@@ -1,5 +1,7 @@
 # AIFeed Protocol — Reference Implementation (v1.0.0-draft)
 
+<p><a href="REFERENCE.md">English</a> · <a href="REFERENCE.id.md">Bahasa Indonesia</a> · <a href="REFERENCE.zh.md">中文</a></p>
+
 AIFeed is an open trust layer for the AI-Web: origins publish a signed declaration at
 `/.well-known/ai.json` describing what AI systems may do with their content. Declarations
 are verifiable offline (Ed25519 + JCS), anchored in DNS (`_aifeed` TXT), and revocable
@@ -149,9 +151,9 @@ Exit codes: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage or internal error.
 ## Tests
 
 ```bash
-npm test                 # Node test suite (195 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration)
+npm test                 # Node test suite (214 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation)
 npm run test:py          # Python verifier suite (44 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
-npm run vectors          # regenerate deterministic manifest vectors and self-check (25)
+npm run vectors          # regenerate deterministic manifest vectors and self-check (34)
 npm run mako:vectors     # regenerate MAKO conformance vectors and self-check (39)
 npm run aimd:vectors     # regenerate AIFeed Markdown conformance vectors and self-check (11)
 npm run fuzz -- --iterations 50000 --seed 42    # deterministic parser fuzzer (invariants + pollution checks)
