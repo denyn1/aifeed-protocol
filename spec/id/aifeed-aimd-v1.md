@@ -1,5 +1,7 @@
 # AIFeed Markdown v1.0 (Profil Konten Native)
 
+<p><a href="../en/aifeed-aimd-v1.md">English</a> · <a href="../id/aifeed-aimd-v1.md">Bahasa Indonesia</a> · <a href="../zh/aifeed-aimd-v1.md">中文</a></p>
+
 **Identifier wire:** `aimd` (media type `text/aifeed+markdown`, konteks tanda tangan `aimd`/`aimd-index`, perintah CLI `aifeed aimd`).
 
 **Versi:** 1.0 (protokol), spesifikasi AIFeed v0.2

@@ -1,5 +1,7 @@
 # AIFeed Markdown v1.0 (Native Content Profile)
 
+<p><a href="../en/aifeed-aimd-v1.md">English</a> · <a href="../id/aifeed-aimd-v1.md">Bahasa Indonesia</a> · <a href="../zh/aifeed-aimd-v1.md">中文</a></p>
+
 **Wire identifier:** `aimd` (media type `text/aifeed+markdown`, signature contexts `aimd`/`aimd-index`, CLI command `aifeed aimd`).
 
 **Version:** 1.0 (protocol), AIFeed specification v0.2

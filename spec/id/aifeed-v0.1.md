@@ -1,5 +1,7 @@
 # AIFeed v0.1 — Deklarasi Tertandatangani untuk Konten AI-Web
 
+<p><a href="../en/aifeed-v0.1.md">English</a> · <a href="../id/aifeed-v0.1.md">Bahasa Indonesia</a> · <a href="../zh/aifeed-v0.1.md">中文</a></p>
+
 **Versi:** 0.1.0-rc1  
 **Status:** Release Candidate — belum dibekukan  
 **Bahasa normatif:** Inggris (`spec/en/aifeed-v0.1.md`). Dokumen ini adalah **terjemahan informasional**; jika terjadi perbedaan, versi Inggris yang berlaku.  

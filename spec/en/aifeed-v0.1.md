@@ -1,5 +1,7 @@
 # AIFeed v0.1 — Signed Declarations for AI-Web Content
 
+<p><a href="../en/aifeed-v0.1.md">English</a> · <a href="../id/aifeed-v0.1.md">Bahasa Indonesia</a> · <a href="../zh/aifeed-v0.1.md">中文</a></p>
+
 **Version:** 0.1.0-rc1  
 **Status:** Release Candidate — not yet frozen (see "Status of This Document")  
 **Canonical language:** English (this document). Translations are informational.  
