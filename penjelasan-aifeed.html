@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIFeed — The Complete Guide</title>
+<meta name="description" content="The long-form guide to AIFeed: the problem, how the protocol works, security layers, AIFeed Markdown and MAKO profiles, measured savings, revocation, and how to adopt it.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://aifeed.md/penjelasan.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aifeed.md/penjelasan.html">
+<meta property="og:site_name" content="AIFeed">
+<meta property="og:title" content="AIFeed — The Complete Guide">
+<meta property="og:description" content="Problem, protocol, security layers, profiles, measured savings, revocation, and adoption — the long-form AIFeed guide.">
+<meta property="og:image" content="https://aifeed.md/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AIFeed — The Complete Guide">
+<meta name="twitter:description" content="Problem, protocol, security layers, profiles, measured savings, revocation, and adoption.">
+<meta name="twitter:image" content="https://aifeed.md/og-image.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","headline":"AIFeed — The Complete Guide","description":"The long-form guide to AIFeed: problem, protocol, security, profiles, savings, revocation, and adoption.","url":"https://aifeed.md/penjelasan.html","inLanguage":"en","author":{"@type":"Organization","name":"AIFeed Protocol Contributors"},"publisher":{"@type":"Organization","name":"AIFeed","logo":{"@type":"ImageObject","url":"https://aifeed.md/logo.svg"}},"mainEntityOfPage":"https://aifeed.md/penjelasan.html"}
+</script>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<script>
+(function () {
+  try {
+    var stored = localStorage.getItem('theme');
+    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  } catch (error) {
+    document.documentElement.dataset.theme = 'dark';
+  }
+})();
+</script>
+<style>
+:root, html[data-theme="dark"] {
+  --bg: #12100f;
+  --panel: #1f1e1c;
+  --panel-soft: #171614;
+  --text: #f8f8f7;
+  --muted: #a5a09c;
+  --faint: #766f6b;
+  --border: rgba(153, 153, 153, .16);
+  --border-strong: rgba(153, 153, 153, .28);
+  --accent: #f55036;
+  --accent-soft: rgba(245, 80, 54, .12);
+  --ok: #3ddc97;
+  --warn: #ffb454;
+  --info-bg: #0a2b4c;
+  --info-border: #1869a7;
+  --info-text: #cdeafb;
+  --shadow: 0 0 16.9px 0 rgba(0, 0, 0, .06);
+}
+html[data-theme="light"] {
+  --bg: #fefefe;
+  --panel: #ffffff;
+  --panel-soft: #f8f8f7;
+  --text: #0c0a09;
+  --muted: #766f6b;
+  --faint: #a5a09c;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  --accent: #f55036;
+  --accent-soft: rgba(245, 80, 54, .1);
+  --ok: #0f9d63;
+  --warn: #b26a00;
+  --info-bg: #eaf6fd;
+  --info-border: #cdeafb;
+  --info-text: #0f3f6b;
+  --shadow: 0 0 16.9px 0 rgba(0, 0, 0, .06);
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark light; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.65 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, .font-header { font-family: Montserrat, Inter, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--accent); }
+.wrap { max-width: 1032px; margin: 0 auto; padding: 0 16px 72px; }
+
+/* nav */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 10px; }
+.brand { display: flex; align-items: center; gap: 9px; }
+.brand img { width: 26px; height: 26px; }
+.brand span { font-family: Montserrat, Inter, sans-serif; font-weight: 600; font-size: 15px; }
+.nav-right { display: flex; align-items: center; gap: 8px; }
+.chip {
+  display: inline-block; font-size: .72rem; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px;
+}
+.theme-btn {
+  appearance: none; border: 1px solid var(--border); background: var(--panel-soft); color: var(--muted);
+  padding: 8px 14px; border-radius: 999px; font-size: .78rem; font-weight: 600; cursor: pointer;
+}
+.theme-btn:hover { color: var(--text); border-color: var(--accent); }
+.theme-btn::after { content: "Light mode"; }
+html[data-theme="light"] .theme-btn::after { content: "Dark mode"; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px;
+  border-radius: 10px; font-size: .85rem; font-weight: 500; border: 1px solid var(--border-strong);
+  background: var(--panel-soft); transition: background .2s ease, border-color .2s ease;
+}
+.btn:hover { border-color: var(--accent); color: var(--text); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: #e2472f; color: #fff; }
+
+/* hero */
+.hero { padding: 44px 0 8px; max-width: 780px; }
+.eyebrow {
+  font-family: Montserrat, Inter, sans-serif; font-size: .72rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+}
+.hero h1 { margin: 0 0 12px; font-size: clamp(1.9rem, 4.5vw, 2.5rem); font-weight: 600; letter-spacing: -.3px; }
+.hero .lede { color: var(--muted); font-size: 1.02rem; margin: 0 0 20px; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+
+/* sections */
+section.block { margin-top: 46px; }
+section.block h2 { font-size: 1.3rem; font-weight: 600; margin: 0 0 14px; }
+section.block p { margin: 0 0 12px; color: var(--text); }
+section.block p.muted { color: var(--muted); }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; box-shadow: var(--shadow);
+}
+.card h3 { margin: 0 0 8px; font-size: .98rem; font-weight: 600; }
+.card p { margin: 0; font-size: .88rem; color: var(--muted); }
+.card ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); font-size: .88rem; }
+.card li { margin: 4px 0; }
+.stepnum {
+  display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+  border-radius: 8px; background: var(--accent-soft); color: var(--accent);
+  font-family: var(--mono, ui-monospace, monospace); font-weight: 700; font-size: .8rem; margin-bottom: 10px;
+}
+ul.check { list-style: none; margin: 0; padding: 0; }
+ul.check li { position: relative; padding-left: 24px; margin: 7px 0; color: var(--muted); font-size: .92rem; }
+ul.check li::before {
+  content: ""; position: absolute; left: 4px; top: .52em; width: 8px; height: 8px;
+  border-radius: 2px; background: var(--accent);
+}
+ol.flow { list-style: none; margin: 0; padding: 0; counter-reset: flow; }
+ol.flow li {
+  counter-increment: flow; position: relative; padding: 10px 0 10px 44px;
+  border-bottom: 1px solid var(--border); font-size: .92rem; color: var(--muted);
+}
+ol.flow li:last-child { border-bottom: 0; }
+ol.flow li strong { color: var(--text); }
+ol.flow li::before {
+  content: counter(flow, decimal-leading-zero); position: absolute; left: 0; top: 10px;
+  font-family: ui-monospace, Consolas, monospace; font-size: .78rem; color: var(--accent);
+  border: 1px solid var(--border); border-radius: 8px; padding: 2px 7px;
+}
+table.data { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 6px 0 0; }
+table.data th, table.data td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+table.data th { color: var(--muted); font-weight: 600; font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; }
+table.data td.num { text-align: right; font-family: ui-monospace, Consolas, monospace; }
+.tag {
+  display: inline-block; font-size: .72rem; font-weight: 600; border-radius: 999px;
+  padding: 2px 9px; border: 1px solid var(--border); color: var(--muted); margin-left: 6px;
+}
+.tag.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+.tag.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+.tag.info { color: var(--info-text, var(--accent)); border-color: var(--border-strong); }
+.banner {
+  display: block; margin-top: 22px; padding: 14px 16px; border-radius: 10px;
+  background: var(--info-bg); border: 1px solid var(--info-border); color: var(--info-text);
+}
+.banner strong { font-family: Montserrat, Inter, sans-serif; }
+.banner small { display: block; opacity: .85; margin-top: 3px; }
+details.faq {
+  border: 1px solid var(--border); border-radius: 10px; background: var(--panel);
+  padding: 12px 16px; margin: 8px 0;
+}
+details.faq summary {
+  cursor: pointer; font-family: Montserrat, Inter, sans-serif; font-weight: 600; font-size: .92rem;
+  list-style: none;
+}
+details.faq summary::-webkit-details-marker { display: none; }
+details.faq summary::after { content: "+"; float: right; color: var(--accent); font-weight: 700; }
+details.faq[open] summary::after { content: "−"; }
+details.faq p { margin: 10px 0 0; color: var(--muted); font-size: .9rem; }
+footer.foot {
+  margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--border);
+  color: var(--faint); font-size: .84rem; display: flex; flex-wrap: wrap; gap: 6px 18px;
+  align-items: center; justify-content: space-between;
+}
+footer.foot a { color: var(--muted); }
+footer.foot a:hover { color: var(--accent); }
+@media (max-width: 640px) {
+  .hero { padding-top: 30px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <a class="brand" href="index.html"><img src="logo.svg" alt="AIFeed logo"><span>AIFeed</span></a>
+    <div class="nav-right">
+      <span class="chip">v1.0.0-draft</span>
+      <button class="theme-btn" id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+      <a class="btn" href="https://github.com/denyn1/aifeed-protocol">Read the spec</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Complete guide</div>
+    <h1>Signed content permissions for the AI web</h1>
+    <p class="lede">
+      AIFeed lets any site publish a <strong>signed, verifiable declaration</strong> of what AI
+      agents may do with its content — training, indexing, summarization, citation — and lets
+      agents prove, on every fetch, that the permission is real, current, and authorized. This
+      guide covers the problem, the protocol, the security layers, both content profiles, the
+      measured savings, revocation, and how to adopt it today.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="process.html">See the protocol flow</a>
+      <a class="btn" href="enforcement-report.html">Open the enforcement benchmark</a>
+    </div>
+  </header>
+
+  <section class="block" id="problem">
+    <div class="eyebrow">01 — The problem</div>
+    <h2>AI crawlers flood the web. Plain signals are not enough.</h2>
+    <p>
+      <code>robots.txt</code> and similar files are <em>unsigned text</em>. Anyone can edit them,
+      nothing binds them to a domain, and there is no way to tell an honest declaration from a
+      forged one. Publishers cannot prove what they allowed; AI builders cannot prove what they
+      were allowed to use; both sides pay for blind re-crawling.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <h3>No proof</h3>
+        <p>An unsigned file carries no cryptographic evidence of who wrote it or whether it was tampered with in transit.</p>
+      </div>
+      <div class="card">
+        <h3>No freshness</h3>
+        <p>A permission granted last year may have been revoked. Without a revocation check, agents act on stale policy.</p>
+      </div>
+      <div class="card">
+        <h3>No economy</h3>
+        <p>Agents re-download full HTML — menus, ads, scripts — for pages that did not change, wasting bytes on both sides.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="eyebrow">02 — How it works</div>
+    <h2>Six steps, about sixty seconds.</h2>
+    <p class="muted">
+      The publisher runs one tool. The rest is standard web infrastructure: a well-known path,
+      a DNS record, and signatures anyone can verify offline.
+    </p>
+    <div class="grid">
+      <div class="card"><span class="stepnum">1</span><h3>Generate keys</h3><p>Ed25519 key pair. The private key never leaves the server.</p></div>
+      <div class="card"><span class="stepnum">2</span><h3>Assemble the manifest</h3><p>Identity, per-use permissions, crawl limits, contact, and license.</p></div>
+      <div class="card"><span class="stepnum">3</span><h3>Sign it</h3><p>Ed25519 over JCS canonical JSON — deterministic bytes, verifiable offline.</p></div>
+      <div class="card"><span class="stepnum">4</span><h3>Publish</h3><p>At <code>/.well-known/ai.json</code>, with signature sidecars and content indexes.</p></div>
+      <div class="card"><span class="stepnum">5</span><h3>Anchor in DNS</h3><p>A <code>_aifeed</code> TXT record pins the key to the domain, preventing manifest forgery.</p></div>
+      <div class="card"><span class="stepnum">6</span><h3>Serve and revoke</h3><p>Agents verify TLS → domain → signature → anchor, then re-check revocation on every use.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="who">
+    <div class="eyebrow">03 — Who it is for</div>
+    <h2>One protocol, four audiences.</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Site owners &amp; hosts</h3>
+        <ul>
+          <li>Declare permissions once; update them in one place.</li>
+          <li>Cut egress bytes, origin CPU, and peak connections.</li>
+          <li>Get audit evidence of who fetched what, under which policy.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>AI builders &amp; agents</h3>
+        <ul>
+          <li>Machine-readable permissions instead of guessing.</li>
+          <li>Lean, agent-ready content with per-page digests.</li>
+          <li>Delta indexes: fetch only what changed.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Users</h3>
+        <ul>
+          <li>Attribution and provenance travel with the content.</li>
+          <li>Revocation gives a real off-switch, not a promise.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Regulators &amp; institutions</h3>
+        <ul>
+          <li>A neutral technical layer that complements law (e.g. UU PDP, EU TDM).</li>
+          <li>Transparent, multi-signature revocation registry.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="security">
+    <div class="eyebrow">04 — Security</div>
+    <h2>Four interlocking layers.</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>1 · Cryptography</h3>
+        <p>Ed25519 signatures over JCS-canonical JSON. Canonicalization is strict: duplicate keys, floats, and oversized integers are rejected, so verification is deterministic across languages.</p>
+      </div>
+      <div class="card">
+        <h3>2 · Domain binding</h3>
+        <p>TLS plus the <code>_aifeed</code> DNS anchor. A stolen manifest from another domain cannot be replayed because the key is pinned to the origin's own DNS.</p>
+      </div>
+      <div class="card">
+        <h3>3 · Revocation &amp; transparency</h3>
+        <p>Status lives in a multi-signature registry. Agents re-check it; offline bundles carry the evidence so audits work without network access.</p>
+      </div>
+      <div class="card">
+        <h3>4 · Least privilege</h3>
+        <p>Content profiles may only <em>restrict</em> the manifest, never widen it. Crawl limits and rate policy keep enforcement bounded and explainable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="profiles">
+    <div class="eyebrow">05 — Content profiles</div>
+    <h2>AIFeed Markdown (native) and MAKO (compatibility).</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>AIFeed Markdown <span class="tag ok">native</span></h3>
+        <ul>
+          <li><code>text/aifeed+markdown</code>, extension <code>.aifeed.md</code></li>
+          <li>In-band signed policy block and optional token budget</li>
+          <li>Delta index with per-page digests and triage fields</li>
+          <li>i18n alternate links and media/asset references</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>MAKO <span class="tag info">compatibility</span></h3>
+        <ul>
+          <li><code>text/mako+markdown</code>, the external MAKO trust profile</li>
+          <li>Served by the same publisher tooling, separate signature context</li>
+          <li>Cross-format replay is rejected by design</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Measured conversion <span class="tag warn">measured-simulation</span></h3>
+        <ul>
+          <li><strong>−68.83%</strong> bytes vs full HTML across the 60-page corpus</li>
+          <li>Delta fetching: <strong>−95.73%</strong> vs HTML, <strong>−86.31%</strong> vs full MAKO</li>
+          <li>Signing overhead: 0.25 ms/page; verification: 0.70 ms/page</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="savings">
+    <div class="eyebrow">06 — Two-sided savings</div>
+    <h2>Both sides win, and the numbers are reproducible.</h2>
+    <p class="muted">
+      Measured in a local HTTP harness with the same edge policy that ships as nginx/Caddy
+      templates. Scenario S3: training crawlers blocked, non-compliant crawlers throttled,
+      compliant clients served signed content with delta indexes.
+    </p>
+    <table class="data">
+      <thead>
+        <tr><th>Side</th><th>Metric</th><th>Result</th><th>Label</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Web owner / host</td><td>Egress bytes saved</td><td class="num">−55.19%</td><td>measured-simulation</td></tr>
+        <tr><td>Web owner / host</td><td>Origin CPU saved</td><td class="num">−56.23%</td><td>measured-simulation</td></tr>
+        <tr><td>Web owner / host</td><td>Peak connections reduced</td><td class="num">−88.24%</td><td>measured-simulation</td></tr>
+        <tr><td>AI side</td><td>Bytes received (all profiles)</td><td class="num">−54.84%</td><td>measured-simulation</td></tr>
+        <tr><td>AI side</td><td>Bytes received (compliant clients)</td><td class="num">−72.93%</td><td>measured-simulation</td></tr>
+        <tr><td>AI side</td><td>Unchanged pages skipped</td><td class="num">14 / 18</td><td>measured-simulation</td></tr>
+        <tr><td>AI side</td><td>Verification cost</td><td class="num">0.70 ms/page</td><td>measured-simulation</td></tr>
+        <tr><td>Scale model</td><td>Projection per 1,000 tenants</td><td class="num">see benchmark</td><td>model</td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="margin-top:10px">
+      Honest baseline: with no enforcement (S0) nothing is blocked or throttled and the origin
+      serves every byte to every profile — that is the cost this protocol removes. Figures are
+      simulation, not a production CDN; the 30-day pilot kit exists to replace them with live data.
+    </p>
+    <a class="banner" href="enforcement-report.html">
+      <strong>Open the interactive enforcement benchmark</strong>
+      <small>Animated process flow, per-scenario tables, and two-sided savings with embedded measured data.</small>
+    </a>
+  </section>
+
+  <section class="block" id="flow">
+    <div class="eyebrow">07 — Full flow</div>
+    <h2>The complete sequence.</h2>
+    <ol class="flow">
+      <li><strong>Keys</strong> — Ed25519 key pair generated; private key stays server-side.</li>
+      <li><strong>Manifest</strong> — identity, permissions, crawl limits, license, revision.</li>
+      <li><strong>Signature</strong> — JCS canonicalization + Ed25519, offline-verifiable.</li>
+      <li><strong>Publish</strong> — <code>/.well-known/ai.json</code>, signatures, content index.</li>
+      <li><strong>DNS anchor</strong> — <code>_aifeed</code> TXT pins the key to the domain.</li>
+      <li><strong>Discovery</strong> — agents find the declaration via link relations or the well-known path.</li>
+      <li><strong>Verification chain</strong> — TLS → domain → signature → anchor, all must pass.</li>
+      <li><strong>Permission decision</strong> — per-use allow/deny, restrict-only overrides.</li>
+      <li><strong>Content fetch</strong> — AIFeed Markdown or MAKO instead of full HTML.</li>
+      <li><strong>Delta consumption</strong> — digests reveal unchanged pages; those cost 0 bytes.</li>
+      <li><strong>Document verification</strong> — signature + digest; replay and tampering rejected.</li>
+      <li><strong>Usage &amp; attribution</strong> — within limits, with an audit trail.</li>
+      <li><strong>Revocation re-check</strong> — status verified at use time, with offline evidence.</li>
+    </ol>
+  </section>
+
+  <section class="block" id="permissions">
+    <div class="eyebrow">08 — Permissions &amp; limits</div>
+    <h2>Granular, explicit, and restrict-only.</h2>
+    <p class="muted">Usage keys cover the real decisions agents make:</p>
+    <ul class="check">
+      <li><code>search</code>, <code>retrieval</code>, <code>input</code> — discovery and grounding</li>
+      <li><code>quote</code>, <code>summarize</code>, <code>reproduce</code>, <code>translate</code> — derived output</li>
+      <li><code>modify</code>, <code>embed</code>, <code>commercial_use</code> — higher-risk uses</li>
+      <li><code>training</code> — the decisive toggle for model training</li>
+    </ul>
+    <p class="muted" style="margin-top:12px">
+      Content profiles can only narrow these grants. Crawl limits bound request rates; attribution
+      settings travel with the content; and a denial is as machine-readable as an allowance.
+    </p>
+  </section>
+
+  <section class="block" id="revocation">
+    <div class="eyebrow">09 — Revocation</div>
+    <h2>An off-switch with evidence.</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Multi-signature registry</h3>
+        <p>Status documents require multiple signatures, so a single compromised key cannot revoke or restore a site.</p>
+      </div>
+      <div class="card">
+        <h3>Statuses</h3>
+        <p><code>active</code>, <code>suspended</code>, <code>revoked</code> — with signed timestamps and reasons.</p>
+      </div>
+      <div class="card">
+        <h3>Offline bundles</h3>
+        <p>Manifest, signatures, revocation, and content hashes in one auditable archive for compliance reviews.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="eyebrow">10 — FAQ</div>
+    <h2>Straight answers.</h2>
+    <details class="faq" open>
+      <summary>Is AIFeed a legal contract?</summary>
+      <p>No. It is a technical signal: cryptographically verifiable permissions that complement law and contracts. It makes the declared policy auditable; it does not replace legal advice or enforcement.</p>
+    </details>
+    <details class="faq">
+      <summary>How is this different from robots.txt or llms.txt?</summary>
+      <p>Those are unsigned conventions. AIFeed binds permissions to a domain with Ed25519, JCS canonical bytes, a DNS anchor, and a revocation registry — and it serves the content itself in lean, agent-ready formats.</p>
+    </details>
+    <details class="faq">
+      <summary>Does it block AI crawlers?</summary>
+      <p>The protocol declares policy; enforcement happens at the edge (the shipped nginx/Caddy templates and adapter code). That gives compliant clients faster, cheaper access while non-compliant behavior is blocked or throttled with an honest baseline you can measure.</p>
+    </details>
+    <details class="faq">
+      <summary>What happens if a signing key leaks?</summary>
+      <p>Publish a new key, update the DNS anchor, and use the revocation registry to invalidate the old key. Rotation and revocation are first-class operations, not afterthoughts.</p>
+    </details>
+    <details class="faq">
+      <summary>What does it cost to adopt?</summary>
+      <p>The standard is open (CC BY 4.0) and the reference implementation is MIT, zero-dependency, and works on static sites, nginx, Caddy, Apache, Node, Next.js, PHP, Python, Go, and WordPress.</p>
+    </details>
+    <details class="faq">
+      <summary>What is the current status?</summary>
+      <p>Release <code>1.0.0-draft</code>: specs are not frozen yet, cross-language conformance is at 75 vectors (JS and Python), and an external cryptographic review is still pending. Wire versions in use: manifest <code>0.1</code>/<code>0.2</code>, AIFeed Markdown <code>1.0</code>, MAKO <code>0.2</code>.</p>
+    </details>
+  </section>
+
+  <section class="block" id="start">
+    <div class="eyebrow">11 — Getting started</div>
+    <h2>Adopt it today.</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Any static site</h3>
+        <p><code>npx aifeed site build ./public</code> generates the manifest, signed content, and indexes for Hugo, Jekyll, Astro, Next export, or plain HTML.</p>
+      </div>
+      <div class="card">
+        <h3>WordPress</h3>
+        <p>The plugin publishes the signed declaration and serves AIFeed Markdown + MAKO dual-stack, plus <code>/llms.txt</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Servers &amp; platforms</h3>
+        <p>Adapters for nginx, Caddy, Apache, Node/Express, Next.js, PHP, Python ASGI, and Go — plus a GitHub Action.</p>
+      </div>
+      <div class="card">
+        <h3>Verify from code</h3>
+        <p><code>npm install @aifeed/verify</code> — fetch, verify, decide, and select pages with a zero-dependency SDK.</p>
+      </div>
+    </div>
+    <div class="hero-cta" style="margin-top:20px">
+      <a class="btn btn-primary" href="https://github.com/denyn1/aifeed-protocol">Get the reference implementation</a>
+      <a class="btn" href="https://github.com/denyn1/aifeed-protocol/tree/main/paper">Read the paper draft</a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>
+      <a href="index.html">Home</a> ·
+      <a href="process.html">Protocol flow</a> ·
+      <a href="enforcement-report.html">Enforcement benchmark</a> ·
+      <a href="https://github.com/denyn1/aifeed-protocol">GitHub</a> ·
+      <a href="mailto:contact@aifeed.md">contact@aifeed.md</a>
+    </span>
+    <span>Specs CC BY 4.0 · Code MIT · v1.0.0-draft</span>
+  </footer>
+
+</div>
+<script>
+(function () {
+  var button = document.getElementById('theme-toggle');
+  button.addEventListener('click', function () {
+    var root = document.documentElement;
+    var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (error) {}
+  });
+})();
+</script>
+</body>
+</html>

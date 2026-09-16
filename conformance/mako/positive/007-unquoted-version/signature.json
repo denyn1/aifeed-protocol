@@ -1,0 +1,12 @@
+{
+  "algorithm": "ed25519",
+  "context": "mako",
+  "url": "https://berita.example/artikel/aifeed-protokol",
+  "key_fingerprint": "sha256:oFCDfYUHBYLM9zlLCYiEfMMSy4glm4lImfbyOc8XkaU",
+  "signature": "base64url:WE52wZu_ND6tgDcZhtPOKHSuuPnUKCBvvMllUQJJ87q_CazGT-h2AAXpZ6scwTvdwFHZdCP9V74b7JwWsVDJCw",
+  "raw_digest": {
+    "sha-256": "jGaGN4homI+mBJazWKoaATebF+8VHG0VAZ0RBT5yEKc=",
+    "applies_to": "raw-bytes"
+  },
+  "signed_at": "2026-09-15T08:00:00Z"
+}

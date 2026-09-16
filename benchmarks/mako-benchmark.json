@@ -1,0 +1,49 @@
+{
+  "corpus": {
+    "pages": 60,
+    "html_bytes": 1205292,
+    "mako_bytes": 351939,
+    "signature_bytes": 23691,
+    "html_tokens_est": 301349,
+    "mako_tokens_est": 88008
+  },
+  "scenarios": {
+    "A_html_crawl": {
+      "requests": 60,
+      "bytes": 1205292,
+      "tokens_est": 301323,
+      "verify_cpu_ms": 0,
+      "wall_ms": 0.0881
+    },
+    "B_mako_full": {
+      "requests": 60,
+      "bytes": 375630,
+      "tokens_est": 93908,
+      "verify_cpu_ms": 23.270200000000006,
+      "wall_ms": 24.5703
+    },
+    "C_mako_delta": {
+      "requests": 7,
+      "bytes": 51408,
+      "tokens_est": 12852,
+      "verify_cpu_ms": 1.5672,
+      "wall_ms": 2.9517,
+      "changed_pages": 6,
+      "unchanged_pages": 54
+    }
+  },
+  "methodology": {
+    "html_corpus": "synthetic article pages with nav/ads/boilerplate (see buildHtml)",
+    "token_estimate": "ceil(bytes / 4), identical heuristic for both representations",
+    "signature_model": "inline header delivery (X-Aifeed-Signature), JSON container bytes counted",
+    "delta_model": "index fetch + changed pages only; unchanged pages assumed 304 (0 bytes)",
+    "change_ratio": 0.1,
+    "sign_ms_per_page": 0.2513,
+    "verify_ms_per_page": 0.3381
+  },
+  "savings": {
+    "mako_vs_html_percent": 68.83,
+    "delta_vs_html_percent": 95.73,
+    "delta_vs_mako_percent": 86.31
+  }
+}

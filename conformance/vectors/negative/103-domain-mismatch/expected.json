@@ -1,0 +1,9 @@
+{
+  "result": "UNVERIFIED",
+  "domain": "other.example",
+  "now": "2026-10-01T00:00:00Z",
+  "errors": [
+    "domain_mismatch"
+  ],
+  "warnings": []
+}

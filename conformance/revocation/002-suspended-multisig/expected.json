@@ -1,0 +1,12 @@
+{
+  "domain": "tokobuku.example",
+  "now": "2026-10-01T00:00:00Z",
+  "governance_keys": [
+    "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+    "ed25519:MCowBQYDK2VwAyEAKay64UG8yvCyLhqU000LxzYeUm0L/hLIl5S8kyKWbdc="
+  ],
+  "warnings": [],
+  "result": "valid",
+  "status": "suspended",
+  "errors": []
+}

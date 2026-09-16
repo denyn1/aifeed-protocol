@@ -1,0 +1,58 @@
+# AIFeed CI: generate and sign AIMD/MAKO + manifest on every deploy.
+# Copy to .github/workflows/aifeed.yml and adjust the paths/domain.
+name: aifeed
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The protocol repository ships the zero-dependency CLI; pin a tag/commit in
+      # production instead of main.
+      - name: Install AIFeed CLI
+        run: |
+          git clone --depth 1 https://github.com/aifeed/aifeed-protocol.git .aifeed-tool
+          echo "$PWD/.aifeed-tool" >> "$GITHUB_PATH"
+
+      # The signing key lives in repository secrets (base64 of aifeed-private.pem).
+      - name: Restore signing key
+        run: |
+          mkdir -p .aifeed
+          echo "${{ secrets.AIFEED_PRIVATE_KEY }}" | base64 -d > .aifeed/aifeed-private.pem
+          chmod 600 .aifeed/aifeed-private.pem
+
+      - name: Build static site (your generator here)
+        run: |
+          echo "replace with: hugo --minify | npx next build && npx next export | eleventy ..."
+          mkdir -p public && cp -r site/* public/ 2>/dev/null || true
+
+      - name: Generate AIMD, manifest, and index
+        run: |
+          node .aifeed-tool/bin/cli.js site build public \
+            --domain "${{ vars.AIFEED_DOMAIN }}" \
+            --base-url "https://${{ vars.AIFEED_DOMAIN }}" \
+            --name "${{ vars.AIFEED_NAME }}" \
+            --key .aifeed/aifeed-private.pem \
+            --profile both --llms --inject
+
+      - name: Verify everything before deploy
+        env:
+          AIFEED_DOMAIN: ${{ vars.AIFEED_DOMAIN }}
+        run: |
+          node .aifeed-tool/bin/cli.js validate public --domain "${{ vars.AIFEED_DOMAIN }}" --json || true
+          node -e "const s=require('./.aifeed-tool/packages/aifeed-verify');const fs=require('fs');const r=s.verifyAll({manifestText:fs.readFileSync('public/.well-known/ai.json','utf8'),manifestBytes:fs.readFileSync('public/.well-known/ai.json'),signatureText:fs.readFileSync('public/.well-known/ai-signature.json','utf8'),domain:process.env.AIFEED_DOMAIN});console.log(r.result);if(r.result!=='VERIFIED')process.exit(1)" 
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-with-aifeed
+          path: public

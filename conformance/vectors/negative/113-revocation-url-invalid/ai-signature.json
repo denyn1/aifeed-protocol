@@ -1,0 +1,9 @@
+{
+  "algorithm": "ed25519",
+  "canonicalization": "jcs-rfc8785",
+  "signature": "base64url:y6me5sBKlFMTXQD2FUUB-sZ4Y97W4TmTYLZ6QAzytSi2gZReOyV-oezBTqCDbdYmE81K7bvKZFG16XC5hPapBw",
+  "raw_digest": {
+    "sha-256": "zYZbYT/eokGsTKbTUKEXKGYihum1Rs1N/SHnQMPqqFo=",
+    "applies_to": "raw-bytes"
+  }
+}

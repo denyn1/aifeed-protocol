@@ -1,0 +1,22 @@
+{
+  "version": "0.1",
+  "created_at": "2026-09-14T08:00:00Z",
+  "domain": "news.example",
+  "files": [
+    {
+      "path": "manifest/ai.json",
+      "sha-256": "siojEvW7scCHArJX5bjQpNNXwMLt5qV1fWGUXj47sJ8=",
+      "size": 2712
+    },
+    {
+      "path": "manifest/ai-signature.json",
+      "sha-256": "xWScgeats8uQJR7uS9QXJpooToIKv4Xc1BEJ4MO9D+M=",
+      "size": 297
+    },
+    {
+      "path": "manifest/fetch-metadata.json",
+      "sha-256": "IEDP9YfVa1MmvaMPvujD3rhCoGC+BYHwvBw/53utLp0=",
+      "size": 177
+    }
+  ]
+}

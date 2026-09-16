@@ -1,0 +1,5 @@
+{
+  "algorithm": "ed25519",
+  "canonicalization": "jcs-rfc8785",
+  "signature": "base64url:AAAA"
+}

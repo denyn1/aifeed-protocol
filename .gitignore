@@ -1,0 +1,39 @@
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+dist/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+.wrangler/
+
+# Never commit signing keys
+aifeed-private.pem
+*.secret
+.env
+.env.*
+
+# Generated artifacts (rebuild with: npm run render:html && npm run build:site)
+benchmarks/enforcement-report.html
+docs/process.html
+site/logo.svg
+site/process.html
+site/enforcement-report.html
+site/penjelasan.html
+site/aifeed-preprint.pdf
+paper/main.pdf
+paper/aifeed-arxiv.zip
+
+# Generated demo origins + apex AIFeed artifacts
+site/demos/
+site/.well-known/
+site/revoke/
+site/llms.txt
+site/*.aifeed.md
+site/*.mako.md
+site/*.sig
+site/robots.txt
+site/sitemap.xml
+site/og-image.png

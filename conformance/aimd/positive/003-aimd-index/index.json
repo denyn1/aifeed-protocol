@@ -1,0 +1,34 @@
+{
+  "version": "0.2",
+  "domain": "berita.example",
+  "site": {
+    "name": "Berita Contoh",
+    "type": "news",
+    "languages": [
+      "id"
+    ]
+  },
+  "generated_at": "2026-09-15T08:00:00Z",
+  "page": 1,
+  "page_count": 1,
+  "entries": [
+    {
+      "url": "/artikel/aimd",
+      "type": "article",
+      "tokens": 120,
+      "title": "Panduan AIFeed Markdown",
+      "summary": "Dokumen native AIFeed.",
+      "tags": [
+        "aimd",
+        "protokol"
+      ],
+      "lang": "id",
+      "related": [
+        "/artikel/mako"
+      ],
+      "updated": "2026-09-15",
+      "etag": "\"aimd-1\"",
+      "sha-256": "wurADOhQcu/l9ow2Be7u6RBw1+4m0amEA0dlevQnh24="
+    }
+  ]
+}

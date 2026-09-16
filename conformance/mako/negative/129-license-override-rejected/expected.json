@@ -1,0 +1,25 @@
+{
+  "kind": "document",
+  "url": "https://berita.example/artikel/aifeed-protokol",
+  "expected": {
+    "mako_verified": true,
+    "errors": [],
+    "warnings": [
+      "permission_override_rejected"
+    ],
+    "usage": {
+      "training": "deny",
+      "summarize": "allow",
+      "search": "allow",
+      "reproduce": "deny"
+    },
+    "attribution": "required",
+    "limits": {
+      "requests_per_minute": 30
+    },
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  }
+}

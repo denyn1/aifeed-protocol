@@ -1,0 +1,87 @@
+{
+  "$schema": "https://aifeed.md/schema/ai-json/v0.1.json",
+  "version": "0.1",
+  "identity": {
+    "domain": "api.example",
+    "name": "Projekta SaaS",
+    "organization": "PT Projekta",
+    "type": "saas",
+    "locale": "en-US",
+    "contact": "mailto:ai@api.example",
+    "public_key": "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+    "key_id": "projekta-2026-key1",
+    "signature_url": "/.well-known/ai-signature.json"
+  },
+  "validity": {
+    "signed_at": "2026-09-14T08:00:00Z",
+    "expires_at": "2027-09-14T08:00:00Z"
+  },
+  "content": {
+    "llms_txt": "/llms.txt",
+    "languages": ["en"]
+  },
+  "permissions": {
+    "default": "deny",
+    "usage": {
+      "search": "allow",
+      "retrieval": "allow",
+      "input": "allow",
+      "training": "deny",
+      "quote": "allow",
+      "summarize": "allow",
+      "reproduce": "deny",
+      "translate": "deny",
+      "modify": "deny",
+      "embed": "deny",
+      "commercial_use": "deny"
+    },
+    "attribution": "optional"
+  },
+  "limits": { "requests_per_minute": 240, "concurrent": 5 },
+  "types": {
+    "project": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "name": { "type": "string", "max_length": 128 },
+        "url": { "type": "string", "format": "uri-reference" }
+      }
+    }
+  },
+  "capabilities": {
+    "list_projects": {
+      "description": "Daftar proyek milik akun terautentikasi",
+      "endpoint": "/api/v1/projects",
+      "method": "GET",
+      "params": {
+        "limit": { "type": "integer", "required": false, "in": "query", "default": 20, "minimum": 1, "maximum": 100 }
+      },
+      "returns": { "type": "array", "items_ref": "project", "max_items": 100 },
+      "auth_required": true
+    }
+  },
+  "actions": {
+    "create_project": {
+      "description": "Buat proyek baru",
+      "endpoint": "/api/v1/projects",
+      "method": "POST",
+      "params": {
+        "name": { "type": "string", "required": true, "in": "body", "max_length": 128 }
+      },
+      "returns": { "type": "object", "items_ref": "project" },
+      "requires_auth": true,
+      "auth": { "type": "oauth2", "documentation_url": "https://api.example/docs/auth" },
+      "human_confirmation_required": false,
+      "requires_idempotency_key": true
+    }
+  },
+  "revocation": {
+    "list_url": "https://aifeed.md/revoke/v1/api.example.json",
+    "maximum_check_interval_hours": 24
+  },
+  "metadata": {
+    "generated_at": "2026-09-14T08:00:00Z",
+    "generated_by": "projekta-backend/2.3.1"
+  }
+}

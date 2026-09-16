@@ -1,0 +1,11 @@
+{
+  "kind": "index",
+  "url": "https://berita.example/.well-known/mako-index.json",
+  "expected": {
+    "verified": false,
+    "errors": [
+      "mako_index_domain_mismatch"
+    ],
+    "warnings": []
+  }
+}

@@ -1,0 +1,51 @@
+# Copyright (C) 2026 AIFeed Protocol Contributors
+# This file is distributed under the MIT license.
+msgid ""
+msgstr ""
+"Project-Id-Version: AIFeed 0.3.0-draft\n"
+"Report-Msgid-Bugs-To: https://github.com/aifeed/aifeed-protocol/issues\n"
+"POT-Creation-Date: 2026-09-15T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: AIFeed starter POT (regenerate with wp i18n make-pot)\n"
+"X-Domain: aifeed\n"
+
+#: includes/class-aifeed-signer.php
+msgid "PHP sodium extension is unavailable."
+msgstr ""
+
+#: includes/class-aifeed-signer.php
+msgid "Generate signing keys first."
+msgstr ""
+
+#: includes/class-aifeed-signer.php
+msgid "Custom manifest JSON is not valid JSON."
+msgstr ""
+
+#: includes/class-aifeed-signer.php
+msgid "Custom manifest public_key must match this site's signing key."
+msgstr ""
+
+#: includes/class-aifeed-signer.php
+msgid "Self-verification failed; output not written."
+msgstr ""
+
+#: includes/class-aifeed-keys.php
+msgid "PHP sodium extension is required to generate signing keys."
+msgstr ""
+
+#: includes/class-aifeed-mako.php
+msgid "Content signing requires sodium and generated keys."
+msgstr ""
+
+#: includes/class-aifeed-mako.php
+msgid "MAKO self-verification failed."
+msgstr ""
+
+#: includes/class-aifeed-manifest.php
+msgid "Failed to encode MAKO index."
+msgstr ""

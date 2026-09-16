@@ -1,0 +1,11 @@
+{
+  "kind": "document",
+  "url": "https://berita.example/artikel/aifeed-protokol",
+  "expected": {
+    "mako_verified": false,
+    "errors": [
+      "yaml_block_scalar_forbidden"
+    ],
+    "warnings": []
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "kind": "document",
+  "profile": "aimd",
+  "url": "https://berita.example/artikel/aimd",
+  "expected": {
+    "verified": true,
+    "errors": [
+      "aimd_frontmatter_missing"
+    ],
+    "warnings": []
+  }
+}

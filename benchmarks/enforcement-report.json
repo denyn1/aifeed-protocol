@@ -1,0 +1,803 @@
+{
+  "version": "0.1",
+  "generated_at": "2026-09-15T14:37:00Z",
+  "methodology": {
+    "transport": "real local HTTP (origin and PDP edge in-process, loopback)",
+    "byte_accounting": "response body bytes only; headers excluded",
+    "cpu_accounting": "origin handler wall time and edge policy decision time (hrtime sums)",
+    "human_control": "10% human visitors exempt from AI policy; p95 latency measured at the client",
+    "rate_limits": "manifest limits (rpm 15, concurrent 2) applied to non-compliant AI profiles",
+    "delta_model": "compliant client stores digests, fetches index, retrieves only changed pages (20% changed)",
+    "determinism": "content generation and client order are seeded; network timing and rolling rate-limit windows can cause small run-to-run variance",
+    "cost_model": "origin requests perform deterministic SHA-256 work (120 iterations) to model per-request rendering cost",
+    "labels": {
+      "measured": "terukur-simulasi (local harness, real HTTP)",
+      "model": "model (extrapolation)",
+      "estimate": "estimasi"
+    },
+    "caveats": [
+      "Loopback harness, not a production CDN or shared-hosting cluster.",
+      "Synthetic corpus and deterministic clients; absolute percentages depend on boilerplate ratio.",
+      "Verification CPU is CPU on the benchmark machine.",
+      "Without enforcement, savings are approximately zero (see S0)."
+    ]
+  },
+  "single_origin": {
+    "config": {
+      "tenants": 1,
+      "pagesPerTenant": 18,
+      "paragraphs": 6,
+      "changeRatio": 0.2,
+      "compliantTenants": 1,
+      "trainingTenants": 1,
+      "plainTenants": 1,
+      "humanTenants": 1,
+      "humanRequests": 8,
+      "requestsPerMinute": 15,
+      "concurrent": 2,
+      "originLatencyMs": 6,
+      "cpuWorkIterations": 120
+    },
+    "scenarios": {
+      "S0": {
+        "scenario": 0,
+        "tenants": 1,
+        "origin": {
+          "requests": 63,
+          "bytes": 177537,
+          "cpu_ms": 46.63,
+          "peak_concurrent": 17,
+          "statuses": {
+            "200": 63
+          }
+        },
+        "edge": {
+          "forwarded": 63,
+          "blocked": 0,
+          "limited": 0,
+          "bytes_to_clients": 177537,
+          "policy_cpu_ms": 1.09,
+          "peak_concurrent": {
+            "compliant": 1,
+            "training": 18,
+            "plain": 4,
+            "human": 1
+          },
+          "by_profile": {
+            "compliant": {
+              "requests": 19,
+              "forwarded": 19,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 52575
+            },
+            "training": {
+              "requests": 18,
+              "forwarded": 18,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 51135
+            },
+            "plain": {
+              "requests": 18,
+              "forwarded": 18,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 51135
+            },
+            "human": {
+              "requests": 8,
+              "forwarded": 8,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 22692
+            }
+          }
+        },
+        "clients": {
+          "compliant": {
+            "requests": 19,
+            "received_bytes": 52575,
+            "statuses": {
+              "200": 19
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 18,
+            "skipped_unchanged": 0
+          },
+          "training": {
+            "requests": 18,
+            "received_bytes": 51135,
+            "statuses": {
+              "200": 18
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "plain": {
+            "requests": 18,
+            "received_bytes": 51135,
+            "statuses": {
+              "200": 18
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "human": {
+            "requests": 8,
+            "received_bytes": 22692,
+            "statuses": {
+              "200": 8
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          }
+        },
+        "human_p95_ms": 19.99
+      },
+      "S1": {
+        "scenario": 1,
+        "tenants": 1,
+        "origin": {
+          "requests": 45,
+          "bytes": 104084,
+          "cpu_ms": 31.07,
+          "peak_concurrent": 4,
+          "statuses": {
+            "200": 45
+          }
+        },
+        "edge": {
+          "forwarded": 45,
+          "blocked": 18,
+          "limited": 0,
+          "bytes_to_clients": 104084,
+          "policy_cpu_ms": 0.7,
+          "peak_concurrent": {
+            "compliant": 1,
+            "plain": 4,
+            "human": 1
+          },
+          "by_profile": {
+            "compliant": {
+              "requests": 19,
+              "forwarded": 19,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 30257
+            },
+            "training": {
+              "requests": 18,
+              "forwarded": 0,
+              "blocked": 18,
+              "limited": 0,
+              "bytes": 0
+            },
+            "plain": {
+              "requests": 18,
+              "forwarded": 18,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 51135
+            },
+            "human": {
+              "requests": 8,
+              "forwarded": 8,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 22692
+            }
+          }
+        },
+        "clients": {
+          "compliant": {
+            "requests": 19,
+            "received_bytes": 30257,
+            "statuses": {
+              "200": 19
+            },
+            "verified": 18,
+            "verify_failed": 0,
+            "verify_cpu_ms": 18.092,
+            "index_cpu_ms": 0,
+            "pages_fetched": 18,
+            "skipped_unchanged": 0
+          },
+          "training": {
+            "requests": 18,
+            "received_bytes": 486,
+            "statuses": {
+              "403": 18
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "plain": {
+            "requests": 18,
+            "received_bytes": 51135,
+            "statuses": {
+              "200": 18
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "human": {
+            "requests": 8,
+            "received_bytes": 22692,
+            "statuses": {
+              "200": 8
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          }
+        },
+        "human_p95_ms": 23.24
+      },
+      "S2": {
+        "scenario": 2,
+        "tenants": 1,
+        "origin": {
+          "requests": 42,
+          "bytes": 95580,
+          "cpu_ms": 28.55,
+          "peak_concurrent": 2,
+          "statuses": {
+            "200": 42
+          }
+        },
+        "edge": {
+          "forwarded": 42,
+          "blocked": 18,
+          "limited": 11,
+          "bytes_to_clients": 95580,
+          "policy_cpu_ms": 1.2,
+          "peak_concurrent": {
+            "compliant": 1,
+            "plain": 2,
+            "human": 1
+          },
+          "by_profile": {
+            "compliant": {
+              "requests": 19,
+              "forwarded": 19,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 30257
+            },
+            "training": {
+              "requests": 18,
+              "forwarded": 0,
+              "blocked": 18,
+              "limited": 0,
+              "bytes": 0
+            },
+            "plain": {
+              "requests": 26,
+              "forwarded": 15,
+              "blocked": 0,
+              "limited": 11,
+              "bytes": 42631
+            },
+            "human": {
+              "requests": 8,
+              "forwarded": 8,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 22692
+            }
+          }
+        },
+        "clients": {
+          "compliant": {
+            "requests": 19,
+            "received_bytes": 30257,
+            "statuses": {
+              "200": 19
+            },
+            "verified": 18,
+            "verify_failed": 0,
+            "verify_cpu_ms": 12.899,
+            "index_cpu_ms": 0,
+            "pages_fetched": 18,
+            "skipped_unchanged": 0
+          },
+          "training": {
+            "requests": 18,
+            "received_bytes": 486,
+            "statuses": {
+              "403": 18
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "plain": {
+            "requests": 26,
+            "received_bytes": 42763,
+            "statuses": {
+              "200": 15,
+              "429": 11
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "human": {
+            "requests": 8,
+            "received_bytes": 22692,
+            "statuses": {
+              "200": 8
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          }
+        },
+        "human_p95_ms": 19.86
+      },
+      "S3": {
+        "scenario": 3,
+        "tenants": 1,
+        "origin": {
+          "requests": 30,
+          "bytes": 79555,
+          "cpu_ms": 20.41,
+          "peak_concurrent": 2,
+          "statuses": {
+            "200": 30
+          }
+        },
+        "edge": {
+          "forwarded": 30,
+          "blocked": 18,
+          "limited": 11,
+          "bytes_to_clients": 79555,
+          "policy_cpu_ms": 0.98,
+          "peak_concurrent": {
+            "compliant": 1,
+            "plain": 2,
+            "human": 1
+          },
+          "by_profile": {
+            "compliant": {
+              "requests": 7,
+              "forwarded": 7,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 14232
+            },
+            "training": {
+              "requests": 18,
+              "forwarded": 0,
+              "blocked": 18,
+              "limited": 0,
+              "bytes": 0
+            },
+            "plain": {
+              "requests": 26,
+              "forwarded": 15,
+              "blocked": 0,
+              "limited": 11,
+              "bytes": 42631
+            },
+            "human": {
+              "requests": 8,
+              "forwarded": 8,
+              "blocked": 0,
+              "limited": 0,
+              "bytes": 22692
+            }
+          }
+        },
+        "clients": {
+          "compliant": {
+            "requests": 7,
+            "received_bytes": 14232,
+            "statuses": {
+              "200": 5
+            },
+            "verified": 4,
+            "verify_failed": 0,
+            "verify_cpu_ms": 2.811,
+            "index_cpu_ms": 3.549,
+            "pages_fetched": 4,
+            "skipped_unchanged": 14
+          },
+          "training": {
+            "requests": 18,
+            "received_bytes": 486,
+            "statuses": {
+              "403": 18
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "plain": {
+            "requests": 26,
+            "received_bytes": 42763,
+            "statuses": {
+              "200": 15,
+              "429": 11
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          },
+          "human": {
+            "requests": 8,
+            "received_bytes": 22692,
+            "statuses": {
+              "200": 8
+            },
+            "verified": 0,
+            "verify_failed": 0,
+            "verify_cpu_ms": 0,
+            "index_cpu_ms": 0,
+            "pages_fetched": 0,
+            "skipped_unchanged": 0
+          }
+        },
+        "human_p95_ms": 19.32
+      }
+    },
+    "savings": {
+      "S1": {
+        "publisher": {
+          "bytes_pct": 41.37,
+          "cpu_pct": 33.37,
+          "peak_concurrent_pct": 76.47,
+          "blocked": 18,
+          "limited": 0
+        },
+        "ai": {
+          "bytes_pct": 41.1,
+          "compliant_bytes_pct": 42.45,
+          "skipped_unchanged": 0,
+          "verified": 18,
+          "verify_failed": 0,
+          "verify_cpu_ms_per_page": 1.005
+        }
+      },
+      "S2": {
+        "publisher": {
+          "bytes_pct": 46.16,
+          "cpu_pct": 38.77,
+          "peak_concurrent_pct": 88.24,
+          "blocked": 18,
+          "limited": 11
+        },
+        "ai": {
+          "bytes_pct": 45.82,
+          "compliant_bytes_pct": 42.45,
+          "skipped_unchanged": 0,
+          "verified": 18,
+          "verify_failed": 0,
+          "verify_cpu_ms_per_page": 0.717
+        }
+      },
+      "S3": {
+        "publisher": {
+          "bytes_pct": 55.19,
+          "cpu_pct": 56.23,
+          "peak_concurrent_pct": 88.24,
+          "blocked": 18,
+          "limited": 11
+        },
+        "ai": {
+          "bytes_pct": 54.84,
+          "compliant_bytes_pct": 72.93,
+          "skipped_unchanged": 14,
+          "verified": 4,
+          "verify_failed": 0,
+          "verify_cpu_ms_per_page": 0.703
+        }
+      }
+    }
+  },
+  "multi_origin": {
+    "config": {
+      "tenants": 100,
+      "pagesPerTenant": 4,
+      "paragraphs": 2,
+      "changeRatio": 0.2,
+      "compliantTenants": 20,
+      "trainingTenants": 50,
+      "plainTenants": 30,
+      "humanTenants": 20,
+      "humanRequests": 3,
+      "requestsPerMinute": 15,
+      "concurrent": 2,
+      "originLatencyMs": 2,
+      "cpuWorkIterations": 40
+    },
+    "baseline": {
+      "scenario": 0,
+      "tenants": 100,
+      "origin": {
+        "requests": 480,
+        "bytes": 962373,
+        "cpu_ms": 113.38,
+        "peak_concurrent": 39,
+        "statuses": {
+          "200": 480
+        }
+      },
+      "edge": {
+        "forwarded": 480,
+        "blocked": 0,
+        "limited": 0,
+        "bytes_to_clients": 962373,
+        "policy_cpu_ms": 3.77,
+        "peak_concurrent": {
+          "compliant": 1,
+          "training": 40,
+          "plain": 4,
+          "human": 1
+        },
+        "by_profile": {
+          "compliant": {
+            "requests": 100,
+            "forwarded": 100,
+            "blocked": 0,
+            "limited": 0,
+            "bytes": 191130
+          },
+          "training": {
+            "requests": 200,
+            "forwarded": 200,
+            "blocked": 0,
+            "limited": 0,
+            "bytes": 405983
+          },
+          "plain": {
+            "requests": 120,
+            "forwarded": 120,
+            "blocked": 0,
+            "limited": 0,
+            "bytes": 243508
+          },
+          "human": {
+            "requests": 60,
+            "forwarded": 60,
+            "blocked": 0,
+            "limited": 0,
+            "bytes": 121752
+          }
+        }
+      },
+      "clients": {
+        "compliant": {
+          "requests": 100,
+          "received_bytes": 191130,
+          "statuses": {
+            "200": 100
+          },
+          "verified": 0,
+          "verify_failed": 0,
+          "verify_cpu_ms": 0,
+          "index_cpu_ms": 0,
+          "pages_fetched": 80,
+          "skipped_unchanged": 0
+        },
+        "training": {
+          "requests": 200,
+          "received_bytes": 405983,
+          "statuses": {
+            "200": 200
+          },
+          "verified": 0,
+          "verify_failed": 0,
+          "verify_cpu_ms": 0,
+          "index_cpu_ms": 0,
+          "pages_fetched": 0,
+          "skipped_unchanged": 0
+        },
+        "plain": {
+          "requests": 120,
+          "received_bytes": 243508,
+          "statuses": {
+            "200": 120
+          },
+          "verified": 0,
+          "verify_failed": 0,
+          "verify_cpu_ms": 0,
+          "index_cpu_ms": 0,
+          "pages_fetched": 0,
+          "skipped_unchanged": 0
+        },
+        "human": {
+          "requests": 60,
+          "received_bytes": 121752,
+          "statuses": {
+            "200": 60
+          },
+          "verified": 0,
+          "verify_failed": 0,
+          "verify_cpu_ms": 0,
+          "index_cpu_ms": 0,
+          "pages_fetched": 0,
+          "skipped_unchanged": 0
+        }
+      },
+      "human_p95_ms": 18.55
+    },
+    "enforced": {
+      "scenario": 3,
+      "tenants": 100,
+      "origin": {
+        "requests": 260,
+        "bytes": 451038,
+        "cpu_ms": 51.29,
+        "peak_concurrent": 4,
+        "statuses": {
+          "200": 260
+        }
+      },
+      "edge": {
+        "forwarded": 260,
+        "blocked": 200,
+        "limited": 2,
+        "bytes_to_clients": 451038,
+        "policy_cpu_ms": 3.43,
+        "peak_concurrent": {
+          "compliant": 1,
+          "plain": 4,
+          "human": 1
+        },
+        "by_profile": {
+          "compliant": {
+            "requests": 80,
+            "forwarded": 80,
+            "blocked": 0,
+            "limited": 0,
+            "bytes": 85778
+          },
+          "training": {
+            "requests": 200,
+            "forwarded": 0,
+            "blocked": 200,
+            "limited": 0,
+            "bytes": 0
+          },
+          "plain": {
+            "requests": 122,
+            "forwarded": 120,
+            "blocked": 0,
+            "limited": 2,
+            "bytes": 243508
+          },
+          "human": {
+            "requests": 60,
+            "forwarded": 60,
+            "blocked": 0,
+            "limited": 0,
+            "bytes": 121752
+          }
+        }
+      },
+      "clients": {
+        "compliant": {
+          "requests": 80,
+          "received_bytes": 85778,
+          "statuses": {
+            "200": 40
+          },
+          "verified": 20,
+          "verify_failed": 0,
+          "verify_cpu_ms": 11.626,
+          "index_cpu_ms": 18.097,
+          "pages_fetched": 20,
+          "skipped_unchanged": 60
+        },
+        "training": {
+          "requests": 200,
+          "received_bytes": 5400,
+          "statuses": {
+            "403": 200
+          },
+          "verified": 0,
+          "verify_failed": 0,
+          "verify_cpu_ms": 0,
+          "index_cpu_ms": 0,
+          "pages_fetched": 0,
+          "skipped_unchanged": 0
+        },
+        "plain": {
+          "requests": 122,
+          "received_bytes": 243532,
+          "statuses": {
+            "200": 120,
+            "429": 2
+          },
+          "verified": 0,
+          "verify_failed": 0,
+          "verify_cpu_ms": 0,
+          "index_cpu_ms": 0,
+          "pages_fetched": 0,
+          "skipped_unchanged": 0
+        },
+        "human": {
+          "requests": 60,
+          "received_bytes": 121752,
+          "statuses": {
+            "200": 60
+          },
+          "verified": 0,
+          "verify_failed": 0,
+          "verify_cpu_ms": 0,
+          "index_cpu_ms": 0,
+          "pages_fetched": 0,
+          "skipped_unchanged": 0
+        }
+      },
+      "human_p95_ms": 17.68
+    },
+    "savings": {
+      "publisher": {
+        "bytes_pct": 53.13,
+        "cpu_pct": 54.76,
+        "peak_concurrent_pct": 89.74,
+        "blocked": 200,
+        "limited": 2
+      },
+      "ai": {
+        "bytes_pct": 52.57,
+        "compliant_bytes_pct": 55.12,
+        "skipped_unchanged": 60,
+        "verified": 20,
+        "verify_failed": 0,
+        "verify_cpu_ms_per_page": 0.581
+      }
+    },
+    "per_1000_tenants": {
+      "label": "model",
+      "origin_bytes_saved": 5113350,
+      "origin_cpu_ms_saved": 620.9,
+      "blocked": 2000,
+      "limited": 20
+    }
+  }
+}

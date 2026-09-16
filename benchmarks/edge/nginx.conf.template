@@ -1,0 +1,82 @@
+# AIFeed enforcement - nginx parity template
+#
+# This template mirrors the PDP policy exercised by tools/bench-enforcement.js:
+#   - manifest permissions.usage.training = deny  -> 403 for training crawlers
+#   - manifest limits.requests_per_minute         -> 429 + Retry-After
+#   - manifest limits.concurrent                  -> 429 + Retry-After
+#
+# Limit keys are empty for humans, compliant AIFeed clients, and the well-known
+# manifest/index paths: nginx does not rate-limit requests whose key is empty.
+# Limits are static here (nginx maps): when the signed manifest changes, update the
+# rate below and reload nginx. For fully dynamic policy, terminate with
+# OpenResty/njs, read the manifest at the edge, or pair nginx with the AIFeed PDP.
+#
+# Replace ORIGIN_HOST/ORIGIN_PORT with your upstream (for example 127.0.0.1:8080).
+
+worker_processes auto;
+events { worker_connections 4096; }
+
+http {
+    # 1. Client classification (mirror of classifyAgent in the harness)
+    map $http_user_agent $aifeed_profile {
+        default          human;
+        ~*AIFeedBot      compliant;
+        ~*GPTBot         training;
+        ~*CCBot          training;
+        ~*Bytespider     training;
+        ~*CrawlerX       plain;
+    }
+
+    # 2. Well-known paths stay open: every client may read the declaration
+    map $uri $aifeed_wellknown {
+        default            0;
+        ~^/\.well-known/   1;
+    }
+
+    map "$aifeed_wellknown:$aifeed_profile" $aifeed_block {
+        default        0;
+        "0:training"   1;
+    }
+
+    # 3. Rate-limit key: empty for humans, compliant clients, and well-known paths
+    map "$aifeed_wellknown:$aifeed_profile" $aifeed_limit_key {
+        default        "";
+        "0:training"   $host:training;
+        "0:plain"      $host:plain;
+    }
+
+    # 4. Limits from the manifest (example: 15 rpm, 2 concurrent)
+    limit_req_zone  $aifeed_limit_key zone=aifeed_rpm:16m rate=15r/m;
+    limit_conn_zone $aifeed_limit_key zone=aifeed_conn:16m;
+
+    limit_req_status  429;
+    limit_conn_status 429;
+    limit_req_log_level warn;
+
+    server {
+        listen 8080;
+        server_name _;
+
+        # 5. Training denied by the signed manifest (content only)
+        if ($aifeed_block) {
+            return 403 "training denied by manifest\n";
+        }
+
+        # 6. Crawl pacing for non-compliant AI clients
+        limit_req  zone=aifeed_rpm burst=5 nodelay;
+        limit_conn aifeed_conn 2;
+
+        # 7. Observability and honest caching
+        add_header Retry-After 2 always;
+        add_header Vary "Accept" always;
+        add_header X-Aifeed-Profile $aifeed_profile always;
+
+        location / {
+            proxy_pass http://ORIGIN_HOST:ORIGIN_PORT;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            # Keep the Accept header intact so MAKO negotiation reaches the origin
+            proxy_set_header Accept $http_accept;
+        }
+    }
+}

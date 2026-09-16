@@ -1,0 +1,59 @@
+{
+  "name": "@aifeed/protocol",
+  "version": "1.0.0-draft",
+  "private": true,
+  "description": "AIFeed reference implementation: signed AI-Web content declarations, native AIFeed Markdown and MAKO profiles, offline verification, and conformance vectors",
+  "type": "commonjs",
+  "license": "MIT",
+  "homepage": "https://aifeed.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aifeed/aifeed-protocol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aifeed/aifeed-protocol/issues"
+  },
+  "keywords": [
+    "aifeed",
+    "aimd",
+    "mako",
+    "ai",
+    "content-permissions",
+    "ed25519"
+  ],
+  "bin": {
+    "aifeed": "bin/cli.js",
+    "aifeed-keygen": "bin/keygen.js",
+    "aifeed-sign": "bin/sign.js",
+    "aifeed-validate": "bin/validate.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "test:py": "python -m unittest discover -s clients/python/tests -t clients/python",
+    "vectors": "node tools/gen-vectors.js",
+    "vectors:check": "node tools/gen-vectors.js --check",
+    "mako:vectors": "node tools/gen-mako-vectors.js",
+    "mako:vectors:check": "node tools/gen-mako-vectors.js --check",
+    "aimd:vectors": "node tools/gen-aimd-vectors.js",
+    "aimd:vectors:check": "node tools/gen-aimd-vectors.js --check",
+    "fuzz": "node tools/fuzz.js",
+    "fuzz:mako": "node tools/fuzz-mako.js",
+    "bench:mako": "node tools/bench-mako.js",
+    "bench:enforcement": "node tools/bench-enforcement.js",
+    "render:html": "node tools/render-html.js",
+    "paper:check": "node tools/check-paper.js",
+    "jcs:fixtures": "node tools/gen-jcs-php-fixtures.js",
+    "build:site": "node tools/build-site.js",
+    "demos": "node tools/gen-demos.js",
+    "demos:check": "node tools/gen-demos.js --check",
+    "verify:live": "node tools/check-live.js",
+    "build:sdk": "node tools/build-sdk.js",
+    "sdk:check": "node tools/build-sdk.js --check",
+    "lint:syntax": "node tools/check-syntax.js",
+    "check:consistency": "node tools/check-consistency.js",
+    "verify": "npm run lint:syntax && npm run check:consistency && npm test && npm run test:py && npm run vectors:check && npm run mako:vectors:check && npm run aimd:vectors:check && npm run build:sdk && npm run sdk:check && npm run paper:check && npm run render:html && npm run build:site && npm run demos:check"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

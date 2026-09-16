@@ -1,0 +1,12 @@
+{
+  "algorithm": "ed25519",
+  "context": "mako-index",
+  "url": "https://berita.example/.well-known/mako-index.json",
+  "key_fingerprint": "sha256:oFCDfYUHBYLM9zlLCYiEfMMSy4glm4lImfbyOc8XkaU",
+  "signature": "base64url:SNr8EPfNna1mBASiWVOY7AFXr6QIA2cuJ0lOfVFl2ynnpgTiUB8-Tm57sUm3sHykTfmt7Mte5pOtP2aAg8PmBw",
+  "raw_digest": {
+    "sha-256": "ys7NQa3c01nZM8AAvJpbkSJJUavJF496ToGMBr8KZoo=",
+    "applies_to": "raw-bytes"
+  },
+  "signed_at": "2026-09-15T08:00:00Z"
+}

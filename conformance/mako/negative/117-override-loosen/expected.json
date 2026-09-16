@@ -1,0 +1,19 @@
+{
+  "kind": "document",
+  "url": "https://berita.example/artikel/aifeed-protokol",
+  "expected": {
+    "mako_verified": false,
+    "errors": [],
+    "warnings": [
+      "permission_override_rejected"
+    ],
+    "usage": {
+      "training": "deny",
+      "summarize": "allow"
+    },
+    "attribution": "required",
+    "limits": {
+      "requests_per_minute": 30
+    }
+  }
+}

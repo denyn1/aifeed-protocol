@@ -1,0 +1,88 @@
+{
+  "$schema": "https://aifeed.md/schema/ai-json/v0.1.json",
+  "version": "0.1",
+  "identity": {
+    "domain": "news.example",
+    "name": "Berita Nusantara",
+    "organization": "PT Media Nusantara",
+    "type": "news",
+    "locale": "id-ID",
+    "contact": "mailto:ai@news.example",
+    "public_key": "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+    "key_id": "news-2026-key1",
+    "signature_url": "/.well-known/ai-signature.json"
+  },
+  "validity": {
+    "signed_at": "2026-09-14T08:00:00Z",
+    "expires_at": "2027-09-14T08:00:00Z"
+  },
+  "content": {
+    "llms_txt": "/llms.txt",
+    "sitemap": "/sitemap.xml",
+    "markdown": { "template": "/{path}.md", "link_relation": true },
+    "languages": ["id", "en"],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://news.example/license",
+      "rsl_url": "https://news.example/rsl.xml"
+    }
+  },
+  "permissions": {
+    "default": "deny",
+    "usage": {
+      "search": "allow",
+      "retrieval": "allow",
+      "input": "allow",
+      "training": "deny",
+      "quote": "allow",
+      "summarize": "allow",
+      "reproduce": "deny",
+      "translate": "allow",
+      "modify": "deny",
+      "embed": "deny",
+      "commercial_use": "deny"
+    },
+    "attribution": "required",
+    "attribution_url": "https://news.example/ai-attribution",
+    "attribution_text": "Sumber: Berita Nusantara (news.example)"
+  },
+  "limits": {
+    "requests_per_minute": 120,
+    "concurrent": 4,
+    "crawl_delay_seconds": 0
+  },
+  "types": {
+    "article": {
+      "type": "object",
+      "required": ["id", "title", "url"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "title": { "type": "string", "max_length": 256 },
+        "section": { "type": "string", "max_length": 64 },
+        "published_at": { "type": "string", "format": "date-time" },
+        "url": { "type": "string", "format": "uri-reference" }
+      }
+    }
+  },
+  "capabilities": {
+    "headlines": {
+      "description": "Daftar headline terbaru per seksi",
+      "endpoint": "/api/v1/headlines",
+      "method": "GET",
+      "params": {
+        "section": { "type": "string", "required": true, "in": "query", "max_length": 64 },
+        "limit": { "type": "integer", "required": false, "in": "query", "default": 20, "minimum": 1, "maximum": 50 }
+      },
+      "returns": { "type": "array", "items_ref": "article", "max_items": 50 },
+      "auth_required": false
+    }
+  },
+  "revocation": {
+    "list_url": "https://aifeed.md/revoke/v1/news.example.json",
+    "maximum_check_interval_hours": 24
+  },
+  "metadata": {
+    "generated_at": "2026-09-14T08:00:00Z",
+    "generated_by": "aifeed-cms-plugin/1.0.0"
+  }
+}

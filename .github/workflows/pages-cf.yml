@@ -1,0 +1,35 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-cf
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build reports
+        run: node tools/render-html.js
+      - name: Build site
+        run: node tools/build-site.js
+      - name: Build demo origins (and verify them)
+        run: node tools/gen-demos.js --check
+      - name: Deploy to Cloudflare Pages
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site --project-name aifeed --branch main --commit-dirty=true

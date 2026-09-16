@@ -1,0 +1,37 @@
+{
+  "version": "0.2",
+  "domain": "berita.example",
+  "site": {
+    "name": "Berita Contoh",
+    "description": "Berita harian independen untuk uji konformansi.",
+    "type": "news",
+    "languages": [
+      "id"
+    ],
+    "license": "All Rights Reserved",
+    "updated_at": "2026-09-15T08:00:00Z"
+  },
+  "generated_at": "2026-09-15T08:00:00Z",
+  "page": 1,
+  "page_count": 1,
+  "entries": [
+    {
+      "url": "/artikel/aifeed-protokol",
+      "type": "article",
+      "tokens": 280,
+      "updated": "2026-09-14",
+      "etag": "\"mako-a1b2c3\"",
+      "sha-256": "2T2oXJjdVHllgmtliV4fEzDiOk5AsKu+ILmBxgUFD0k=",
+      "title": "Panduan Protokol AIFeed",
+      "summary": "Ringkasan singkat tentang AIFeed dan MAKO.",
+      "tags": [
+        "aifeed",
+        "mako"
+      ],
+      "lang": "id",
+      "related": [
+        "/artikel/mako-index"
+      ]
+    }
+  ]
+}

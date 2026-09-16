@@ -1,0 +1,10 @@
+{
+  "kind": "index",
+  "profile": "aimd",
+  "url": "https://berita.example/.well-known/aifeed-index.json",
+  "expected": {
+    "verified": true,
+    "errors": [],
+    "warnings": []
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "result": "UNVERIFIED",
+  "domain": "tokobuku.example",
+  "now": "2026-10-01T00:00:00Z",
+  "errors": [
+    "bad_signature",
+    "raw_digest_mismatch"
+  ],
+  "warnings": []
+}

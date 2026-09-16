@@ -1,0 +1,30 @@
+{
+  "version": "0.1",
+  "domain": "tokobuku.example",
+  "status": "suspended",
+  "reason": "repeated_spam",
+  "reason_detail": "fixture",
+  "effective_at": "2026-09-01T00:00:00Z",
+  "expires_at": "2026-12-01T00:00:00Z",
+  "revoked_by": "aifeed-governance",
+  "appeal_url": "https://aifeed.md/appeal?domain=tokobuku.example",
+  "keys": [
+    {
+      "fingerprint": "sha256:xY3nQ7vK2mR8tL5pW1sB6dC0aF4gH9jK2mN3qS4uY0z"
+    }
+  ],
+  "signatures": [
+    {
+      "algorithm": "ed25519",
+      "key_id": "fixture-governance",
+      "canonicalization": "jcs-rfc8785",
+      "signature": "base64url:ur_YW8A-4Y0dMNygIzqHK9ui3Ax7MtXyeULDDi2QiibDy0cuMtJOmqS5qQmn5Hoqv5rBrB8UYQxiqOe01oYJAg"
+    },
+    {
+      "algorithm": "ed25519",
+      "key_id": "fixture-governance",
+      "canonicalization": "jcs-rfc8785",
+      "signature": "base64url:Ja1d7Jqpun8v0sLeTqwMZscWtLYDvx6APCQ2puB8R3Ao_Ijz-6GJTFozylmGRXPhUrTXpcS2YnqKovp5DUglDA"
+    }
+  ]
+}

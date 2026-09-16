@@ -1,0 +1,173 @@
+{
+  "$schema": "https://aifeed.md/schema/ai-json/v0.2.json",
+  "version": "0.2",
+  "identity": {
+    "domain": "tokobuku.example",
+    "name": "Toko Buku Nusantara",
+    "organization": "PT Toko Buku Nusantara",
+    "type": "ecommerce",
+    "locale": "id-ID",
+    "contact": "mailto:admin@tokobuku.example",
+    "public_key": "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+    "key_id": "tokobuku-2026-key1",
+    "signature_url": "/.well-known/ai-signature.json"
+  },
+  "validity": {
+    "signed_at": "2026-09-14T08:00:00Z",
+    "expires_at": "2027-09-14T08:00:00Z"
+  },
+  "content": {
+    "llms_txt": "/llms.txt",
+    "sitemap": "/sitemap.xml",
+    "markdown": {
+      "template": "/{path}.md",
+      "link_relation": true
+    },
+    "languages": [
+      "id",
+      "en"
+    ],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://tokobuku.example/license",
+      "rsl_url": "https://tokobuku.example/rsl.xml"
+    },
+    "mako": {
+      "index_url": "/.well-known/mako-index.json",
+      "signature": "optional",
+      "overrides": "restrict-only"
+    }
+  },
+  "permissions": {
+    "default": "deny",
+    "usage": {
+      "search": "allow",
+      "retrieval": "allow",
+      "input": "allow",
+      "training": "deny",
+      "quote": "allow",
+      "summarize": "allow",
+      "reproduce": "deny",
+      "translate": "allow",
+      "modify": "deny",
+      "embed": "deny",
+      "commercial_use": "deny"
+    },
+    "attribution": "required",
+    "attribution_url": "https://tokobuku.example/ai-attribution",
+    "attribution_text": "Sumber: Toko Buku Nusantara (tokobuku.example)"
+  },
+  "limits": {
+    "requests_per_minute": 60,
+    "concurrent": 2,
+    "crawl_delay_seconds": 1
+  },
+  "types": {
+    "product": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "price_idr"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "max_length": 64
+        },
+        "name": {
+          "type": "string",
+          "max_length": 256
+        },
+        "price_idr": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      }
+    }
+  },
+  "capabilities": {
+    "search_products": {
+      "description": "Cari produk berdasarkan kata kunci",
+      "endpoint": "/api/v1/search",
+      "method": "GET",
+      "params": {
+        "q": {
+          "type": "string",
+          "required": true,
+          "in": "query",
+          "max_length": 128
+        },
+        "limit": {
+          "type": "integer",
+          "required": false,
+          "in": "query",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "returns": {
+        "type": "array",
+        "items_ref": "product",
+        "max_items": 100
+      },
+      "auth_required": false
+    }
+  },
+  "actions": {
+    "purchase": {
+      "description": "Beli produk",
+      "endpoint": "/api/v1/orders",
+      "method": "POST",
+      "params": {
+        "product_id": {
+          "type": "string",
+          "required": true,
+          "in": "body",
+          "max_length": 64
+        },
+        "quantity": {
+          "type": "integer",
+          "required": true,
+          "in": "body",
+          "minimum": 1,
+          "maximum": 99
+        }
+      },
+      "returns": {
+        "type": "object",
+        "items_ref": "product"
+      },
+      "requires_auth": true,
+      "auth": {
+        "type": "oauth2",
+        "documentation_url": "https://tokobuku.example/api/docs"
+      },
+      "payment_terms_url": "https://tokobuku.example/payment-terms",
+      "human_confirmation_required": true,
+      "requires_idempotency_key": true,
+      "spending_limit": {
+        "amount": 1000000,
+        "currency": "IDR"
+      }
+    }
+  },
+  "revocation": {
+    "list_url": "https://aifeed.md/revoke/v1/tokobuku.example.json",
+    "maximum_check_interval_hours": 24
+  },
+  "metadata": {
+    "generated_at": "2026-09-14T08:00:00Z",
+    "generated_by": "aifeed-protocol/0.2.0"
+  },
+  "rotation": {
+    "successor_fp": "sha256:eI3lCW-LUw7vl6QBXP-3z-smDCN5W4Rr-BEmgqk7EQE",
+    "effective_at": "2026-10-05T00:00:00Z",
+    "grace_until": "2026-10-12T00:00:00Z"
+  }
+}

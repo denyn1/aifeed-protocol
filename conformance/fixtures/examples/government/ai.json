@@ -1,0 +1,53 @@
+{
+  "$schema": "https://aifeed.md/schema/ai-json/v0.1.json",
+  "version": "0.1",
+  "identity": {
+    "domain": "layanan.go.id.example",
+    "name": "Portal Layanan Publik",
+    "organization": "Dinas Komunikasi dan Informatika",
+    "type": "government",
+    "locale": "id-ID",
+    "contact": "https://layanan.go.id.example/kontak",
+    "public_key": "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+    "key_id": "gov-2026-key1",
+    "signature_url": "/.well-known/ai-signature.json",
+    "x_high_assurance": true
+  },
+  "validity": {
+    "signed_at": "2026-09-14T08:00:00Z",
+    "expires_at": "2027-03-14T08:00:00Z"
+  },
+  "content": {
+    "llms_txt": "/llms.txt",
+    "sitemap": "/sitemap.xml",
+    "languages": ["id", "en"],
+    "license": { "name": "Public Domain (Pemerintah)", "url": "https://layanan.go.id.example/legal" }
+  },
+  "permissions": {
+    "default": "allow",
+    "usage": {
+      "search": "allow",
+      "retrieval": "allow",
+      "input": "allow",
+      "training": "deny",
+      "quote": "allow",
+      "summarize": "allow",
+      "reproduce": "allow",
+      "translate": "allow",
+      "modify": "deny",
+      "embed": "allow",
+      "commercial_use": "deny"
+    },
+    "attribution": "optional",
+    "attribution_text": "Sumber: Portal Layanan Publik"
+  },
+  "limits": { "requests_per_minute": 300, "concurrent": 10 },
+  "revocation": {
+    "list_url": "https://aifeed.md/revoke/v1/layanan.go.id.example.json",
+    "maximum_check_interval_hours": 12
+  },
+  "metadata": {
+    "generated_at": "2026-09-14T08:00:00Z",
+    "generated_by": "sipd-integration/1.0.0"
+  }
+}

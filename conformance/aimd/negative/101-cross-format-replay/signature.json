@@ -1,0 +1,12 @@
+{
+  "algorithm": "ed25519",
+  "context": "mako",
+  "url": "https://berita.example/artikel/aimd",
+  "key_fingerprint": "sha256:oFCDfYUHBYLM9zlLCYiEfMMSy4glm4lImfbyOc8XkaU",
+  "signature": "base64url:iJHR5fSL54V8FcCpQUGuRcEhUMY6mXERtBTBTAUIK_Khalci9v78eMgIDeTIA-lgB8uefhHESr9_HTsQIv86Ag",
+  "raw_digest": {
+    "sha-256": "wurADOhQcu/l9ow2Be7u6RBw1+4m0amEA0dlevQnh24=",
+    "applies_to": "raw-bytes"
+  },
+  "signed_at": "2026-09-15T08:00:00Z"
+}

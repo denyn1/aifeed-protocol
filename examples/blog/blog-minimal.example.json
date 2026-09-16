@@ -1,0 +1,38 @@
+{
+  "$schema": "https://aifeed.md/schema/ai-json/v0.1.json",
+  "version": "0.1",
+  "identity": {
+    "domain": "catatan.example",
+    "name": "Catatan Harian",
+    "type": "blog",
+    "locale": "id-ID",
+    "contact": "mailto:halo@catatan.example",
+    "public_key": "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+    "key_id": "blog-2026-key1",
+    "signature_url": "/.well-known/ai-signature.json"
+  },
+  "validity": {
+    "signed_at": "2026-09-14T08:00:00Z",
+    "expires_at": "2027-09-14T08:00:00Z"
+  },
+  "content": {
+    "languages": ["id"]
+  },
+  "permissions": {
+    "default": "deny",
+    "usage": {
+      "search": "allow",
+      "retrieval": "allow",
+      "input": "allow",
+      "training": "deny"
+    },
+    "attribution": "required"
+  },
+  "revocation": {
+    "list_url": "https://aifeed.md/revoke/v1/catatan.example.json",
+    "maximum_check_interval_hours": 24
+  },
+  "metadata": {
+    "generated_at": "2026-09-14T08:00:00Z"
+  }
+}

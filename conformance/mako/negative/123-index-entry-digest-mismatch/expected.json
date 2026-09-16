@@ -1,0 +1,13 @@
+{
+  "kind": "index",
+  "url": "https://berita.example/.well-known/mako-index.json",
+  "entry_digest_check": {
+    "body": "body.mako.md",
+    "error": "mako_index_digest_mismatch"
+  },
+  "expected": {
+    "verified": false,
+    "errors": [],
+    "warnings": []
+  }
+}

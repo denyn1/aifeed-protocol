@@ -1,0 +1,24 @@
+{
+  "public_key": "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+  "content_mako": {
+    "signature": "optional",
+    "overrides": "restrict-only"
+  },
+  "permissions": {
+    "default": "allow",
+    "usage": {
+      "search": "allow",
+      "retrieval": "allow",
+      "input": "allow",
+      "training": "deny",
+      "quote": "allow",
+      "summarize": "allow",
+      "reproduce": "deny",
+      "translate": "allow",
+      "modify": "deny",
+      "embed": "deny",
+      "commercial_use": "deny"
+    },
+    "attribution": "optional"
+  }
+}

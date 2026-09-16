@@ -1,0 +1,12 @@
+{
+  "algorithm": "ed25519",
+  "context": "aimd-index",
+  "url": "https://berita.example/.well-known/aifeed-index.json",
+  "key_fingerprint": "sha256:oFCDfYUHBYLM9zlLCYiEfMMSy4glm4lImfbyOc8XkaU",
+  "signature": "base64url:YNRXoerjVO5mBWY4ycUtJfQzgE9P8zkaxMYsfbvOjt70YKo8I7KKFg5Lqowy4tCLwqXktFxTj9sbxacBOFcWBw",
+  "raw_digest": {
+    "sha-256": "OskCxr8iW2Gq+0m1oe8c/38mlG9G8zttlirrRtpW+K8=",
+    "applies_to": "raw-bytes"
+  },
+  "signed_at": "2026-09-15T08:00:00Z"
+}

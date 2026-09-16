@@ -1,0 +1,51 @@
+# AIFeed content serving for Apache (mod_rewrite + mod_headers).
+# Drop this in the site root after `aifeed site build`.
+# Requires: AllowOverride FileInfo, mod_rewrite, mod_headers.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # AIMD: Accept: text/aifeed+markdown -> /path.aifeed.md (or /dir/index.aifeed.md)
+    RewriteCond %{HTTP_ACCEPT} text/aifeed\+markdown [NC]
+    RewriteCond %{REQUEST_URI} !\.(aifeed|mako)\.md$ [NC]
+    RewriteCond %{REQUEST_URI} !\.sig$ [NC]
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.aifeed.md -f
+    RewriteRule ^(.*)$ $1.aifeed.md [L,QSA]
+
+    RewriteCond %{HTTP_ACCEPT} text/aifeed\+markdown [NC]
+    RewriteCond %{REQUEST_URI} !\.(aifeed|mako)\.md$ [NC]
+    RewriteCond %{REQUEST_URI} !\.sig$ [NC]
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.aifeed.md -f
+    RewriteRule ^(.*)$ $1/index.aifeed.md [L,QSA]
+
+    # MAKO: Accept: text/mako+markdown -> /path.mako.md
+    RewriteCond %{HTTP_ACCEPT} text/mako\+markdown [NC]
+    RewriteCond %{REQUEST_URI} !\.(aifeed|mako)\.md$ [NC]
+    RewriteCond %{REQUEST_URI} !\.sig$ [NC]
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.mako.md -f
+    RewriteRule ^(.*)$ $1.mako.md [L,QSA]
+
+    RewriteCond %{HTTP_ACCEPT} text/mako\+markdown [NC]
+    RewriteCond %{REQUEST_URI} !\.(aifeed|mako)\.md$ [NC]
+    RewriteCond %{REQUEST_URI} !\.sig$ [NC]
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.mako.md -f
+    RewriteRule ^(.*)$ $1/index.mako.md [L,QSA]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header append Vary Accept
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+</IfModule>
+
+# Media types for the generated markdown files
+<FilesMatch "\.aifeed\.md$">
+    ForceType text/aifeed+markdown
+</FilesMatch>
+<FilesMatch "\.mako\.md$">
+    ForceType text/mako+markdown
+</FilesMatch>
+
+# Signature sidecars are JSON
+<FilesMatch "\.sig$">
+    ForceType application/json
+</FilesMatch>

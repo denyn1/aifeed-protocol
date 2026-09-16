@@ -1,0 +1,8 @@
+{
+  "result": "VERIFIED",
+  "now": "2026-09-15T00:00:00Z",
+  "warnings": [
+    "bundle_unsigned"
+  ],
+  "bundler_public_key": null
+}

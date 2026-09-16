@@ -1,0 +1,49 @@
+.aifeed-wrap .aifeed-subtitle {
+    color: #50575e;
+    max-width: 46em;
+}
+
+.aifeed-wrap .aifeed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.aifeed-wrap .aifeed-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.aifeed-wrap .aifeed-card h2 {
+    margin-top: 0;
+}
+
+.aifeed-wrap .aifeed-actions form {
+    display: inline;
+    margin-right: 8px;
+}
+
+.aifeed-wrap .aifeed-check {
+    display: inline-block;
+    margin-right: 12px;
+    white-space: nowrap;
+}
+
+.aifeed-wrap .aifeed-error {
+    color: #b32d2e;
+    font-weight: 600;
+}
+
+.aifeed-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border: 1px solid #1d4ed8;
+    border-radius: 999px;
+    color: #1d4ed8;
+    font-size: 0.85em;
+    text-decoration: none;
+}

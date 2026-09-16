@@ -1,0 +1,9 @@
+{
+  "result": "VERIFIED",
+  "domain": "tokobuku.example",
+  "now": "2026-10-01T00:00:00Z",
+  "errors": [],
+  "warnings": [
+    "check_interval_capped"
+  ]
+}

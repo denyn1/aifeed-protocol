@@ -1,0 +1,74 @@
+# AIFeed enforcement - Caddy parity template
+#
+# Mirrors the PDP policy exercised by tools/bench-enforcement.js:
+#   - training crawlers denied (403) per manifest permissions.usage.training
+#   - non-compliant AI clients rate-limited (429 + Retry-After)
+#   - humans, compliant AIFeed clients, and /.well-known/* stay open
+#
+# Rate limiting needs the caddy-ratelimit module:
+#   xcaddy build --with github.com/mholt/caddy-ratelimit
+# Without that module the 403 rule still works; the rate_limit blocks are ignored.
+#
+# Replace ORIGIN_HOST:ORIGIN_PORT with your upstream.
+
+{
+	# Global zone: 15 requests per minute per tenant+profile key, 2 concurrent
+	rate_limit {
+		zone aifeed_rpm {
+			key {http.request.host}:{http.request.header.User-Agent}	# see note below
+			events 15
+			window 1m
+		}
+		zone aifeed_conn {
+			key {http.request.host}:{http.request.header.User-Agent}
+			events 2
+			window 1s
+		}
+	}
+}
+
+:8080 {
+	# Keep well-known declarations readable by every client
+	@wellknown path /.well-known/*
+	handle @wellknown {
+		reverse_proxy ORIGIN_HOST:ORIGIN_PORT
+	}
+
+	# 1. Training crawlers: 403 per the signed manifest
+	@training {
+		not path /.well-known/*
+		header_regexp User-Agent (?i)(GPTBot|CCBot|Bytespider)
+	}
+	handle @training {
+		respond "training denied by manifest" 403
+	}
+
+	# 2. Non-compliant AI crawlers: 429 + Retry-After via the global rate_limit zones.
+	#    In caddy-ratelimit the zone applies per request key; humans and AIFeedBot are
+	#    exempted by keying the zone on a filtered header, or by a matcher-scoped
+	#    rate_limit when using a route-level configuration:
+	@ai_crawler {
+		not path /.well-known/*
+		header_regexp User-Agent (?i)(CrawlerX)
+	}
+	handle @ai_crawler {
+		rate_limit aifeed_rpm
+		rate_limit aifeed_conn
+		header Retry-After "2"
+		reverse_proxy ORIGIN_HOST:ORIGIN_PORT {
+			header_up Host {http.request.host}
+		}
+	}
+
+	# 3. Everyone else (humans, compliant AIFeed clients) is not limited
+	handle {
+		header Vary "Accept"
+		reverse_proxy ORIGIN_HOST:ORIGIN_PORT {
+			header_up Host {http.request.host}
+		}
+	}
+}
+
+# Note: caddy-ratelimit keys cannot depend on a User-Agent classification map as
+# directly as nginx maps; keep the key simple and scope limits with matchers, or
+# terminate with the AIFeed PDP middleware for fully dynamic per-manifest policy.

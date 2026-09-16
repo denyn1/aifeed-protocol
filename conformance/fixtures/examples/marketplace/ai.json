@@ -1,0 +1,366 @@
+{
+  "$schema": "https://aifeed.md/schema/ai-json/v0.1.json",
+  "version": "0.1",
+  "identity": {
+    "domain": "marketplace.example",
+    "name": "Marketplace Nusantara",
+    "organization": "PT Marketplace Nusantara Tbk",
+    "type": "marketplace",
+    "locale": "id-ID",
+    "contact": "mailto:ai-ops@marketplace.example",
+    "public_key": "ed25519:MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg=",
+    "key_id": "marketplace-2026-key1",
+    "signature_url": "/.well-known/ai-signature.json",
+    "x_verification": {
+      "method": "dns+signature",
+      "registry": "https://aifeed.md"
+    }
+  },
+  "validity": {
+    "signed_at": "2026-09-14T08:00:00Z",
+    "expires_at": "2027-09-14T08:00:00Z"
+  },
+  "content": {
+    "llms_txt": "/llms.txt",
+    "sitemap": "/sitemap.xml",
+    "markdown": { "template": "/{path}.md", "link_relation": true },
+    "languages": ["id", "en"],
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://marketplace.example/license",
+      "rsl_url": "https://marketplace.example/rsl.xml"
+    }
+  },
+  "permissions": {
+    "default": "deny",
+    "usage": {
+      "search": "allow",
+      "retrieval": "allow",
+      "input": "allow",
+      "training": "deny",
+      "quote": "allow",
+      "summarize": "allow",
+      "reproduce": "deny",
+      "translate": "allow",
+      "modify": "deny",
+      "embed": "allow",
+      "commercial_use": "deny"
+    },
+    "attribution": "required",
+    "attribution_url": "https://marketplace.example/ai-attribution",
+    "attribution_text": "Sumber: Marketplace Nusantara (marketplace.example)",
+    "x_policy_note": "Izin di atas berlaku untuk seluruh origin; konten berbayar tetap tunduk pada syarat lisensi."
+  },
+  "limits": {
+    "requests_per_minute": 600,
+    "concurrent": 20,
+    "crawl_delay_seconds": 1
+  },
+  "types": {
+    "money": {
+      "type": "object",
+      "required": ["amount", "currency"],
+      "properties": {
+        "amount": { "type": "integer", "minimum": 0 },
+        "currency": { "type": "string", "max_length": 3 }
+      }
+    },
+    "seller": {
+      "type": "object",
+      "required": ["id", "name", "rating"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "name": { "type": "string", "max_length": 256 },
+        "rating": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "location": { "type": "string", "max_length": 128 },
+        "badges": { "type": "array", "items": { "type": "string", "enum": ["official", "power", "new"] } },
+        "url": { "type": "string", "format": "uri-reference" }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "required": ["id", "name", "price"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "name": { "type": "string", "max_length": 128 },
+        "price": { "type": "object" },
+        "stock": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "product": {
+      "type": "object",
+      "required": ["id", "name", "price", "seller", "stock"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "name": { "type": "string", "max_length": 256 },
+        "description": { "type": "string", "max_length": 2000 },
+        "price": { "type": "object" },
+        "stock": { "type": "integer", "minimum": 0 },
+        "condition": { "type": "string", "enum": ["new", "used"] },
+        "rating": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "review_count": { "type": "integer", "minimum": 0 },
+        "seller": { "type": "object" },
+        "variants": { "type": "array", "items": { "type": "object" } },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "url": { "type": "string", "format": "uri-reference" }
+      }
+    },
+    "order": {
+      "type": "object",
+      "required": ["id", "status", "total"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "status": { "type": "string", "enum": ["pending", "paid", "shipped", "delivered", "cancelled", "refunded"] },
+        "total": { "type": "object" },
+        "tracking_number": { "type": "string", "max_length": 64 },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["id", "product_id", "rating"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "product_id": { "type": "string", "max_length": 64 },
+        "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "comment": { "type": "string", "max_length": 2000 },
+        "author_alias": { "type": "string", "max_length": 64 },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "category": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "max_length": 64 },
+        "name": { "type": "string", "max_length": 128 },
+        "slug": { "type": "string", "max_length": 128 },
+        "children": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "trend": {
+      "type": "object",
+      "required": ["keyword"],
+      "properties": {
+        "keyword": { "type": "string", "max_length": 128 },
+        "score": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "shipping": {
+      "type": "object",
+      "required": ["courier", "cost", "eta_days"],
+      "properties": {
+        "courier": { "type": "string", "max_length": 32 },
+        "service": { "type": "string", "max_length": 64 },
+        "cost": { "type": "object" },
+        "eta_days": { "type": "integer", "minimum": 1, "maximum": 30 }
+      }
+    },
+    "price_point": {
+      "type": "object",
+      "required": ["date", "price"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "price": { "type": "object" }
+      }
+    }
+  },
+  "capabilities": {
+    "search_products": {
+      "description": "Cari produk dengan filter kategori, harga, kondisi, dan pengurutan",
+      "endpoint": "/api/v1/products/search",
+      "method": "GET",
+      "params": {
+        "q": { "type": "string", "required": true, "in": "query", "max_length": 128 },
+        "category": { "type": "string", "required": false, "in": "query", "max_length": 64 },
+        "min_price": { "type": "integer", "required": false, "in": "query", "minimum": 0 },
+        "max_price": { "type": "integer", "required": false, "in": "query", "minimum": 0 },
+        "condition": { "type": "string", "required": false, "in": "query", "enum": ["new", "used"] },
+        "sort": { "type": "string", "required": false, "in": "query", "enum": ["relevance", "price_asc", "price_desc", "rating"] },
+        "limit": { "type": "integer", "required": false, "in": "query", "default": 20, "minimum": 1, "maximum": 100 },
+        "cursor": { "type": "string", "required": false, "in": "query", "max_length": 256 }
+      },
+      "returns": { "type": "array", "items_ref": "product", "max_items": 100 },
+      "auth_required": false
+    },
+    "get_product": {
+      "description": "Detail produk termasuk varian dan penjual",
+      "endpoint": "/api/v1/products/{product_id}",
+      "method": "GET",
+      "params": {
+        "product_id": { "type": "string", "required": true, "in": "path", "max_length": 64 }
+      },
+      "returns": { "type": "object", "items_ref": "product" },
+      "auth_required": false
+    },
+    "list_sellers": {
+      "description": "Daftar penjual terverifikasi per wilayah",
+      "endpoint": "/api/v1/sellers",
+      "method": "GET",
+      "params": {
+        "location": { "type": "string", "required": false, "in": "query", "max_length": 128 },
+        "limit": { "type": "integer", "required": false, "in": "query", "default": 20, "minimum": 1, "maximum": 100 }
+      },
+      "returns": { "type": "array", "items_ref": "seller", "max_items": 100 },
+      "auth_required": false
+    },
+    "get_seller": {
+      "description": "Profil penjual dan reputasinya",
+      "endpoint": "/api/v1/sellers/{seller_id}",
+      "method": "GET",
+      "params": {
+        "seller_id": { "type": "string", "required": true, "in": "path", "max_length": 64 }
+      },
+      "returns": { "type": "object", "items_ref": "seller" },
+      "auth_required": false
+    },
+    "product_reviews": {
+      "description": "Ulasan produk dengan filter rating",
+      "endpoint": "/api/v1/products/{product_id}/reviews",
+      "method": "GET",
+      "params": {
+        "product_id": { "type": "string", "required": true, "in": "path", "max_length": 64 },
+        "rating_filter": { "type": "integer", "required": false, "in": "query", "minimum": 1, "maximum": 5 },
+        "limit": { "type": "integer", "required": false, "in": "query", "default": 20, "minimum": 1, "maximum": 100 }
+      },
+      "returns": { "type": "array", "items_ref": "review", "max_items": 100 },
+      "auth_required": false
+    },
+    "trending_searches": {
+      "description": "Kata kunci pencarian yang sedang tren",
+      "endpoint": "/api/v1/trends",
+      "method": "GET",
+      "params": {
+        "region": { "type": "string", "required": false, "in": "query", "max_length": 8 },
+        "limit": { "type": "integer", "required": false, "in": "query", "default": 20, "minimum": 1, "maximum": 50 }
+      },
+      "returns": { "type": "array", "items_ref": "trend", "max_items": 50 },
+      "auth_required": false
+    },
+    "categories": {
+      "description": "Pohon kategori lengkap",
+      "endpoint": "/api/v1/categories",
+      "method": "GET",
+      "params": {},
+      "returns": { "type": "array", "items_ref": "category", "max_items": 500 },
+      "auth_required": false
+    },
+    "shipping_estimate": {
+      "description": "Estimasi ongkos kirim untuk tujuan tertentu",
+      "endpoint": "/api/v1/shipping/estimate",
+      "method": "GET",
+      "params": {
+        "product_id": { "type": "string", "required": true, "in": "query", "max_length": 64 },
+        "destination_postal_code": { "type": "string", "required": true, "in": "query", "max_length": 10 },
+        "courier": { "type": "string", "required": false, "in": "query", "enum": ["jne", "jnt", "sicepat", "anteraja"] }
+      },
+      "returns": { "type": "object", "items_ref": "shipping" },
+      "auth_required": false
+    },
+    "price_history": {
+      "description": "Riwayat harga produk",
+      "endpoint": "/api/v1/products/{product_id}/price-history",
+      "method": "GET",
+      "params": {
+        "product_id": { "type": "string", "required": true, "in": "path", "max_length": 64 },
+        "days": { "type": "integer", "required": false, "in": "query", "default": 30, "minimum": 1, "maximum": 90 }
+      },
+      "returns": { "type": "array", "items_ref": "price_point", "max_items": 90 },
+      "auth_required": false
+    }
+  },
+  "actions": {
+    "purchase": {
+      "description": "Buat pesanan pembelian",
+      "endpoint": "/api/v1/orders",
+      "method": "POST",
+      "params": {
+        "product_id": { "type": "string", "required": true, "in": "body", "max_length": 64 },
+        "variant_id": { "type": "string", "required": false, "in": "body", "max_length": 64 },
+        "quantity": { "type": "integer", "required": true, "in": "body", "minimum": 1, "maximum": 999 },
+        "coupon_code": { "type": "string", "required": false, "in": "body", "max_length": 32 },
+        "destination_address_id": { "type": "string", "required": true, "in": "body", "max_length": 64 }
+      },
+      "returns": { "type": "object", "items_ref": "order" },
+      "requires_auth": true,
+      "auth": { "type": "oauth2", "documentation_url": "https://marketplace.example/api/docs/auth" },
+      "payment_terms_url": "https://marketplace.example/payment-terms",
+      "human_confirmation_required": true,
+      "requires_idempotency_key": true,
+      "spending_limit": { "amount": 50000000, "currency": "IDR" },
+      "x_action_class": "financial"
+    },
+    "cancel_order": {
+      "description": "Batalkan pesanan yang belum dikirim",
+      "endpoint": "/api/v1/orders/{order_id}/cancel",
+      "method": "POST",
+      "params": {
+        "order_id": { "type": "string", "required": true, "in": "path", "max_length": 64 },
+        "reason": { "type": "string", "required": false, "in": "body", "enum": ["changed_mind", "wrong_item", "other"], "max_length": 64 }
+      },
+      "returns": { "type": "object", "items_ref": "order" },
+      "requires_auth": true,
+      "auth": { "type": "oauth2", "documentation_url": "https://marketplace.example/api/docs/auth" },
+      "human_confirmation_required": true,
+      "requires_idempotency_key": true,
+      "x_action_class": "financial"
+    },
+    "track_order": {
+      "description": "Lacak status pengiriman pesanan",
+      "endpoint": "/api/v1/orders/{order_id}/tracking",
+      "method": "GET",
+      "params": {
+        "order_id": { "type": "string", "required": true, "in": "path", "max_length": 64 }
+      },
+      "returns": { "type": "object", "items_ref": "order" },
+      "requires_auth": true,
+      "auth": { "type": "oauth2", "documentation_url": "https://marketplace.example/api/docs/auth" },
+      "human_confirmation_required": false
+    },
+    "request_refund": {
+      "description": "Ajukan pengembalian dana",
+      "endpoint": "/api/v1/orders/{order_id}/refunds",
+      "method": "POST",
+      "params": {
+        "order_id": { "type": "string", "required": true, "in": "path", "max_length": 64 },
+        "reason": { "type": "string", "required": true, "in": "body", "enum": ["damaged", "not_received", "wrong_item", "other"] },
+        "note": { "type": "string", "required": false, "in": "body", "max_length": 500 }
+      },
+      "returns": { "type": "object", "items_ref": "order" },
+      "requires_auth": true,
+      "auth": { "type": "oauth2", "documentation_url": "https://marketplace.example/api/docs/auth" },
+      "payment_terms_url": "https://marketplace.example/refund-policy",
+      "human_confirmation_required": true,
+      "requires_idempotency_key": true,
+      "spending_limit": { "amount": 0, "currency": "IDR" },
+      "x_action_class": "financial"
+    },
+    "submit_review": {
+      "description": "Kirim ulasan produk",
+      "endpoint": "/api/v1/products/{product_id}/reviews",
+      "method": "POST",
+      "params": {
+        "product_id": { "type": "string", "required": true, "in": "path", "max_length": 64 },
+        "rating": { "type": "integer", "required": true, "in": "body", "minimum": 1, "maximum": 5 },
+        "comment": { "type": "string", "required": false, "in": "body", "max_length": 2000 }
+      },
+      "returns": { "type": "object", "items_ref": "review" },
+      "requires_auth": true,
+      "auth": { "type": "oauth2", "documentation_url": "https://marketplace.example/api/docs/auth" },
+      "human_confirmation_required": false,
+      "x_action_class": "content"
+    }
+  },
+  "revocation": {
+    "list_url": "https://aifeed.md/revoke/v1/marketplace.example.json",
+    "maximum_check_interval_hours": 12
+  },
+  "metadata": {
+    "generated_at": "2026-09-14T08:00:00Z",
+    "generated_by": "marketplace-cms/4.2.0",
+    "x_build": "2026.09.14-1"
+  },
+  "x_changelog": {
+    "2026-09-14": "Menambahkan shipping_estimate, price_history, dan spending_limit multi-currency"
+  }
+}
