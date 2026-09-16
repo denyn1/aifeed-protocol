@@ -1,5 +1,7 @@
 # AIFeed Specifications
 
+<p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
+
 Canonical language: **English** (`spec/en/`). Translations (`spec/<lang>/`) are
 informational; when they diverge, English wins.
 

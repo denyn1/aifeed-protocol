@@ -1,5 +1,7 @@
 # @aifeed/verify
 
+<p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
+
 Zero-dependency verifier for the **AIFeed protocol** — signed AI-Web content
 declarations and content profiles:
 

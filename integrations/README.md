@@ -1,5 +1,7 @@
 # AIFeed Integrations — any platform, not just WordPress
 
+<p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
+
 `aifeed site build <dir>` turns **any** static output (Hugo, Jekyll, Astro, Eleventy,
 Next.js export, Vite, plain HTML, …) into an AIFeed origin: signed manifest, delta
 index, per-page AIFeed Markdown documents, signature sidecars, and optional `llms.txt`. Server

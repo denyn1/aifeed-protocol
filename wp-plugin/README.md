@@ -1,5 +1,7 @@
 # AIFeed WordPress Plugin (v1.0.0-draft)
 
+<p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
+
 Reference **publisher-side SDK** for AIFeed. It generates an Ed25519 keypair, builds a
 schema-conformant manifest from your WordPress site data, signs it (RFC 8785 JCS +
 Ed25519), serves it at `/.well-known/ai.json` with the detached signature at
@@ -7,7 +9,7 @@ Ed25519), serves it at `/.well-known/ai.json` with the detached signature at
 (`Link: rel="ai-feed"` header, `<link rel="ai-feed">` element, and a `robots.txt`
 hint) so AI clients find and follow the declaration on first contact.
 
-Version 0.3 serves the same signed markdown bytes in **two content profiles**:
+The v0.2 manifest serves the same signed markdown bytes in **two content profiles**:
 **AIFeed Markdown** — native AIFeed (`Accept: text/aifeed+markdown`, `aimd: "1.0"`) — and **MAKO**
 compatibility (`Accept: text/mako+markdown`). Each media type carries its own signature
 context (`aimd1:` / `mako1:`), cross-format replay is rejected, and the delta index is
