@@ -1,5 +1,7 @@
 # Live demo origins
 
+<p><a href="demos.md">English</a> · <a href="demos.id.md">Bahasa Indonesia</a> · <a href="demos.zh.md">中文</a></p>
+
 Seven demonstration origins plus the apex site, all served from Cloudflare Pages
 (`functions/` routes each subdomain to its generated origin under `site/demos/`).
 Everything is generated deterministically by `tools/gen-demos.js` from

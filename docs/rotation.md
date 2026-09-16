@@ -1,5 +1,7 @@
 # Key rotation runbook
 
+<p><a href="rotation.md">English</a> · <a href="rotation.id.md">Bahasa Indonesia</a> · <a href="rotation.zh.md">中文</a></p>
+
 AIFeed manifests can replace their signing key without breaking verification, using
 the `rotation` directive (spec: [`spec/en/aifeed-v0.2.md`](../spec/en/aifeed-v0.2.md)
 §14). This runbook covers the normal ceremony, the emergency path, and what clients see.

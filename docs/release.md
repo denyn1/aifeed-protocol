@@ -1,5 +1,7 @@
 # Release and upgrade checklist
 
+<p><a href="release.md">English</a> · <a href="release.id.md">Bahasa Indonesia</a> · <a href="release.zh.md">中文</a></p>
+
 One page for cutting a release, publishing the SDK, deploying the site, and keeping
 consumers in sync. Keep it boring: bump in one change, prove it with
 `npm run check:consistency`, gate on `npm run verify`.

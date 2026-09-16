@@ -1,5 +1,7 @@
 # Namespace setup (GitHub, npm, domain)
 
+<p><a href="namespace-setup.md">English</a> · <a href="namespace-setup.id.md">Bahasa Indonesia</a> · <a href="namespace-setup.zh.md">中文</a></p>
+
 Run this checklist once, then record the results in `paper/CHECKLIST.md`.
 
 ## 1. GitHub organization — `aifeed` (verified available 2026-09-15)

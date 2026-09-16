@@ -1,5 +1,7 @@
 # Architecture
 
+<p><a href="architecture.md">English</a> · <a href="architecture.id.md">Bahasa Indonesia</a> · <a href="architecture.zh.md">中文</a></p>
+
 How AIFeed is put together, what each layer owns, and where to extend it. For the
 agent/human workflow rules see [`../AGENTS.md`](../AGENTS.md); for release mechanics see
 [`release.md`](release.md).

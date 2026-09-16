@@ -1,5 +1,7 @@
 # Deploying the AIFeed site on `aifeed.md`
 
+<p><a href="deploy-site.md">English</a> · <a href="deploy-site.id.md">Bahasa Indonesia</a> · <a href="deploy-site.zh.md">中文</a></p>
+
 The site is a plain static bundle in `site/` — landing page, logo, the process
 animation, the enforcement report, the Indonesian explainer, and the generated demo
 origins. No build framework, no runtime dependencies.

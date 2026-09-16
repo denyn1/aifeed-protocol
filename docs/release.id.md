@@ -1,0 +1,83 @@
+# Checklist rilis dan upgrade
+
+<p><a href="release.md">English</a> · <a href="release.id.md">Bahasa Indonesia</a> · <a href="release.zh.md">中文</a></p>
+
+Satu halaman untuk memotong rilis, menerbitkan SDK, men-deploy situs, dan menjaga konsumen
+tetap sinkron. Buat tetap membosankan: naikkan versi dalam satu perubahan, buktikan dengan
+`npm run check:consistency`, gerbang dengan `npm run verify`.
+
+## Lokasi versi (naikkan bersamaan)
+
+| File | Yang diubah |
+|---|---|
+| `package.json` | `version` (nomor rilis, mis. `1.0.0-draft` → `1.0.0`) |
+| `packages/aifeed-verify/package.json` | `version` (inti sama; sufiks prerelease diizinkan, mis. `1.0.0-draft.2`) |
+| `wp-plugin/aifeed.php` | header `Version:` dan `define('AIFEED_VERSION', …)` |
+| `wp-plugin/readme.txt` | `Stable tag:` (+ entri changelog) |
+| `site/index.html` | chip footer `v<version>` |
+| `CHANGELOG.md` | bagian teratas baru `## [<version>] — YYYY-MM-DD` |
+| `SECURITY.md` | baris versi yang didukung bila lini rilis berubah |
+
+Versi wire independen: manifest `0.1`/`0.2`, AIFeed Markdown `1.0`, MAKO `0.2`.
+Jangan menomori ulang kecuali format wire benar-benar berubah.
+
+## Langkah
+
+```bash
+npm run verify            # harus hijau sebelum apa pun
+# naikkan file di atas + tulis entri changelog
+npm run check:consistency # membuktikan versi selaras
+npm run verify            # lagi, setelah kenaikan
+git add -A && git commit -m "release: <version>"
+git tag -a v<version> -m "AIFeed <version>"
+git push origin main --tags
+```
+
+Deployment: `.github/workflows/pages-cf.yml` membangun ulang `site/` (laporan, landing
+page, origin demo) pada setiap push ke `main` dan men-deploy-nya bersama `functions/` ke
+Cloudflare Pages, yang melayani `aifeed.md`, `www.aifeed.md`, dan tujuh subdomain demo.
+Workflow ini membutuhkan secret repositori `CLOUDFLARE_API_TOKEN` dan
+`CLOUDFLARE_ACCOUNT_ID`; tanpa keduanya ia dilewati. Padanan lokal:
+`npx wrangler@latest pages deploy site --project-name aifeed --branch main`. Periksa
+halaman live setelahnya; anchor DNS untuk demo tercantum di `docs/demos.md`.
+
+## Menerbitkan SDK
+
+```bash
+# non-interaktif: token granular dengan "Bypass 2FA" (atau token Classic Automation)
+cd packages/aifeed-verify
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+npm dist-tag add @aifeed/verify@<version> latest --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- Versi prerelease **mewajibkan** `--tag` eksplisit (`next`); versi stabil default ke
+  `latest`.
+- Registry npm memproses publikasi secara asinkron (HTTP `202`) dan meng-cache pembacaan
+  selama beberapa menit. Verifikasi lewat endpoint write:
+  `curl -s "https://registry.npmjs.org/@aifeed%2Fverify?write=true" | node -e "…"`
+  atau `npm view @aifeed/verify version dist-tags`.
+- Jangan pernah menempelkan token ke file, commit, atau issue; simpan di environment.
+
+## Plugin WordPress
+
+Plugin dikirim dari `wp-plugin/` di repositori ini. Untuk rilis WordPress.org, naikkan
+header/`Stable tag`, tambahkan bagian changelog di `readme.txt`, jalankan suite PHP
+(`php -l`, `php tests/jcs-test.php`, `php tests/mako-test.php`), lalu tag.
+
+## Paper (saat rilis mengubah klaim)
+
+1. Edit `paper/main.tex`, cerminkan prosa di `paper/main.md`.
+2. Bila abstrak berubah, perbarui `paper/ARXIV-SUBMISSION.md`.
+3. `npm run paper:check`; bangun ulang PDF (Tectonic) dan bundel arXiv:
+   `cd paper && tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json`.
+4. Ikuti `paper/CHECKLIST.md` sebelum mengirim versi arXiv baru.
+
+## Meng-upgrade konsumen
+
+- Verifikasi manifest menerima `0.1.x` dan `0.2.x`; versi lain melaporkan
+  `upgrade_required`. Pertahankan dukungan baca lama saat versi wire bergerak.
+- Setelah rilis SDK, uji asap paket terbit di folder scratch:
+  `npm install @aifeed/verify@<version>` lalu jalankan quickstart dari
+  `packages/aifeed-verify/README.md`.
+- Situs adalah artefak yang dikutip konsumen: pastikan chip versi baru dan changelog live
+  sebelum mengumumkan.

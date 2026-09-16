@@ -1,5 +1,7 @@
 # Agent quickstart — check AIFeed before you crawl
 
+<p><a href="agent-quickstart.md">English</a> · <a href="agent-quickstart.id.md">Bahasa Indonesia</a> · <a href="agent-quickstart.zh.md">中文</a></p>
+
 This is the client side of the protocol: what an AI system, crawler, or agent should do
 **before its first request** to a site, so it acts on signed permissions instead of
 guessing from unsigned files.

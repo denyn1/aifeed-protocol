@@ -1,5 +1,7 @@
 # SEO and Google
 
+<p><a href="seo.md">English</a> · <a href="seo.id.md">Bahasa Indonesia</a> · <a href="seo.zh.md">中文</a></p>
+
 What the site ships today, and the two steps only the owner can complete.
 
 ## Implemented
