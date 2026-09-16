@@ -1,64 +1,67 @@
-# Pilot AIFeed 30 Hari — Protokol
+# AIFeed 30-Day Pilot — Protocol
 
-Status: **siap dijalankan** (belum ada situs pilot). Semua tooling tersedia; begitu ada
-situs nyata + akses log, fase eksekusi tinggal dimulai.
+<p><a href="plan.md">English</a> · <a href="plan.id.md">Bahasa Indonesia</a> · <a href="plan.zh.md">中文</a></p>
 
-## Tujuan
+Status: **ready to run** (no pilot site yet). All tooling is available; once there is a
+real site plus access logs, the execution phase can start.
 
-Mengukur dampak nyata AIFeed pada dua sisi — pemilik web (bandwidth, CPU, penegakan)
-dan sisi AI (byte, fetch sia-sia, verifikasi) — di luar simulasi harness.
+## Goal
 
-## Peran
+Measure AIFeed's real-world impact on both sides — website owner (bandwidth, CPU,
+enforcement) and AI side (bytes, wasted fetches, verification) — beyond the simulation
+harness.
 
-| Peran | Tanggung jawab |
+## Roles
+
+| Role | Responsibility |
 |---|---|
-| Operator situs | Akses log, pemasangan plugin, aturan edge (nginx/Caddy/Cloudflare) |
-| Analis | Menjalankan `tools/pilot-report.js`, menyusun laporan mingguan |
-| (Opsional) Mitra AI | Klien AIFeed-aware eksternal; jika absen, pakai crawler referensi SDK |
+| Site operator | Access logs, plugin install, edge rules (nginx/Caddy/Cloudflare) |
+| Analyst | Runs `tools/pilot-report.js`, compiles weekly reports |
+| (Optional) AI partner | External AIFeed-aware client; if absent, use the SDK reference crawler |
 
-## Linimasa
+## Timeline
 
-| Hari | Aktivitas | Output |
+| Day | Activity | Output |
 |---|---|---|
-| H-7…H-1 | Baseline: log penuh tanpa penegakan, klasifikasi bot, salinan manifest+keys | `baseline.jsonl` + angka awal |
-| H0 | Aktifkan plugin + aturan edge (lihat `benchmarks/edge/`), verifikasi manifest & MAKO | checklist aktivasi |
-| H1–H7 | Minggu 1: pantau blokir/limit, false positive, error | laporan mingguan 1 |
-| H8–H14 | Minggu 2: stabilkan limit; mulai catat delta/MAKO | laporan mingguan 2 |
-| H15–H21 | Minggu 3: evaluasi trafik rujukan, keluhan pengguna (target: nol) | laporan mingguan 3 |
-| H22–H28 | Minggu 4: audit verifikasi tanda tangan + insiden | laporan mingguan 4 |
-| H29–H30 | Analisis akhir vs kriteria | `pilot-report.md` + keputusan lanjut |
+| D-7…D-1 | Baseline: full logs without enforcement, bot classification, manifest+keys copy | `baseline.jsonl` + starting numbers |
+| D0 | Enable plugin + edge rules (see `benchmarks/edge/`), verify manifest & MAKO | activation checklist |
+| D1–D7 | Week 1: monitor blocks/limits, false positives, errors | weekly report 1 |
+| D8–D14 | Week 2: stabilize limits; start recording delta/MAKO | weekly report 2 |
+| D15–D21 | Week 3: evaluate referral traffic, user complaints (target: zero) | weekly report 3 |
+| D22–D28 | Week 4: signature verification + incident audit | weekly report 4 |
+| D29–D30 | Final analysis vs criteria | `pilot-report.md` + go/no-go decision |
 
-## Kriteria lulus (verdict otomatis di `tools/pilot-report.js`)
+## Pass criteria (automatic verdict in `tools/pilot-report.js`)
 
-1. Byte AI (egress ke bot AI) turun **≥40%** vs baseline.
-2. p95 latency manusia tidak memburuk **>20%**.
-3. Error rate manusia tidak naik **>0,5 poin persen**.
-4. Verifikasi tanda tangan **0 gagal** pada request MAKO.
-5. Insiden blokir keliru terhadap crawler sah = 0 (diperiksa manual).
+1. AI bytes (egress to AI bots) drop **≥40%** vs baseline.
+2. Human p95 latency does not worsen by **>20%**.
+3. Human error rate does not rise by **>0.5 percentage points**.
+4. Signature verification: **0 failures** on MAKO requests.
+5. Erroneous blocks of legitimate crawlers = 0 (checked manually).
 
-## Etika & privasi
+## Ethics & privacy
 
-- Hanya situs milik operator; tidak ada intervensi ke pihak ketiga.
-- Log diagregasi dan dianonimkan (IP dipotong), retensi maksimum 30 hari, lihat
+- Operator-owned sites only; no intervention on third parties.
+- Logs are aggregated and anonymized (IPs truncated), retention max 30 days, see
   `instrumentation.md`.
-- Tidak memblokir crawler mesin pencari; klasifikasi dibatasi ke kelas AI yang
-  dinyatakan di manifest.
-- Hasil diterbitkan sebagai studi kasus + metodologi, bukan klaim statistik.
+- No blocking of search engine crawlers; classification is limited to the AI classes
+  declared in the manifest.
+- Results are published as a case study plus methodology, not as statistical claims.
 
-## Cara menjalankan
+## How to run
 
 ```bash
-# 1. Siapkan log JSONL (lihat instrumentation.md)
-# 2. Bandingkan baseline vs pilot
+# 1. Prepare JSONL logs (see instrumentation.md)
+# 2. Compare baseline vs pilot
 node tools/pilot-report.js --baseline pilot/baseline.jsonl --pilot pilot/pilot.jsonl --out pilot/laporan-30-hari.md
-# 3. Sertakan laporan mingguan (templates/weekly-report.md) sebagai lampiran
+# 3. Attach weekly reports (templates/weekly-report.md) as an appendix
 ```
 
-## Risiko yang dipantau
+## Monitored risks
 
-| Risiko | Sinyal | Tindakan |
+| Risk | Signal | Action |
 |---|---|---|
-| Blokir keliru | 403 ke crawler sah | longgarkan klasifikasi, ulangi |
-| Kenaikan 429 ke mitra | 429 pada UA patuh | periksa limit manifest vs kebijakan edge |
-| Stealth crawling | trafik AI dari UA anonim naik | andalkan perilaku (rate/path), bukan UA |
-| Latensi naik | p95 manusia memburuk | turunkan beban limit/CPU edge |
+| Erroneous blocking | 403 to legitimate crawlers | loosen classification, retry |
+| Rise in 429s to partners | 429 on compliant UAs | check manifest limits vs edge policy |
+| Stealth crawling | AI traffic from anonymous UAs rises | rely on behavior (rate/path), not UA |
+| Latency increase | human p95 worsens | lower edge limit/CPU load |

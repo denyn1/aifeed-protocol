@@ -1,5 +1,7 @@
 # Proposal: AIFeed Trust Layer for MAKO (Extension Specification)
 
+<p><a href="EXTENSION.md">English</a> · <a href="EXTENSION.id.md">Bahasa Indonesia</a> · <a href="EXTENSION.zh.md">中文</a></p>
+
 **Status:** Draft for discussion (intended for the `mako-spec` community via CONTRIBUTING)
 **Author:** AIFeed Protocol Contributors
 **Date:** 2026-09-15
@@ -223,10 +225,11 @@ Rules:
 
 ## 10. Reference implementation
 
-- Specification (EN + ID): `spec/en/aifeed-v0.2.md`, `spec/id/aifeed-v0.2.md`
+- Specification (EN + ID + ZH): `spec/en/aifeed-v0.2.md`, `spec/id/aifeed-v0.2.md`,
+  `spec/zh/aifeed-v0.2.md`
 - Schemas: `schema/ai-json.v0.2.json`, `schema/mako.v0.2.json`,
   `schema/mako-signature.v0.2.json`, `schema/mako-index.v0.2.json`
-- Conformance vectors: `conformance/mako/` (33 cases) — verified by independent
+- Conformance vectors: `conformance/mako/` (39 cases) — verified by independent
   JavaScript and Python implementations.
 - CLI: `aifeed mako generate|sign|verify|index|fetch`
 - SDK: `packages/aifeed-verify` (`fetchMako`, `fetchIndexDelta`, `mako.*`)

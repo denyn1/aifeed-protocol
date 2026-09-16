@@ -1,34 +1,36 @@
-# Laporan Pilot AIFeed — Minggu {N}
+# AIFeed Pilot Report — Week {N}
 
-Tanggal: {YYYY-MM-DD} · Situs: {domain} · Operator: {nama}
+<p><a href="weekly-report.md">English</a> · <a href="weekly-report.id.md">Bahasa Indonesia</a> · <a href="weekly-report.zh.md">中文</a></p>
 
-## Ringkasan 5 baris
+Date: {YYYY-MM-DD} · Site: {domain} · Operator: {name}
 
-- AI byte: {baseline} → {pilot} ({savings}%)
-- AI request: {baseline} → {pilot} ({savings}%)
-- Blokir 403 / limit 429: {blocks} / {limits}
-- Verifikasi MAKO: {verified} lulus / {failed} gagal
-- p95 manusia: {p95} ms (baseline {p95b} ms), error rate {err}% (baseline {errb}%)
+## Five-line summary
 
-## Insiden minggu ini
+- AI bytes: {baseline} → {pilot} ({savings}%)
+- AI requests: {baseline} → {pilot} ({savings}%)
+- 403 blocks / 429 limits: {blocks} / {limits}
+- MAKO verification: {verified} pass / {failed} fail
+- Human p95: {p95} ms (baseline {p95b} ms), error rate {err}% (baseline {errb}%)
 
-| Tanggal | Kejadian | Dampak | Tindakan |
+## This week's incidents
+
+| Date | Event | Impact | Action |
 |---|---|---|---|
 | | | | |
 
-## False positive (crawler sah yang terblokir)
+## False positives (legitimate crawlers blocked)
 
-| UA | Path | Status | Keputusan |
+| UA | Path | Status | Decision |
 |---|---|---|---|
 | | | | |
 
-## Catatan operator
+## Operator notes
 
-- Perubahan konfigurasi:
-- Keluhan pengguna:
-- Pengamatan lain:
+- Configuration changes:
+- User complaints:
+- Other observations:
 
-## Lampiran
+## Appendix
 
-- `pilot/laporan-minggu-{N}.json` (hasil `pilot-report.js`)
-- Cuplikan log agregat (tanpa data pribadi)
+- `pilot/laporan-minggu-{N}.json` (output of `pilot-report.js`)
+- Aggregate log excerpt (no personal data)

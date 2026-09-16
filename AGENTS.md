@@ -1,5 +1,7 @@
 # AGENTS.md — working in this repository
 
+<p><a href="AGENTS.md">English</a> · <a href="AGENTS.id.md">Bahasa Indonesia</a> · <a href="AGENTS.zh.md">中文</a></p>
+
 Instructions for AI coding agents (and humans) who maintain, update, or upgrade AIFeed.
 Read this first; it is the contract that keeps the repository reproducible.
 
@@ -20,7 +22,7 @@ benchmarks, the website, and the paper.
    | Generated artifact | Source of truth | Regenerate | Verify |
    |---|---|---|---|
    | `packages/aifeed-verify/{lib,schema,index.js,index.d.ts}` | `lib/`, `schema/` (+ hand-written SDK `index.js`) | `npm run build:sdk` | `npm run sdk:check` |
-   | `conformance/vectors/**` (25) | `tools/gen-vectors.js` | `npm run vectors` | `npm run vectors:check` |
+   | `conformance/vectors/**` (34) | `tools/gen-vectors.js` | `npm run vectors` | `npm run vectors:check` |
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
@@ -37,7 +39,8 @@ benchmarks, the website, and the paper.
    inside `conformance/`, `examples/`, or signed `site/.well-known` files.
    `.gitattributes` forces LF; keep it.
 5. **Specs are canonical in English.** After editing `spec/en/`, mirror the same
-   section in `spec/id/` (informational translation). Keep heading structure aligned.
+   section in `spec/id/` and `spec/zh/` (informational translations). Keep heading
+   structure aligned.
 6. **One source of truth per fact.** Measured numbers live in `benchmarks/*.json` and
    `paper/CLAIMS.md`; pages and the paper render from those, never invent numbers.
 7. **Evidence labels are mandatory** for factual claims ([F] fact, [M] plausible,
@@ -55,7 +58,7 @@ benchmarks, the website, and the paper.
 npm run verify            # everything below, one gate
 npm run lint:syntax       # parse-check every .js file
 npm run check:consistency # versions, deps, secrets, spec pairs, script targets
-npm test                  # Node suite (197 tests)
+npm test                  # Node suite (214 tests)
 npm run test:py           # independent Python verifier (44 tests)
 npm run bench:mako        # regenerate benchmarks/mako-*.json + report
 npm run bench:enforcement # regenerate benchmarks/enforcement-*.json|md
@@ -70,10 +73,10 @@ node bin/cli.js --help    # CLI surface
 
 | Path | Owns |
 |---|---|
-| `spec/{en,id}/` | Normative specifications (manifest v0.1/v0.2, AIFeed Markdown v1.0) |
+| `spec/{en,id,zh}/` | Normative specifications (manifest v0.1/v0.2, AIFeed Markdown v1.0) |
 | `schema/` | JSON Schemas used by the validator and SDK |
 | `lib/` | Reference implementation: strict parser, JCS, Ed25519, validation, MAKO/AIMD, delta index, bundles, revocation |
-| `bin/cli.js` | CLI entry (`keygen`, `sign`, `validate`, `bundle`, `aimd\|mako …`, `site build`) |
+| `bin/cli.js` | CLI entry (`keygen`, `sign`, `rotate`, `validate`, `bundle`, `aimd\|mako …`, `site build`) |
 | `packages/aifeed-verify/` | Published SDK (`@aifeed/verify`); `index.js`/`index.d.ts` are hand-written, `lib/`+`schema/` are generated copies |
 | `clients/python/` | Independent verifier + tests (differential conformance) |
 | `conformance/` | Vectors: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revocation + bundles |

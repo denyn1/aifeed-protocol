@@ -1,5 +1,7 @@
 # Edge enforcement templates (nginx / Caddy)
 
+<p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
+
 Production-side parity templates for the policy exercised by
 `tools/bench-enforcement.js`. The harness proves the policy logic on loopback; these
 files let you reproduce it on a VPS with real clients.

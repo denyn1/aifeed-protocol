@@ -1,5 +1,7 @@
 # Changelog
 
+<p><a href="CHANGELOG.md">English</a> · <a href="CHANGELOG.id.md">Bahasa Indonesia</a> · <a href="CHANGELOG.zh.md">中文</a></p>
+
 All notable changes to the AIFeed protocol and reference implementation are documented
 here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
@@ -33,7 +35,7 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   `verifyAimdIndex`, media-type constants.
 - WordPress plugin 1.0.0-draft: dual-stack serving, AIFeed Markdown-only mode via the
   `aifeed_dual_stack` filter, per-format signatures and indices.
-- Specs: `spec/en|id/aifeed-aimd-v1.md` (operating modes, IANA considerations).
+- Specs: `spec/en|id|zh/aifeed-aimd-v1.md` (operating modes, IANA considerations).
 - Vectors: `conformance/aimd/` (11 cases: markers, cross-format replay, tamper, assets,
   alternates, strict optional-field validation) with Python parity; fuzz corpus includes
   AIFeed Markdown.
@@ -56,7 +58,7 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
 - **arXiv preprint draft** (`paper/`): LaTeX source + Markdown mirror, `refs.bib` with
   metadata verified against primary sources (17 RFCs, pinned IETF drafts, Crossref DOIs,
   publisher pages), `CLAIMS.md` claim→source ledger, `CHECKLIST.md` submission readiness,
-  and `npm run paper:check` for citation/environment cross-checks (49/49 cited).
+  and `npm run paper:check` for citation/environment cross-checks (52/52 cited).
 
 ### Changed
 
