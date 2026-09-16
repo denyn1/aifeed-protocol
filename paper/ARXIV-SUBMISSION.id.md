@@ -1,48 +1,48 @@
-# arXiv submission package
+# Paket submission arXiv
 
 <p><a href="ARXIV-SUBMISSION.md">English</a> · <a href="ARXIV-SUBMISSION.id.md">Bahasa Indonesia</a> · <a href="ARXIV-SUBMISSION.zh.md">中文</a></p>
 
-Ready-to-upload bundle for the preprint:
+Bundel siap-unggah untuk preprint:
 
 > **AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web**
 
-## Files to upload
+## File yang diunggah
 
-| File | Purpose |
+| File | Kegunaan |
 |---|---|
-| `paper/main.tex` | LaTeX source (self-contained; TikZ diagrams inline) |
-| `paper/refs.bib` | Bibliography (52 verified entries, natbib/plainnat) |
-| `paper/00README.json` | Tells arXiv's AutoTeX to use `pdflatex` |
-| `paper/aifeed-arxiv.tar.gz` | **Upload this** (arXiv prefers `.tar.gz`) |
+| `paper/main.tex` | Sumber LaTeX (mandiri; diagram TikZ inline) |
+| `paper/refs.bib` | Bibliografi (52 entri terverifikasi, natbib/plainnat) |
+| `paper/00README.json` | Memberi tahu AutoTeX arXiv untuk memakai `pdflatex` |
+| `paper/aifeed-arxiv.tar.gz` | **Unggah ini** (arXiv lebih memilih `.tar.gz`) |
 
-Regenerate the bundle after editing the paper:
+Regenerasi bundel setelah mengedit paper:
 
 ```bash
 cd paper
 tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json
 ```
 
-No LaTeX is installed locally; arXiv runs `pdflatex` + BibTeX itself. If a
-bibliography error occurs, open the project on Overleaf, compile once, download the
-generated `main.bbl`, and re-upload it together with `main.tex` and `refs.bib`
-(that is the only common failure mode for `plainnat`).
+Tidak ada LaTeX yang terpasang lokal; arXiv menjalankan `pdflatex` + BibTeX sendiri. Bila
+terjadi error bibliografi, buka proyek di Overleaf, kompilasi sekali, unduh `main.bbl`
+yang dihasilkan, lalu unggah ulang bersama `main.tex` dan `refs.bib` (itu satu-satunya
+mode kegagalan umum untuk `plainnat`).
 
-## Metadata for the submission form
+## Metadata untuk formulir submission
 
-**Title:** AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web
+**Judul:** AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web
 
-**Authors:** AIFeed Protocol Contributors
+**Penulis:** AIFeed Protocol Contributors
 
-**Primary category:** `cs.CR` (Cryptography and Security)
+**Kategori utama:** `cs.CR` (Cryptography and Security)
 **Cross-list:** `cs.AI` (Artificial Intelligence), `cs.IR` (Information Retrieval),
 `cs.NI` (Networking and Internet Architecture)
 
-**Comments:** Preprint, 13 sections. Reference implementation, schemas, and 84
-conformance vectors: https://github.com/denyn1/aifeed-protocol
+**Komentar:** Preprint, 13 bagian. Implementasi referensi, schema, dan 84 vektor
+konformansi: https://github.com/denyn1/aifeed-protocol
 
-**License:** recommend **CC BY 4.0** (the specifications are CC BY 4.0; code is MIT).
+**Lisensi:** disarankan **CC BY 4.0** (spesifikasi CC BY 4.0; kode MIT).
 
-**Abstract (plain text for the form):**
+**Abstrak (teks polos untuk formulir):**
 
 AI systems now consume more web content than people do, and the plain-text preferences in
 robots.txt do not hold them back: one vendor logged 1.9 billion crawls that ignored robots
@@ -70,22 +70,22 @@ reduction rely on summarization our converter does not perform; origin-plus-DNS 
 is invisible on first contact; and the compatibility profile depends on a third-party
 draft. No external cryptographic review or live pilot exists yet.
 
-## Before you press submit
+## Sebelum menekan submit
 
-- [x] Public repository with a pinned tag (`v1.0.0-draft`) —
+- [x] Repositori publik dengan tag terpin (`v1.0.0-draft`) —
       https://github.com/denyn1/aifeed-protocol
-- [ ] Confirm the contact email (`contact@aifeed.md` is still a placeholder in the
-      author footnote; create the mailbox or replace it with a real address)
-- [ ] arXiv account + any required endorsement for `cs.CR` (first-time submitters may
-      need an endorser; the submission form will say so)
-- [ ] Optional: transfer the repository to the `aifeed` organization and update the
-      artifact URL in `main.tex` (one `replace` + bundle rebuild)
-- [ ] After acceptance: add the arXiv ID to `paper/CHECKLIST.md` and the site footer
+- [ ] Konfirmasi email kontak (`contact@aifeed.md` masih placeholder di catatan kaki
+      penulis; buat mailbox-nya atau ganti dengan alamat nyata)
+- [ ] Akun arXiv + endorsement yang diperlukan untuk `cs.CR` (pengirim pertama kali
+      mungkin butuh endorser; formulir submission akan memberi tahu)
+- [ ] Opsional: pindahkan repositori ke organisasi `aifeed` dan perbarui URL artefak di
+      `main.tex` (satu `replace` + bangun ulang bundel)
+- [ ] Setelah diterima: tambahkan ID arXiv ke `paper/CHECKLIST.md` dan footer situs
 
-## Post-submission
+## Setelah submission
 
-1. The arXiv listing URL and DOI (if assigned) go into `paper/CHECKLIST.md`.
-2. Cite the preprint from the landing page footer if desired.
-3. Keep `v1.0.0-draft` as the pinned artifact version for reviewers; the wire
-   versions inside the paper (manifest 0.1/0.2, AIFeed Markdown 1.0, MAKO 0.2) are
-   independent of the release number.
+1. URL listing arXiv dan DOI (bila diberikan) masuk ke `paper/CHECKLIST.md`.
+2. Sitasi preprint dari footer landing page bila diinginkan.
+3. Pertahankan `v1.0.0-draft` sebagai versi artefak terpin untuk reviewer; versi wire di
+   dalam paper (manifest 0.1/0.2, AIFeed Markdown 1.0, MAKO 0.2) independen dari nomor
+   rilis.

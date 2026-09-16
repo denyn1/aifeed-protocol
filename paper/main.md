@@ -1,8 +1,10 @@
 # AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web
 
-*Draft â€” collective author: AIFeed Protocol Contributors.*
-*LaTeX source: [`main.tex`](main.tex) Â· bibliography: [`refs.bib`](refs.bib) Â·
-claims ledger: [`CLAIMS.md`](CLAIMS.md) Â· submission checklist: [`CHECKLIST.md`](CHECKLIST.md)*
+<p><a href="main.md">English</a> · <a href="main.id.md">Bahasa Indonesia</a> · <a href="main.zh.md">中文</a></p>
+
+*Draft — collective author: AIFeed Protocol Contributors.*
+*LaTeX source: [`main.tex`](main.tex) · bibliography: [`refs.bib`](refs.bib) ·
+claims ledger: [`CLAIMS.md`](CLAIMS.md) · submission checklist: [`CHECKLIST.md`](CHECKLIST.md)*
 
 ## Abstract
 
@@ -89,7 +91,7 @@ tests; unfavorable results are reported alongside.
   guiding AI interactions [li2025aitxt]. As of our inspection (2026-09-15), we did not
   find a single project that combines publisher-signed permissions with a DNS anchor and
   revocation, dual content profiles over one signed payload, and a verifiable delta index
-  â€” our claim is to that combination, not to having invented any of its parts.
+  — our claim is to that combination, not to having invented any of its parts.
 - **Measurement and economics.** A substantial empirical literature studies robots at
   scale: classifier-based analysis of robots usage [lee2009], exclusion as a guidance
   protocol [ge2016], robots-based gatekeeping [steinacker2025], creator protection
@@ -103,8 +105,8 @@ tests; unfavorable results are reported alongside.
 
 ## 3. Design
 
-**Trust chain.** TLS â†’ domain match â†’ Ed25519 signature over JCS canonical form with
-domain separation (`aifeed.v0.2\n`) â†’ DNS TXT anchor (`_aifeed`). Well-known URI
+**Trust chain.** TLS → domain match → Ed25519 signature over JCS canonical form with
+domain separation (`aifeed.v0.2\n`) → DNS TXT anchor (`_aifeed`). Well-known URI
 [rfc8615]; strict JSON/I-JSON [rfc8259, rfc7493]; RFC 3339 timestamps [rfc3339]; JCS
 [rfc8785]; BCP 14 keywords [rfc2119, rfc8174]; transparency log pattern [rfc9162]. Key
 pinning detects replacement; first-contact origin+DNS compromise is not detectable.
@@ -160,9 +162,9 @@ All numbers reproduce from committed artifacts (`benchmarks/*.json`,
 `npm run bench:mako`, `npm run bench:enforcement`); fixed seeds; single machine; loopback
 networking; synthetic corpus with navigation, ads, comments, and scripts.
 
-**Content efficiency (60 pages).** Bytes 1,205,292 â†’ 375,630 including signatures:
-**âˆ’68.83%**; token estimate âˆ’68.8%; sign 0.25 ms/page; verify 0.34â€“0.70 ms/page. Delta
-with 10% changed pages: 51,408 bytes, **âˆ’95.73%** vs HTML crawl (unchanged assumed 304).
+**Content efficiency (60 pages).** Bytes 1,205,292 → 375,630 including signatures:
+**−68.83%**; token estimate −68.8%; sign 0.25 ms/page; verify 0.34–0.70 ms/page. Delta
+with 10% changed pages: 51,408 bytes, **−95.73%** vs HTML crawl (unchanged assumed 304).
 MAKO's up-to-94% claim presumes publisher summarization; our faithful converter measures
 68.8% and we report the smaller value.
 
@@ -177,11 +179,11 @@ MAKO's up-to-94% claim presumes publisher summarization; our faithful converter 
 | 403 blocks / 429 limits | 0 / 0 | 18 / 0 | 18 / 11 | 18 / 11 |
 | Client bytes received | 177,537 | 104,570 | 96,198 | 80,173 |
 | Human p95 latency (ms) | 20.0 | 23.2 | 19.9 | 19.3 |
-| Publisher byte saving | â€” | 41.4% | 46.2% | **55.2%** |
-| Publisher CPU saving | â€” | 33.4% | 38.8% | **56.2%** |
-| AI byte saving (all / compliant) | â€” | 41.1% / 42.5% | 45.8% / 42.5% | **54.8% / 72.9%** |
+| Publisher byte saving | — | 41.4% | 46.2% | **55.2%** |
+| Publisher CPU saving | — | 33.4% | 38.8% | **56.2%** |
+| AI byte saving (all / compliant) | — | 41.1% / 42.5% | 45.8% / 42.5% | **54.8% / 72.9%** |
 
-100-tenant run: origin bytes 962,373 â†’ 451,038 enforced; per-1,000-tenant projections are
+100-tenant run: origin bytes 962,373 → 451,038 enforced; per-1,000-tenant projections are
 linear extrapolations (labeled as such). Without enforcement, savings are zero by
 construction.
 
@@ -208,8 +210,8 @@ signatures, assets, triage, and `llms.txt`.
 ## 8. Conclusion and Future Work
 
 Publisher-side, cryptographically attributable permissions are specifiable, implementable
-without dependencies, and measurable: 55â€“56% publisher-side byte/CPU savings under
-enforcement, 55â€“73% AI-side byte savings, 95.7% steady-state delta savings, sub-millisecond
+without dependencies, and measurable: 55–56% publisher-side byte/CPU savings under
+enforcement, 55–73% AI-side byte savings, 95.7% steady-state delta savings, sub-millisecond
 verification. Remaining work is institutional: independent cryptographic review, a live
 pilot, upstream standardization (MAKO extension; IETF Internet-Draft for the protocol
 core), and multi-stakeholder registry governance. All artifacts are released for

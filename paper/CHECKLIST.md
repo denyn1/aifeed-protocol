@@ -1,5 +1,7 @@
 # Paper submission checklist (arXiv → IETF later)
 
+<p><a href="CHECKLIST.md">English</a> · <a href="CHECKLIST.id.md">Bahasa Indonesia</a> · <a href="CHECKLIST.zh.md">中文</a></p>
+
 Status keys: **[x]** done and verified · **[ ]** pending · **[!]** blocker for submission.
 
 ## Metadata
@@ -72,7 +74,7 @@ Status keys: **[x]** done and verified · **[ ]** pending · **[!]** blocker for
 ## Manuscript mechanics
 
 - **[x]** LaTeX source (`paper/main.tex`, `paper/refs.bib`) + Markdown mirror for review.
-- **[x]** Structural cross-check: `npm run paper:check` — 49/49 citation keys resolve in
+- **[x]** Structural cross-check: `npm run paper:check` — 52/52 citation keys resolve in
   `refs.bib`, all LaTeX environments balanced.
 - **[!]** Compile check: no local TeX distribution detected on the authoring machine;
   compile on Overleaf or after installing TeX Live before upload.

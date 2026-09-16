@@ -1,5 +1,7 @@
 # Claims ledger
 
+<p><a href="CLAIMS.md">English</a> · <a href="CLAIMS.id.md">Bahasa Indonesia</a> · <a href="CLAIMS.zh.md">中文</a></p>
+
 Every quantitative claim in the paper is traced here. Types:
 **[peer]** peer-reviewed publication · **[std]** standard/specification ·
 **[ind]** industry report or vendor statement · **[meas]** our reproducible measurement ·
@@ -61,7 +63,7 @@ Bib keys refer to `refs.bib`. Access dates for web sources: 2026-09-14/15.
 | M12 | Signature verification correctness | 0 failures; cross-format/context replay rejected (E2E WordPress + vectors) | `tests/`, E2E scripts | meas |
 | M13 | Vendor claim vs faithful conversion | MAKO claims up to −94% tokens (semantic optimization); our faithful converter measures −68.8% bytes — the gap is publisher-chosen summarization, not achieved by the protocol | `makoSpec` vs `benchmarks/` | comparison |
 | M14 | Key rotation (v0.2 §14) | 4 positive + 5 negative conformance vectors; successor bound by an old-key-signed directive with an advisory DNS `pk2` cross-check; 1 h hard overlap floor | `conformance/vectors/*/0{08..11,119..123}-rotation*` | meas |
-| M14 | Savings without adoption/enforcement | ≈0 (baseline S0 serves everything; bypass evidence C8) | idem | analysis |
+| M15 | Savings without adoption/enforcement | ≈0 (baseline S0 serves everything; bypass evidence C8) | idem | analysis |
 
 ## Non-quantitative claims (stated with scope)
 
@@ -76,6 +78,6 @@ Bib keys refer to `refs.bib`. Access dates for web sources: 2026-09-14/15.
 
 ## Unfavorable results included
 
-- M13 (vendor-claim gap), M14 (zero savings without enforcement), TOFU limits,
+- M13 (vendor-claim gap), M15 (zero savings without enforcement), TOFU limits,
   single-machine synthetic evaluation, no production CDN data, dependence on draft
   specifications, and the two-sided adoption cold-start.

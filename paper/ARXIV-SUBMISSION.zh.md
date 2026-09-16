@@ -1,48 +1,47 @@
-# arXiv submission package
+# arXiv 投稿包
 
 <p><a href="ARXIV-SUBMISSION.md">English</a> · <a href="ARXIV-SUBMISSION.id.md">Bahasa Indonesia</a> · <a href="ARXIV-SUBMISSION.zh.md">中文</a></p>
 
-Ready-to-upload bundle for the preprint:
+预印本的可上传打包：
 
 > **AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web**
 
-## Files to upload
+## 需要上传的文件
 
-| File | Purpose |
+| 文件 | 用途 |
 |---|---|
-| `paper/main.tex` | LaTeX source (self-contained; TikZ diagrams inline) |
-| `paper/refs.bib` | Bibliography (52 verified entries, natbib/plainnat) |
-| `paper/00README.json` | Tells arXiv's AutoTeX to use `pdflatex` |
-| `paper/aifeed-arxiv.tar.gz` | **Upload this** (arXiv prefers `.tar.gz`) |
+| `paper/main.tex` | LaTeX 源（自包含；TikZ 图内联） |
+| `paper/refs.bib` | 参考文献（52 条已核验条目，natbib/plainnat） |
+| `paper/00README.json` | 告知 arXiv AutoTeX 使用 `pdflatex` |
+| `paper/aifeed-arxiv.tar.gz` | **上传此文件**（arXiv 偏好 `.tar.gz`） |
 
-Regenerate the bundle after editing the paper:
+编辑论文后重新生成打包：
 
 ```bash
 cd paper
 tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json
 ```
 
-No LaTeX is installed locally; arXiv runs `pdflatex` + BibTeX itself. If a
-bibliography error occurs, open the project on Overleaf, compile once, download the
-generated `main.bbl`, and re-upload it together with `main.tex` and `refs.bib`
-(that is the only common failure mode for `plainnat`).
+本机未安装 LaTeX；arXiv 自行运行 `pdflatex` + BibTeX。若出现参考文献错误，请在
+Overleaf 打开项目、编译一次、下载生成的 `main.bbl`，再与 `main.tex`、`refs.bib`
+一起重新上传（这是 `plainnat` 唯一常见的失败模式）。
 
-## Metadata for the submission form
+## 投稿表单元数据
 
-**Title:** AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web
+**标题：** AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web
 
-**Authors:** AIFeed Protocol Contributors
+**作者：** AIFeed Protocol Contributors
 
-**Primary category:** `cs.CR` (Cryptography and Security)
-**Cross-list:** `cs.AI` (Artificial Intelligence), `cs.IR` (Information Retrieval),
-`cs.NI` (Networking and Internet Architecture)
+**主分类：** `cs.CR`（密码学与安全）
+**交叉列表：** `cs.AI`（人工智能）、`cs.IR`（信息检索）、
+`cs.NI`（网络与互联网架构）
 
-**Comments:** Preprint, 13 sections. Reference implementation, schemas, and 84
-conformance vectors: https://github.com/denyn1/aifeed-protocol
+**备注：** 预印本，13 个章节。参考实现、schema 与 84 个一致性向量：
+https://github.com/denyn1/aifeed-protocol
 
-**License:** recommend **CC BY 4.0** (the specifications are CC BY 4.0; code is MIT).
+**许可证：** 建议 **CC BY 4.0**（规范为 CC BY 4.0；代码为 MIT）。
 
-**Abstract (plain text for the form):**
+**摘要（表单用纯文本）：**
 
 AI systems now consume more web content than people do, and the plain-text preferences in
 robots.txt do not hold them back: one vendor logged 1.9 billion crawls that ignored robots
@@ -70,22 +69,20 @@ reduction rely on summarization our converter does not perform; origin-plus-DNS 
 is invisible on first contact; and the compatibility profile depends on a third-party
 draft. No external cryptographic review or live pilot exists yet.
 
-## Before you press submit
+## 点击提交之前
 
-- [x] Public repository with a pinned tag (`v1.0.0-draft`) —
+- [x] 带固定标签的公开仓库（`v1.0.0-draft`）——
       https://github.com/denyn1/aifeed-protocol
-- [ ] Confirm the contact email (`contact@aifeed.md` is still a placeholder in the
-      author footnote; create the mailbox or replace it with a real address)
-- [ ] arXiv account + any required endorsement for `cs.CR` (first-time submitters may
-      need an endorser; the submission form will say so)
-- [ ] Optional: transfer the repository to the `aifeed` organization and update the
-      artifact URL in `main.tex` (one `replace` + bundle rebuild)
-- [ ] After acceptance: add the arXiv ID to `paper/CHECKLIST.md` and the site footer
+- [ ] 确认联络邮箱（作者脚注中的 `contact@aifeed.md` 仍是占位；请创建邮箱或换成真实
+      地址）
+- [ ] arXiv 账号 + `cs.CR` 所需背书（首次投稿者可能需要背书人；投稿表单会说明）
+- [ ] 可选：把仓库转移到 `aifeed` 组织，并更新 `main.tex` 中的产物 URL
+      （一次 `replace` + 重建打包）
+- [ ] 被接收后：把 arXiv ID 加到 `paper/CHECKLIST.md` 与站点页脚
 
-## Post-submission
+## 投稿之后
 
-1. The arXiv listing URL and DOI (if assigned) go into `paper/CHECKLIST.md`.
-2. Cite the preprint from the landing page footer if desired.
-3. Keep `v1.0.0-draft` as the pinned artifact version for reviewers; the wire
-   versions inside the paper (manifest 0.1/0.2, AIFeed Markdown 1.0, MAKO 0.2) are
-   independent of the release number.
+1. arXiv 列表 URL 与 DOI（若分配）写入 `paper/CHECKLIST.md`。
+2. 如需要，在落地页页脚引用该预印本。
+3. 保留 `v1.0.0-draft` 作为审阅者使用的固定产物版本；论文内部的线格式版本
+   （manifest 0.1/0.2、AIFeed Markdown 1.0、MAKO 0.2）与发布号相互独立。
