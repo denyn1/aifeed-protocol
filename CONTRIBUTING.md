@@ -1,5 +1,7 @@
 # Contributing to AIFeed
 
+<p><a href="CONTRIBUTING.md">English</a> · <a href="CONTRIBUTING.id.md">Bahasa Indonesia</a> · <a href="CONTRIBUTING.zh.md">中文</a></p>
+
 Thanks for helping make AIFeed a global, trustworthy standard. This repository hosts the
 specification, the reference implementation, conformance vectors, and the WordPress
 publisher.

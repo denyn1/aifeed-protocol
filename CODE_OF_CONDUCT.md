@@ -1,5 +1,7 @@
 # Contributor Covenant Code of Conduct
 
+<p><a href="CODE_OF_CONDUCT.md">English</a> · <a href="CODE_OF_CONDUCT.id.md">Bahasa Indonesia</a> · <a href="CODE_OF_CONDUCT.zh.md">中文</a></p>
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our community

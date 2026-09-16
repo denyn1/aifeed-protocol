@@ -1,12 +1,14 @@
 # AIFeed Governance (interim)
 
+<p><a href="GOVERNANCE.md">English</a> · <a href="GOVERNANCE.id.md">Bahasa Indonesia</a> · <a href="GOVERNANCE.zh.md">中文</a></p>
+
 AIFeed is an open standard with a public registry (revocations) and a shared trust
 model. This document describes how decisions are made today and the path to a
 multi-stakeholder foundation.
 
 ## Current status
 
-AIFeed is at draft stage (AIFeed Markdown v1 / AIFeed 0.3.x). Governance is **interim**: a group of
+AIFeed is at draft stage (AIFeed Markdown v1 / AIFeed 0.2.x). Governance is **interim**: a group of
 maintainers ("the maintainers") stewards the specification, the reference
 implementation, conformance vectors, and the revocation registry process.
 

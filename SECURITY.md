@@ -1,5 +1,7 @@
 # Security Policy
 
+<p><a href="SECURITY.md">English</a> · <a href="SECURITY.id.md">Bahasa Indonesia</a> · <a href="SECURITY.zh.md">中文</a></p>
+
 ## Supported versions
 
 | Version | Status | Security fixes |
@@ -36,8 +38,9 @@ attacks that require pre-existing control of the origin's private key or DNS.
 
 If a signing key is compromised:
 
-1. Publish a new key (`key_id` rotation; `pk2` in the `_aifeed` DNS record supports
-   rotation).
+1. Publish a new key following the rotation runbook
+   ([`docs/rotation.md`](docs/rotation.md)): announce the successor, keep a bounded
+   overlap, cut over.
 2. Request a revocation document for the old fingerprint via the registry process in
    `GOVERNANCE.md`.
 3. Re-sign the manifest with the new key; clients with key pinning will alarm on the
