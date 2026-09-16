@@ -85,7 +85,7 @@ node bin/cli.js --help    # CLI surface
 | `tools/` | Generators, renderers, benchmarks, fuzzers, checkers — zero-dep |
 | `demos/` | Demo origin content (`sites.js`) and public demo keys (`keys.js`) |
 | `functions/` | Cloudflare Pages Function: host routing, CORS, `strict` enforcement |
-| `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md` |
+| `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `publisher-ai-guide.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md` |
 | `site/` | Website sources: `index.html` (hand-written); other files are generated |
 | `paper/` | Preprint: `main.tex` (source), `main.md` (mirror), `refs.bib`, `CLAIMS.md`, `CHECKLIST.md`, bundles |
 | `.github/workflows/pages-cf.yml` | CI: `render-html` → `build-site` → deploy Cloudflare Pages (skips without the CF secrets) |

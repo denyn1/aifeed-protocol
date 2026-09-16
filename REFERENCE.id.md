@@ -230,6 +230,13 @@ dan batas crawl, serta memakai indeks delta. Panduan:
 [`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js) —
 `node examples/agent/compliant-agent.js https://example.com --use retrieval --fetch`.
 
+## Panduan AI publisher
+
+Pemilik website: berikan panduan ini ke AI coding agent Anda dan ia akan memasang AIFeed
+end-to-end:
+[`docs/publisher-ai-guide.id.md`](docs/publisher-ai-guide.id.md) — satu track untuk situs
+kecil, menengah, besar, dan raksasa, masing-masing berakhir di manifest terverifikasi.
+
 ## SDK
 
 - **Klien AI — `@aifeed/verify`** (`packages/aifeed-verify/`): paket npm mandiri yang

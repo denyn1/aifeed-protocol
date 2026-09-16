@@ -233,6 +233,12 @@ permissions and crawl limits, and use the delta index. Guide:
 [`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js) —
 `node examples/agent/compliant-agent.js https://example.com --use retrieval --fetch`.
 
+## Publisher AI guide
+
+Website owners: hand your AI coding agent this guide and it installs AIFeed end-to-end:
+[`docs/publisher-ai-guide.md`](docs/publisher-ai-guide.md) — one track each for small,
+medium, large, and giant sites, every track ending in a verified manifest.
+
 ## SDKs
 
 - **AI client — `@aifeed/verify`** (`packages/aifeed-verify/`): self-contained npm

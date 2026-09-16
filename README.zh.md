@@ -137,6 +137,7 @@ node bin/cli.js site build ./public --domain example.com --key keys/aifeed-priva
 - 维护契约（AI 智能体与开发者）：[`AGENTS.md`](AGENTS.md)
 - 架构：[`docs/architecture.md`](docs/architecture.md) · 发布指南：[`docs/release.md`](docs/release.md)
 - 智能体快速上手（客户端侧）：[`docs/agent-quickstart.md`](docs/agent-quickstart.md)
+- 发布方 AI 指南（所有者侧）：[`docs/publisher-ai-guide.zh.md`](docs/publisher-ai-guide.zh.md)
 - 完整指南：[`penjelasan-aifeed.html`](penjelasan-aifeed.html)（<https://aifeed.md/penjelasan.html> 的源码）
 - 安全政策：[`SECURITY.md`](SECURITY.md)
 - 治理与开放核心政策：[`GOVERNANCE.md`](GOVERNANCE.md)

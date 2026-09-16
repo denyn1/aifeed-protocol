@@ -215,6 +215,11 @@ HTML 页面声明 alternate 链接，签名增量索引与逐条摘要匹配。�
 [`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js)——
 `node examples/agent/compliant-agent.js https://example.com --use retrieval --fetch`。
 
+## 发布方 AI 指南
+
+如果你拥有网站，把这份指南交给你的 AI 编程智能体，它会为你端到端安装 AIFeed：
+[`docs/publisher-ai-guide.zh.md`](docs/publisher-ai-guide.zh.md) —— 覆盖小型、中型、大型、巨型站点，每条 track 都以验证通过的 manifest 结束。
+
 ## SDK
 
 - **AI 客户端 — `@aifeed/verify`**（`packages/aifeed-verify/`）：通过

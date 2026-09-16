@@ -143,6 +143,7 @@ yang tidak dilakukan proyek ini secara otomatis.
 - Kontrak pemeliharaan (agen AI & dev): [`AGENTS.md`](AGENTS.md)
 - Arsitektur: [`docs/architecture.md`](docs/architecture.md) · Panduan rilis: [`docs/release.md`](docs/release.md)
 - Quickstart agen (sisi klien): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
+- Panduan AI publisher (sisi pemilik): [`docs/publisher-ai-guide.id.md`](docs/publisher-ai-guide.id.md)
 - Panduan lengkap: [`penjelasan-aifeed.html`](penjelasan-aifeed.html) (sumber <https://aifeed.md/penjelasan.html>)
 - Kebijakan keamanan: [`SECURITY.md`](SECURITY.md)
 - Governance & kebijakan open-core: [`GOVERNANCE.md`](GOVERNANCE.md)

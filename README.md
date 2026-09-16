@@ -141,6 +141,7 @@ summarization this project does not perform automatically.
 - Maintenance contract (AI agents & devs): [`AGENTS.md`](AGENTS.md)
 - Architecture: [`docs/architecture.md`](docs/architecture.md) · Release guide: [`docs/release.md`](docs/release.md)
 - Agent quickstart (client side): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
+- Publisher AI guide (owner side): [`docs/publisher-ai-guide.md`](docs/publisher-ai-guide.md)
 - Complete guide: [`penjelasan-aifeed.html`](penjelasan-aifeed.html) (source of <https://aifeed.md/penjelasan.html>)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Governance & open-core policy: [`GOVERNANCE.md`](GOVERNANCE.md)
