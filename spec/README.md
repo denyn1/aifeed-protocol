@@ -5,9 +5,9 @@ informational; when they diverge, English wins.
 
 | Document | Version | Status | Scope |
 |---|---|---|---|
-| [`en/aifeed-v0.1.md`](en/aifeed-v0.1.md) · [id](id/aifeed-v0.1.md) | 0.1.0-rc1 | Release candidate | Signed declarations: manifest, signature, DNS anchor, revocation, bundles |
-| [`en/aifeed-v0.2.md`](en/aifeed-v0.2.md) · [id](id/aifeed-v0.2.md) | 0.2.0-draft | Draft | MAKO trust profile: MAKO signatures, permission binding, delta index, assets, triage |
-| [`en/aifeed-aimd-v1.md`](en/aifeed-aimd-v1.md) · [id](id/aifeed-aimd-v1.md) | 1.0 (protocol), AIFeed 0.2 | Draft | **AIFeed Markdown** native content profile, dual-stack operating modes, media type registration plan |
+| [`en/aifeed-v0.1.md`](en/aifeed-v0.1.md) · [id](id/aifeed-v0.1.md) · [zh](zh/aifeed-v0.1.md) | 0.1.0-rc1 | Release candidate | Signed declarations: manifest, signature, DNS anchor, revocation, bundles |
+| [`en/aifeed-v0.2.md`](en/aifeed-v0.2.md) · [id](id/aifeed-v0.2.md) · [zh](zh/aifeed-v0.2.md) | 0.2.0-draft | Draft | MAKO trust profile: MAKO signatures, permission binding, delta index, assets, triage |
+| [`en/aifeed-aimd-v1.md`](en/aifeed-aimd-v1.md) · [id](id/aifeed-aimd-v1.md) · [zh](zh/aifeed-aimd-v1.md) | 1.0 (protocol), AIFeed 0.2 | Draft | **AIFeed Markdown** native content profile, dual-stack operating modes, media type registration plan |
 
 Related documents outside `spec/`:
 

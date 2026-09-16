@@ -1,5 +1,7 @@
 # AIFeed v0.2 — MAKO Trust Profile (Extension to v0.1)
 
+<p><a href="../en/aifeed-v0.2.md">English</a> · <a href="../id/aifeed-v0.2.md">Bahasa Indonesia</a> · <a href="../zh/aifeed-v0.2.md">中文</a></p>
+
 **Version:** 0.2.0-draft
 **Status:** Draft — not frozen (see "Status of This Document")
 **Canonical language:** English (this document). Translations are informational.

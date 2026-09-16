@@ -1,5 +1,7 @@
 # AIFeed v0.2 — Profil Kepercayaan MAKO (Ekstensi v0.1)
 
+<p><a href="../en/aifeed-v0.2.md">English</a> · <a href="../id/aifeed-v0.2.md">Bahasa Indonesia</a> · <a href="../zh/aifeed-v0.2.md">中文</a></p>
+
 **Versi:** 0.2.0-draft
 **Status:** Draf — belum dibekukan (lihat "Status Dokumen")
 **Bahasa normatif:** Inggris (`spec/en/aifeed-v0.2.md`). Dokumen ini adalah **terjemahan informasional**; jika terjadi perbedaan, versi Inggris yang berlaku.

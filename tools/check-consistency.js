@@ -53,15 +53,16 @@ for (const [file, pkg] of [['package.json', rootPkg], ['packages/aifeed-verify/p
 const sdkEntry = path.join(ROOT, 'packages/aifeed-verify/index.js');
 if (!fs.existsSync(sdkEntry)) failures.push('packages/aifeed-verify/index.js is missing');
 
-const specPairs = [['spec/en', 'spec/id']];
-for (const [enDir, idDir] of specPairs) {
-  const en = fs.readdirSync(path.join(ROOT, enDir)).filter((name) => name.endsWith('.md')).sort();
-  const id = fs.readdirSync(path.join(ROOT, idDir)).filter((name) => name.endsWith('.md')).sort();
-  for (const name of en) {
-    if (!id.includes(name)) failures.push(idDir + ': missing mirror of ' + enDir + '/' + name);
+const specBase = 'spec/en';
+const specMirrors = ['spec/id', 'spec/zh'];
+const specFiles = fs.readdirSync(path.join(ROOT, specBase)).filter((name) => name.endsWith('.md')).sort();
+for (const mirror of specMirrors) {
+  const files = fs.readdirSync(path.join(ROOT, mirror)).filter((name) => name.endsWith('.md')).sort();
+  for (const name of specFiles) {
+    if (!files.includes(name)) failures.push(mirror + ': missing mirror of ' + specBase + '/' + name);
   }
-  for (const name of id) {
-    if (!en.includes(name)) failures.push(enDir + ': missing mirror of ' + idDir + '/' + name);
+  for (const name of files) {
+    if (!specFiles.includes(name)) failures.push(specBase + ': missing mirror of ' + mirror + '/' + name);
   }
 }
 
