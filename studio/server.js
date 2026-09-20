@@ -22,6 +22,10 @@ const VERSION = require('../package.json').version;
 const UI_DIR = path.join(__dirname, 'ui');
 const MAX_BODY = 1024 * 1024;
 
+function allowPrivateTest() {
+  return process.env.AIFEED_STUDIO_ALLOW_PRIVATE === '1';
+}
+
 function parseArgs(argv) {
   const args = {};
   for (let index = 0; index < argv.length; index++) {
@@ -289,7 +293,7 @@ function createServer(options = {}) {
           } catch (error) {
             return json(res, 400, { error: 'crawl source requires { origin: "https://..." }' });
           }
-          if (!origin.startsWith('https://')) {
+          if (!origin.startsWith('https://') && !(allowPrivateTest() && origin.startsWith('http://'))) {
             return json(res, 400, { error: 'crawl origin must be https://' });
           }
           const toList = (value) => Array.isArray(value)
@@ -328,6 +332,7 @@ function createServer(options = {}) {
             include: source.include,
             exclude: source.exclude,
             respectRobots: source.respectRobots,
+            allowPrivate: allowPrivateTest(),
             onProgress: emit
           });
           source.pages = result.stats.total;

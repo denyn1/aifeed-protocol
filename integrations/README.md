@@ -21,11 +21,13 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | nginx | Accept → `.aifeed.md` / `.mako.md` rewrite | [`nginx/aifeed-content.conf`](nginx/aifeed-content.conf) |
 | Caddy | Accept → `.aifeed.md` / `.mako.md` rewrite | [`caddy/Caddyfile`](caddy/Caddyfile) |
 | Apache | mod_rewrite + ForceType | [`apache/.htaccess`](apache/.htaccess) |
+| Traefik (v2/v3) | Accept → `.aifeed.md` / `.mako.md` rewrite | [`traefik/aifeed.yml`](traefik/aifeed.yml) |
 | Node / Express / plain http | handler + inline signature | [`node/aifeed-serve.js`](node/aifeed-serve.js) |
 | Next.js (App Router) | middleware + route handler | [`nextjs/middleware.js`](nextjs/middleware.js), [`nextjs/app/api/aifeed/route.js`](nextjs/app/api/aifeed/route.js) |
 | PHP (non-WordPress) | `aifeed_serve()` front-controller check | [`php/aifeed-serve.php`](php/aifeed-serve.php) |
 | Python ASGI (FastAPI/Starlette/Django) | `AifeedMiddleware` | [`python/aifeed_middleware.py`](python/aifeed_middleware.py) |
 | Go (net/http) | `aifeed.Handler(next, root, aimd, mako)` | [`go/aifeed.go`](go/aifeed.go) |
+| Cloudflare Workers (static assets) | Accept → `.aifeed.md` / `.mako.md` via the `ASSETS` binding | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | build + sign + verify before deploy | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
 | WordPress | plugin with dual-stack serving + admin | `wp-plugin/` |
 
@@ -123,6 +125,24 @@ app.add_middleware(AifeedMiddleware, root="public", mako=True)
 ```go
 http.Handle("/", aifeed.Handler(http.FileServer(http.Dir("public")), "public", true, true))
 ```
+
+### Traefik (v2/v3)
+
+```bash
+traefik --providers.file.filename=integrations/traefik/aifeed.yml
+# set ORIGIN_HOST / ORIGIN_PORT inside the file first
+```
+
+### Cloudflare Workers (static assets)
+
+```bash
+cp integrations/cloudflare/worker.mjs ./worker.mjs
+cp integrations/cloudflare/wrangler.template.toml ./wrangler.toml   # point [assets].directory at your build output
+npx wrangler deploy
+```
+
+Request directory URLs with a trailing slash (`/dir/`) to receive markdown; `/dir`
+falls back to the HTML asset.
 
 ## Verify after deploy
 

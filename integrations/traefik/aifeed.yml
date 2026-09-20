@@ -1,0 +1,72 @@
+# AIFeed content negotiation for Traefik v2/v3 (file provider)
+#
+# Load with:
+#   traefik --providers.file.filename=integrations/traefik/aifeed.yml
+# Replace ORIGIN_HOST / ORIGIN_PORT with your upstream.
+#
+# When a client sends Accept: text/aifeed+markdown (or text/mako+markdown),
+# / -> /index.<profile>.md, /dir/ -> /dir/index.<profile>.md and
+# /dir/page -> /dir/page.<profile>.md. Static .well-known/* files, llms.txt,
+# and {file}.sig sidecars are served untouched by the origin.
+http:
+  routers:
+    aifeed-aimd-root:
+      rule: 'Method(`GET`, `HEAD`) && HeaderRegexp(`Accept`, `text/aifeed\+markdown`) && Path(`/`)'
+      priority: 130
+      middlewares: [aifeed-aimd-root]
+      service: aifeed-origin
+    aifeed-aimd-dir:
+      rule: 'Method(`GET`, `HEAD`) && HeaderRegexp(`Accept`, `text/aifeed\+markdown`) && PathRegexp(`.+/$`)'
+      priority: 129
+      middlewares: [aifeed-aimd-dir]
+      service: aifeed-origin
+    aifeed-aimd-page:
+      rule: 'Method(`GET`, `HEAD`) && HeaderRegexp(`Accept`, `text/aifeed\+markdown`) && PathRegexp(`[^/]$`)'
+      priority: 128
+      middlewares: [aifeed-aimd-page]
+      service: aifeed-origin
+
+    aifeed-mako-root:
+      rule: 'Method(`GET`, `HEAD`) && HeaderRegexp(`Accept`, `text/mako\+markdown`) && Path(`/`)'
+      priority: 127
+      middlewares: [aifeed-mako-root]
+      service: aifeed-origin
+    aifeed-mako-dir:
+      rule: 'Method(`GET`, `HEAD`) && HeaderRegexp(`Accept`, `text/mako\+markdown`) && PathRegexp(`.+/$`)'
+      priority: 126
+      middlewares: [aifeed-mako-dir]
+      service: aifeed-origin
+    aifeed-mako-page:
+      rule: 'Method(`GET`, `HEAD`) && HeaderRegexp(`Accept`, `text/mako\+markdown`) && PathRegexp(`[^/]$`)'
+      priority: 125
+      middlewares: [aifeed-mako-page]
+      service: aifeed-origin
+
+  middlewares:
+    aifeed-aimd-root:
+      replacePath: /index.aifeed.md
+    aifeed-aimd-dir:
+      replacePathRegex:
+        regex: '^/(.*)/$'
+        replacement: /$1/index.aifeed.md
+    aifeed-aimd-page:
+      replacePathRegex:
+        regex: '^/?(.*)$'
+        replacement: /$1.aifeed.md
+
+    aifeed-mako-root:
+      replacePath: /index.mako.md
+    aifeed-mako-dir:
+      replacePathRegex:
+        regex: '^/(.*)/$'
+        replacement: /$1/index.mako.md
+    aifeed-mako-page:
+      replacePathRegex:
+        regex: '^/?(.*)$'
+        replacement: /$1.mako.md
+
+  services:
+    aifeed-origin:
+      loadBalancer:
+        servers:
+          - url: 'http://ORIGIN_HOST:ORIGIN_PORT'

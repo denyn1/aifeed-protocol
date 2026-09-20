@@ -21,11 +21,13 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | nginx | Accept → `.aifeed.md` / `.mako.md` 重写 | [`nginx/aifeed-content.conf`](nginx/aifeed-content.conf) |
 | Caddy | Accept → `.aifeed.md` / `.mako.md` 重写 | [`caddy/Caddyfile`](caddy/Caddyfile) |
 | Apache | mod_rewrite + ForceType | [`apache/.htaccess`](apache/.htaccess) |
+| Traefik（v2/v3） | Accept → `.aifeed.md` / `.mako.md` 重写 | [`traefik/aifeed.yml`](traefik/aifeed.yml) |
 | Node / Express / 纯 http | handler + 内联签名 | [`node/aifeed-serve.js`](node/aifeed-serve.js) |
 | Next.js（App Router） | middleware + route handler | [`nextjs/middleware.js`](nextjs/middleware.js), [`nextjs/app/api/aifeed/route.js`](nextjs/app/api/aifeed/route.js) |
 | PHP（非 WordPress） | `aifeed_serve()` 前端控制器检查 | [`php/aifeed-serve.php`](php/aifeed-serve.php) |
 | Python ASGI（FastAPI/Starlette/Django） | `AifeedMiddleware` | [`python/aifeed_middleware.py`](python/aifeed_middleware.py) |
 | Go（net/http） | `aifeed.Handler(next, root, aimd, mako)` | [`go/aifeed.go`](go/aifeed.go) |
+| Cloudflare Workers（静态资源） | Accept → 通过 `ASSETS` binding 返回 `.aifeed.md` / `.mako.md` | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | 部署前 build + 签名 + 验证 | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
 | WordPress | 双栈服务 + 管理界面的插件 | `wp-plugin/` |
 
@@ -122,6 +124,23 @@ app.add_middleware(AifeedMiddleware, root="public", mako=True)
 ```go
 http.Handle("/", aifeed.Handler(http.FileServer(http.Dir("public")), "public", true, true))
 ```
+
+### Traefik（v2/v3）
+
+```bash
+traefik --providers.file.filename=integrations/traefik/aifeed.yml
+# 先在文件中设置 ORIGIN_HOST / ORIGIN_PORT
+```
+
+### Cloudflare Workers（静态资源）
+
+```bash
+cp integrations/cloudflare/worker.mjs ./worker.mjs
+cp integrations/cloudflare/wrangler.template.toml ./wrangler.toml   # 把 [assets].directory 指向你的构建输出
+npx wrangler deploy
+```
+
+请求目录 URL 时请带尾部斜杠（`/dir/`）以获得 markdown；`/dir` 会回退到 HTML 资源。
 
 ## 部署后验证
 

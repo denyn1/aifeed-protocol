@@ -75,7 +75,9 @@ export async function negotiate(request, env, prefix, pathname, accept, host) {
   const wantsAimd = accept.includes('text/aifeed+markdown');
   const wantsMako = accept.includes('text/mako+markdown');
   if (!wantsAimd && !wantsMako) return null;
-  if (!(pathname.endsWith('/') || pathname.endsWith('.html'))) return null;
+  const lastSegment = pathname.split('/').pop();
+  const hasExtension = /\.[A-Za-z0-9]+$/.test(lastSegment);
+  if (hasExtension && !pathname.endsWith('.html')) return null;
   const suffix = wantsAimd ? '.aifeed.md' : '.mako.md';
   const context = wantsAimd ? 'aimd' : 'mako';
   const mediaType = wantsAimd ? 'text/aifeed+markdown' : 'text/mako+markdown';

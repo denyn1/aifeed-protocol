@@ -22,11 +22,13 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | nginx | Accept → rewrite `.aifeed.md` / `.mako.md` | [`nginx/aifeed-content.conf`](nginx/aifeed-content.conf) |
 | Caddy | Accept → rewrite `.aifeed.md` / `.mako.md` | [`caddy/Caddyfile`](caddy/Caddyfile) |
 | Apache | mod_rewrite + ForceType | [`apache/.htaccess`](apache/.htaccess) |
+| Traefik (v2/v3) | Accept → rewrite `.aifeed.md` / `.mako.md` | [`traefik/aifeed.yml`](traefik/aifeed.yml) |
 | Node / Express / http polos | handler + tanda tangan inline | [`node/aifeed-serve.js`](node/aifeed-serve.js) |
 | Next.js (App Router) | middleware + route handler | [`nextjs/middleware.js`](nextjs/middleware.js), [`nextjs/app/api/aifeed/route.js`](nextjs/app/api/aifeed/route.js) |
 | PHP (non-WordPress) | cek front-controller `aifeed_serve()` | [`php/aifeed-serve.php`](php/aifeed-serve.php) |
 | Python ASGI (FastAPI/Starlette/Django) | `AifeedMiddleware` | [`python/aifeed_middleware.py`](python/aifeed_middleware.py) |
 | Go (net/http) | `aifeed.Handler(next, root, aimd, mako)` | [`go/aifeed.go`](go/aifeed.go) |
+| Cloudflare Workers (aset statis) | Accept → `.aifeed.md` / `.mako.md` via binding `ASSETS` | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | build + tanda tangan + verifikasi sebelum deploy | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
 | WordPress | plugin dengan penyajian dual-stack + admin | `wp-plugin/` |
 
@@ -125,6 +127,24 @@ app.add_middleware(AifeedMiddleware, root="public", mako=True)
 ```go
 http.Handle("/", aifeed.Handler(http.FileServer(http.Dir("public")), "public", true, true))
 ```
+
+### Traefik (v2/v3)
+
+```bash
+traefik --providers.file.filename=integrations/traefik/aifeed.yml
+# set ORIGIN_HOST / ORIGIN_PORT di dalam berkas dulu
+```
+
+### Cloudflare Workers (aset statis)
+
+```bash
+cp integrations/cloudflare/worker.mjs ./worker.mjs
+cp integrations/cloudflare/wrangler.template.toml ./wrangler.toml   # arahkan [assets].directory ke output build Anda
+npx wrangler deploy
+```
+
+Minta URL direktori dengan trailing slash (`/dir/`) untuk menerima markdown; `/dir`
+jatuh ke aset HTML.
 
 ## Verifikasi setelah deploy
 
