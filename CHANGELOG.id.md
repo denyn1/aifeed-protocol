@@ -18,7 +18,10 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   crawl, lisensi, `llms.txt`, interval revokasi, aturan per-path), build incremental,
   verifikasi lokal manifest/halaman/indeks, dan ekspor bersama record DNS TXT
   `_aifeed`; crawler yang menghormati robots (sitemap atau penemuan tautan, rate
-  limit, cache ETag/Last-Modified) menangani situs live. Private key tetap di
+  limit, cache ETag/Last-Modified) menangani situs live; preset jenis situs (news,
+  ecommerce, marketplace, government, open, restrictive, blog), tipe halaman per-path
+  (`product`, `article`, `listing`, …), dan metadata freshness opt-in (tanggal/tag
+  halaman) melengkapi dukungan jenis situs. Private key tetap di
   workspace (0600) dan tidak pernah disajikan; UI EN/ID/ZH. Pembangun manifest
   (`lib/site.js`) mendapat opsi opsional `limits`,
   `license`, `attribution_text/url`, dan `maxCheckIntervalHours` (backward-compatible).

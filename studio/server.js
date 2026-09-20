@@ -11,6 +11,7 @@ const siteLib = require('../lib/site');
 const { publishProject } = require('./lib/publish');
 const { verifyBuild } = require('./lib/verify');
 const { crawlSite } = require('./lib/crawl');
+const { listPresets, TYPE_PRESETS } = require('./lib/presets');
 const { createJobManager } = require('./jobs');
 
 const VERSION = require('../package.json').version;
@@ -144,6 +145,10 @@ function createServer(options = {}) {
       });
     }
 
+    if (parts.length === 2 && parts[1] === 'presets' && method === 'GET') {
+      return json(res, 200, { presets: listPresets(), typePresets: TYPE_PRESETS });
+    }
+
     if (parts.length === 2 && parts[1] === 'projects' && method === 'GET') {
       return json(res, 200, { projects: projectSummaryList() });
     }
@@ -184,6 +189,13 @@ function createServer(options = {}) {
             return json(res, 400, { error: field + ' must be a string' });
           }
         }
+        if (body.page_types !== undefined) {
+          const errors = policyLib.validatePageTypes(body.page_types);
+          if (errors.length > 0) return json(res, 400, { error: 'invalid page_types', errors });
+        }
+        if (body.freshness !== undefined && typeof body.freshness !== 'boolean') {
+          return json(res, 400, { error: 'freshness must be a boolean' });
+        }
         const updated = {
           ...project,
           name: body.name !== undefined ? body.name : project.name,
@@ -191,7 +203,9 @@ function createServer(options = {}) {
           locale: body.locale !== undefined ? body.locale : project.locale,
           contact: body.contact !== undefined ? body.contact : project.contact,
           description: body.description !== undefined ? body.description : project.description,
-          profile: body.profile !== undefined ? body.profile : project.profile
+          profile: body.profile !== undefined ? body.profile : project.profile,
+          page_types: body.page_types !== undefined ? body.page_types : project.page_types,
+          freshness: body.freshness !== undefined ? body.freshness : project.freshness
         };
         workspace.saveProject(id, updated);
         return json(res, 200, { project: updated });
@@ -309,6 +323,8 @@ function createServer(options = {}) {
             sourceDir,
             pages,
             sitemap,
+            pageTypes: project.page_types || [],
+            freshness: project.freshness !== false,
             outDir: paths.outDir,
             keyPath: paths.keyPath,
             statePath: paths.statePath,

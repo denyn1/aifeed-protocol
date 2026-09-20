@@ -4,16 +4,20 @@
   const TOKEN = window.__STUDIO_TOKEN__ || '';
   const USAGE_KEYS = ['search', 'retrieval', 'input', 'training', 'quote', 'summarize', 'reproduce', 'translate', 'modify', 'embed', 'commercial_use'];
   const TYPES = ['blog', 'news', 'ecommerce', 'marketplace', 'government', 'education', 'saas', 'portfolio', 'community', 'docs', 'nonprofit', 'personal', 'other'];
+  const MAKO_TYPES = ['product', 'article', 'docs', 'landing', 'profile', 'listing', 'event', 'recipe', 'faq', 'custom'];
   const ATTRIBUTION_RANK = { none: 0, optional: 1, required: 2 };
 
   const state = {
     lang: localStorage.getItem('aifeed-studio-lang') || ((navigator.language || 'en').slice(0, 2)),
     i18n: {},
+    presets: [],
+    typePresets: {},
     view: 'projects',
     projects: [],
     current: null,
     tab: 'setup',
     policyDraft: null,
+    pageTypesDraft: null,
     verifyReport: null,
     exportInfo: null,
     log: [],
@@ -81,6 +85,17 @@
     }
   }
 
+  async function loadPresets() {
+    try {
+      const data = await api('/presets');
+      state.presets = data.presets || [];
+      state.typePresets = data.typePresets || {};
+    } catch (error) {
+      state.presets = [];
+      state.typePresets = {};
+    }
+  }
+
   async function refreshProjects() {
     const data = await api('/projects');
     state.projects = data.projects;
@@ -111,6 +126,7 @@
       field('n-domain', t('new.domain'), 'text', 'example.com') +
       field('n-name', t('new.name'), 'text', '') +
       '<div><label>' + t('new.type') + '</label><select id="n-type">' + TYPES.map((type) => option(type, type, 'blog')).join('') + '</select></div>' +
+      '<div><label>' + t('new.preset') + '</label><select id="n-preset">' + presetOptions('blog') + '</select></div>' +
       field('n-locale', t('new.locale'), 'text', 'en') +
       field('n-contact', t('new.contact'), 'text', 'mailto:admin@example.com') +
       '<div><label>' + t('new.profile') + '</label><select id="n-profile">' +
@@ -122,12 +138,16 @@
     for (const element of app.querySelectorAll('.project-item')) {
       element.addEventListener('click', () => openProject(element.dataset.id));
     }
+    document.getElementById('n-type').addEventListener('change', (event) => {
+      document.getElementById('n-preset').value = (state.typePresets && state.typePresets[event.target.value]) || 'blog';
+    });
     document.getElementById('create').addEventListener('click', async () => {
       try {
         const body = {
           domain: value('n-domain'),
           name: value('n-name'),
           type: value('n-type'),
+          preset: value('n-preset'),
           locale: value('n-locale'),
           contact: value('n-contact'),
           description: value('n-description'),
@@ -168,6 +188,7 @@
       const data = await api('/projects/' + id);
       state.current = data;
       state.policyDraft = JSON.parse(JSON.stringify(data.policy));
+      state.pageTypesDraft = null;
       state.tab = 'setup';
       state.verifyReport = null;
       state.exportInfo = null;
@@ -317,6 +338,10 @@
   function renderPolicy() {
     const tab = document.getElementById('tab');
     const policy = state.policyDraft;
+    if (!state.pageTypesDraft) {
+      state.pageTypesDraft = JSON.parse(JSON.stringify(state.current.project.page_types || []));
+    }
+    const pageTypes = state.pageTypesDraft;
     const usageRows = USAGE_KEYS.map((key) =>
       '<div><label>' + t('usage.' + key) + '</label><select id="p-usage-' + key + '">' +
       option('allow', 'allow', policy.usage[key]) + option('deny', 'deny', policy.usage[key]) + '</select></div>'
@@ -348,9 +373,17 @@
       '<label class="check"><input id="p-llms" type="checkbox"' + (policy.llms ? ' checked' : '') + '> ' + t('policy.llms') + '</label>' +
       '<div><label>' + t('policy.interval') + '</label><input id="p-interval" type="number" min="1" max="8760" value="' + esc(policy.max_check_interval_hours) + '"></div>' +
       '</div></div>' +
+      '<div class="card"><h2>' + t('policy.preset') + '</h2>' +
+      '<div class="row"><div><select id="p-preset">' + presetOptions(state.current.project.preset) + '</select></div>' +
+      '<div style="flex:0 0 auto"><button id="preset-apply">' + t('policy.applyPreset') + '</button></div></div></div>' +
       '<div class="card"><h2>' + t('policy.rules') + '</h2><div id="rules">' + rules + '</div>' +
       '<p><button class="ghost" id="rule-add">+ ' + t('policy.ruleAdd') + '</button></p>' +
       '<p><button class="primary" id="policy-save">' + t('policy.save') + '</button></p></div>' +
+      '<div class="card"><h2>' + t('policy.content') + '</h2>' +
+      '<label class="check"><input id="p-freshness" type="checkbox"' + (state.current.project.freshness !== false ? ' checked' : '') + '> ' + t('policy.freshness') + '</label>' +
+      '<h2>' + t('policy.pageTypes') + '</h2><div id="page-types">' + pageTypes.map((entry, index) => pageTypeRow(entry, index)).join('') + '</div>' +
+      '<p><button class="ghost" id="pt-add">+ ' + t('policy.pageTypeAdd') + '</button></p>' +
+      '<p><button class="primary" id="pt-save">' + t('policy.saveContent') + '</button></p></div>' +
       '<div class="card"><h2>' + t('policy.preview') + '</h2>' +
       '<div class="row"><div><label>' + t('policy.previewPath') + '</label><input id="preview-path" type="text" placeholder="/cart/checkout"></div>' +
       '<div style="flex:0 0 auto"><label>&nbsp;</label><button id="preview-run">' + t('policy.previewRun') + '</button></div></div>' +
@@ -392,6 +425,63 @@
         fail(error);
       }
     });
+    document.getElementById('preset-apply').addEventListener('click', () => {
+      const preset = state.presets.find((entry) => entry.name === value('p-preset'));
+      if (!preset) return;
+      state.policyDraft = JSON.parse(JSON.stringify(preset.policy));
+      render();
+    });
+    for (const button of tab.querySelectorAll('[data-pt-remove]')) {
+      button.addEventListener('click', () => {
+        state.pageTypesDraft = collectPageTypes();
+        state.pageTypesDraft.splice(Number(button.dataset.ptRemove), 1);
+        render();
+      });
+    }
+    document.getElementById('pt-add').addEventListener('click', () => {
+      state.pageTypesDraft = collectPageTypes();
+      state.pageTypesDraft.push({ pattern: '/products/**', type: 'product' });
+      render();
+    });
+    document.getElementById('pt-save').addEventListener('click', async () => {
+      try {
+        const updated = await api('/projects/' + state.current.project.id, {
+          method: 'PUT',
+          body: JSON.stringify({
+            page_types: collectPageTypes(),
+            freshness: checked('p-freshness')
+          })
+        });
+        state.current.project = updated.project;
+        state.pageTypesDraft = JSON.parse(JSON.stringify(updated.project.page_types || []));
+        showToast(t('common.saved'), true);
+        render();
+      } catch (error) {
+        fail(error);
+      }
+    });
+  }
+
+  function presetOptions(selected) {
+    const names = state.presets.length > 0
+      ? state.presets.map((entry) => entry.name)
+      : ['blog', 'news', 'ecommerce', 'marketplace', 'government', 'open', 'restrictive'];
+    return names.map((name) => option(name, name, selected)).join('');
+  }
+
+  function pageTypeRow(entry, index) {
+    return '<div class="rule"><div class="row">' +
+      '<div><label>' + t('policy.pageTypePattern') + '</label><input id="pt-' + index + '-pattern" type="text" value="' + esc(entry.pattern || '') + '"></div>' +
+      '<div><label>' + t('policy.pageTypeType') + '</label><select id="pt-' + index + '-type">' + MAKO_TYPES.map((type) => option(type, type, entry.type)).join('') + '</select></div>' +
+      '<div style="flex:0 0 auto"><label>&nbsp;</label><button class="ghost" data-pt-remove="' + index + '">' + t('policy.pageTypeRemove') + '</button></div>' +
+      '</div></div>';
+  }
+
+  function collectPageTypes() {
+    return (state.pageTypesDraft || []).map((entry, index) => ({
+      pattern: value('pt-' + index + '-pattern'),
+      type: value('pt-' + index + '-type')
+    })).filter((entry) => entry.pattern);
   }
 
   function policyRule(rule, index, policy) {
@@ -610,6 +700,7 @@
   (async () => {
     if (!['en', 'id', 'zh'].includes(state.lang)) state.lang = 'en';
     await loadI18n();
+    await loadPresets();
     try {
       await refreshProjects();
     } catch (error) {

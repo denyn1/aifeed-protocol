@@ -33,6 +33,15 @@ build, verify, and export.
   summarize, reproduce, translate, modify, embed, commercial use), attribution
   requirement plus text/URL, crawl limits, license, `llms.txt`, revocation check
   interval, and per-path rules that can only restrict (spec `restrict-only`).
+- **Site-type presets**: news, ecommerce, marketplace, government, open, restrictive,
+  and blog policies derived from `lib/scaffold.js`, applied at project creation or from
+  the Policy tab.
+- **Page types per path**: map path patterns to frontmatter types (`product`, `article`,
+  `listing`, `faq`, …) with longest-pattern precedence; delta index entries inherit the
+  type.
+- **Freshness metadata**: page `updated` dates from `article:modified_time` /
+  `og:updated_time` / `<time datetime>` and tags from `<meta name="keywords">`,
+  toggleable per project (off by default in the library, on in Studio).
 - **Incremental builds**: unchanged pages (by HTML hash) are skipped; the state file
   keeps a per-page index entry so rebuilds stay fast for large sites.
 - **Verify**: manifest, every page signature, and both indexes are verified locally
@@ -84,6 +93,8 @@ All API calls need the `x-studio-token` header (SSE uses `?token=`).
 
 - **M2 (done):** crawl a live site via `sitemap.xml` or links (robots-aware,
   rate-limited, cached with conditional requests) and build from the cache.
+- **M2.5 (done):** site-type presets, per-path page types, and freshness metadata
+  extraction for news and e-commerce sites.
 - **M3 (next):** tar.gz export, stack detection for adapter instructions, live
   verification from the UI, key rotation ceremony.
 - **M4:** friendlier diagnostics, audit journal, screenshots.

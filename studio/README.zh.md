@@ -30,6 +30,13 @@ npm run studio -- --port 8080 --workspace ./studio-data
 - **策略编辑器**：使用许可（search、retrieval、input、training、quote、summarize、
   reproduce、translate、modify、embed、commercial use）、署名要求与文本/URL、抓取限额、
   许可证、`llms.txt`、撤销检查间隔，以及只能收紧的路径规则（规范 `restrict-only`）。
+- **站点类型预设**：从 `lib/scaffold.js` 派生的 news、ecommerce、marketplace、
+  government、open、restrictive 与 blog 策略，在创建项目时或从策略标签应用。
+- **按路径的页面类型**：把路径模式映射到 frontmatter 类型（`product`、`article`、
+  `listing`、`faq`……），最长模式优先；增量索引条目继承该类型。
+- **Freshness 元数据**：页面 `updated` 日期取自 `article:modified_time` /
+  `og:updated_time` / `<time datetime>`，标签取自 `<meta name="keywords">`，可按项目
+  开关（库中默认关闭，Studio 中默认开启）。
 - **增量构建**：未变更页面（按 HTML 哈希）会被跳过；状态文件保存逐页索引条目，大型站点
   重建依然快速。
 - **验证**：发布前在本地验证 manifest、所有页面签名与两个索引。
@@ -78,6 +85,8 @@ npm run studio -- --port 8080 --workspace ./studio-data
 
 - **M2（已完成）：** 通过 `sitemap.xml` 或链接抓取线上站点（遵守 robots、限速、带条件
   请求的缓存），并从缓存构建。
+- **M2.5（已完成）：** 站点类型预设、按路径的页面类型，以及面向新闻与电商站点的
+  freshness 元数据提取。
 - **M3（下一步）：** tar.gz 导出、栈检测生成适配器说明、UI 内线上验证、密钥轮换仪式。
 - **M4：** 更友好的诊断、审计日志、截图。
 

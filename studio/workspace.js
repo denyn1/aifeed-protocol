@@ -5,6 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 const cryptoLib = require('../lib/crypto');
 const policyLib = require('./lib/policy');
+const { presetPolicy, presetForType, PRESET_NAMES } = require('./lib/presets');
 
 function defaultWorkspace() {
   return process.env.AIFEED_STUDIO_HOME || path.join(os.homedir(), '.aifeed-studio');
@@ -99,21 +100,26 @@ class Workspace {
     const fingerprint = cryptoLib.fingerprintOf(publicKey);
     fs.writeFileSync(paths.publicKeyPath, publicKeyValue + '\n' + fingerprint + '\n');
 
+    const type = input.type || 'blog';
+    const preset = PRESET_NAMES.includes(input.preset) ? input.preset : presetForType(type);
     const project = {
       id,
       domain,
       name: input.name || domain,
-      type: input.type || 'blog',
+      type,
       locale: input.locale || 'en',
       contact: input.contact || 'mailto:admin@' + domain,
       description: input.description || '',
       profile: ['aimd', 'mako', 'both'].includes(input.profile) ? input.profile : 'both',
+      preset,
+      page_types: [],
+      freshness: true,
       key_id: input.keyId || id + '-key1',
       created_at: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
       source: null
     };
     writeJson(paths.projectPath, project);
-    writeJson(paths.policyPath, policyLib.DEFAULT_POLICY);
+    writeJson(paths.policyPath, presetPolicy(preset));
 
     list.push({ id, domain: project.domain, name: project.name, created_at: project.created_at });
     this.saveList(list);

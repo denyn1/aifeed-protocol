@@ -123,5 +123,16 @@
   "setup.respectRobots": "Respect robots.txt",
   "setup.scanStatus": "{count} pages cached · last scan {at}",
   "build.scan": "Scan site",
-  "build.scanDone": "Scan finished — fetched {fetched}, unchanged {unchanged}, skipped by robots {robots}, errors {errors}"
+  "build.scanDone": "Scan finished — fetched {fetched}, unchanged {unchanged}, skipped by robots {robots}, errors {errors}",
+  "new.preset": "Policy preset",
+  "policy.preset": "Policy preset",
+  "policy.applyPreset": "Apply preset",
+  "policy.content": "Content metadata",
+  "policy.freshness": "Use page dates and tags from HTML",
+  "policy.pageTypes": "Page types",
+  "policy.pageTypePattern": "Path pattern (e.g. /products/**)",
+  "policy.pageTypeType": "Page type",
+  "policy.pageTypeAdd": "Add page type",
+  "policy.pageTypeRemove": "Remove",
+  "policy.saveContent": "Save content settings"
 }

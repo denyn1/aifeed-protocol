@@ -1,5 +1,7 @@
 'use strict';
 
+const { MAKO_TYPES } = require('../../lib/mako-html');
+
 const USAGE_KEYS = [
   'search',
   'retrieval',
@@ -282,14 +284,55 @@ function resolveOverride(policy, urlPath) {
   return Object.keys(override).length > 0 ? override : null;
 }
 
+function validatePageTypes(pageTypes) {
+  const errors = [];
+  if (!Array.isArray(pageTypes)) return ['page_types must be an array'];
+  if (pageTypes.length > 100) errors.push('page_types supports at most 100 entries');
+  pageTypes.forEach((entry, index) => {
+    if (!entry || typeof entry !== 'object') {
+      errors.push('page_types[' + index + '] must be an object');
+      return;
+    }
+    if (typeof entry.pattern !== 'string' || !entry.pattern.startsWith('/')) {
+      errors.push('page_types[' + index + '].pattern must start with "/"');
+    } else if (entry.pattern.length > 512 || entry.pattern.includes('..')) {
+      errors.push('page_types[' + index + '].pattern is invalid');
+    }
+    if (!MAKO_TYPES.includes(entry.type)) {
+      errors.push('page_types[' + index + '].type must be one of ' + MAKO_TYPES.join(', '));
+    }
+    for (const key of Object.keys(entry)) {
+      if (key !== 'pattern' && key !== 'type') errors.push('page_types[' + index + '] unknown field: ' + key);
+    }
+  });
+  return errors;
+}
+
+function resolvePageType(pageTypes, urlPath) {
+  let best = null;
+  let bestLength = -1;
+  for (const entry of pageTypes || []) {
+    if (!entry || typeof entry.pattern !== 'string') continue;
+    if (!matchPath(entry.pattern, urlPath)) continue;
+    if (entry.pattern.length > bestLength) {
+      best = entry.type;
+      bestLength = entry.pattern.length;
+    }
+  }
+  return best || null;
+}
+
 module.exports = {
   USAGE_KEYS,
   LIMIT_KEYS,
   DEFAULT_POLICY,
+  MAKO_TYPES,
   normalizePolicy,
   validatePolicy,
   validateRules,
+  validatePageTypes,
   matchPath,
   effectivePolicy,
-  resolveOverride
+  resolveOverride,
+  resolvePageType
 };

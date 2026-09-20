@@ -123,5 +123,16 @@
   "setup.respectRobots": "遵守 robots.txt",
   "setup.scanStatus": "已缓存 {count} 个页面 · 上次扫描 {at}",
   "build.scan": "扫描站点",
-  "build.scanDone": "扫描完成——抓取 {fetched}，未变更 {unchanged}，robots 跳过 {robots}，错误 {errors}"
+  "build.scanDone": "扫描完成——抓取 {fetched}，未变更 {unchanged}，robots 跳过 {robots}，错误 {errors}",
+  "new.preset": "策略预设",
+  "policy.preset": "策略预设",
+  "policy.applyPreset": "应用预设",
+  "policy.content": "内容元数据",
+  "policy.freshness": "使用页面中的日期与标签",
+  "policy.pageTypes": "页面类型",
+  "policy.pageTypePattern": "路径模式（如 /products/**）",
+  "policy.pageTypeType": "页面类型",
+  "policy.pageTypeAdd": "添加页面类型",
+  "policy.pageTypeRemove": "删除",
+  "policy.saveContent": "保存内容设置"
 }

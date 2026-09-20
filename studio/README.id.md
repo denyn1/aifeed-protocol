@@ -35,6 +35,15 @@ lalu ekspor.
   summarize, reproduce, translate, modify, embed, commercial use), atribusi + teks/URL,
   batas crawl, lisensi, `llms.txt`, interval cek revokasi, dan aturan per-path yang hanya
   bisa mengetatkan (spec `restrict-only`).
+- **Preset jenis situs**: kebijakan news, ecommerce, marketplace, government, open,
+  restrictive, dan blog yang diturunkan dari `lib/scaffold.js`, diterapkan saat membuat
+  proyek atau dari tab Kebijakan.
+- **Tipe halaman per-path**: petakan pola path ke tipe frontmatter (`product`, `article`,
+  `listing`, `faq`, …) dengan presedensi pola terpanjang; entri indeks delta mewarisi
+  tipe tersebut.
+- **Metadata freshness**: tanggal `updated` halaman dari `article:modified_time` /
+  `og:updated_time` / `<time datetime>` dan tag dari `<meta name="keywords">`, bisa
+  diaktifkan per proyek (default off di library, on di Studio).
 - **Build incremental**: halaman tak berubah (hash HTML) dilewati; state menyimpan entri
   indeks per halaman agar rebuild tetap cepat untuk situs besar.
 - **Verifikasi**: manifest, semua tanda tangan halaman, dan kedua indeks diverifikasi
@@ -86,6 +95,8 @@ Semua panggilan API butuh header `x-studio-token` (SSE memakai `?token=`).
 
 - **M2 (selesai):** crawl situs live via `sitemap.xml` atau tautan (hormati robots,
   rate limit, cache dengan conditional request) dan build dari cache.
+- **M2.5 (selesai):** preset jenis situs, tipe halaman per-path, dan ekstraksi metadata
+  freshness untuk situs news dan e-commerce.
 - **M3 (berikutnya):** ekspor tar.gz, deteksi stack untuk instruksi adapter, verifikasi
   live dari UI, upacara rotasi kunci.
 - **M4:** diagnostik ramah, jurnal audit, tangkapan layar.

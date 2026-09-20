@@ -94,6 +94,8 @@ function publishProject(options) {
     outDir,
     keyPath,
     statePath,
+    pageTypes = [],
+    freshness = false,
     incremental = true,
     now = new Date(),
     onProgress = () => {}
@@ -123,9 +125,9 @@ function publishProject(options) {
   const profileList = writtenProfiles(profile);
   const key = loadKey(keyPath);
   const signedAt = isoSeconds(now);
-  const policyHash = sha256Base64(Buffer.from(JSON.stringify({ policy, profile })));
+  const policyHash = sha256Base64(Buffer.from(JSON.stringify({ policy, profile, pageTypes, freshness })));
   const previousState = incremental ? (options.previousState || null) : null;
-  const reuse = previousState && previousState.policy_hash === policyHash ? previousState : null;
+  const reuse = previousState && previousState.version === 2 && previousState.policy_hash === policyHash ? previousState : null;
 
   const htmlFiles = pageInputs;
   if (htmlFiles.length === 0) throw new Error('no pages to build');
@@ -161,10 +163,14 @@ function publishProject(options) {
       skipped++;
     } else {
       const override = policyLib.resolveOverride(policy, urlPath);
+      const pageType = policyLib.resolvePageType(pageTypes, urlPath) || undefined;
       const converted = makoHtmlLib.htmlToMako(htmlText, {
         profile,
+        type: pageType,
         canonical: pageUrl,
         updated: options.updated,
+        useMetaDates: freshness,
+        useMetaTags: freshness,
         alternates: siteLib.extractAlternates(htmlText, baseUrl),
         aifeed: override || undefined
       });
@@ -267,7 +273,7 @@ function publishProject(options) {
   }
 
   const state = {
-    version: 1,
+    version: 2,
     policy_hash: policyHash,
     profile,
     fingerprint: key.fingerprint,

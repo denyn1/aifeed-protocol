@@ -23,7 +23,21 @@ function copyRecursive(source, target) {
     return;
   }
   fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.copyFileSync(source, target);
+  const temp = target + '.tmp-' + process.pid;
+  fs.copyFileSync(source, temp);
+  fs.renameSync(temp, target);
+}
+
+function pruneMissing(source, target) {
+  for (const entry of fs.readdirSync(target, { withFileTypes: true })) {
+    const sourcePath = path.join(source, entry.name);
+    const targetPath = path.join(target, entry.name);
+    if (!fs.existsSync(sourcePath)) {
+      fs.rmSync(targetPath, { recursive: true, force: true });
+      continue;
+    }
+    if (entry.isDirectory()) pruneMissing(sourcePath, targetPath);
+  }
 }
 
 function listFiles(root) {
@@ -49,8 +63,8 @@ function buildSdk() {
   for (const [source, target] of ENTRIES) {
     const sourcePath = path.join(ROOT, source);
     const targetPath = path.join(SDK_DIR, target);
-    fs.rmSync(targetPath, { recursive: true, force: true });
     copyRecursive(sourcePath, targetPath);
+    if (fs.statSync(sourcePath).isDirectory()) pruneMissing(sourcePath, targetPath);
   }
   return SDK_DIR;
 }

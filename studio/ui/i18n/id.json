@@ -123,5 +123,16 @@
   "setup.respectRobots": "Hormati robots.txt",
   "setup.scanStatus": "{count} halaman ter-cache · scan terakhir {at}",
   "build.scan": "Scan situs",
-  "build.scanDone": "Scan selesai — diambil {fetched}, tak berubah {unchanged}, dilewati robots {robots}, error {errors}"
+  "build.scanDone": "Scan selesai — diambil {fetched}, tak berubah {unchanged}, dilewati robots {robots}, error {errors}",
+  "new.preset": "Preset kebijakan",
+  "policy.preset": "Preset kebijakan",
+  "policy.applyPreset": "Terapkan preset",
+  "policy.content": "Metadata konten",
+  "policy.freshness": "Gunakan tanggal & tag dari HTML",
+  "policy.pageTypes": "Tipe halaman",
+  "policy.pageTypePattern": "Pola path (mis. /produk/**)",
+  "policy.pageTypeType": "Tipe halaman",
+  "policy.pageTypeAdd": "Tambah tipe halaman",
+  "policy.pageTypeRemove": "Hapus",
+  "policy.saveContent": "Simpan pengaturan konten"
 }
