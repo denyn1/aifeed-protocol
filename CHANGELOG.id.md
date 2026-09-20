@@ -12,6 +12,14 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 
 ### Ditambahkan
 
+- **AIFeed Studio (aplikasi publisher lokal)** — `npm run studio` menyajikan UI web
+  tanpa dependensi di `127.0.0.1:7777`: workspace per domain, pengambilan sumber HTML
+  lokal, editor kebijakan restrict-only (izin penggunaan, teks/URL atribusi, batas
+  crawl, lisensi, `llms.txt`, interval revokasi, aturan per-path), build incremental,
+  verifikasi lokal manifest/halaman/indeks, dan ekspor bersama record DNS TXT
+  `_aifeed`. Private key tetap di workspace (0600) dan tidak pernah disajikan; UI
+  EN/ID/ZH. Pembangun manifest (`lib/site.js`) mendapat opsi opsional `limits`,
+  `license`, `attribution_text/url`, dan `maxCheckIntervalHours` (backward-compatible).
 - **Rotasi kunci (v0.2 §14)** — mengganti kunci penanda tangan manifest tanpa merusak
   verifikasi: direktif `rotation.successor_fp` bertanda tangan kunci lama plus cross-check
   DNS `pk2` yang advisory, overlap terbatas (`effective_at` → `grace_until`, batas keras

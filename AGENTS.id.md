@@ -59,7 +59,7 @@ situs web, dan paper.
 npm run verify            # semuanya di bawah, satu gerbang
 npm run lint:syntax       # cek parse setiap file .js
 npm run check:consistency # versi, deps, secret, pasangan spec, target skrip
-npm test                  # suite Node (226 tes)
+npm test                  # suite Node (231 tes)
 npm run test:py           # verifier Python independen (44 tes)
 npm run bench:mako        # regenerasi benchmarks/mako-*.json + laporan
 npm run bench:enforcement # regenerasi benchmarks/enforcement-*.json|md
@@ -67,6 +67,7 @@ npm run fuzz:mako -- --iterations 3000   # fuzzing parser (seed tetap)
 npm run demos             # generate origin demo live + artefak apex
 npm run demos:check       # generate, lalu verifikasi setiap manifest/revokasi demo
 npm run verify:live       # konformansi live ke demo terdeploy (jaringan)
+npm run studio            # aplikasi publisher lokal di http://127.0.0.1:7777 (UI zero-dep)
 node bin/cli.js --help    # permukaan CLI
 ```
 
@@ -87,6 +88,7 @@ node bin/cli.js --help    # permukaan CLI
 | `demos/` | Konten origin demo (`sites.js`) dan kunci demo publik (`keys.js`) |
 | `functions/` | Cloudflare Pages Function: routing host, CORS, enforcement `strict` |
 | `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md` |
+| `studio/` | Aplikasi publisher lokal: workspace proyek, editor kebijakan (restrict-only), build/verifikasi/ekspor incremental, UI tiga bahasa |
 | `site/` | Sumber situs: `index.html` (tulisan tangan); file lain hasil generate |
 | `paper/` | Preprint: `main.tex` (sumber), `main.md` (cermin), `refs.bib`, `CLAIMS.md`, `CHECKLIST.md`, bundel |
 | `.github/workflows/pages-cf.yml` | CI: `render-html` → `build-site` → deploy Cloudflare Pages (dilewati tanpa secret CF) |

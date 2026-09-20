@@ -13,6 +13,14 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
 
 ### Added
 
+- **AIFeed Studio (local publisher app)** — `npm run studio` serves a zero-dependency
+  web UI on `127.0.0.1:7777`: per-domain workspace, local HTML source ingestion,
+  restrict-only policy editor (usage permissions, attribution text/URL, crawl limits,
+  license, `llms.txt`, revocation interval, per-path rules), incremental builds,
+  local verification of manifest/pages/indexes, and export with the `_aifeed` DNS TXT
+  record. Private keys stay in the workspace (0600) and are never served; UI in
+  EN/ID/ZH. The manifest builder (`lib/site.js`) gained optional `limits`, `license`,
+  `attribution_text/url`, and `maxCheckIntervalHours` options (backward compatible).
 - **Key rotation (v0.2 §14)** — replaces a manifest signing key without breaking
   verification: old-key-signed `rotation.successor_fp` directive plus an advisory DNS
   `pk2` cross-check, bounded overlap (`effective_at` → `grace_until`, 1 h hard floor),

@@ -58,7 +58,7 @@ benchmarks, the website, and the paper.
 npm run verify            # everything below, one gate
 npm run lint:syntax       # parse-check every .js file
 npm run check:consistency # versions, deps, secrets, spec pairs, script targets
-npm test                  # Node suite (226 tests)
+npm test                  # Node suite (231 tests)
 npm run test:py           # independent Python verifier (44 tests)
 npm run bench:mako        # regenerate benchmarks/mako-*.json + report
 npm run bench:enforcement # regenerate benchmarks/enforcement-*.json|md
@@ -66,6 +66,7 @@ npm run fuzz:mako -- --iterations 3000   # parser fuzzing (fixed seeds)
 npm run demos             # generate the live demo origins + apex artifacts
 npm run demos:check       # generate, then verify every demo manifest/revocation
 npm run verify:live       # live conformance against the deployed demos (network)
+npm run studio            # local publisher app at http://127.0.0.1:7777 (zero-dep UI)
 node bin/cli.js --help    # CLI surface
 ```
 
@@ -86,6 +87,7 @@ node bin/cli.js --help    # CLI surface
 | `demos/` | Demo origin content (`sites.js`) and public demo keys (`keys.js`) |
 | `functions/` | Cloudflare Pages Function: host routing, CORS, `strict` enforcement |
 | `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `publisher-ai-guide.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md` |
+| `studio/` | Local publisher app: project workspace, policy editor (restrict-only), incremental build/verify/export, trilingual UI |
 | `site/` | Website sources: `index.html` (hand-written); other files are generated |
 | `paper/` | Preprint: `main.tex` (source), `main.md` (mirror), `refs.bib`, `CLAIMS.md`, `CHECKLIST.md`, bundles |
 | `.github/workflows/pages-cf.yml` | CI: `render-html` → `build-site` → deploy Cloudflare Pages (skips without the CF secrets) |

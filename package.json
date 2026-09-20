@@ -47,6 +47,7 @@
     "demos": "node tools/gen-demos.js",
     "demos:check": "node tools/gen-demos.js --check",
     "verify:live": "node tools/check-live.js",
+    "studio": "node studio/server.js",
     "build:sdk": "node tools/build-sdk.js",
     "sdk:check": "node tools/build-sdk.js --check",
     "lint:syntax": "node tools/check-syntax.js",

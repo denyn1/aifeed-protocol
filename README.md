@@ -11,7 +11,7 @@ Declare, sign, and revoke what AI agents may do with your content — and let ag
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="npm version"></a>
-  <img src="https://img.shields.io/badge/tests-226%20JS%20%C2%B7%2044%20Python-3ddc97" alt="test suites">
+  <img src="https://img.shields.io/badge/tests-231%20JS%20%C2%B7%2044%20Python-3ddc97" alt="test suites">
   <img src="https://img.shields.io/badge/conformance-84%20vectors-f55036" alt="conformance vectors">
   <img src="https://img.shields.io/badge/specs-CC%20BY%204.0-6ea8fe" alt="spec license">
   <img src="https://img.shields.io/badge/code-MIT-3ddc97" alt="code license">
@@ -142,6 +142,7 @@ summarization this project does not perform automatically.
 - Architecture: [`docs/architecture.md`](docs/architecture.md) · Release guide: [`docs/release.md`](docs/release.md)
 - Agent quickstart (client side): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - Publisher AI guide (owner side): [`docs/publisher-ai-guide.md`](docs/publisher-ai-guide.md)
+- Publisher Studio (local app): [`studio/README.md`](studio/README.md)
 - Complete guide: [`penjelasan-aifeed.html`](penjelasan-aifeed.html) (source of <https://aifeed.md/penjelasan.html>)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Governance & open-core policy: [`GOVERNANCE.md`](GOVERNANCE.md)

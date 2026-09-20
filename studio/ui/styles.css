@@ -1,0 +1,146 @@
+:root {
+  --bg: #16130f;
+  --panel: #1f1a15;
+  --panel-2: #262019;
+  --border: #3a2f25;
+  --text: #f2ece4;
+  --muted: #a99d8f;
+  --accent: #f55036;
+  --ok: #3ddc97;
+  --warn: #ffb454;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 "Segoe UI", system-ui, sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.brand { font-weight: 700; letter-spacing: .3px; }
+.brand span { color: var(--accent); }
+.spacer { flex: 1; }
+
+main { max-width: 1060px; margin: 0 auto; padding: 22px; }
+footer { text-align: center; color: var(--muted); font-size: 12px; padding: 18px; }
+
+h1 { font-size: 22px; margin: 0 0 12px; }
+h2 { font-size: 17px; margin: 22px 0 10px; }
+p.muted, .muted { color: var(--muted); }
+.small { font-size: 12.5px; }
+
+a { color: var(--accent); }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.row { display: flex; gap: 12px; flex-wrap: wrap; }
+.row > * { flex: 1 1 220px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+
+label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+
+input[type="text"], input[type="number"], input[type="url"], select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font: inherit;
+}
+
+input:focus, select:focus, textarea:focus { outline: 1px solid var(--accent); }
+
+button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+button.ghost { background: transparent; }
+button:disabled { opacity: .55; cursor: not-allowed; }
+
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0; }
+.tabs button.active { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-size: 12.5px; font-weight: 600; }
+
+.pill { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); }
+.pill.ok { color: var(--ok); border-color: var(--ok); }
+.pill.bad { color: var(--accent); border-color: var(--accent); }
+.pill.warn { color: var(--warn); border-color: var(--warn); }
+
+pre {
+  background: #0f0d0a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  overflow: auto;
+  max-height: 320px;
+  font-size: 12.5px;
+}
+
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  background: var(--panel-2);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  max-width: 420px;
+  z-index: 10;
+}
+
+.toast.ok { border-color: var(--ok); }
+
+.projects { display: grid; gap: 10px; }
+.project-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  cursor: pointer;
+}
+.project-item:hover { border-color: var(--accent); }
+.project-item .dom { font-weight: 600; }
+.project-item .spacer { flex: 1; }
+
+.usage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; }
+.rule { border: 1px dashed var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+.inline { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.inline label { margin: 0; }
+.check { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text); }
+.check input { width: auto; }

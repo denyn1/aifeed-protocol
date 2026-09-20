@@ -12,7 +12,7 @@ Anda — dan biarkan agen membuktikannya.</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="versi npm"></a>
-  <img src="https://img.shields.io/badge/tests-226%20JS%20%C2%B7%2044%20Python-3ddc97" alt="suite pengujian">
+  <img src="https://img.shields.io/badge/tests-231%20JS%20%C2%B7%2044%20Python-3ddc97" alt="suite pengujian">
   <img src="https://img.shields.io/badge/conformance-84%20vectors-f55036" alt="vektor konformansi">
   <img src="https://img.shields.io/badge/specs-CC%20BY%204.0-6ea8fe" alt="lisensi spesifikasi">
   <img src="https://img.shields.io/badge/code-MIT-3ddc97" alt="lisensi kode">
@@ -144,6 +144,7 @@ yang tidak dilakukan proyek ini secara otomatis.
 - Arsitektur: [`docs/architecture.md`](docs/architecture.md) · Panduan rilis: [`docs/release.md`](docs/release.md)
 - Quickstart agen (sisi klien): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - Panduan AI publisher (sisi pemilik): [`docs/publisher-ai-guide.id.md`](docs/publisher-ai-guide.id.md)
+- Publisher Studio (aplikasi lokal): [`studio/README.id.md`](studio/README.id.md)
 - Panduan lengkap: [`penjelasan-aifeed.html`](penjelasan-aifeed.html) (sumber <https://aifeed.md/penjelasan.html>)
 - Kebijakan keamanan: [`SECURITY.md`](SECURITY.md)
 - Governance & kebijakan open-core: [`GOVERNANCE.md`](GOVERNANCE.md)

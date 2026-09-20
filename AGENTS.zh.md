@@ -54,7 +54,7 @@ WordPress 发布插件、基准、网站与论文。
 npm run verify            # 以下全部，一个门禁
 npm run lint:syntax       # 解析检查所有 .js 文件
 npm run check:consistency # 版本、依赖、密钥、规范镜像、脚本目标
-npm test                  # Node 套件（226 项测试）
+npm test                  # Node 套件（231 项测试）
 npm run test:py           # 独立 Python 验证器（44 项测试）
 npm run bench:mako        # 重新生成 benchmarks/mako-*.json + 报告
 npm run bench:enforcement # 重新生成 benchmarks/enforcement-*.json|md
@@ -62,6 +62,7 @@ npm run fuzz:mako -- --iterations 3000   # 解析器模糊测试（固定种子�
 npm run demos             # 生成线上演示源站 + apex 产物
 npm run demos:check       # 生成后验证每个演示 manifest/撤销
 npm run verify:live       # 对已部署演示做线上一致性检查（联网）
+npm run studio            # 本地发布方应用，http://127.0.0.1:7777（零依赖 UI）
 node bin/cli.js --help    # CLI 界面
 ```
 
@@ -82,6 +83,7 @@ node bin/cli.js --help    # CLI 界面
 | `demos/` | 演示源站内容（`sites.js`）与公开演示密钥（`keys.js`） |
 | `functions/` | Cloudflare Pages Function：主机路由、CORS、`strict` 执行 |
 | `docs/` | `architecture.md`、`release.md`、`agent-quickstart.md`、`rotation.md`、`deploy-site.md`、`namespace-setup.md` |
+| `studio/` | 本地发布方应用：项目工作区、策略编辑器（restrict-only）、增量构建/验证/导出、三语 UI |
 | `site/` | 网站源：`index.html`（手写）；其他文件为生成产物 |
 | `paper/` | 预印本：`main.tex`（源）、`main.md`（镜像）、`refs.bib`、`CLAIMS.md`、`CHECKLIST.md`、打包 |
 | `.github/workflows/pages-cf.yml` | CI：`render-html` → `build-site` → 部署 Cloudflare Pages（无 CF 密钥时跳过） |

@@ -1,0 +1,93 @@
+# AIFeed Studio
+
+<p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
+
+Aplikasi lokal tanpa dependensi yang mengubah website menjadi origin AIFeed bertanda
+tangan — manifest, AIFeed Markdown/MAKO per halaman, tanda tangan, indeks delta, dan
+`llms.txt` — dengan editor kebijakan untuk apa yang boleh diambil AI dan bagaimana
+sumber wajib ditandai.
+
+Private key tidak pernah meninggalkan mesin Anda. Server hanya bind ke `127.0.0.1`,
+setiap panggilan API butuh token sesi, dan tidak ada endpoint yang mengekspos private key.
+
+## Menjalankan
+
+```bash
+npm run studio                          # http://127.0.0.1:7777/
+npm run studio -- --port 8080 --workspace ./studio-data
+```
+
+Buka URL-nya, buat proyek untuk domain Anda, arahkan ke direktori HTML lokal situs
+(hasil build/export statis, atau pohon halaman CMS), atur kebijakan, build, verifikasi,
+lalu ekspor.
+
+## Fitur saat ini
+
+- **Workspace proyek** per domain: identitas, kebijakan, pasangan kunci, status incremental.
+- **Sumber lokal**: memindai direktori HTML, mengonversi dengan konverter yang sama
+  seperti `aifeed site build`, dan menulis output ke overlay `build/` terpisah — file
+  sumber Anda tidak pernah diubah.
+- **Editor kebijakan**: izin penggunaan (search, retrieval, input, training, quote,
+  summarize, reproduce, translate, modify, embed, commercial use), atribusi + teks/URL,
+  batas crawl, lisensi, `llms.txt`, interval cek revokasi, dan aturan per-path yang hanya
+  bisa mengetatkan (spec `restrict-only`).
+- **Build incremental**: halaman tak berubah (hash HTML) dilewati; state menyimpan entri
+  indeks per halaman agar rebuild tetap cepat untuk situs besar.
+- **Verifikasi**: manifest, semua tanda tangan halaman, dan kedua indeks diverifikasi
+  lokal sebelum dipublikasikan.
+- **Ekspor**: direktori overlay siap-upload, record DNS TXT `_aifeed` yang persis, dan
+  instruksi langkah demi langkah.
+- **UI dalam bahasa Inggris, Indonesia, dan China.**
+
+## Tata letak workspace
+
+```
+~/.aifeed-studio/                 (atau --workspace)
+  projects.json
+  projects/<domain>/
+    project.json                  identitas, sumber, profil
+    policy.json                   kebijakan global + aturan path
+    aifeed-private.pem            0600, tidak pernah disajikan
+    aifeed-public.txt
+    state.json                    status build incremental
+    build/                        unggah overlay ini ke web root Anda
+```
+
+## Semantik kebijakan (penting)
+
+- Satu manifest per origin. Manifest membawa kebijakan global.
+- Aturan per-path disuntikkan ke blok frontmatter `aifeed` bertanda tangan tiap halaman
+  dan **hanya boleh mengetatkan** yang diizinkan manifest (deny di atas allow, atribusi
+  lebih ketat, limit lebih ketat); pelonggaran ditolak, sesuai AIFeed v0.2 §6.3.
+- UI menampilkan pratinjau kebijakan efektif untuk URL mana pun sebelum build.
+
+## Keamanan
+
+- Bind `127.0.0.1` secara default; panggilan API butuh token per sesi yang disuntikkan ke
+  halaman UI.
+- Tanpa dependensi, tanpa panggilan eksternal kecuali halaman yang Anda build sendiri.
+- Private key hanya disimpan di direktori workspace dengan izin hanya-pemilik.
+
+## API (untuk skrip dan tes)
+
+`GET /api/info`, `GET|POST /api/projects`, `GET|PUT /api/projects/:id`,
+`PUT /api/projects/:id/policy`, `PUT /api/projects/:id/source`,
+`POST /api/projects/:id/build` (mengembalikan job id), `GET /api/projects/:id/jobs/:id`,
+`GET /api/projects/:id/events?job=` (SSE), `POST /api/projects/:id/verify`,
+`GET /api/projects/:id/preview?path=`, `GET /api/projects/:id/export`.
+
+Semua panggilan API butuh header `x-studio-token` (SSE memakai `?token=`).
+
+## Peta jalan
+
+- **M2 (berikutnya):** crawl situs live via `sitemap.xml` (hormati robots, kena rate
+  limit, ber-cache), aturan per-path untuk sumber crawl, job yang bisa dilanjutkan.
+- **M3:** ekspor tar.gz, deteksi stack untuk instruksi adapter, verifikasi live dari UI,
+  upacara rotasi kunci.
+- **M4:** diagnostik ramah, jurnal audit, tangkapan layar.
+
+## Terkait
+
+- Panduan AI publisher (setup via agen): [`../docs/publisher-ai-guide.id.md`](../docs/publisher-ai-guide.id.md)
+- Referensi perintah: [`../REFERENCE.id.md`](../REFERENCE.id.md)
+- Runbook rotasi: [`../docs/rotation.id.md`](../docs/rotation.id.md)
