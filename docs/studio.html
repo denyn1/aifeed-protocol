@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIFeed Studio — publish signed content permissions</title>
+<meta name="description" content="Run a zero-dependency local publisher app: create, crawl, declare, build, verify, export, and rotate AIFeed declarations.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://aifeed.md/studio.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aifeed.md/studio.html">
+<meta property="og:site_name" content="AIFeed">
+<meta property="og:title" content="AIFeed Studio — publish signed content permissions">
+<meta property="og:description" content="Run a zero-dependency local publisher app: create, crawl, declare, build, verify, export, and rotate AIFeed declarations.">
+<meta property="og:image" content="https://aifeed.md/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AIFeed Studio — publish signed content permissions">
+<meta name="twitter:description" content="Run a zero-dependency local publisher app: create, crawl, declare, build, verify, export, and rotate AIFeed declarations.">
+<meta name="twitter:image" content="https://aifeed.md/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"AIFeed Studio — publish signed content permissions","description":"Run a zero-dependency local publisher app: create, crawl, declare, build, verify, export, and rotate AIFeed declarations.","url":"https://aifeed.md/studio.html","isPartOf":{"@type":"WebSite","name":"AIFeed","url":"https://aifeed.md"}}</script>
+<script>
+(function () {
+  try {
+    var stored = localStorage.getItem('theme');
+    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  } catch (error) {
+    document.documentElement.dataset.theme = 'dark';
+  }
+})();
+</script>
+<style>
+:root, html[data-theme="dark"] {
+  --bg: #12100f;
+  --bg-soft: #171614;
+  --card: #1f1e1c;
+  --card-strong: #262524;
+  --border: rgba(153, 153, 153, 0.16);
+  --border-strong: rgba(153, 153, 153, 0.28);
+  --text: #f8f8f7;
+  --muted: #a5a09c;
+  --faint: #766f6b;
+  --accent: #f55036;
+  --accent-2: #ff8f6b;
+  --ok: #3ddc97;
+  --warn: #ffb454;
+  --bad: #ff6b6b;
+  --skip: #8f7bff;
+  --info: #6ea8fe;
+  --radius: 10px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+html[data-theme="light"] {
+  --bg: #fefefe;
+  --bg-soft: #f8f8f7;
+  --card: #ffffff;
+  --card-strong: #f3f3f2;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  --text: #0c0a09;
+  --muted: #766f6b;
+  --faint: #a5a09c;
+  --accent: #f55036;
+  --accent-2: #e2472f;
+  --ok: #0f9d63;
+  --warn: #b26a00;
+  --bad: #d92d20;
+  --skip: #6b52e0;
+  --info: #1e6fd9;
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark light; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 15.5px/1.6 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+h1, h2, h3, .who, .font-header { font-family: Montserrat, Inter, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 64px; }
+a { color: inherit; }
+header.hero { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; }
+h1 { margin: 0; font-size: clamp(22px, 3vw, 32px); letter-spacing: -0.02em; font-weight: 600; }
+h2 { margin: 0 0 12px; font-size: 18px; letter-spacing: -0.01em; font-weight: 600; }
+p.lede { margin: 6px 0 0; color: var(--muted); max-width: 72ch; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--muted); background: transparent;
+}
+.badge.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+.badge.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+.badge.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+.badge.info { color: var(--info); border-color: color-mix(in srgb, var(--info) 40%, transparent); }
+.theme-btn {
+  appearance: none; border: 1px solid var(--border); background: var(--card-strong); color: var(--muted);
+  padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.theme-btn:hover { color: var(--text); border-color: var(--accent); }
+.theme-btn::after { content: "Light"; }
+html[data-theme="light"] .theme-btn::after { content: "Dark"; }
+.banner {
+  margin: 14px 0 22px; padding: 12px 16px; border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent); background: color-mix(in srgb, var(--warn) 8%, transparent);
+  color: var(--warn); font-size: 13.5px;
+}
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.tab {
+  appearance: none; border: 1px solid var(--border); background: var(--card); color: var(--muted);
+  padding: 9px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+.tab:hover { transform: translateY(-1px); color: var(--text); }
+.tab[aria-selected="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+.panel { display: none; }
+.panel.active { display: block; animation: fadeUp 320ms ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.grid { display: grid; gap: 16px; }
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.card h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.stage { position: relative; min-height: 430px; padding: 10px; }
+.stage .node {
+  position: absolute; z-index: 2; min-width: 132px; padding: 10px 12px; border-radius: 10px;
+  background: var(--card-strong); border: 1px solid var(--border); font-size: 13px; text-align: center;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+.stage .node strong { display: block; font-size: 13.5px; }
+.stage .node span { color: var(--muted); font-size: 11.5px; }
+.stage .node.flash-ok { border-color: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
+.stage .node.flash-bad { border-color: var(--bad); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bad) 22%, transparent); }
+.stage .node.flash-warn { border-color: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 22%, transparent); }
+.stage .node.flash-skip { border-color: var(--skip); box-shadow: 0 0 0 3px color-mix(in srgb, var(--skip) 22%, transparent); }
+.packet {
+  position: absolute; z-index: 1; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
+  transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 620ms ease;
+  pointer-events: none;
+}
+.packet.ok { background: var(--ok); box-shadow: 0 0 12px color-mix(in srgb, var(--ok) 70%, transparent); }
+.packet.bad { background: var(--bad); box-shadow: 0 0 12px color-mix(in srgb, var(--bad) 70%, transparent); }
+.packet.warn { background: var(--warn); box-shadow: 0 0 12px color-mix(in srgb, var(--warn) 70%, transparent); }
+.packet.skip { background: var(--skip); box-shadow: 0 0 12px color-mix(in srgb, var(--skip) 70%, transparent); }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+.btn {
+  appearance: none; border: 1px solid var(--border-strong); background: var(--card-strong); color: var(--text);
+  padding: 8px 14px; border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+.btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 10px; overflow: hidden; }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--muted); padding: 8px 13px; cursor: pointer; font-weight: 600; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.steps { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.step {
+  display: flex; gap: 10px; align-items: flex-start; padding: 9px 12px; border-radius: 10px;
+  border: 1px solid transparent; color: var(--muted); transition: all 220ms ease;
+}
+.step .dot { width: 9px; height: 9px; margin-top: 6px; border-radius: 50%; background: var(--border); flex: 0 0 auto; }
+.step.current { color: var(--text); border-color: var(--border); background: var(--card); }
+.step.current .dot { background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent); }
+.step.done { color: var(--text); }
+.step.done .dot { background: var(--ok); }
+.step .detail { color: var(--muted); font-size: 12.5px; }
+.counter-row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.counter { background: var(--card-strong); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.counter .label { color: var(--muted); font-size: 12px; }
+.counter .value { font: 700 22px/1.2 var(--mono); margin-top: 4px; }
+.counter .value.good { color: var(--ok); }
+.counter .value.bad { color: var(--bad); }
+.counter .value.warn { color: var(--warn); }
+.counter .value.skip { color: var(--skip); }
+table.data { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.data th, table.data td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+table.data th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+table.data td.num { text-align: right; font-family: var(--mono); }
+.bar { height: 12px; border-radius: 999px; background: var(--card-strong); overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--accent); transition: width 900ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+.bar.warn > i { background: var(--warn); }
+.bar.bad > i { background: var(--bad); }
+.bar.ok > i { background: var(--ok); }
+.split { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.side-title { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.side-title .who { font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; color: var(--muted); font-size: 12.5px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-top: 1px solid var(--border); padding-top: 14px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 720px) {
+  .stage { min-height: 560px; }
+  .stage .node { min-width: 108px; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .packet, .bar > i, .tab, .btn { transition: none !important; }
+  .panel.active { animation: none; }
+}
+
+pre.code { background: var(--card-strong); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; overflow-x: auto; font: 13px/1.55 var(--mono); color: var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div>
+<h1>Publish with AIFeed Studio</h1>
+<p class="lede">A zero-dependency local app for publishers: declare, sign, verify, and export AIFeed content permissions without touching the command line.</p>
+</div>
+<div class="badges">
+<span class="badge ok">zero dependencies</span>
+<span class="badge info">runs on 127.0.0.1:7777</span>
+</div>
+</header>
+<div class="banner">Private keys stay in your local workspace (0600) and are never served or uploaded. Verify every export with the open SDK before publishing.</div>
+<div class="split">
+<div class="card">
+<h3>Quick start</h3>
+<pre class="code">git clone https://github.com/denyn1/aifeed-protocol.git
+cd aifeed-protocol
+npm run studio
+# open http://127.0.0.1:7777</pre>
+<p class="lede" style="margin:10px 0 0">UI in English, Bahasa Indonesia, and Chinese. Workspace defaults to <code>~/.aifeed-studio</code>; override with <code>AIFEED_STUDIO_HOME</code>.</p>
+</div>
+<div class="card">
+<h3>Or hand it to an AI agent</h3>
+<p class="lede" style="margin:0 0 10px">The publisher guide walks an agent through Classes S/M/L/XL, from a hand-written site to a full CMS integration, with a verified tool capability matrix.</p>
+<p><a href="https://github.com/denyn1/aifeed-protocol/blob/main/docs/publisher-ai-guide.md">English</a> · <a href="https://github.com/denyn1/aifeed-protocol/blob/main/docs/publisher-ai-guide.id.md">Bahasa Indonesia</a> · <a href="https://github.com/denyn1/aifeed-protocol/blob/main/docs/publisher-ai-guide.zh.md">中文</a></p>
+<p class="lede" style="margin:10px 0 0"><a href="https://github.com/denyn1/aifeed-protocol/blob/main/docs/agent-quickstart.md">Agent quickstart</a> · <a href="https://github.com/denyn1/aifeed-protocol/blob/main/docs/rotation.md">Key rotation runbook</a> · <a href="https://github.com/denyn1/aifeed-protocol/tree/main/studio">Studio source</a></p>
+</div>
+</div>
+<section class="section" style="margin-top:24px">
+<h2>What it does</h2>
+<div class="grid cols-3">
+<div class="card"><h3>Create</h3><p class="lede" style="margin:0">Point Studio at a local HTML folder or crawl the live site: robots-aware sitemap or link discovery, rate limits, and an ETag/Last-Modified cache.</p></div>
+<div class="card"><h3>Declare</h3><p class="lede" style="margin:0">Restrict-only policy editor: usage permissions, attribution, crawl limits, license, llms.txt, per-path rules, news/ecommerce presets, and opt-in freshness metadata.</p></div>
+<div class="card"><h3>Build</h3><p class="lede" style="margin:0">Incremental builds emit the signed v0.2 manifest, AIFeed Markdown and MAKO pages, delta indexes, and llms.txt.</p></div>
+<div class="card"><h3>Verify</h3><p class="lede" style="margin:0">Local verification of manifest, pages, and indexes, plus one-click live verification against the origin and DNS anchor.</p></div>
+<div class="card"><h3>Export</h3><p class="lede" style="margin:0">Folder or .tar.gz overlay, the _aifeed DNS TXT record, and adapter hints for nginx, Caddy, Apache, Node, Next.js, PHP, Python, Go, Traefik, and Cloudflare.</p></div>
+<div class="card"><h3>Rotate &amp; audit</h3><p class="lede" style="margin:0">Guarded key rotation (prepare, overlap, cutover, re-sign), a journal.ndjson audit trail, and inline fix hints for common failures.</p></div>
+</div>
+</section>
+<footer class="foot">Docs: studio/README.md · Run: <code>npm run studio</code> · Regenerate: <code>npm run render:html &amp;&amp; npm run build:site</code></footer>
+</div>
+<script>
+(function () {
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function qs(root, selector) { return root.querySelector(selector); }
+  function qsa(root, selector) { return Array.prototype.slice.call(root.querySelectorAll(selector)); }
+
+  function setupTheme() {
+    var button = document.getElementById('theme-toggle');
+    if (!button) return;
+    button.addEventListener('click', function () {
+      var root = document.documentElement;
+      var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (error) {}
+    });
+  }
+
+  function setupTabs() {
+    var tabs = qsa(document, '.tab');
+    var panels = qsa(document, '.panel');
+    if (tabs.length === 0 || panels.length === 0) return;
+    function activate(name) {
+      tabs.forEach(function (tab) {
+        var selected = tab.getAttribute('data-panel') === name;
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      });
+      panels.forEach(function (panel) {
+        panel.classList.toggle('active', panel.id === 'panel-' + name);
+      });
+      document.dispatchEvent(new CustomEvent('aifeed:panel', { detail: name }));
+    }
+    tabs.forEach(function (tab, index) {
+      tab.addEventListener('click', function () { activate(tab.getAttribute('data-panel')); });
+      tab.addEventListener('keydown', function (event) {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        var next = event.key === 'ArrowRight' ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+        tabs[next].focus();
+        activate(tabs[next].getAttribute('data-panel'));
+      });
+    });
+    activate(tabs[0].getAttribute('data-panel'));
+  }
+
+  function animateNumber(element, target, duration) {
+    if (!element) return;
+    if (reduceMotion || !duration) { element.textContent = String(target); return; }
+    var start = null;
+    function tick(now) {
+      if (start === null) start = now;
+      var progress = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = String(Math.round(target * eased));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function animateBars(root) {
+    qsa(root, '.bar > i').forEach(function (fill) {
+      var value = Number(fill.getAttribute('data-value') || 0);
+      requestAnimationFrame(function () { fill.style.width = Math.max(0, Math.min(100, value)) + '%'; });
+    });
+  }
+
+  function flyPacket(stage, fromEl, toEl, kind, speed) {
+    if (!fromEl || !toEl) return;
+    var stageRect = stage.getBoundingClientRect();
+    var fromRect = fromEl.getBoundingClientRect();
+    var toRect = toEl.getBoundingClientRect();
+    var packet = document.createElement('div');
+    packet.className = 'packet ' + (kind || '');
+    var startX = fromRect.left - stageRect.left + fromRect.width / 2 - 6;
+    var startY = fromRect.top - stageRect.top + fromRect.height / 2 - 6;
+    var endX = toRect.left - stageRect.left + toRect.width / 2 - 6;
+    var endY = toRect.top - stageRect.top + toRect.height / 2 - 6;
+    packet.style.transform = 'translate(' + startX + 'px,' + startY + 'px)';
+    packet.style.transitionDuration = (620 / (speed || 1)) + 'ms';
+    if (reduceMotion) { packet.style.transitionDuration = '0ms'; }
+    stage.appendChild(packet);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        packet.style.transform = 'translate(' + endX + 'px,' + endY + 'px)';
+        if (kind === 'bad' || kind === 'warn' || kind === 'skip') packet.style.opacity = '0.15';
+      });
+    });
+    setTimeout(function () { packet.remove(); }, 900 / (speed || 1));
+  }
+
+  function flash(el, kind) {
+    if (!el) return;
+    var klass = 'flash-' + (kind || 'ok');
+    el.classList.add(klass);
+    setTimeout(function () { el.classList.remove(klass); }, 900);
+  }
+
+  window.AIFeedAnim = {
+    reduceMotion: reduceMotion,
+    qs: qs,
+    qsa: qsa,
+    setupTheme: setupTheme,
+    setupTabs: setupTabs,
+    animateNumber: animateNumber,
+    animateBars: animateBars,
+    flyPacket: flyPacket,
+    flash: flash
+  };
+})();
+</script>
+<script></script>
+</body>
+</html>

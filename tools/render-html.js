@@ -952,6 +952,210 @@ function renderProcessHtml(options = {}) {
   });
 }
 
+const CHANGELOG_STYLE = `
+.changelog { max-width: 92ch; }
+.changelog h2 { margin: 26px 0 10px; font-size: 20px; }
+.changelog h3 { margin: 22px 0 8px; font-size: 16px; }
+.changelog h4 { margin: 18px 0 6px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.changelog ul { margin: 6px 0 14px; padding-left: 22px; }
+.changelog li { margin: 4px 0; color: var(--muted); }
+.changelog li strong { color: var(--text); }
+.changelog p { margin: 10px 0; color: var(--muted); }
+.changelog code { font-family: var(--mono); font-size: 12.5px; background: var(--card-strong); border: 1px solid var(--border); border-radius: 6px; padding: 1px 5px; color: var(--text); }
+.changelog pre { background: var(--card-strong); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; overflow-x: auto; }
+.changelog pre code { border: 0; background: transparent; padding: 0; }
+.changelog hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+.changelog a { color: var(--accent-2); text-decoration: none; }
+.changelog a:hover { text-decoration: underline; }
+`;
+
+const STUDIO_STYLE = `
+pre.code { background: var(--card-strong); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; overflow-x: auto; font: 13px/1.55 var(--mono); color: var(--text); }
+`;
+
+function renderMarkdown(markdown) {
+  const lines = String(markdown).replace(/\r\n/g, '\n').split('\n');
+  const html = [];
+  let listOpen = false;
+  let fence = false;
+
+  function inline(text) {
+    let output = escapeHtml(text);
+    output = output.replace(/`([^`]+)`/g, '<code>$1</code>');
+    output = output.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    output = output.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
+    return output;
+  }
+
+  function closeList() {
+    if (listOpen) {
+      html.push('</ul>');
+      listOpen = false;
+    }
+  }
+
+  for (const line of lines) {
+    if (/^```/.test(line)) {
+      if (!fence) closeList();
+      fence = !fence;
+      html.push(fence ? '<pre><code>' : '</code></pre>');
+      continue;
+    }
+    if (fence) {
+      html.push(escapeHtml(line));
+      continue;
+    }
+    const heading = /^(#{1,6})\s+(.*)$/.exec(line);
+    if (heading) {
+      closeList();
+      const level = Math.min(4, heading[1].length + 1);
+      html.push('<h' + level + '>' + inline(heading[2]) + '</h' + level + '>');
+      continue;
+    }
+    const bullet = /^\s*[-*]\s+(.*)$/.exec(line);
+    if (bullet) {
+      if (!listOpen) {
+        html.push('<ul>');
+        listOpen = true;
+      }
+      html.push('<li>' + inline(bullet[1]) + '</li>');
+      continue;
+    }
+    if (listOpen && /^\s+\S/.test(line) && html[html.length - 1].endsWith('</li>')) {
+      html[html.length - 1] = html[html.length - 1].replace(/<\/li>$/, ' ' + inline(line.trim()) + '</li>');
+      continue;
+    }
+    if (/^\s*$/.test(line)) {
+      closeList();
+      continue;
+    }
+    if (/^---+$/.test(line)) {
+      closeList();
+      html.push('<hr>');
+      continue;
+    }
+    closeList();
+    html.push('<p>' + inline(line) + '</p>');
+  }
+  closeList();
+  return html.join('\n');
+}
+
+function renderStudioHtml() {
+  const repo = 'https://github.com/denyn1/aifeed-protocol';
+  const features = [
+    ['Create', 'Point Studio at a local HTML folder or crawl the live site: robots-aware sitemap or link discovery, rate limits, and an ETag/Last-Modified cache.'],
+    ['Declare', 'Restrict-only policy editor: usage permissions, attribution, crawl limits, license, llms.txt, per-path rules, news/ecommerce presets, and opt-in freshness metadata.'],
+    ['Build', 'Incremental builds emit the signed v0.2 manifest, AIFeed Markdown and MAKO pages, delta indexes, and llms.txt.'],
+    ['Verify', 'Local verification of manifest, pages, and indexes, plus one-click live verification against the origin and DNS anchor.'],
+    ['Export', 'Folder or .tar.gz overlay, the _aifeed DNS TXT record, and adapter hints for nginx, Caddy, Apache, Node, Next.js, PHP, Python, Go, Traefik, and Cloudflare.'],
+    ['Rotate & audit', 'Guarded key rotation (prepare, overlap, cutover, re-sign), a journal.ndjson audit trail, and inline fix hints for common failures.']
+  ];
+  const cards = features.map(([title, text]) =>
+    '<div class="card"><h3>' + escapeHtml(title) + '</h3><p class="lede" style="margin:0">' + escapeHtml(text) + '</p></div>'
+  ).join('\n');
+  const guide = [
+    ['English', repo + '/blob/main/docs/publisher-ai-guide.md'],
+    ['Bahasa Indonesia', repo + '/blob/main/docs/publisher-ai-guide.id.md'],
+    ['中文', repo + '/blob/main/docs/publisher-ai-guide.zh.md']
+  ].map(([label, href]) => '<a href="' + href + '">' + escapeHtml(label) + '</a>').join(' · ');
+
+  const body = [
+    '<div class="wrap">',
+    '<header class="hero">',
+    '<div>',
+    '<h1>Publish with AIFeed Studio</h1>',
+    '<p class="lede">A zero-dependency local app for publishers: declare, sign, verify, and export AIFeed content permissions without touching the command line.</p>',
+    '</div>',
+    '<div class="badges">',
+    '<span class="badge ok">zero dependencies</span>',
+    '<span class="badge info">runs on 127.0.0.1:7777</span>',
+    '</div>',
+    '</header>',
+    '<div class="banner">Private keys stay in your local workspace (0600) and are never served or uploaded. Verify every export with the open SDK before publishing.</div>',
+    '<div class="split">',
+    '<div class="card">',
+    '<h3>Quick start</h3>',
+    '<pre class="code">git clone ' + repo + '.git\ncd aifeed-protocol\nnpm run studio\n# open http://127.0.0.1:7777</pre>',
+    '<p class="lede" style="margin:10px 0 0">UI in English, Bahasa Indonesia, and Chinese. Workspace defaults to <code>~/.aifeed-studio</code>; override with <code>AIFEED_STUDIO_HOME</code>.</p>',
+    '</div>',
+    '<div class="card">',
+    '<h3>Or hand it to an AI agent</h3>',
+    '<p class="lede" style="margin:0 0 10px">The publisher guide walks an agent through Classes S/M/L/XL, from a hand-written site to a full CMS integration, with a verified tool capability matrix.</p>',
+    '<p>' + guide + '</p>',
+    '<p class="lede" style="margin:10px 0 0"><a href="' + repo + '/blob/main/docs/agent-quickstart.md">Agent quickstart</a> · <a href="' + repo + '/blob/main/docs/rotation.md">Key rotation runbook</a> · <a href="' + repo + '/tree/main/studio">Studio source</a></p>',
+    '</div>',
+    '</div>',
+    '<section class="section" style="margin-top:24px">',
+    '<h2>What it does</h2>',
+    '<div class="grid cols-3">',
+    cards,
+    '</div>',
+    '</section>',
+    '<footer class="foot">Docs: studio/README.md · Run: <code>npm run studio</code> · Regenerate: <code>npm run render:html &amp;&amp; npm run build:site</code></footer>',
+    '</div>'
+  ].join('\n');
+
+  return pageShell({
+    title: 'AIFeed Studio — publish signed content permissions',
+    description: 'Run a zero-dependency local publisher app: create, crawl, declare, build, verify, export, and rotate AIFeed declarations.',
+    canonical: 'https://aifeed.md/studio.html',
+    body,
+    script: '',
+    extraStyle: STUDIO_STYLE
+  });
+}
+
+function renderUpdatesHtml(options = {}) {
+  const repo = 'https://github.com/denyn1/aifeed-protocol';
+  const langs = [
+    ['en', 'English', 'CHANGELOG.md'],
+    ['id', 'Bahasa Indonesia', 'CHANGELOG.id.md'],
+    ['zh', '中文', 'CHANGELOG.zh.md']
+  ];
+  const contents = langs.map(([code, , file]) =>
+    (options.changelogs && options.changelogs[code]) || fs.readFileSync(path.join(ROOT, file), 'utf8')
+  );
+  const tabs = langs.map(([code, label], index) =>
+    '<button class="tab" data-panel="' + code + '" role="tab" aria-selected="' + (index === 0 ? 'true' : 'false') + '">' + label + '</button>'
+  ).join('\n');
+  const panels = langs.map(([code], index) =>
+    '<section class="panel' + (index === 0 ? ' active' : '') + '" id="panel-' + code + '" role="tabpanel" lang="' + code + '">\n<div class="changelog">\n' + renderMarkdown(contents[index]) + '\n</div>\n</section>'
+  ).join('\n');
+  const sources = langs.map(([code, label, file]) =>
+    '<a href="' + repo + '/blob/main/' + file + '">' + label + '</a>'
+  ).join(' · ');
+
+  const body = [
+    '<div class="wrap">',
+    '<header class="hero">',
+    '<div>',
+    '<h1>What\'s new in AIFeed</h1>',
+    '<p class="lede">Release notes rendered from the repository changelog at build time — the same file that ships with the code.</p>',
+    '</div>',
+    '<div class="badges">',
+    '<span class="badge info">generated from CHANGELOG.md</span>',
+    '</div>',
+    '</header>',
+    '<div class="banner">Source of truth: ' + sources + '. Anything not in the changelog is not a release note.</div>',
+    '<div class="tabs" role="tablist" aria-label="Changelog languages">',
+    tabs,
+    '</div>',
+    panels,
+    '<footer class="foot">Regenerate: <code>npm run render:html &amp;&amp; npm run build:site</code></footer>',
+    '</div>'
+  ].join('\n');
+
+  return pageShell({
+    title: 'AIFeed — Updates',
+    description: 'AIFeed release notes in English, Bahasa Indonesia, and Chinese, rendered from the repository changelog.',
+    canonical: 'https://aifeed.md/updates.html',
+    body,
+    script: '',
+    extraStyle: CHANGELOG_STYLE
+  });
+}
+
 function main() {
   fs.mkdirSync(DOCS_DIR, { recursive: true });
   const enforcement = readJsonIfExists(path.join(BENCH_DIR, 'enforcement-report.json'));
@@ -963,9 +1167,13 @@ function main() {
   }
   fs.writeFileSync(path.join(DOCS_DIR, 'process.html'), renderProcessHtml({}), 'utf8');
   process.stdout.write('html written: docs/process.html\n');
+  fs.writeFileSync(path.join(DOCS_DIR, 'studio.html'), renderStudioHtml(), 'utf8');
+  process.stdout.write('html written: docs/studio.html\n');
+  fs.writeFileSync(path.join(DOCS_DIR, 'updates.html'), renderUpdatesHtml({}), 'utf8');
+  process.stdout.write('html written: docs/updates.html\n');
 }
 
-module.exports = { renderEnforcementHtml, renderProcessHtml, STYLE, ENGINE };
+module.exports = { renderEnforcementHtml, renderProcessHtml, renderStudioHtml, renderUpdatesHtml, renderMarkdown, STYLE, ENGINE };
 
 if (require.main === module) {
   main();

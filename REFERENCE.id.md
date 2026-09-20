@@ -147,7 +147,7 @@ Exit code: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage atau error internal
 ## Tes
 
 ```bash
-npm test                 # suite tes Node (248 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci)
+npm test                 # suite tes Node (251 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci)
 npm run test:py          # suite verifier Python (44 tes: vektor, paritas AIFeed Markdown/MAKO, revokasi, bundel, contoh)
 npm run vectors          # regenerasi vektor manifest deterministik + self-check (34)
 npm run mako:vectors     # regenerasi vektor konformansi MAKO + self-check (39)

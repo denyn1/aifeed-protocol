@@ -27,7 +27,7 @@ situs web, dan paper.
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,aifeed-preprint.pdf}` | file root + `paper/` | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,aifeed-preprint.pdf}` | file root + `paper/` + `tools/render-html.js` (`updates.html` dari `CHANGELOG*.md`) | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`, apex `site/.well-known/**`, `site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check` (di dalam `verify`) |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | plugin `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`, `refs.bib`, `00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json` (di `paper/`) | untar + baca `00README.json` |
@@ -59,7 +59,7 @@ situs web, dan paper.
 npm run verify            # semuanya di bawah, satu gerbang
 npm run lint:syntax       # cek parse setiap file .js
 npm run check:consistency # versi, deps, secret, pasangan spec, target skrip
-npm test                  # suite Node (248 tes)
+npm test                  # suite Node (251 tes)
 npm run test:py           # verifier Python independen (44 tes)
 npm run bench:mako        # regenerasi benchmarks/mako-*.json + laporan
 npm run bench:enforcement # regenerasi benchmarks/enforcement-*.json|md
@@ -109,8 +109,9 @@ node bin/cli.js --help    # permukaan CLI
   `packages/aifeed-verify/lib/*` (hasil generate). Jalankan
   `npm run build:sdk && npm run sdk:check`.
 - **Mengubah situs web:** `site/index.html` dan `penjelasan-aifeed.html` root adalah
-  sumber; `docs/process.html`/`benchmarks/enforcement-report.html` berasal dari
-  `tools/render-html.js`. Jalankan `npm run verify`. Tautan GitHub di situs harus memuat
+  sumber; `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
+  `docs/updates.html` berasal dari `tools/render-html.js` (`updates.html` merender
+  `CHANGELOG*.md`). Jalankan `npm run verify`. Tautan GitHub di situs harus memuat
   nama repositori: `https://github.com/denyn1/aifeed-protocol/...`.
 - **Menambah atau mengubah origin demo:** edit `demos/sites.js` (halaman, override
   kebijakan via `permissions`, tema), jalankan `npm run demos:check`. Kunci penanda tangan

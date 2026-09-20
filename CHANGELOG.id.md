@@ -31,6 +31,9 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   workspace (0600) dan tidak pernah disajikan; UI EN/ID/ZH. Pembangun manifest
   (`lib/site.js`) mendapat opsi opsional `limits`,
   `license`, `attribution_text/url`, dan `maxCheckIntervalHours` (backward-compatible).
+- **Situs web** — halaman baru `studio.html` (Publish) dan `updates.html` (catatan rilis
+  yang dirender dari changelog dalam EN/ID/ZH saat build), tertaut dari navbar, grid
+  artifacts, dan sitemap apex; keduanya menyertakan AIFeed Markdown bertanda tangan.
 - **Rotasi kunci (v0.2 §14)** — mengganti kunci penanda tangan manifest tanpa merusak
   verifikasi: direktif `rotation.successor_fp` bertanda tangan kunci lama plus cross-check
   DNS `pk2` yang advisory, overlap terbatas (`effective_at` → `grace_until`, batas keras

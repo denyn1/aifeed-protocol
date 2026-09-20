@@ -978,7 +978,7 @@ module.exports = { main: null, generateSite, revocationsFor, pagePathMaps };
 
 function generateApex(siteRoot) {
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'aifeed-apex-'));
-  const sources = ['index.html', 'process.html', 'enforcement-report.html', 'penjelasan.html'];
+  const sources = ['index.html', 'process.html', 'enforcement-report.html', 'penjelasan.html', 'studio.html', 'updates.html'];
   for (const name of sources) {
     const source = path.join(siteRoot, name);
     if (fs.existsSync(source)) fs.copyFileSync(source, path.join(staging, name));
@@ -1019,7 +1019,7 @@ function generateApex(siteRoot) {
 
 function writeApexSeo(siteRoot) {
   const today = new Date().toISOString().slice(0, 10);
-  const apexPages = ['/', '/process.html', '/enforcement-report.html', '/penjelasan.html', '/aifeed-preprint.pdf'];
+  const apexPages = ['/', '/process.html', '/enforcement-report.html', '/penjelasan.html', '/studio.html', '/updates.html', '/aifeed-preprint.pdf'];
   const urls = [];
   for (const pagePath of apexPages) urls.push({ loc: 'https://aifeed.md' + pagePath, priority: pagePath === '/' ? '1.0' : '0.8' });
   for (const site of siteDefinitions) {

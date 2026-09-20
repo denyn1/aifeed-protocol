@@ -32,6 +32,9 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   (0600) and are never served; UI in EN/ID/ZH. The manifest builder (`lib/site.js`)
   gained optional `limits`, `license`,
   `attribution_text/url`, and `maxCheckIntervalHours` options (backward compatible).
+- **Website** — new `studio.html` (Publish) and `updates.html` (release notes rendered
+  from the changelog in EN/ID/ZH at build time) pages, linked from the navbar, the
+  artifacts grid, and the apex sitemap; both pages ship signed AIFeed Markdown.
 - **Key rotation (v0.2 §14)** — replaces a manifest signing key without breaking
   verification: old-key-signed `rotation.successor_fp` directive plus an advisory DNS
   `pk2` cross-check, bounded overlap (`effective_at` → `grace_until`, 1 h hard floor),

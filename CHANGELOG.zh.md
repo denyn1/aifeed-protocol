@@ -27,6 +27,9 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   界面支持 EN/ID/ZH。manifest 构建器
   （`lib/site.js`）新增可选 `limits`、`license`、`attribution_text/url` 与
   `maxCheckIntervalHours` 选项（向后兼容）。
+- **网站** — 新增 `studio.html`（Publish）与 `updates.html`（构建时从 EN/ID/ZH 变更日志
+  渲染的发布说明）页面，已从导航栏、artifacts 网格与 apex sitemap 链接；两者均附带
+  签名 AIFeed Markdown。
 - **密钥轮换（v0.2 §14）**——在不破坏验证的前提下替换 manifest 签名密钥：旧密钥签名的
   `rotation.successor_fp` 指令加建议性 DNS `pk2` 交叉校验、有界重叠期
   （`effective_at` → `grace_until`，1 小时硬下限）、新密钥签名的 `predecessor_fp` 切换

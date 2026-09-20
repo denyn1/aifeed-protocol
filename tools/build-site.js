@@ -12,6 +12,8 @@ const COPIES = [
   ['docs/process.html', 'process.html'],
   ['benchmarks/enforcement-report.html', 'enforcement-report.html'],
   ['penjelasan-aifeed.html', 'penjelasan.html'],
+  ['docs/studio.html', 'studio.html'],
+  ['docs/updates.html', 'updates.html'],
   ['paper/aifeed-preprint.pdf', 'aifeed-preprint.pdf']
 ];
 

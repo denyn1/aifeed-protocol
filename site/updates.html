@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIFeed — Updates</title>
+<meta name="description" content="AIFeed release notes in English, Bahasa Indonesia, and Chinese, rendered from the repository changelog.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://aifeed.md/updates.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aifeed.md/updates.html">
+<meta property="og:site_name" content="AIFeed">
+<meta property="og:title" content="AIFeed — Updates">
+<meta property="og:description" content="AIFeed release notes in English, Bahasa Indonesia, and Chinese, rendered from the repository changelog.">
+<meta property="og:image" content="https://aifeed.md/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AIFeed — Updates">
+<meta name="twitter:description" content="AIFeed release notes in English, Bahasa Indonesia, and Chinese, rendered from the repository changelog.">
+<meta name="twitter:image" content="https://aifeed.md/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"AIFeed — Updates","description":"AIFeed release notes in English, Bahasa Indonesia, and Chinese, rendered from the repository changelog.","url":"https://aifeed.md/updates.html","isPartOf":{"@type":"WebSite","name":"AIFeed","url":"https://aifeed.md"}}</script>
+<script>
+(function () {
+  try {
+    var stored = localStorage.getItem('theme');
+    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  } catch (error) {
+    document.documentElement.dataset.theme = 'dark';
+  }
+})();
+</script>
+<style>
+:root, html[data-theme="dark"] {
+  --bg: #12100f;
+  --bg-soft: #171614;
+  --card: #1f1e1c;
+  --card-strong: #262524;
+  --border: rgba(153, 153, 153, 0.16);
+  --border-strong: rgba(153, 153, 153, 0.28);
+  --text: #f8f8f7;
+  --muted: #a5a09c;
+  --faint: #766f6b;
+  --accent: #f55036;
+  --accent-2: #ff8f6b;
+  --ok: #3ddc97;
+  --warn: #ffb454;
+  --bad: #ff6b6b;
+  --skip: #8f7bff;
+  --info: #6ea8fe;
+  --radius: 10px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+html[data-theme="light"] {
+  --bg: #fefefe;
+  --bg-soft: #f8f8f7;
+  --card: #ffffff;
+  --card-strong: #f3f3f2;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  --text: #0c0a09;
+  --muted: #766f6b;
+  --faint: #a5a09c;
+  --accent: #f55036;
+  --accent-2: #e2472f;
+  --ok: #0f9d63;
+  --warn: #b26a00;
+  --bad: #d92d20;
+  --skip: #6b52e0;
+  --info: #1e6fd9;
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark light; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 15.5px/1.6 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+h1, h2, h3, .who, .font-header { font-family: Montserrat, Inter, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 64px; }
+a { color: inherit; }
+header.hero { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; }
+h1 { margin: 0; font-size: clamp(22px, 3vw, 32px); letter-spacing: -0.02em; font-weight: 600; }
+h2 { margin: 0 0 12px; font-size: 18px; letter-spacing: -0.01em; font-weight: 600; }
+p.lede { margin: 6px 0 0; color: var(--muted); max-width: 72ch; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--muted); background: transparent;
+}
+.badge.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+.badge.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+.badge.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+.badge.info { color: var(--info); border-color: color-mix(in srgb, var(--info) 40%, transparent); }
+.theme-btn {
+  appearance: none; border: 1px solid var(--border); background: var(--card-strong); color: var(--muted);
+  padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.theme-btn:hover { color: var(--text); border-color: var(--accent); }
+.theme-btn::after { content: "Light"; }
+html[data-theme="light"] .theme-btn::after { content: "Dark"; }
+.banner {
+  margin: 14px 0 22px; padding: 12px 16px; border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent); background: color-mix(in srgb, var(--warn) 8%, transparent);
+  color: var(--warn); font-size: 13.5px;
+}
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.tab {
+  appearance: none; border: 1px solid var(--border); background: var(--card); color: var(--muted);
+  padding: 9px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+.tab:hover { transform: translateY(-1px); color: var(--text); }
+.tab[aria-selected="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+.panel { display: none; }
+.panel.active { display: block; animation: fadeUp 320ms ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.grid { display: grid; gap: 16px; }
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.card h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.stage { position: relative; min-height: 430px; padding: 10px; }
+.stage .node {
+  position: absolute; z-index: 2; min-width: 132px; padding: 10px 12px; border-radius: 10px;
+  background: var(--card-strong); border: 1px solid var(--border); font-size: 13px; text-align: center;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+.stage .node strong { display: block; font-size: 13.5px; }
+.stage .node span { color: var(--muted); font-size: 11.5px; }
+.stage .node.flash-ok { border-color: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent); }
+.stage .node.flash-bad { border-color: var(--bad); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bad) 22%, transparent); }
+.stage .node.flash-warn { border-color: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 22%, transparent); }
+.stage .node.flash-skip { border-color: var(--skip); box-shadow: 0 0 0 3px color-mix(in srgb, var(--skip) 22%, transparent); }
+.packet {
+  position: absolute; z-index: 1; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
+  transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 620ms ease;
+  pointer-events: none;
+}
+.packet.ok { background: var(--ok); box-shadow: 0 0 12px color-mix(in srgb, var(--ok) 70%, transparent); }
+.packet.bad { background: var(--bad); box-shadow: 0 0 12px color-mix(in srgb, var(--bad) 70%, transparent); }
+.packet.warn { background: var(--warn); box-shadow: 0 0 12px color-mix(in srgb, var(--warn) 70%, transparent); }
+.packet.skip { background: var(--skip); box-shadow: 0 0 12px color-mix(in srgb, var(--skip) 70%, transparent); }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+.btn {
+  appearance: none; border: 1px solid var(--border-strong); background: var(--card-strong); color: var(--text);
+  padding: 8px 14px; border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+.btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 10px; overflow: hidden; }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--muted); padding: 8px 13px; cursor: pointer; font-weight: 600; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.steps { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.step {
+  display: flex; gap: 10px; align-items: flex-start; padding: 9px 12px; border-radius: 10px;
+  border: 1px solid transparent; color: var(--muted); transition: all 220ms ease;
+}
+.step .dot { width: 9px; height: 9px; margin-top: 6px; border-radius: 50%; background: var(--border); flex: 0 0 auto; }
+.step.current { color: var(--text); border-color: var(--border); background: var(--card); }
+.step.current .dot { background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent); }
+.step.done { color: var(--text); }
+.step.done .dot { background: var(--ok); }
+.step .detail { color: var(--muted); font-size: 12.5px; }
+.counter-row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.counter { background: var(--card-strong); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.counter .label { color: var(--muted); font-size: 12px; }
+.counter .value { font: 700 22px/1.2 var(--mono); margin-top: 4px; }
+.counter .value.good { color: var(--ok); }
+.counter .value.bad { color: var(--bad); }
+.counter .value.warn { color: var(--warn); }
+.counter .value.skip { color: var(--skip); }
+table.data { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.data th, table.data td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+table.data th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+table.data td.num { text-align: right; font-family: var(--mono); }
+.bar { height: 12px; border-radius: 999px; background: var(--card-strong); overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--accent); transition: width 900ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+.bar.warn > i { background: var(--warn); }
+.bar.bad > i { background: var(--bad); }
+.bar.ok > i { background: var(--ok); }
+.split { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.side-title { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.side-title .who { font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; color: var(--muted); font-size: 12.5px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-top: 1px solid var(--border); padding-top: 14px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 720px) {
+  .stage { min-height: 560px; }
+  .stage .node { min-width: 108px; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .packet, .bar > i, .tab, .btn { transition: none !important; }
+  .panel.active { animation: none; }
+}
+
+.changelog { max-width: 92ch; }
+.changelog h2 { margin: 26px 0 10px; font-size: 20px; }
+.changelog h3 { margin: 22px 0 8px; font-size: 16px; }
+.changelog h4 { margin: 18px 0 6px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.changelog ul { margin: 6px 0 14px; padding-left: 22px; }
+.changelog li { margin: 4px 0; color: var(--muted); }
+.changelog li strong { color: var(--text); }
+.changelog p { margin: 10px 0; color: var(--muted); }
+.changelog code { font-family: var(--mono); font-size: 12.5px; background: var(--card-strong); border: 1px solid var(--border); border-radius: 6px; padding: 1px 5px; color: var(--text); }
+.changelog pre { background: var(--card-strong); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; overflow-x: auto; }
+.changelog pre code { border: 0; background: transparent; padding: 0; }
+.changelog hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+.changelog a { color: var(--accent-2); text-decoration: none; }
+.changelog a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div>
+<h1>What's new in AIFeed</h1>
+<p class="lede">Release notes rendered from the repository changelog at build time — the same file that ships with the code.</p>
+</div>
+<div class="badges">
+<span class="badge info">generated from CHANGELOG.md</span>
+</div>
+</header>
+<div class="banner">Source of truth: <a href="https://github.com/denyn1/aifeed-protocol/blob/main/CHANGELOG.md">English</a> · <a href="https://github.com/denyn1/aifeed-protocol/blob/main/CHANGELOG.id.md">Bahasa Indonesia</a> · <a href="https://github.com/denyn1/aifeed-protocol/blob/main/CHANGELOG.zh.md">中文</a>. Anything not in the changelog is not a release note.</div>
+<div class="tabs" role="tablist" aria-label="Changelog languages">
+<button class="tab" data-panel="en" role="tab" aria-selected="true">English</button>
+<button class="tab" data-panel="id" role="tab" aria-selected="false">Bahasa Indonesia</button>
+<button class="tab" data-panel="zh" role="tab" aria-selected="false">中文</button>
+</div>
+<section class="panel active" id="panel-en" role="tabpanel" lang="en">
+<div class="changelog">
+<h2>Changelog</h2>
+<p>&lt;p&gt;&lt;a href=&quot;CHANGELOG.md&quot;&gt;English&lt;/a&gt; · &lt;a href=&quot;CHANGELOG.id.md&quot;&gt;Bahasa Indonesia&lt;/a&gt; · &lt;a href=&quot;CHANGELOG.zh.md&quot;&gt;中文&lt;/a&gt;&lt;/p&gt;</p>
+<p>All notable changes to the AIFeed protocol and reference implementation are documented</p>
+<p>here. The format follows <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>.</p>
+<p>&gt; Evidence labels used across the project: [F] verified fact, [M] plausible,</p>
+<p>&gt; [E] model estimate, [S] measured in the local simulation harness, [H] needs legal</p>
+<p>&gt; review.</p>
+<h3>[1.0.0-draft] — 2026-09-16</h3>
+<h4>Added</h4>
+<ul>
+<li><strong>AIFeed Studio (local publisher app)</strong> — <code>npm run studio</code> serves a zero-dependency web UI on <code>127.0.0.1:7777</code>: per-domain workspace, local HTML source ingestion, restrict-only policy editor (usage permissions, attribution text/URL, crawl limits, license, <code>llms.txt</code>, revocation interval, per-path rules), incremental builds, local verification of manifest/pages/indexes, and export with the <code>_aifeed</code> DNS TXT record; a robots-aware crawler (sitemap or link discovery, rate limits, ETag/Last-Modified cache) covers live sites; site-type presets (news, ecommerce, marketplace, government, open, restrictive, blog), per-path page types (<code>product</code>, <code>  article</code>, <code>listing</code>, …), and opt-in freshness metadata (page dates/tags) complete the site-type support. M3 adds <code>.tar.gz</code> overlay download, stack detection wired to <code>integrations/</code> adapter hints, one-click live verification (manifest, signature, DNS anchor), and a guarded key-rotation ceremony that swaps the key and re-signs every page. G4 adds schema-validated <code>types</code>/<code>capabilities</code>/<code>actions</code> editors and OpenAPI import for e-commerce actions, plus an audit journal (<code>journal.ndjson</code>) and inline fix hints for common DNS, schema, signature, and rotation failures. Private keys stay in the workspace (0600) and are never served; UI in EN/ID/ZH. The manifest builder (<code>lib/site.js</code>) gained optional <code>limits</code>, <code>license</code>, <code>attribution_text/url</code>, and <code>maxCheckIntervalHours</code> options (backward compatible).</li>
+<li><strong>Website</strong> — new <code>studio.html</code> (Publish) and <code>updates.html</code> (release notes rendered from the changelog in EN/ID/ZH at build time) pages, linked from the navbar, the artifacts grid, and the apex sitemap; both pages ship signed AIFeed Markdown.</li>
+<li><strong>Key rotation (v0.2 §14)</strong> — replaces a manifest signing key without breaking verification: old-key-signed <code>rotation.successor_fp</code> directive plus an advisory DNS <code>pk2</code> cross-check, bounded overlap (<code>effective_at</code> → <code>grace_until</code>, 1 h hard floor), new-key-signed <code>predecessor_fp</code> cutover binding, then permanent revocation. Six result codes: <code>rotation_invalid</code>, <code>rotation_anchor_unverified</code>, <code>grace_accepted</code>, <code>rotation_denied</code>, <code>rotation_resync</code>, <code>key_revoked</code>. Implemented in <code>lib/rotation.js</code>, single-command CLI <code>aifeed rotate [--dry-run]</code>, SDK <code>rotation</code> export, Python directive parity, PHP manifest validation, vectors 008–011 / 119–123, and the runbook in <code>docs/rotation.md</code>.</li>
+<li><strong>SDK republished as <code>1.0.0-draft.2</code></strong> — includes the key-rotation helpers (<code>rotation.*</code>), the v0.2 manifest builder options used by Studio (limits, license, attribution text/URL), and the <code>htmlToMako</code> page-type and opt-in freshness options.</li>
+<li><strong>AIFeed Markdown v1.0</strong> — native content profile: <code>text/aifeed+markdown</code>, <code>.aifeed.md</code>, <code>aimd: &quot;1.0&quot;</code>, first-class <code>aifeed</code> policy block, token budget up to the publisher's choice (reference default 4,000 in AIFeed Markdown-only mode).</li>
+<li><strong>Dual-stack serving</strong> — the same signed bytes under AIFeed Markdown and MAKO, each with its own signature context (<code>aimd</code> / <code>mako</code>); cross-format replay rejected.</li>
+<li>Manifest extensions: <code>content.profile</code> (<code>mako</code> | <code>aifeed-md</code> | <code>both</code>) and <code>content.index_url</code>; AIFeed Markdown index at <code>/.well-known/aifeed-index.json</code>.</li>
+<li>CLI: <code>aifeed aimd &lt;generate|sign|verify|index|fetch&gt;</code> alias, <code>--format</code> for generate, index, and fetch; profile auto-detection for sign/verify.</li>
+<li>SDK <code>@aifeed/verify</code> 1.0.0-draft: <code>fetchAimd</code>, <code>verifyAimdDocument</code>, <code>verifyAimdIndex</code>, media-type constants.</li>
+<li>WordPress plugin 1.0.0-draft: dual-stack serving, AIFeed Markdown-only mode via the <code>aifeed_dual_stack</code> filter, per-format signatures and indices.</li>
+<li>Specs: <code>spec/en|id|zh/aifeed-aimd-v1.md</code> (operating modes, IANA considerations).</li>
+<li>Vectors: <code>conformance/aimd/</code> (11 cases: markers, cross-format replay, tamper, assets, alternates, strict optional-field validation) with Python parity; fuzz corpus includes AIFeed Markdown.</li>
+<li>Repository: <code>CONTRIBUTING.md</code>, <code>SECURITY.md</code>, <code>CODE_OF_CONDUCT.md</code>, <code>GOVERNANCE.md</code>, <code>spec/README.md</code>, SDK README, plugin LICENSE and starter <code>.pot</code>.</li>
+<li><strong>Any-platform publishing</strong>: <code>aifeed site build &lt;dir&gt;</code> generates manifest, delta index, per-page content with signatures, and optional <code>llms.txt</code> for any static output (Hugo, Jekyll, Astro, Next export, plain HTML), with opt-in <code>&lt;link rel=&quot;alternate&quot;&gt;</code> injection. File naming is profile-specific — <code>.aifeed.md</code> for AIFeed Markdown, <code>.mako.md</code> for MAKO, both written for <code>--profile both</code> — with <code>{file}.sig</code> sidecars whose context matches the media type. Directory indexes (<code>/dir/index.html</code>) are addressable at the clean path (<code>/dir</code>) across every adapter, including nested paths.</li>
+<li><strong>Server adapters</strong> in <code>integrations/</code>: nginx, Caddy, Apache, Node/Express, Next.js, PHP, Python ASGI, Go, and a GitHub Action (with tests for the Node handler).</li>
+<li><strong>Licensing and open-core policy</strong> documented in <code>GOVERNANCE.md</code>: the verification path (spec, schemas, verifiers, vectors, publisher tooling) is permanently open with no proprietary verification extensions; only secrets, customer data, and anti-abuse tactics stay private. Contribution licensing (inbound=outbound) added to <code>CONTRIBUTING.md</code>.</li>
+<li><strong>arXiv preprint draft</strong> (<code>paper/</code>): LaTeX source + Markdown mirror, <code>refs.bib</code> with metadata verified against primary sources (17 RFCs, pinned IETF drafts, Crossref DOIs, publisher pages), <code>CLAIMS.md</code> claim→source ledger, <code>CHECKLIST.md</code> submission readiness, and <code>npm run paper:check</code> for citation/environment cross-checks (52/52 cited).</li>
+</ul>
+<h4>Changed</h4>
+<ul>
+<li><strong>Release renumbered to <code>1.0.0-draft</code></strong> (was <code>0.3.0-draft</code>) across the protocol package, SDK, CLI, WordPress plugin, docs, and site. Wire/spec versions are unchanged: manifest <code>0.1</code> / <code>0.2</code>, AIFeed Markdown <code>1.0</code>, external MAKO <code>0.2</code> — the renumbering does not change any signed bytes or compatibility claims.</li>
+<li>Manifest verification accepts <code>0.1.x</code> and <code>0.2.x</code>; other versions report <code>upgrade_required</code>.</li>
+<li>Enforcement/HTML reports and pilot kit are self-contained and offline.</li>
+<li><strong>Canonical domain migrated</strong> from <code>aifeed.org</code> (third-party) to <code>aifeed.md</code> across specs, schemas, registry/revocation URLs, docs, tests, SDK, and the WordPress plugin — including escaped regex forms in JSON schemas and PHP. All signed vectors, fixtures, and indexes were regenerated and the full regression re-run. The migration is repeatable via <code>node tools/replace-domain.js --domain aifeed.md</code> (dry-run by default).</li>
+<li><strong>Canonical domain <code>aifeed.md</code> registered</strong> (maintainer, 2026-09-16). DNS and the spec/docs site are the next configuration step; normative URLs in specs, schemas, and registry links already point at <code>aifeed.md</code>.</li>
+<li><strong>Static site deployment assets</strong> for <code>aifeed.md</code>: <code>site/</code> (landing page), <code>npm run build:site</code> (<code>tools/build-site.js</code>) to refresh the copied artifacts, <code>.github/workflows/pages-cf.yml</code> for Cloudflare Pages, and <code>docs/deploy-site.md</code> covering the DNS, deploy, and demo-subdomain layout.</li>
+<li><strong>Landing page redesigned</strong> with a Groq-console-inspired, dark-first aesthetic: warm-black surfaces, vermilion accent, Inter/Montserrat typography, top nav, hero with inline mark, icon feature grid, grouped spec/tooling columns, info banner, and a light/dark toggle.</li>
+<li><strong>SEO kit</strong>: per-page metadata (canonical, Open Graph, Twitter cards, <code>max-image-preview</code>), JSON-LD on the landing and every demo page, apex <code>robots.txt</code> + <code>sitemap.xml</code> covering all demo pages, a zero-dependency 1200×630 <code>og-image.png</code> generator (<code>tools/gen-og-image.js</code>), and <code>docs/seo.md</code> with the Google Search Console runbook.</li>
+<li><strong>Live demo origins</strong>: seven signed demo sites (<code>demo</code>, <code>news</code>, <code>shop</code>, <code>gov</code>, <code>strict</code>, <code>revoked</code>, <code>verify</code>) generated deterministically from <code>demos/sites.js</code> with public demo keys, served on Cloudflare Pages through <code>functions/[[path]].js</code> (host routing, CORS, live 403/429 enforcement on <code>strict</code>, browser verifier on <code>verify</code>, multi-signature revocation registry under <code>site/revoke/</code>). The apex <code>aifeed.md</code> now dogfoods AIFeed with its own signed manifest. New tooling: <code>npm run demos</code>, <code>npm run demos:check</code> (in <code>verify</code>), <code>npm run verify:live</code>.</li>
+<li><strong>Maintainability kit</strong>: <code>AGENTS.md</code> (agent/dev contract: generated files, version locations, pitfalls), <code>docs/architecture.md</code> (module map, invariants, extension points), <code>docs/release.md</code> (release/upgrade checklist), and zero-dependency checkers (<code>npm run lint:syntax</code>, <code>npm run check:consistency</code>) rolled into one gate: <code>npm run verify</code>.</li>
+<li><strong>Repository flattened</strong>: the protocol project now lives at the repository root (was <code>aifeed-protocol/</code>), the WordPress plugin at <code>wp-plugin/</code>, and the Indonesian project documents under <code>docs/</code>. Canonical paths are now <code>github.com/denyn1/aifeed-protocol/tree/main/&lt;path&gt;</code> (no doubled prefix); the CI workflow, site links, and documentation were updated accordingly.</li>
+<li><strong>CI fix</strong>: the Pages workflow now runs the report renderer before the site builder (<code>render-html</code> → <code>build-site</code>), so <code>/process.html</code> and <code>/enforcement-report.html</code> ship again; <code>build-site</code> now fails loudly when a generated source is missing instead of silently skipping it (both were gitignored during the cleanup).</li>
+<li><strong>Agent-side quickstart</strong>: <code>docs/agent-quickstart.md</code> (check-first flow and failure handling) plus a runnable compliant-agent example (<code>examples/agent/compliant-agent.js</code>) covered by <code>tests/agent-example.test.js</code>. The SDK now forwards <code>allowPrivate</code>/<code>ca</code> through <code>fetchMako</code>, <code>fetchIndexDelta</code>, and sidecar signature fetching (for local, self-signed test environments).</li>
+<li><strong>Repository cleanup</strong>: removed obsolete proposal/review drafts and committed build artifacts (report HTML, site copies, duplicate PDF, arXiv staging/ZIP); those are regenerated on demand (<code>npm run render:html</code>, <code>npm run build:site</code>) and are now gitignored. The arXiv bundle is built directly from <code>paper/</code>.</li>
+<li><strong>SDK published to npm</strong>: <code>@aifeed/verify@1.0.0-draft</code> (dist-tags <code>latest</code> and <code>next</code>), 27 files, 44.7 kB packed; <code>npm install @aifeed/verify</code> resolves out of the box. Updated to <strong><code>1.0.0-draft.1</code></strong> (2026-09-16) with the TLS/private-fetch option forwarding fix; both dist-tags now point at it. The monorepo package is marked <code>&quot;private&quot;: true</code> to prevent accidental publishes.</li>
+<li><strong>Logo simplified</strong> to a static flat 2D mark (vermilion shield + white check, 378 bytes, no gradients/filters/animation), replacing the animated badge. The site, favicon, and the complete guide all use it via <code>site/logo.svg</code>.</li>
+<li><strong>Report pages rebuilt in the landing-page design system and in English</strong>: the protocol flow (<code>docs/process.html</code>), the enforcement benchmark (<code>benchmarks/enforcement-report.html</code>), and the long-form complete guide (<code>penjelasan-aifeed.html</code> → <code>site/penjelasan.html</code>) now share the warm dark-first palette, vermilion accent, and a light/dark toggle; all remain self-contained/offline with no external resources.</li>
+<li><strong>Human-facing naming unified to &quot;AIFeed Markdown&quot;</strong> across docs, CLI/SDK output, and reports; wire identifiers are unchanged (<code>aimd</code>, <code>aimd-index</code>, <code>AIMD-C1..C4</code> level codes, <code>AIMD_*</code> constants, <code>.aifeed.md</code>). EN/ID spec headings now state the wire identifier explicitly.</li>
+<li><strong>PHP JCS fixture drift fixed</strong>: <code>npm run jcs:fixtures</code> (<code>tools/gen-jcs-php-fixtures.js</code>) rebuilds <code>tools/jcs-php-fixtures.json</code> from conformance vector 001, so the plugin's cross-language JCS/Ed25519 test (<code>tests/jcs-test.php</code>) can no longer go stale after regeneration.</li>
+<li>Paper title aligned to *AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web*; <code>paper/CHECKLIST.md</code> domain item updated to reflect the applied migration.</li>
+</ul>
+<h3>[0.2.0-draft] — 2026-09-15</h3>
+<h4>Added</h4>
+<ul>
+<li>MAKO trust profile: signed MAKO documents (<code>aifeed.mako.v0.2</code>), permission binding (restrict-only), YAML-safe subset, delta index with per-entry digests.</li>
+<li>Assets as links (<code>aifeed.assets</code>), site resume and triage fields in the index, <code>/llms.txt</code> (v2) publishing in the WordPress plugin.</li>
+<li>CLI <code>aifeed mako generate|sign|verify|index|fetch</code>; SDK <code>fetchMako</code>, <code>fetchIndexDelta</code>, <code>selectEntries</code>, <code>decideUsage</code>.</li>
+<li>Enforcement harness (S0–S3, four client profiles, 100-tenant scale) with two-sided savings [S]; nginx/Caddy parity templates; animated HTML reports; 30-day pilot kit.</li>
+<li>39 MAKO conformance vectors; Python parity; fuzz targets for MAKO.</li>
+</ul>
+<h3>[0.1.0-rc1] — 2026-09-14</h3>
+<h4>Added</h4>
+<ul>
+<li>AIFeed v0.1: signed manifests at <code>/.well-known/ai.json</code>, Ed25519 + JCS, DNS anchor (<code>_aifeed</code>), revocation with multi-signature documents, offline bundles.</li>
+<li>Reference CLI (<code>keygen|sign|validate|bundle|init|import-openapi</code>), 24 manifest vectors, independent JavaScript and Python verifiers, WordPress publisher plugin (0.1.0-rc1) verified end-to-end (17/17 admin checks).</li>
+</ul>
+</div>
+</section>
+<section class="panel" id="panel-id" role="tabpanel" lang="id">
+<div class="changelog">
+<h2>Changelog</h2>
+<p>&lt;p&gt;&lt;a href=&quot;CHANGELOG.md&quot;&gt;English&lt;/a&gt; · &lt;a href=&quot;CHANGELOG.id.md&quot;&gt;Bahasa Indonesia&lt;/a&gt; · &lt;a href=&quot;CHANGELOG.zh.md&quot;&gt;中文&lt;/a&gt;&lt;/p&gt;</p>
+<p>Semua perubahan penting pada protokol AIFeed dan implementasi referensinya didokumentasikan</p>
+<p>di sini. Format mengikuti <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>.</p>
+<p>&gt; Label bukti yang dipakai di seluruh proyek: [F] fakta terverifikasi, [M] masuk akal,</p>
+<p>&gt; [E] estimasi model, [S] terukur di harness simulasi lokal, [H] butuh review hukum.</p>
+<h3>[1.0.0-draft] — 2026-09-16</h3>
+<h4>Ditambahkan</h4>
+<ul>
+<li><strong>AIFeed Studio (aplikasi publisher lokal)</strong> — <code>npm run studio</code> menyajikan UI web tanpa dependensi di <code>127.0.0.1:7777</code>: workspace per domain, pengambilan sumber HTML lokal, editor kebijakan restrict-only (izin penggunaan, teks/URL atribusi, batas crawl, lisensi, <code>llms.txt</code>, interval revokasi, aturan per-path), build incremental, verifikasi lokal manifest/halaman/indeks, dan ekspor bersama record DNS TXT <code>_aifeed</code>; crawler yang menghormati robots (sitemap atau penemuan tautan, rate limit, cache ETag/Last-Modified) menangani situs live; preset jenis situs (news, ecommerce, marketplace, government, open, restrictive, blog), tipe halaman per-path (<code>product</code>, <code>article</code>, <code>listing</code>, …), dan metadata freshness opt-in (tanggal/tag halaman) melengkapi dukungan jenis situs. M3 menambahkan unduhan overlay <code>.tar.gz</code>, deteksi stack dengan petunjuk adapter <code>integrations/</code>, verifikasi live sekali klik (manifest, tanda tangan, anchor DNS), dan upacara rotasi kunci terjaga yang menukar kunci dan menandatangani ulang seluruh halaman. G4 menambahkan editor <code>types</code>/<code>capabilities</code>/<code>actions</code> tervalidasi schema dan impor OpenAPI untuk aksi e-commerce, plus jurnal audit (<code>journal.ndjson</code>) dan petunjuk perbaikan inline untuk kegagalan DNS, schema, tanda tangan, dan rotasi yang umum. Private key tetap di workspace (0600) dan tidak pernah disajikan; UI EN/ID/ZH. Pembangun manifest (<code>lib/site.js</code>) mendapat opsi opsional <code>limits</code>, <code>license</code>, <code>attribution_text/url</code>, dan <code>maxCheckIntervalHours</code> (backward-compatible).</li>
+<li><strong>Situs web</strong> — halaman baru <code>studio.html</code> (Publish) dan <code>updates.html</code> (catatan rilis yang dirender dari changelog dalam EN/ID/ZH saat build), tertaut dari navbar, grid artifacts, dan sitemap apex; keduanya menyertakan AIFeed Markdown bertanda tangan.</li>
+<li><strong>Rotasi kunci (v0.2 §14)</strong> — mengganti kunci penanda tangan manifest tanpa merusak verifikasi: direktif <code>rotation.successor_fp</code> bertanda tangan kunci lama plus cross-check DNS <code>pk2</code> yang advisory, overlap terbatas (<code>effective_at</code> → <code>grace_until</code>, batas keras 1 jam), pengikatan cutover <code>predecessor_fp</code> bertanda tangan kunci baru, lalu revokasi permanen. Enam kode hasil: <code>rotation_invalid</code>, <code>rotation_anchor_unverified</code>, <code>grace_accepted</code>, <code>rotation_denied</code>, <code>rotation_resync</code>, <code>key_revoked</code>. Diimplementasikan di <code>lib/rotation.js</code>, CLI satu perintah <code>aifeed rotate [--dry-run]</code>, ekspor SDK <code>rotation</code>, paritas direktif Python, validasi manifest PHP, vektor 008–011 / 119–123, dan runbook di <code>docs/rotation.md</code>.</li>
+<li><strong>SDK diterbitkan ulang sebagai <code>1.0.0-draft.2</code></strong> — mencakup helper rotasi kunci (<code>rotation.*</code>), opsi pembangun manifest v0.2 yang dipakai Studio (limits, license, attribution text/URL), serta opsi tipe halaman dan freshness opt-in di <code>htmlToMako</code>.</li>
+<li><strong>AIFeed Markdown v1.0</strong> — profil konten native: <code>text/aifeed+markdown</code>, <code>.aifeed.md</code>, <code>aimd: &quot;1.0&quot;</code>, blok kebijakan <code>aifeed</code> kelas satu, budget token sesuai pilihan penerbit (default referensi 4.000 pada mode AIFeed Markdown-only).</li>
+<li><strong>Penyajian dual-stack</strong> — byte bertanda tangan yang sama di bawah AIFeed Markdown dan MAKO, masing-masing dengan konteks tanda tangannya sendiri (<code>aimd</code> / <code>mako</code>); replay lintas format ditolak.</li>
+<li>Ekstensi manifest: <code>content.profile</code> (<code>mako</code> | <code>aifeed-md</code> | <code>both</code>) dan <code>content.index_url</code>; indeks AIFeed Markdown di <code>/.well-known/aifeed-index.json</code>.</li>
+<li>CLI: alias <code>aifeed aimd &lt;generate|sign|verify|index|fetch&gt;</code>, <code>--format</code> untuk generate, index, dan fetch; deteksi otomatis profil untuk sign/verify.</li>
+<li>SDK <code>@aifeed/verify</code> 1.0.0-draft: <code>fetchAimd</code>, <code>verifyAimdDocument</code>, <code>verifyAimdIndex</code>, konstanta media type.</li>
+<li>Plugin WordPress 1.0.0-draft: penyajian dual-stack, mode AIFeed Markdown-only via filter <code>aifeed_dual_stack</code>, tanda tangan dan indeks per format.</li>
+<li>Spec: <code>spec/en|id|zh/aifeed-aimd-v1.md</code> (mode operasi, pertimbangan IANA).</li>
+<li>Vektor: <code>conformance/aimd/</code> (11 kasus: penanda, replay lintas format, tamper, aset, alternates, validasi field opsional yang ketat) dengan paritas Python; korpus fuzz mencakup AIFeed Markdown.</li>
+<li>Repositori: <code>CONTRIBUTING.md</code>, <code>SECURITY.md</code>, <code>CODE_OF_CONDUCT.md</code>, <code>GOVERNANCE.md</code>, <code>spec/README.md</code>, README SDK, LICENSE plugin, dan starter <code>.pot</code>.</li>
+<li><strong>Penerbitan platform apa pun</strong>: <code>aifeed site build &lt;dir&gt;</code> menghasilkan manifest, indeks delta, konten per halaman dengan tanda tangan, dan <code>llms.txt</code> opsional untuk output statis apa pun (Hugo, Jekyll, Astro, Next export, HTML polos), dengan injeksi <code>&lt;link rel=&quot;alternate&quot;&gt;</code> opt-in. Penamaan file spesifik profil — <code>.aifeed.md</code> untuk AIFeed Markdown, <code>.mako.md</code> untuk MAKO, keduanya ditulis untuk <code>--profile both</code> — dengan sidecar <code>{file}.sig</code> yang konteksnya cocok dengan media type. Indeks direktori (<code>/dir/index.html</code>) dapat diakses di path bersih (<code>/dir</code>) pada setiap adapter, termasuk path bersarang.</li>
+<li><strong>Adapter server</strong> di <code>integrations/</code>: nginx, Caddy, Apache, Node/Express, Next.js, PHP, Python ASGI, Go, dan GitHub Action (dengan tes untuk handler Node).</li>
+<li><strong>Kebijakan lisensi dan open-core</strong> didokumentasikan di <code>GOVERNANCE.md</code>: jalur verifikasi (spec, schema, verifier, vektor, tooling penerbit) permanen terbuka tanpa ekstensi verifikasi proprietary; hanya secret, data pelanggan, dan taktik anti-abuse yang tetap privat. Lisensi kontribusi (inbound=outbound) ditambahkan ke <code>CONTRIBUTING.md</code>.</li>
+<li><strong>Draf preprint arXiv</strong> (<code>paper/</code>): sumber LaTeX + cermin Markdown, <code>refs.bib</code> dengan metadata terverifikasi terhadap sumber primer (17 RFC, draf IETF yang dipin, DOI Crossref, halaman penerbit), ledger klaim→sumber <code>CLAIMS.md</code>, kesiapan submission <code>CHECKLIST.md</code>, dan <code>npm run paper:check</code> untuk cek silang sitasi/lingkungan (52/52 disitasi).</li>
+</ul>
+<h4>Diubah</h4>
+<ul>
+<li><strong>Rilis dinomori ulang menjadi <code>1.0.0-draft</code></strong> (sebelumnya <code>0.3.0-draft</code>) di paket protokol, SDK, CLI, plugin WordPress, dokumen, dan situs. Versi wire/spec tidak berubah: manifest <code>0.1</code> / <code>0.2</code>, AIFeed Markdown <code>1.0</code>, MAKO eksternal <code>0.2</code> — penomoran ulang tidak mengubah byte bertanda tangan atau klaim kompatibilitas apa pun.</li>
+<li>Verifikasi manifest menerima <code>0.1.x</code> dan <code>0.2.x</code>; versi lain melaporkan <code>upgrade_required</code>.</li>
+<li>Laporan enforcement/HTML dan kit pilot mandiri dan offline.</li>
+<li><strong>Domain kanonik dimigrasikan</strong> dari <code>aifeed.org</code> (pihak ketiga) ke <code>aifeed.md</code> di spec, schema, URL registry/revokasi, dokumen, tes, SDK, dan plugin WordPress — termasuk bentuk regex ter-escape di schema JSON dan PHP. Semua vektor bertanda tangan, fixture, dan indeks diregenerasi dan regresi penuh dijalankan ulang. Migrasi dapat diulang via <code>node tools/replace-domain.js --domain aifeed.md</code> (dry-run secara default).</li>
+<li><strong>Domain kanonik <code>aifeed.md</code> terdaftar</strong> (maintainer, 2026-09-16). DNS dan situs spec/docs adalah langkah konfigurasi berikutnya; URL normatif di spec, schema, dan tautan registry sudah menunjuk <code>aifeed.md</code>.</li>
+<li><strong>Aset deployment situs statis</strong> untuk <code>aifeed.md</code>: <code>site/</code> (landing page), <code>npm run build:site</code> (<code>tools/build-site.js</code>) untuk menyegarkan artefak salinan, <code>.github/workflows/pages-cf.yml</code> untuk Cloudflare Pages, dan <code>docs/deploy-site.md</code> yang mencakup DNS, deploy, dan tata letak subdomain demo.</li>
+<li><strong>Landing page didesain ulang</strong> dengan estetika dark-first terinspirasi konsol Groq: permukaan warm-black, aksen vermilion, tipografi Inter/Montserrat, nav atas, hero dengan mark inline, grid fitur ikon, kolom spec/tooling berkelompok, banner info, dan toggle terang/gelap.</li>
+<li><strong>Kit SEO</strong>: metadata per halaman (canonical, Open Graph, kartu Twitter, <code>max-image-preview</code>), JSON-LD di landing dan setiap halaman demo, <code>robots.txt</code> + <code>sitemap.xml</code> apex yang mencakup semua halaman demo, generator <code>og-image.png</code> 1200×630 tanpa dependensi (<code>tools/gen-og-image.js</code>), dan <code>docs/seo.md</code> dengan runbook Google Search Console.</li>
+<li><strong>Origin demo live</strong>: tujuh situs demo bertanda tangan (<code>demo</code>, <code>news</code>, <code>shop</code>, <code>gov</code>, <code>strict</code>, <code>revoked</code>, <code>verify</code>) yang dihasilkan deterministik dari <code>demos/sites.js</code> dengan kunci demo publik, disajikan di Cloudflare Pages melalui <code>functions/[[path]].js</code> (routing host, CORS, enforcement 403/429 live pada <code>strict</code>, verifier browser pada <code>verify</code>, registry revokasi multi-tanda-tangan di bawah <code>site/revoke/</code>). Apex <code>aifeed.md</code> kini memakai AIFeed pada dirinya sendiri dengan manifest bertanda tangannya. Tooling baru: <code>npm run demos</code>, <code>npm run demos:check</code> (di dalam <code>verify</code>), <code>npm run verify:live</code>.</li>
+<li><strong>Kit pemeliharaan</strong>: <code>AGENTS.md</code> (kontrak agen/dev: file hasil generate, lokasi versi, jebakan), <code>docs/architecture.md</code> (peta modul, invarian, titik ekstensi), <code>docs/release.md</code> (checklist rilis/upgrade), dan pemeriksa tanpa dependensi (<code>npm run lint:syntax</code>, <code>npm run check:consistency</code>) yang digabung jadi satu gerbang: <code>npm run verify</code>.</li>
+<li><strong>Repositori diratakan</strong>: proyek protokol kini berada di root repositori (sebelumnya <code>aifeed-protocol/</code>), plugin WordPress di <code>wp-plugin/</code>, dan dokumen proyek Indonesia di bawah <code>docs/</code>. Path kanonik kini <code>github.com/denyn1/aifeed-protocol/tree/main/&lt;path&gt;</code> (tanpa prefiks ganda); workflow CI, tautan situs, dan dokumentasi diperbarui mengikuti.</li>
+<li><strong>Perbaikan CI</strong>: workflow Pages kini menjalankan renderer laporan sebelum builder situs (<code>render-html</code> → <code>build-site</code>), sehingga <code>/process.html</code> dan <code>/enforcement-report.html</code> kembali terkirim; <code>build-site</code> kini gagal dengan berisik saat sumber hasil generate hilang alih-alih melewatinya diam-diam (keduanya di-gitignore saat pembersihan).</li>
+<li><strong>Quickstart sisi agen</strong>: <code>docs/agent-quickstart.md</code> (alur periksa-dulu dan penanganan kegagalan) plus contoh agen patuh yang bisa dijalankan (<code>examples/agent/compliant-agent.js</code>) yang dilindungi <code>tests/agent-example.test.js</code>. SDK kini meneruskan <code>allowPrivate</code>/<code>ca</code> melalui <code>fetchMako</code>, <code>fetchIndexDelta</code>, dan pengambilan tanda tangan sidecar (untuk lingkungan tes lokal self-signed).</li>
+<li><strong>Pembersihan repositori</strong>: draf proposal/review usang dan artefak build yang ter-commit (HTML laporan, salinan situs, PDF duplikat, staging/ZIP arXiv) dihapus; semuanya diregenerasi sesuai kebutuhan (<code>npm run render:html</code>, <code>npm run build:site</code>) dan kini di-gitignore. Bundel arXiv dibangun langsung dari <code>paper/</code>.</li>
+<li><strong>SDK diterbitkan ke npm</strong>: <code>@aifeed/verify@1.0.0-draft</code> (dist-tag <code>latest</code> dan <code>next</code>), 27 file, 44,7 kB terpaket; <code>npm install @aifeed/verify</code> langsung berfungsi. Diperbarui ke <strong><code>1.0.0-draft.1</code></strong> (2026-09-16) dengan perbaikan penerusan opsi TLS/private-fetch; kedua dist-tag kini menunjuk versi itu. Paket monorepo ditandai <code>&quot;private&quot;: true</code> untuk mencegah publikasi tak sengaja.</li>
+<li><strong>Logo disederhanakan</strong> menjadi mark 2D flat statis (shield vermilion + centang putih, 378 byte, tanpa gradien/filter/animasi), menggantikan badge beranimasi. Situs, favicon, dan panduan lengkap semuanya memakainya via <code>site/logo.svg</code>.</li>
+<li>**Halaman laporan dibangun ulang dalam sistem desain landing page dan dalam bahasa Inggris**: alur protokol (<code>docs/process.html</code>), benchmark enforcement (<code>benchmarks/enforcement-report.html</code>), dan panduan lengkap bentuk panjang (<code>penjelasan-aifeed.html</code> → <code>site/penjelasan.html</code>) kini berbagi palet warm dark-first, aksen vermilion, dan toggle terang/gelap; semuanya tetap mandiri/offline tanpa sumber eksternal.</li>
+<li><strong>Penamaan menghadap manusia disatukan menjadi &quot;AIFeed Markdown&quot;</strong> di dokumen, output CLI/SDK, dan laporan; identifier wire tidak berubah (<code>aimd</code>, <code>aimd-index</code>, kode level <code>AIMD-C1..C4</code>, konstanta <code>AIMD_*</code>, <code>.aifeed.md</code>). Heading spec EN/ID kini menyatakan identifier wire secara eksplisit.</li>
+<li><strong>Drift fixture JCS PHP diperbaiki</strong>: <code>npm run jcs:fixtures</code> (<code>tools/gen-jcs-php-fixtures.js</code>) membangun ulang <code>tools/jcs-php-fixtures.json</code> dari vektor konformansi 001, sehingga tes lintas bahasa JCS/Ed25519 plugin (<code>tests/jcs-test.php</code>) tidak bisa lagi basi setelah regenerasi.</li>
+<li>Judul paper diselaraskan ke *AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web*; item domain <code>paper/CHECKLIST.md</code> diperbarui untuk mencerminkan migrasi yang sudah diterapkan.</li>
+</ul>
+<h3>[0.2.0-draft] — 2026-09-15</h3>
+<h4>Ditambahkan</h4>
+<ul>
+<li>Profil trust MAKO: dokumen MAKO bertanda tangan (<code>aifeed.mako.v0.2</code>), pengikatan izin (restrict-only), subset YAML aman, indeks delta dengan digest per entri.</li>
+<li>Aset sebagai tautan (<code>aifeed.assets</code>), resume situs dan field triage di indeks, penerbitan <code>/llms.txt</code> (v2) di plugin WordPress.</li>
+<li>CLI <code>aifeed mako generate|sign|verify|index|fetch</code>; SDK <code>fetchMako</code>, <code>fetchIndexDelta</code>, <code>selectEntries</code>, <code>decideUsage</code>.</li>
+<li>Harness enforcement (S0–S3, empat profil klien, skala 100 tenant) dengan penghematan dua sisi [S]; template paritas nginx/Caddy; laporan HTML beranimasi; kit pilot 30 hari.</li>
+<li>39 vektor konformansi MAKO; paritas Python; target fuzz untuk MAKO.</li>
+</ul>
+<h3>[0.1.0-rc1] — 2026-09-14</h3>
+<h4>Ditambahkan</h4>
+<ul>
+<li>AIFeed v0.1: manifest bertanda tangan di <code>/.well-known/ai.json</code>, Ed25519 + JCS, anchor DNS (<code>_aifeed</code>), revokasi dengan dokumen multi-tanda-tangan, bundel offline.</li>
+<li>CLI referensi (<code>keygen|sign|validate|bundle|init|import-openapi</code>), 24 vektor manifest, verifier JavaScript dan Python independen, plugin penerbit WordPress (0.1.0-rc1) terverifikasi end-to-end (17/17 pemeriksaan admin).</li>
+</ul>
+</div>
+</section>
+<section class="panel" id="panel-zh" role="tabpanel" lang="zh">
+<div class="changelog">
+<h2>更新日志</h2>
+<p>&lt;p&gt;&lt;a href=&quot;CHANGELOG.md&quot;&gt;English&lt;/a&gt; · &lt;a href=&quot;CHANGELOG.id.md&quot;&gt;Bahasa Indonesia&lt;/a&gt; · &lt;a href=&quot;CHANGELOG.zh.md&quot;&gt;中文&lt;/a&gt;&lt;/p&gt;</p>
+<p>AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循</p>
+<p><a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>。</p>
+<p>&gt; 全项目使用的证据标签：[F] 已验证事实、[M] 可信、[E] 模型估计、[S] 本地模拟装置实测、</p>
+<p>&gt; [H] 需法律审查。</p>
+<h3>[1.0.0-draft] — 2026-09-16</h3>
+<h4>新增</h4>
+<ul>
+<li><strong>AIFeed Studio（本地发布方应用）</strong> —— <code>npm run studio</code> 在 <code>127.0.0.1:7777</code> 提供 零依赖 Web UI：按域名的工作区、本地 HTML 来源接入、restrict-only 策略编辑器 （使用许可、署名文本/URL、抓取限额、许可证、<code>llms.txt</code>、撤销间隔、路径规则）、 增量构建、manifest/页面/索引的本地验证，以及带 <code>_aifeed</code> DNS TXT 记录的导出。 遵守 robots 的抓取器（sitemap 或链接发现、限速、ETag/Last-Modified 缓存）覆盖线上 站点；站点类型预设（news、ecommerce、marketplace、government、open、restrictive、 blog）、按路径的页面类型（<code>product</code>、<code>article</code>、<code>listing</code>……）以及可选的 freshness 元数据（页面日期/标签）补齐了站点类型支持。M3 新增 <code>.tar.gz</code> 覆盖层下载、与 <code>integrations/</code> 适配器提示相连的技术栈检测、一键线上验证（manifest、签名、DNS 锚点），以及会换钥并重新签名所有页面的受保护密钥轮换仪式。G4 新增经 schema 校验的 <code>types</code>/<code>capabilities</code>/<code>actions</code> 编辑器、面向电商动作的 OpenAPI 导入，以及审计日志 （<code>journal.ndjson</code>）和针对常见 DNS、schema、签名与轮换失败的内联修复提示。私钥保留在工作区（0600）且永不对外提供； 界面支持 EN/ID/ZH。manifest 构建器 （<code>lib/site.js</code>）新增可选 <code>limits</code>、<code>license</code>、<code>attribution_text/url</code> 与 <code>maxCheckIntervalHours</code> 选项（向后兼容）。</li>
+<li><strong>网站</strong> — 新增 <code>studio.html</code>（Publish）与 <code>updates.html</code>（构建时从 EN/ID/ZH 变更日志 渲染的发布说明）页面，已从导航栏、artifacts 网格与 apex sitemap 链接；两者均附带 签名 AIFeed Markdown。</li>
+<li><strong>密钥轮换（v0.2 §14）</strong>——在不破坏验证的前提下替换 manifest 签名密钥：旧密钥签名的 <code>rotation.successor_fp</code> 指令加建议性 DNS <code>pk2</code> 交叉校验、有界重叠期 （<code>effective_at</code> → <code>grace_until</code>，1 小时硬下限）、新密钥签名的 <code>predecessor_fp</code> 切换 绑定，然后是永久撤销。六个结果码：<code>rotation_invalid</code>、<code>rotation_anchor_unverified</code>、 <code>grace_accepted</code>、<code>rotation_denied</code>、<code>rotation_resync</code>、<code>key_revoked</code>。实现于 <code>lib/rotation.js</code>、单命令 CLI <code>aifeed rotate [--dry-run]</code>、SDK <code>rotation</code> 导出、 Python 指令对等、PHP manifest 校验、向量 008–011 / 119–123，操作手册见 <code>docs/rotation.md</code>。</li>
+<li><strong>SDK 重新发布为 <code>1.0.0-draft.2</code></strong> —— 包含密钥轮换辅助（<code>rotation.*</code>）、Studio 使用的 v0.2 manifest 构建器选项（limits、license、attribution 文本/URL），以及 <code>htmlToMako</code> 的页面类型与可选 freshness 选项。</li>
+<li><strong>AIFeed Markdown v1.0</strong>——原生内容配置：<code>text/aifeed+markdown</code>、<code>.aifeed.md</code>、 <code>aimd: &quot;1.0&quot;</code>、一等 <code>aifeed</code> 政策块、token 预算由发布方自选（仅 AIFeed Markdown 模式 下参考默认 4,000）。</li>
+<li><strong>双栈服务</strong>——同一份签名字节在 AIFeed Markdown 与 MAKO 下提供，各带自己的签名上下文 （<code>aimd</code> / <code>mako</code>）；跨格式重放被拒绝。</li>
+<li>manifest 扩展：<code>content.profile</code>（<code>mako</code> | <code>aifeed-md</code> | <code>both</code>）与 <code>content.index_url</code>；AIFeed Markdown 索引位于 <code>/.well-known/aifeed-index.json</code>。</li>
+<li>CLI：<code>aifeed aimd &lt;generate|sign|verify|index|fetch&gt;</code> 别名，generate、index、fetch 支持 <code>--format</code>；sign/verify 自动识别配置。</li>
+<li>SDK <code>@aifeed/verify</code> 1.0.0-draft：<code>fetchAimd</code>、<code>verifyAimdDocument</code>、 <code>verifyAimdIndex</code>、媒体类型常量。</li>
+<li>WordPress 插件 1.0.0-draft：双栈服务、通过 <code>aifeed_dual_stack</code> 过滤器实现仅 AIFeed Markdown 模式、按格式的签名与索引。</li>
+<li>规范：<code>spec/en|id|zh/aifeed-aimd-v1.md</code>（运行模式、IANA 考虑）。</li>
+<li>向量：<code>conformance/aimd/</code>（11 个用例：标记、跨格式重放、篡改、资源、alternates、 严格可选字段校验）并带 Python 对等；模糊语料包含 AIFeed Markdown。</li>
+<li>仓库：<code>CONTRIBUTING.md</code>、<code>SECURITY.md</code>、<code>CODE_OF_CONDUCT.md</code>、<code>GOVERNANCE.md</code>、 <code>spec/README.md</code>、SDK README、插件 LICENSE 与初始 <code>.pot</code>。</li>
+<li><strong>任意平台发布</strong>：<code>aifeed site build &lt;dir&gt;</code> 为任意静态输出（Hugo、Jekyll、Astro、 Next export、纯 HTML）生成 manifest、增量索引、带签名的逐页内容与可选的 <code>llms.txt</code>， 并支持可选注入 <code>&lt;link rel=&quot;alternate&quot;&gt;</code>。文件命名按配置区分——AIFeed Markdown 用 <code>.aifeed.md</code>、MAKO 用 <code>.mako.md</code>、<code>--profile both</code> 两者都写——附带与媒体类型匹配的 <code>{file}.sig</code> 边车。目录索引（<code>/dir/index.html</code>）在所有适配器上都可通过干净路径 （<code>/dir</code>）访问，包括嵌套路径。</li>
+<li><strong>服务器适配器</strong>（<code>integrations/</code>）：nginx、Caddy、Apache、Node/Express、Next.js、 PHP、Python ASGI、Go 与 GitHub Action（含 Node handler 测试）。</li>
+<li><strong>许可与开放核心政策</strong>记录于 <code>GOVERNANCE.md</code>：验证路径（规范、schema、验证器、向量、 发布工具）永久开放，不含专有验证扩展；只有密钥、客户数据与反滥用策略保持私有。 贡献许可（inbound=outbound）加入 <code>CONTRIBUTING.md</code>。</li>
+<li><strong>arXiv 预印本草案</strong>（<code>paper/</code>）：LaTeX 源 + Markdown 镜像、对照一手来源核验元数据的 <code>refs.bib</code>（17 个 RFC、固定版本 IETF 草案、Crossref DOI、出版商页面）、 <code>CLAIMS.md</code> 主张→来源台账、<code>CHECKLIST.md</code> 投稿就绪清单，以及用于引文/环境交叉检查的 <code>npm run paper:check</code>（52/52 已引用）。</li>
+</ul>
+<h4>变更</h4>
+<ul>
+<li><strong>发布号改为 <code>1.0.0-draft</code></strong>（原 <code>0.3.0-draft</code>），覆盖协议包、SDK、CLI、WordPress 插件、文档与站点。线格式/规范版本不变：manifest <code>0.1</code> / <code>0.2</code>、AIFeed Markdown <code>1.0</code>、外部 MAKO <code>0.2</code>——重新编号不改变任何签名字节或兼容性主张。</li>
+<li>manifest 验证接受 <code>0.1.x</code> 与 <code>0.2.x</code>；其他版本报告 <code>upgrade_required</code>。</li>
+<li>执行/HTML 报告与试点套件自包含且可离线。</li>
+<li><strong>规范域名迁移</strong>：从 <code>aifeed.org</code>（第三方）迁移到 <code>aifeed.md</code>，覆盖规范、schema、 注册表/撤销 URL、文档、测试、SDK 与 WordPress 插件——包括 JSON schema 与 PHP 中 转义的正则形式。所有签名向量、夹具与索引重新生成，完整回归重跑。迁移可通过 <code>node tools/replace-domain.js --domain aifeed.md</code> 重复执行（默认 dry-run）。</li>
+<li><strong>规范域名 <code>aifeed.md</code> 已注册</strong>（维护者，2026-09-16）。DNS 与规范/文档站点是下一步 配置；规范、schema 与注册表链接中的规范 URL 已指向 <code>aifeed.md</code>。</li>
+<li><strong><code>aifeed.md</code> 静态站点部署资产</strong>：<code>site/</code>（落地页）、用于刷新复制产物的 <code>npm run build:site</code>（<code>tools/build-site.js</code>）、面向 Cloudflare Pages 的 <code>.github/workflows/pages-cf.yml</code>，以及涵盖 DNS、部署与演示子域名布局的 <code>docs/deploy-site.md</code>。</li>
+<li><strong>落地页重新设计</strong>，采用受 Groq 控制台启发的暗色优先美学：暖黑表面、朱红强调色、 Inter/Montserrat 字体、顶部导航、带内联标志的 hero、图标功能网格、分组规范/工具 栏目、信息横幅与明暗切换。</li>
+<li><strong>SEO 套件</strong>：逐页元数据（canonical、Open Graph、Twitter 卡片、 <code>max-image-preview</code>）、落地页与每个演示页的 JSON-LD、覆盖全部演示页的 apex <code>robots.txt</code> + <code>sitemap.xml</code>、零依赖 1200×630 <code>og-image.png</code> 生成器 （<code>tools/gen-og-image.js</code>），以及含 Google Search Console 操作手册的 <code>docs/seo.md</code>。</li>
+<li><strong>线上演示源站</strong>：七个签名演示站点（<code>demo</code>、<code>news</code>、<code>shop</code>、<code>gov</code>、<code>strict</code>、 <code>revoked</code>、<code>verify</code>）由 <code>demos/sites.js</code> 与公开演示密钥确定性生成，通过 <code>functions/[[path]].js</code> 部署于 Cloudflare Pages（主机路由、CORS、<code>strict</code> 上的 实时 403/429 执行、<code>verify</code> 上的浏览器验证器、<code>site/revoke/</code> 下的多签名撤销注册 表）。apex <code>aifeed.md</code> 现在以自身签名 manifest 自我吃狗粮。新工具：<code>npm run demos</code>、 <code>npm run demos:check</code>（在 <code>verify</code> 内）、<code>npm run verify:live</code>。</li>
+<li><strong>可维护性套件</strong>：<code>AGENTS.md</code>（智能体/开发者契约：生成文件、版本位置、陷阱）、 <code>docs/architecture.md</code>（模块地图、不变量、扩展点）、<code>docs/release.md</code> （发布/升级清单），以及零依赖检查器（<code>npm run lint:syntax</code>、 <code>npm run check:consistency</code>）并入一个门禁：<code>npm run verify</code>。</li>
+<li><strong>仓库扁平化</strong>：协议项目现在位于仓库根目录（原为 <code>aifeed-protocol/</code>），WordPress 插件位于 <code>wp-plugin/</code>，印尼语项目文档位于 <code>docs/</code> 下。规范路径现在是 <code>github.com/denyn1/aifeed-protocol/tree/main/&lt;path&gt;</code>（无双重前缀）；CI workflow、 站点链接与文档已相应更新。</li>
+<li><strong>CI 修复</strong>：Pages workflow 现在先运行报告渲染器再运行站点构建器 （<code>render-html</code> → <code>build-site</code>），因此 <code>/process.html</code> 与 <code>/enforcement-report.html</code> 恢复发布；<code>build-site</code> 现在在生成源缺失时大声失败， 而不是静默跳过（两者在清理时被 gitignore）。</li>
+<li><strong>智能体侧快速上手</strong>：<code>docs/agent-quickstart.md</code>（先检查流程与失败处理）与可运行的 合规智能体示例（<code>examples/agent/compliant-agent.js</code>），由 <code>tests/agent-example.test.js</code> 覆盖。SDK 现在通过 <code>fetchMako</code>、<code>fetchIndexDelta</code> 与 边车签名抓取转发 <code>allowPrivate</code>/<code>ca</code>（用于本地自签名测试环境）。</li>
+<li><strong>仓库清理</strong>：删除过时的提案/评审草稿与已提交的构建产物（报告 HTML、站点副本、 重复 PDF、arXiv 暂存/ZIP）；它们按需重新生成（<code>npm run render:html</code>、 <code>npm run build:site</code>）并已 gitignore。arXiv 包直接从 <code>paper/</code> 构建。</li>
+<li><strong>SDK 发布到 npm</strong>：<code>@aifeed/verify@1.0.0-draft</code>（dist-tag <code>latest</code> 与 <code>next</code>）， 27 个文件、打包 44.7 kB；<code>npm install @aifeed/verify</code> 开箱即用。更新为 <strong><code>1.0.0-draft.1</code></strong>（2026-09-16），含 TLS/私有抓取选项转发修复；两个 dist-tag 均 指向它。monorepo 包标记为 <code>&quot;private&quot;: true</code> 以防误发布。</li>
+<li><strong>Logo 简化</strong>为静态扁平 2D 标记（朱红盾牌 + 白色对勾，378 字节，无渐变/滤镜/动画）， 取代动态徽章。站点、favicon 与完整指南均通过 <code>site/logo.svg</code> 使用它。</li>
+<li><strong>报告页面按落地页设计系统重建并改为英文</strong>：协议流程（<code>docs/process.html</code>）、执行 基准（<code>benchmarks/enforcement-report.html</code>）与长文完整指南 （<code>penjelasan-aifeed.html</code> → <code>site/penjelasan.html</code>）现在共享暖黑调色板、朱红强调色 与明暗切换；全部保持自包含/离线，无外部资源。</li>
+<li><strong>面向人类的命名统一为 &quot;AIFeed Markdown&quot;</strong>，覆盖文档、CLI/SDK 输出与报告；线标识 不变（<code>aimd</code>、<code>aimd-index</code>、<code>AIMD-C1..C4</code> 级别码、<code>AIMD_*</code> 常量、<code>.aifeed.md</code>）。 EN/ID 规范标题现在明确说明线标识。</li>
+<li><strong>PHP JCS 夹具漂移修复</strong>：<code>npm run jcs:fixtures</code> （<code>tools/gen-jcs-php-fixtures.js</code>）从一致性向量 001 重建 <code>tools/jcs-php-fixtures.json</code>，插件的跨语言 JCS/Ed25519 测试 （<code>tests/jcs-test.php</code>）在重新生成后不会再过期。</li>
+<li>论文标题对齐为 *AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the AI Web*；<code>paper/CHECKLIST.md</code> 的域名项更新以反映已执行的迁移。</li>
+</ul>
+<h3>[0.2.0-draft] — 2026-09-15</h3>
+<h4>新增</h4>
+<ul>
+<li>MAKO 信任配置：签名 MAKO 文档（<code>aifeed.mako.v0.2</code>）、许可绑定（restrict-only）、 YAML 安全子集、带逐条摘要的增量索引。</li>
+<li>资源链接（<code>aifeed.assets</code>）、索引中的站点摘要与分流字段、WordPress 插件中的 <code>/llms.txt</code>（v2）发布。</li>
+<li>CLI <code>aifeed mako generate|sign|verify|index|fetch</code>；SDK <code>fetchMako</code>、 <code>fetchIndexDelta</code>、<code>selectEntries</code>、<code>decideUsage</code>。</li>
+<li>执行测试装置（S0–S3、四种客户端配置、100 租户规模）与双方节省 [S]；nginx/Caddy 对等模板；动画 HTML 报告；30 天试点套件。</li>
+<li>39 个 MAKO 一致性向量；Python 对等；MAKO 模糊测试目标。</li>
+</ul>
+<h3>[0.1.0-rc1] — 2026-09-14</h3>
+<h4>新增</h4>
+<ul>
+<li>AIFeed v0.1：位于 <code>/.well-known/ai.json</code> 的签名 manifest、Ed25519 + JCS、DNS 锚点 （<code>_aifeed</code>）、带多签名文档的撤销、离线包。</li>
+<li>参考 CLI（<code>keygen|sign|validate|bundle|init|import-openapi</code>）、24 个 manifest 向量、 独立 JavaScript 与 Python 验证器、经端到端验证的 WordPress 发布插件 （0.1.0-rc1，17/17 管理检查通过）。</li>
+</ul>
+</div>
+</section>
+<footer class="foot">Regenerate: <code>npm run render:html &amp;&amp; npm run build:site</code></footer>
+</div>
+<script>
+(function () {
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function qs(root, selector) { return root.querySelector(selector); }
+  function qsa(root, selector) { return Array.prototype.slice.call(root.querySelectorAll(selector)); }
+
+  function setupTheme() {
+    var button = document.getElementById('theme-toggle');
+    if (!button) return;
+    button.addEventListener('click', function () {
+      var root = document.documentElement;
+      var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (error) {}
+    });
+  }
+
+  function setupTabs() {
+    var tabs = qsa(document, '.tab');
+    var panels = qsa(document, '.panel');
+    if (tabs.length === 0 || panels.length === 0) return;
+    function activate(name) {
+      tabs.forEach(function (tab) {
+        var selected = tab.getAttribute('data-panel') === name;
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      });
+      panels.forEach(function (panel) {
+        panel.classList.toggle('active', panel.id === 'panel-' + name);
+      });
+      document.dispatchEvent(new CustomEvent('aifeed:panel', { detail: name }));
+    }
+    tabs.forEach(function (tab, index) {
+      tab.addEventListener('click', function () { activate(tab.getAttribute('data-panel')); });
+      tab.addEventListener('keydown', function (event) {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        var next = event.key === 'ArrowRight' ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+        tabs[next].focus();
+        activate(tabs[next].getAttribute('data-panel'));
+      });
+    });
+    activate(tabs[0].getAttribute('data-panel'));
+  }
+
+  function animateNumber(element, target, duration) {
+    if (!element) return;
+    if (reduceMotion || !duration) { element.textContent = String(target); return; }
+    var start = null;
+    function tick(now) {
+      if (start === null) start = now;
+      var progress = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = String(Math.round(target * eased));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function animateBars(root) {
+    qsa(root, '.bar > i').forEach(function (fill) {
+      var value = Number(fill.getAttribute('data-value') || 0);
+      requestAnimationFrame(function () { fill.style.width = Math.max(0, Math.min(100, value)) + '%'; });
+    });
+  }
+
+  function flyPacket(stage, fromEl, toEl, kind, speed) {
+    if (!fromEl || !toEl) return;
+    var stageRect = stage.getBoundingClientRect();
+    var fromRect = fromEl.getBoundingClientRect();
+    var toRect = toEl.getBoundingClientRect();
+    var packet = document.createElement('div');
+    packet.className = 'packet ' + (kind || '');
+    var startX = fromRect.left - stageRect.left + fromRect.width / 2 - 6;
+    var startY = fromRect.top - stageRect.top + fromRect.height / 2 - 6;
+    var endX = toRect.left - stageRect.left + toRect.width / 2 - 6;
+    var endY = toRect.top - stageRect.top + toRect.height / 2 - 6;
+    packet.style.transform = 'translate(' + startX + 'px,' + startY + 'px)';
+    packet.style.transitionDuration = (620 / (speed || 1)) + 'ms';
+    if (reduceMotion) { packet.style.transitionDuration = '0ms'; }
+    stage.appendChild(packet);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        packet.style.transform = 'translate(' + endX + 'px,' + endY + 'px)';
+        if (kind === 'bad' || kind === 'warn' || kind === 'skip') packet.style.opacity = '0.15';
+      });
+    });
+    setTimeout(function () { packet.remove(); }, 900 / (speed || 1));
+  }
+
+  function flash(el, kind) {
+    if (!el) return;
+    var klass = 'flash-' + (kind || 'ok');
+    el.classList.add(klass);
+    setTimeout(function () { el.classList.remove(klass); }, 900);
+  }
+
+  window.AIFeedAnim = {
+    reduceMotion: reduceMotion,
+    qs: qs,
+    qsa: qsa,
+    setupTheme: setupTheme,
+    setupTabs: setupTabs,
+    animateNumber: animateNumber,
+    animateBars: animateBars,
+    flyPacket: flyPacket,
+    flash: flash
+  };
+})();
+</script>
+<script></script>
+</body>
+</html>

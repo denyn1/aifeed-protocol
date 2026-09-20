@@ -26,7 +26,7 @@ benchmarks, the website, and the paper.
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,aifeed-preprint.pdf}` | root files + `paper/` | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,aifeed-preprint.pdf}` | root files + `paper/` + `tools/render-html.js` (`updates.html` from `CHANGELOG*.md`) | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`, apex `site/.well-known/**`, `site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check` (inside `verify`) |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | plugin `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`, `refs.bib`, `00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json` (in `paper/`) | untar + read `00README.json` |
@@ -58,7 +58,7 @@ benchmarks, the website, and the paper.
 npm run verify            # everything below, one gate
 npm run lint:syntax       # parse-check every .js file
 npm run check:consistency # versions, deps, secrets, spec pairs, script targets
-npm test                  # Node suite (248 tests)
+npm test                  # Node suite (251 tests)
 npm run test:py           # independent Python verifier (44 tests)
 npm run bench:mako        # regenerate benchmarks/mako-*.json + report
 npm run bench:enforcement # regenerate benchmarks/enforcement-*.json|md
@@ -107,8 +107,9 @@ node bin/cli.js --help    # CLI surface
   and `index.d.ts`. Never edit `packages/aifeed-verify/lib/*` (generated). Run
   `npm run build:sdk && npm run sdk:check`.
 - **Change the website:** `site/index.html` and root `penjelasan-aifeed.html` are
-  sources; `docs/process.html`/`benchmarks/enforcement-report.html` come from
-  `tools/render-html.js`. Run `npm run verify`. Site links to GitHub must include the
+  sources; `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
+  `docs/updates.html` come from `tools/render-html.js` (`updates.html` renders
+  `CHANGELOG*.md`). Run `npm run verify`. Site links to GitHub must include the
   repository name: `https://github.com/denyn1/aifeed-protocol/...`.
 - **Add or change a demo origin:** edit `demos/sites.js` (pages, policy overrides via
   `permissions`, theme), run `npm run demos:check`. Signing keys are deterministic and
