@@ -54,6 +54,9 @@ lalu ekspor.
 - **Field manifest lanjutan**: editor JSON `types`, `capabilities`, dan `actions` yang
   divalidasi terhadap schema v0.2, plus impor OpenAPI (tempel spec) untuk menyusun
   capabilities dan aksi bergaya purchase bagi agen e-commerce.
+- **Integritas aset**: halaman mendeklarasikan gambar/PDF/unduhan dengan `mime`, `size`,
+  dan `sha-256` untuk berkas lokal; ringkasan build dan verifikasi menampilkan total aset
+  dan cakupan digest.
 - **Jurnal audit**: setiap proyek menyimpan `journal.ndjson` (proyek dibuat, sumber,
   scan, build, verifikasi, rotasi, field lanjutan) untuk ketertelusuran.
 - **Build incremental**: halaman tak berubah (hash HTML) dilewati; state menyimpan entri

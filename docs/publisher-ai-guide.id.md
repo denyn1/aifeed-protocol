@@ -333,6 +333,34 @@ Gate: pack complete, every number traceable to an artifact.
 
 Track XL selesai saat gate PX-3 lolos dua kali berturut-turut dan paket bukti terarsip.
 
+## Aset — gambar, PDF, dan unduhan
+
+Berkas non-HTML (gambar, video, audio, PDF, arsip, tautan `download` apa pun)
+dideklarasikan per halaman di frontmatter bertanda tangan pada `aifeed.assets`:
+
+```yaml
+aifeed:
+  assets:
+    - url: /uploads/sampul.webp
+      type: image
+      mime: image/webp
+      size: 48213
+      sha-256: "9GyqhORj/l1nnxteUlVZjHyf83us13ziRunVmf97e6M="
+    - url: /laporan.pdf
+      type: document
+      mime: application/pdf
+```
+
+- **Hanya rujukan** — aset tidak pernah di-inline; agen yang memutuskan mengunduh.
+- **Izin sama** — pengambilan aset mengikuti usage dan limit halaman (`retrieval`,
+  `commercial_use`, …), dan template edge mencakup path aset juga.
+- **Integritas** — bila `size` atau `sha-256` ada, verifikasi byte yang diunduh dengan
+  `sdk.verifyAsset(bytes, asset)` sebelum dipakai. `aifeed site build` (dan Studio)
+  mengisi `mime` dari ekstensi dan menghitung hash berkas lokal di direktori sumber
+  (≤16 MiB); aset hasil crawl/remote tetap tanpa hash sampai agen mengunduhnya.
+- **Triase pra-fetch** — entri indeks membawa jumlah `assets`, jadi agen bisa menilai
+  apakah halaman layak diambil sebelum mengunduh apa pun.
+
 ## Lebih suka aplikasi? Pakai AIFeed Studio
 
 Kalau Anda lebih suka klik daripada prompt, repositori ini menyertakan aplikasi lokal

@@ -9,6 +9,39 @@ const cryptoLib = require('./crypto');
 const { sha256Base64, rawDigestOf } = require('./digest');
 
 const DEFAULT_TYPES = ['ecommerce', 'news', 'education', 'government', 'saas', 'portfolio', 'community', 'docs', 'nonprofit', 'personal', 'blog', 'media', 'marketplace', 'other'];
+const ASSET_HASH_LIMIT_BYTES = 16 * 1024 * 1024;
+
+function assetDetailsReader(baseDir) {
+  const root = path.resolve(baseDir);
+  const cache = new Map();
+  return (url) => {
+    if (cache.has(url)) return cache.get(url);
+    let details = null;
+    const clean = String(url || '').split('#')[0].split('?')[0];
+    if (clean && !/^(https?:)?\/\//i.test(clean) && !/^(data|mailto|javascript):/i.test(clean)) {
+      let relative = clean.replace(/^\/+/, '');
+      try {
+        relative = decodeURIComponent(relative);
+      } catch (error) {
+        relative = clean.replace(/^\/+/, '');
+      }
+      const filePath = path.resolve(root, relative);
+      if (filePath.startsWith(root + path.sep)) {
+        try {
+          const stat = fs.statSync(filePath);
+          if (stat.isFile() && stat.size <= ASSET_HASH_LIMIT_BYTES) {
+            const bytes = fs.readFileSync(filePath);
+            details = { size: bytes.length, sha256: sha256Base64(bytes) };
+          }
+        } catch (error) {
+          details = null;
+        }
+      }
+    }
+    cache.set(url, details);
+    return details;
+  };
+}
 
 function collectHtmlFiles(dir, results = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -155,6 +188,9 @@ function buildSiteIndexEntry(url, mdBytes, frontmatter) {
   if (Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0) entry.tags = frontmatter.tags.slice(0, 10);
   if (typeof frontmatter.language === 'string') entry.lang = frontmatter.language;
   if (Array.isArray(frontmatter.related) && frontmatter.related.length > 0) entry.related = frontmatter.related.slice(0, 20);
+  if (frontmatter.aifeed && Array.isArray(frontmatter.aifeed.assets) && frontmatter.aifeed.assets.length > 0) {
+    entry.assets = frontmatter.aifeed.assets.length;
+  }
   return entry;
 }
 
@@ -199,7 +235,8 @@ function buildSite(options) {
       profile: profile === 'both' ? 'both' : profile === 'mako' ? 'mako' : 'aimd',
       canonical: baseUrl + pagePath,
       updated: options.updated,
-      alternates: extractAlternates(html, baseUrl)
+      alternates: extractAlternates(html, baseUrl),
+      assetDetails: assetDetailsReader(dir)
     });
     for (const warning of converted.warnings) warnings.push({ file: relative, ...warning });
 
@@ -329,4 +366,4 @@ function buildSite(options) {
   };
 }
 
-module.exports = { buildSite, buildManifest, buildSiteIndexEntry, collectHtmlFiles, pagePathFor, mdPathFor, extractAlternates };
+module.exports = { buildSite, buildManifest, buildSiteIndexEntry, assetDetailsReader, collectHtmlFiles, pagePathFor, mdPathFor, extractAlternates };

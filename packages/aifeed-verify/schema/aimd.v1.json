@@ -175,6 +175,8 @@
               "url": { "type": "string", "minLength": 1, "maxLength": 2048 },
               "type": { "enum": ["image", "video", "audio", "document", "archive", "file"] },
               "mime": { "type": "string", "maxLength": 128 },
+              "size": { "type": "integer", "minimum": 0 },
+              "sha-256": { "type": "string", "pattern": "^[A-Za-z0-9+/]{43}=$" },
               "title": { "type": "string", "maxLength": 500 },
               "alt": { "type": "string", "maxLength": 500 }
             }

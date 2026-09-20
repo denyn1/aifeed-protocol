@@ -206,6 +206,26 @@ const IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'a
 const VIDEO_EXTENSIONS = new Set(['mp4', 'webm', 'mov', 'mkv', 'avi', 'm4v', 'm3u8']);
 const AUDIO_EXTENSIONS = new Set(['mp3', 'wav', 'ogg', 'oga', 'm4a', 'aac', 'flac']);
 
+const MIME_TYPES = {
+  jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp',
+  svg: 'image/svg+xml', avif: 'image/avif', bmp: 'image/bmp', tiff: 'image/tiff',
+  mp4: 'video/mp4', webm: 'video/webm', mov: 'video/quicktime', mkv: 'video/x-matroska', avi: 'video/x-msvideo',
+  m4v: 'video/x-m4v', m3u8: 'application/vnd.apple.mpegurl',
+  mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', oga: 'audio/ogg', m4a: 'audio/mp4',
+  aac: 'audio/aac', flac: 'audio/flac',
+  pdf: 'application/pdf', txt: 'text/plain', md: 'text/markdown', csv: 'text/csv', rtf: 'application/rtf',
+  doc: 'application/msword', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  odt: 'application/vnd.oasis.opendocument.text', epub: 'application/epub+zip',
+  xls: 'application/vnd.ms-excel', xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  ppt: 'application/vnd.ms-powerpoint', pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  zip: 'application/zip', rar: 'application/vnd.rar', '7z': 'application/x-7z-compressed',
+  tar: 'application/x-tar', gz: 'application/gzip', tgz: 'application/gzip', bz2: 'application/x-bzip2'
+};
+
+function mimeOf(url) {
+  return MIME_TYPES[extensionOf(url)] || null;
+}
+
 function extensionOf(url) {
   const clean = String(url).split('#')[0].split('?')[0];
   const match = /\.([A-Za-z0-9]{1,8})$/.exec(clean);
@@ -222,7 +242,7 @@ function classifyAsset(url) {
   return null;
 }
 
-function extractAssets(html) {
+function extractAssets(html, options = {}) {
   const assets = [];
   const seen = new Set();
   const push = (url, type, title, alt) => {
@@ -234,6 +254,18 @@ function extractAssets(html) {
     const asset = { url: value, type };
     if (title) asset.title = String(title).slice(0, 500);
     if (alt) asset.alt = String(alt).slice(0, 500);
+    const mime = mimeOf(value);
+    if (mime) asset.mime = mime;
+    if (typeof options.assetDetails === 'function') {
+      let details = null;
+      try {
+        details = options.assetDetails(value);
+      } catch (error) {
+        details = null;
+      }
+      if (details && Number.isInteger(details.size) && details.size >= 0) asset.size = details.size;
+      if (details && typeof details.sha256 === 'string') asset['sha-256'] = details.sha256;
+    }
     assets.push(asset);
   };
 
@@ -368,7 +400,7 @@ function htmlToMako(html, options = {}) {
   if (!MAKO_TYPES.includes(type)) {
     warnings.push({ code: 'mako_type_invalid', message: 'unknown type "' + type + '"; using "article"' });
   }
-  const assets = options.assets === false ? [] : extractAssets(main);
+  const assets = options.assets === false ? [] : extractAssets(main, { assetDetails: options.assetDetails });
   const tokens = estimateTokens(body);
   const maxTokens = options.maxTokens ?? (profile === 'mako' ? 1000 : 4000);
   let truncated = false;
@@ -421,6 +453,7 @@ module.exports = {
   extractAssets,
   assetsSection,
   classifyAsset,
+  mimeOf,
   estimateTokens,
   renderYaml,
   htmlToMako

@@ -189,6 +189,9 @@ aifeed:
     - url: /uploads/sampul.webp
       type: image
       alt: "Foto sampul"
+      mime: image/webp
+      size: 48213
+      sha-256: "9GyqhORj/l1nnxteUlVZjHyf83us13ziRunVmf97e6M="
     - url: /media/demo.mp4
       type: video
       title: "Video demo"
@@ -199,11 +202,12 @@ aifeed:
 
 `assets` 列出页面引用的媒体与可下载文件（图片、视频、音频、文档、压缩包，以及通常带
 HTML `download` 属性的其他文件）。每个条目携带 `url`、`type`（`image`、`video`、
-`audio`、`document`、`archive`、`file`）与可选的 `mime`、`title`、`alt`。该列表**仅是
-引用**：资源绝不内联，获取它们受与页面内容相同的许可与限额约束，由客户端决定是否下载。
-转换器还应当在 markdown 正文中保留内联引用（例如图片写作 `![alt](url)`），并应当输出
-简短的 "Media & Unduhan" 式小节列出资源链接，以便不感知 AIFeed 的 MAKO 消费者也能找到
-它们。
+`audio`、`document`、`archive`、`file`）与可选的 `mime`、`size`（字节）、`sha-256`
+（base64）、`title`、`alt`。该列表**仅是引用**：资源绝不内联，获取它们受与页面内容相同的
+许可与限额约束，由客户端决定是否下载。当存在 `size` 或 `sha-256` 时，客户端 MUST 在使用前
+用其验证下载的字节；没有完整性字段的资源 MAY 仍被下载，风险由客户端自负。转换器还应当在
+markdown 正文中保留内联引用（例如图片写作 `![alt](url)`），并应当输出简短的
+"Media & Unduhan" 式小节列出资源链接，以便不感知 AIFeed 的 MAKO 消费者也能找到它们。
 
 ### 6.2 继承
 
@@ -354,6 +358,7 @@ INPUT : MAKO bytes B, page URL U, manifest M (VERIFIED), container C (optional)
       "related": ["/product/adidas-ultraboost"],
       "updated": "2026-09-14T12:00:00Z",
       "etag": "\"mako-a1b2c3\"",
+      "assets": 2,
       "sha-256": "<43 chars + '='>"
     }
   ]
@@ -375,7 +380,8 @@ INPUT : MAKO bytes B, page URL U, manifest M (VERIFIED), container C (optional)
 源站发布什么。描述必须是公开信息（发布方展示给访客的同一文本）。
 
 条目可以携带分流字段，让智能体**无需下载**就能决定抓取哪些页面：`title`（≤500）、
-`summary`（≤160）、`tags`（≤10）、`lang` 与 `related`（≤20 个 URL 路径）。规则：
+`summary`（≤160）、`tags`（≤10）、`lang`、`related`（≤20 个 URL 路径）与 `assets`
+（已声明资源数量）。规则：
 
 - 分流字段必须仅来源于已发布内容；草稿、私有页面与未发布元数据不得出现。
 - 分流字段是**不可信提示**，与索引条目一样：客户端在使用前仍必须验证逐条 `sha-256`

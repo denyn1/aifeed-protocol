@@ -35,6 +35,7 @@ function makeStaticSite() {
     '<body><h1>Indeks Artikel</h1><p>Semua artikel.</p></body></html>'
   ].join('\n'));
   fs.writeFileSync(path.join(dir, 'sitemap.xml'), '<?xml version="1.0"?><urlset></urlset>\n');
+  fs.writeFileSync(path.join(dir, 'laporan.pdf'), '%PDF-1.4 demo report\n');
   return dir;
 }
 
@@ -109,8 +110,12 @@ test('site build publishes AIFeed Markdown for any static site and everything ve
   assert.ok(llms.startsWith('# Situs Statis'), 'llms heading');
   assert.ok(llms.includes(BASE_URL + '/artikel/satu'), 'llms links the page');
 
-  // Assets survive conversion
-  assert.ok(fs.readFileSync(mdPath, 'utf8').includes('/laporan.pdf'), 'asset link present');
+  // Assets survive conversion, with mime and local file integrity metadata
+  const mdText = fs.readFileSync(mdPath, 'utf8');
+  assert.ok(mdText.includes('/laporan.pdf'), 'asset link present');
+  assert.ok(mdText.includes('mime: "application/pdf"'), 'asset mime recorded');
+  assert.ok(mdText.includes('sha-256:'), 'asset digest recorded');
+  assert.strictEqual(entry.assets, 1, 'index exposes the asset count');
 });
 
 test('site build refuses to run without a key or domain', () => {

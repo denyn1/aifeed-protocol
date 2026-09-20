@@ -31,6 +31,11 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   workspace (0600) dan tidak pernah disajikan; UI EN/ID/ZH. Pembangun manifest
   (`lib/site.js`) mendapat opsi opsional `limits`,
   `license`, `attribution_text/url`, dan `maxCheckIntervalHours` (backward-compatible).
+- **Integritas aset dan visibilitas indeks** — entri `aifeed.assets` halaman boleh
+  membawa `mime`, `size`, dan `sha-256` (di-hash dari berkas lokal saat build, ≤16 MiB);
+  entri indeks delta mengekspos jumlah `assets`, SDK menambah `listAssets()` dan
+  `verifyAsset()`, Studio menampilkan total aset dan cakupan digest, dan `verify:live`
+  membuktikan penegakan edge pada path aset.
 - **Situs web** — halaman baru `studio.html` (Publish) dan `updates.html` (catatan rilis
   yang dirender dari changelog dalam EN/ID/ZH saat build), tertaut dari navbar, grid
   artifacts, dan sitemap apex; keduanya menyertakan AIFeed Markdown bertanda tangan.

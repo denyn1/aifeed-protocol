@@ -40,6 +40,15 @@ MAKO profile, `type="text/mako+markdown" href="/path.mako.md"`). `aifeed site bu
 --inject` adds those link tags automatically. Signatures live in `{file}.sig` sidecars
 (for example `/artikel/satu.aifeed.md.sig`) and their context matches the media type.
 
+## Asset files (images, PDFs, downloads)
+
+Pages list their media and downloadable files under `aifeed.assets` in the signed
+frontmatter — references only, never inlined. `aifeed site build` fills `mime` from the
+file extension and, for files present in the source directory (≤16 MiB), adds `size` and
+`sha-256`; agents can verify a download with `sdk.verifyAsset(bytes, asset)` before using
+it. Edge policy applies to asset paths too: on the strict demo origin,
+`/assets/logo.svg` returns 403 for training crawlers and 200 for everyone else.
+
 ## File naming
 
 `aifeed site build` is profile-aware:

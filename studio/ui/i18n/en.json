@@ -162,5 +162,8 @@
   "diag.hint.schema": "fix the manifest fields to match the schema, then rebuild",
   "diag.hint.signature": "re-sign the manifest with the key that matches identity.public_key",
   "diag.hint.rotation": "see docs/rotation.md; complete the cutover or publish the new key",
-  "diag.hint.path": "verify the path exists and is readable"
+  "diag.hint.path": "verify the path exists and is readable",
+  "build.assets": "Assets",
+  "build.assetsHashed": "with digest",
+  "verify.assets": "Assets"
 }

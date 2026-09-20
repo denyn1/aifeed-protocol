@@ -11,6 +11,7 @@ const { detectStack, STACK_ADAPTERS } = require('../studio/lib/crawl');
 const { compareAnchor } = require('../studio/lib/live-verify');
 const { Workspace } = require('../studio/workspace');
 const { publishProject } = require('../studio/lib/publish');
+const { verifyBuild } = require('../studio/lib/verify');
 const { createServer } = require('../studio/server');
 
 function readTar(buffer) {
@@ -69,6 +70,40 @@ test('compareAnchor accepts a matching TXT record and rejects mismatches', () =>
   const empty = compareAnchor([], publicKey);
   assert.strictEqual(empty.anchored, false);
   assert.ok(empty.warnings.some((entry) => entry.code === 'dns_not_anchored'));
+});
+
+test('studio build records asset digests, counts, and verify summaries', () => {
+  const workspace = new Workspace(fs.mkdtempSync(path.join(os.tmpdir(), 'aifeed-studio-assets-')));
+  const created = workspace.create({ domain: 'assets.example', name: 'Assets' });
+  const paths = workspace.paths(created.id);
+  const source = fs.mkdtempSync(path.join(os.tmpdir(), 'aifeed-studio-assetsrc-'));
+  fs.writeFileSync(path.join(source, 'index.html'), [
+    '<html lang="en"><head><title>Home</title></head><body><main><h1>Home</h1>',
+    '<p><a href="/berkas.pdf" download>Report</a></p></main></body></html>'
+  ].join('\n'));
+  fs.writeFileSync(path.join(source, 'berkas.pdf'), '%PDF-1.4 studio asset\n');
+
+  const built = publishProject({
+    project: created,
+    policy: workspace.policy(created.id),
+    sourceDir: source,
+    outDir: paths.outDir,
+    keyPath: paths.keyPath,
+    statePath: paths.statePath
+  });
+  assert.strictEqual(built.assets.total, 1);
+  assert.strictEqual(built.assets.hashed, 1);
+
+  const md = fs.readFileSync(path.join(paths.outDir, 'index.aifeed.md'), 'utf8');
+  assert.ok(md.includes('mime: "application/pdf"'), 'asset mime recorded');
+  assert.ok(md.includes('sha-256:'), 'asset digest recorded');
+
+  const index = JSON.parse(fs.readFileSync(path.join(paths.outDir, '.well-known', 'aifeed-index.json'), 'utf8'));
+  assert.strictEqual(index.entries.find((entry) => entry.url === '/').assets, 1);
+
+  const report = verifyBuild({ outDir: paths.outDir, domain: created.domain, keyPath: paths.keyPath });
+  assert.strictEqual(report.result, 'VERIFIED', JSON.stringify(report));
+  assert.deepStrictEqual(report.assets, { total: 1, hashed: 1 });
 });
 
 test('tar.gz endpoint serves the built overlay', async () => {

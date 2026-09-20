@@ -331,6 +331,34 @@ Gate: pack complete, every number traceable to an artifact.
 
 Track XL is complete when PX-3's gates pass twice and the evidence pack is filed.
 
+## Assets — images, PDFs, and downloads
+
+Non-HTML files (images, video, audio, PDFs, archives, any `download` link) are declared
+per page in the signed frontmatter under `aifeed.assets`:
+
+```yaml
+aifeed:
+  assets:
+    - url: /uploads/sampul.webp
+      type: image
+      mime: image/webp
+      size: 48213
+      sha-256: "9GyqhORj/l1nnxteUlVZjHyf83us13ziRunVmf97e6M="
+    - url: /laporan.pdf
+      type: document
+      mime: application/pdf
+```
+
+- **References only** — assets are never inlined; the agent decides whether to download.
+- **Same permissions** — fetching an asset follows the page's usage and limits
+  (`retrieval`, `commercial_use`, …), and the edge templates cover asset paths too.
+- **Integrity** — when `size` or `sha-256` is present, verify the downloaded bytes with
+  `sdk.verifyAsset(bytes, asset)` before use. `aifeed site build` (and Studio) fills
+  `mime` from the extension and hashes local files in the source directory (≤16 MiB);
+  crawled or remote assets stay hash-less until the agent downloads them.
+- **Pre-fetch triage** — index entries carry an `assets` count, so an agent can decide
+  whether fetching the page is worth it before downloading anything.
+
 ## Prefer an app? Use AIFeed Studio
 
 If you would rather click than prompt, the repository ships a local app that does the

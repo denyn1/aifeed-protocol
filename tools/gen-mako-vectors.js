@@ -284,9 +284,13 @@ function generate() {
       '    - url: /uploads/sampul.webp',
       '      type: image',
       '      alt: "Sampul"',
+      '      mime: image/webp',
       '    - url: /laporan.pdf',
       '      type: document',
-      '      title: "Laporan Lengkap"'
+      '      title: "Laporan Lengkap"',
+      '      mime: application/pdf',
+      '      size: 1024',
+      '      sha-256: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="'
     ].join('\n')
   );
   writeDocumentCase('positive', '009-aifeed-assets', {

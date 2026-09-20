@@ -27,6 +27,10 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   界面支持 EN/ID/ZH。manifest 构建器
   （`lib/site.js`）新增可选 `limits`、`license`、`attribution_text/url` 与
   `maxCheckIntervalHours` 选项（向后兼容）。
+- **资源完整性与索引可见性** — 页面 `aifeed.assets` 条目可携带 `mime`、`size` 与
+  `sha-256`（构建时对本地文件计算，≤16 MiB）；增量索引条目暴露 `assets` 数量，SDK 新增
+  `listAssets()` 与 `verifyAsset()`，Studio 显示资源总数与摘要覆盖率，`verify:live`
+  在资源路径上验证边缘执行。
 - **网站** — 新增 `studio.html`（Publish）与 `updates.html`（构建时从 EN/ID/ZH 变更日志
   渲染的发布说明）页面，已从导航栏、artifacts 网格与 apex sitemap 链接；两者均附带
   签名 AIFeed Markdown。

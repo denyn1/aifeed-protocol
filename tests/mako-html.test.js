@@ -98,6 +98,29 @@ test('assets (images, video, documents) are listed as links in frontmatter and b
   assert.deepStrictEqual(makoLib.validateMakoFields(parsed.frontmatter), []);
 });
 
+test('asset entries carry mime and optional size/sha-256 details', () => {
+  const html = '<html><body><article><img src="/media/cover.webp" alt="Cover">' +
+    '<p><a href="/laporan.pdf" download>Laporan</a></p></article></body></html>';
+  const plain = makoHtml.htmlToMako(html, {});
+  const plainAssets = plain.frontmatter.aifeed.assets;
+  assert.strictEqual(plainAssets.find((item) => item.url === '/media/cover.webp').mime, 'image/webp');
+  assert.strictEqual(plainAssets.find((item) => item.url === '/laporan.pdf').mime, 'application/pdf');
+  assert.ok(!('size' in plainAssets[0]), 'no size without a resolver');
+
+  const digest = 'A'.repeat(43) + '=';
+  const detailed = makoHtml.htmlToMako(html, {
+    assetDetails: (url) => (url === '/media/cover.webp' ? { size: 12, sha256: digest } : null)
+  });
+  const cover = detailed.frontmatter.aifeed.assets.find((item) => item.url === '/media/cover.webp');
+  assert.strictEqual(cover.size, 12);
+  assert.strictEqual(cover['sha-256'], digest);
+  assert.ok(!('size' in detailed.frontmatter.aifeed.assets.find((item) => item.url === '/laporan.pdf')));
+
+  const parsed = makoLib.parseFrontmatter(Buffer.from(detailed.text, 'utf8'));
+  assert.deepStrictEqual(parsed.errors, []);
+  assert.deepStrictEqual(makoLib.validateMakoFields(parsed.frontmatter), []);
+});
+
 test('assets section and structured list can be disabled independently', () => {
   const html = '<html><body><article><p><a href="/file.pdf">PDF</a></p></article></body></html>';
   const withoutSection = makoHtml.htmlToMako(html, { assetsSection: false });

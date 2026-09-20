@@ -145,9 +145,9 @@ async function checkOrigin(domain) {
 
 async function checkStrictEnforcement(domain) {
   const report = { domain, steps: {}, errors: [] };
-  async function probe(userAgent, accept, label, expected) {
+  async function probe(userAgent, accept, label, expected, path = '/') {
     try {
-      const response = await rawGet('https://' + domain + '/', { 'user-agent': userAgent, accept });
+      const response = await rawGet('https://' + domain + path, { 'user-agent': userAgent, accept });
       report.steps[label] = response.status;
       if (response.status !== expected) report.errors.push(label + ' expected ' + expected + ', got ' + response.status);
     } catch (error) {
@@ -158,6 +158,9 @@ async function checkStrictEnforcement(domain) {
   await probe(CRAWLER_UA, '*/*', 'crawler', 429);
   await probe('Mozilla/5.0 (demo)', 'text/aifeed+markdown', 'compliant', 200);
   await probe('Mozilla/5.0 (demo)', 'text/html', 'human', 200);
+  await probe(TRAINING_UA, '*/*', 'asset_training', 403, '/assets/logo.svg');
+  await probe(CRAWLER_UA, '*/*', 'asset_crawler', 429, '/assets/logo.svg');
+  await probe('Mozilla/5.0 (demo)', 'image/svg+xml', 'asset_allowed', 200, '/assets/logo.svg');
   return report;
 }
 

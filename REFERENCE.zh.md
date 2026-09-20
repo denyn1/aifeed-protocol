@@ -130,11 +130,12 @@ node bin/cli.js rotate --dir ./my-site
 - MAKO 文档（v0.2）：安全 YAML 子集 frontmatter（拒绝 anchor、alias、tag 与 flow
   集合）、对 `"aifeed.mako.v0.2\n" || url || LF || 原始字节` 的 Ed25519 签名、
   带 restrict-only 覆盖的许可绑定、带逐条 SHA-256 摘要的分页增量索引，以及
-  `aifeed.assets` 链接列表（图片、视频、音频、文档、压缩包），让智能体决定下载什么；
+  `aifeed.assets` 链接列表（图片、视频、音频、文档、压缩包）与可选的 `mime`、`size`、
+  `sha-256`，让智能体决定下载什么并验证所得字节（`sdk.verifyAsset`）；
   转换器还会输出 "Media & Unduhan" 正文小节。
 - 站点分流（v0.2）：增量索引携带可选的 `site` 摘要
   （名称、描述、类型、语言）和逐条分流字段
-  （`title`、`summary`、`tags`、`lang`、`related`），让智能体在抓取前排序与挑选页面；
+  （`title`、`summary`、`tags`、`lang`、`related`、`assets`），让智能体在抓取前排序与挑选页面；
   SDK 为此提供 `selectEntries()`。
 
 ---
@@ -142,8 +143,8 @@ node bin/cli.js rotate --dir ./my-site
 ## 测试
 
 ```bash
-npm test                 # Node 测试套件（251 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换）
-npm run test:py          # Python 验证器套件（44 项：向量、AIFeed Markdown/MAKO 对等、撤销、离线包、示例）
+npm test                 # Node 测试套件（254 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换）
+npm run test:py          # Python 验证器套件（45 项：向量、AIFeed Markdown/MAKO 对等、撤销、离线包、示例）
 npm run vectors          # 重新生成确定性 manifest 向量并自检（34）
 npm run mako:vectors     # 重新生成 MAKO 一致性向量并自检（39）
 npm run aimd:vectors     # 重新生成 AIFeed Markdown 一致性向量并自检（11）
@@ -225,7 +226,7 @@ HTML 页面声明 alternate 链接，签名增量索引与逐条摘要匹配。�
 - **AI 客户端 — `@aifeed/verify`**（`packages/aifeed-verify/`）：通过
   `npm run build:sdk` 从 `lib/` 与 `schema/` 构建的自包含 npm 包；随附 TypeScript
   声明（`index.d.ts`）与 v0.2 MAKO API（`fetchMako`、`fetchIndexDelta`、
-  `selectEntries`、`decideUsage`、`mako.*` 原语、v0.2 schema）；打包经
+  `selectEntries`、`decideUsage`、`listAssets`、`verifyAsset`、`mako.*` 原语、v0.2 schema）；打包经
   `npm pack --dry-run` 测试。
 - **发布方 — WordPress**（`wp-plugin/`）：参考发布方 SDK（密钥管理、manifest 构建器、
   PHP 版 JCS、签名、`/.well-known` 服务、管理界面、DNS 指引、徽章、每月重签），以及

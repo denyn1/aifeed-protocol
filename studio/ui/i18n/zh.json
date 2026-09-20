@@ -162,5 +162,8 @@
   "diag.hint.schema": "按 schema 修正 manifest 字段后重新构建",
   "diag.hint.signature": "用与 identity.public_key 匹配的密钥重新签名",
   "diag.hint.rotation": "见 docs/rotation.md；完成切换或发布新密钥",
-  "diag.hint.path": "确认路径存在且可读"
+  "diag.hint.path": "确认路径存在且可读",
+  "build.assets": "资源",
+  "build.assetsHashed": "含摘要",
+  "verify.assets": "资源"
 }

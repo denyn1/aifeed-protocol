@@ -59,8 +59,8 @@ situs web, dan paper.
 npm run verify            # semuanya di bawah, satu gerbang
 npm run lint:syntax       # cek parse setiap file .js
 npm run check:consistency # versi, deps, secret, pasangan spec, target skrip
-npm test                  # suite Node (251 tes)
-npm run test:py           # verifier Python independen (44 tes)
+npm test                  # suite Node (254 tes)
+npm run test:py           # verifier Python independen (45 tes)
 npm run bench:mako        # regenerasi benchmarks/mako-*.json + laporan
 npm run bench:enforcement # regenerasi benchmarks/enforcement-*.json|md
 npm run fuzz:mako -- --iterations 3000   # fuzzing parser (seed tetap)

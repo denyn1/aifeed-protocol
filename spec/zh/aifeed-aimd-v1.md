@@ -92,7 +92,8 @@ Isi halaman sebenarnya, dikonversi jujur ke markdown.
 ### 2.1 资源
 
 与 v0.2 相同：`aifeed.assets` 以引用链接形式列出媒体与可下载文件
-（image、video、audio、document、archive、file）；获取它们遵循与页面内容相同的许可与限额。
+（image、video、audio、document、archive、file），并可选 `mime`、`size`、`sha-256`；
+获取它们遵循与页面内容相同的许可与限额，存在 `size`/`sha-256` 时客户端 MUST 用其验证下载字节。
 
 ### 2.2 可选文档字段
 

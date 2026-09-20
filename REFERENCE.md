@@ -139,20 +139,21 @@ Exit codes: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage or internal error.
   collections are rejected), Ed25519 signatures over
   `"aifeed.mako.v0.2\n" || url || LF || raw bytes`, permission binding with
   restrict-only overrides, a paginated delta index with per-entry SHA-256 digests, and
-  an `aifeed.assets` link list (images, video, audio, documents, archives) so agents
-  can decide what to download; converters also emit a "Media & Unduhan" body section.
+  an `aifeed.assets` link list (images, video, audio, documents, archives) with optional
+  `mime`, `size`, and `sha-256` so agents can decide what to download and verify the
+  bytes they get (`sdk.verifyAsset`); converters also emit a "Media & Unduhan" section.
 - Site triage (v0.2): the delta index carries an optional `site` resume
   (name, description, type, languages) and per-entry triage fields
-  (`title`, `summary`, `tags`, `lang`, `related`) so agents can rank and select pages
-  before fetching; the SDK exposes `selectEntries()` for that ranking.
+  (`title`, `summary`, `tags`, `lang`, `related`, `assets`) so agents can rank and select
+  pages before fetching; the SDK exposes `selectEntries()` for that ranking.
 
 ---
 
 ## Tests
 
 ```bash
-npm test                 # Node test suite (251 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation)
-npm run test:py          # Python verifier suite (44 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
+npm test                 # Node test suite (254 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation)
+npm run test:py          # Python verifier suite (45 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
 npm run vectors          # regenerate deterministic manifest vectors and self-check (34)
 npm run mako:vectors     # regenerate MAKO conformance vectors and self-check (39)
 npm run aimd:vectors     # regenerate AIFeed Markdown conformance vectors and self-check (11)
@@ -244,8 +245,8 @@ medium, large, and giant sites, every track ending in a verified manifest.
 - **AI client — `@aifeed/verify`** (`packages/aifeed-verify/`): self-contained npm
   package built from `lib/` and `schema/` via `npm run build:sdk`; ships TypeScript
   declarations (`index.d.ts`) and the v0.2 MAKO API (`fetchMako`, `fetchIndexDelta`,
-  `selectEntries`, `decideUsage`, `mako.*` primitives, v0.2 schemas); packaging is
-  tested with `npm pack --dry-run`.
+  `selectEntries`, `decideUsage`, `listAssets`, `verifyAsset`, `mako.*` primitives,
+  v0.2 schemas); packaging is tested with `npm pack --dry-run`.
 - **Publisher — WordPress** (`wp-plugin/`): reference publisher SDK (key
   management, manifest builder, JCS in PHP, signing, `/.well-known` serving, admin UI,
   DNS instructions, badge, monthly re-sign) plus the v0.2 MAKO layer (content

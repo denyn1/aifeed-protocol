@@ -203,6 +203,9 @@ aifeed:
     - url: /uploads/sampul.webp
       type: image
       alt: "Foto sampul"
+      mime: image/webp
+      size: 48213
+      sha-256: "9GyqhORj/l1nnxteUlVZjHyf83us13ziRunVmf97e6M="
     - url: /media/demo.mp4
       type: video
       title: "Video demo"
@@ -214,12 +217,15 @@ aifeed:
 `assets` lists media and downloadable files referenced by the page (images, video,
 audio, documents, archives, other files typically marked with the HTML `download`
 attribute). Each entry carries `url`, `type` (`image`, `video`, `audio`, `document`,
-`archive`, `file`), and optional `mime`, `title`, and `alt`. The list is **references
-only**: assets are never inlined, fetching them is subject to the same permissions and
-limits as page content, and the client decides whether to download them. Converters
-SHOULD also keep inline references in the markdown body (for example images as
-`![alt](url)`) and SHOULD emit a short "Media & Unduhan" style section listing the
-asset links so non-AIFeed MAKO consumers can find them too.
+`archive`, `file`), and optional `mime`, `size` (bytes), `sha-256` (base64), `title`, and
+`alt`. The list is **references only**: assets are never inlined, fetching them is
+subject to the same permissions and limits as page content, and the client decides
+whether to download them. When `size` or `sha-256` is present the client MUST verify the
+downloaded bytes against it before use; assets without integrity fields MAY still be
+downloaded, at the client's own risk. Converters SHOULD keep inline references in the
+markdown body (for example images as `![alt](url)`) and SHOULD emit a short
+"Media & Unduhan" style section listing the asset links so non-AIFeed MAKO consumers can
+find them too.
 
 ### 6.2 Inheritance
 
@@ -379,6 +385,7 @@ different clients.
       "related": ["/product/adidas-ultraboost"],
       "updated": "2026-09-14T12:00:00Z",
       "etag": "\"mako-a1b2c3\"",
+      "assets": 2,
       "sha-256": "<43 chars + '='>"
     }
   ]
@@ -404,8 +411,8 @@ understand what the origin publishes before fetching any page. Descriptions MUST
 public information (the same text a publisher would show to visitors).
 
 Entries MAY carry triage fields so an agent can decide **which pages to fetch** without
-downloading them: `title` (≤500), `summary` (≤160), `tags` (≤10), `lang`, and `related`
-(≤20 URL paths). Rules:
+downloading them: `title` (≤500), `summary` (≤160), `tags` (≤10), `lang`, `related`
+(≤20 URL paths), and `assets` (count of declared assets). Rules:
 
 - Triage fields MUST be derived from published content only; drafts, private pages, and
   unpublished metadata MUST NOT appear.

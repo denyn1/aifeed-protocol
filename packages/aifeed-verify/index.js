@@ -162,6 +162,65 @@ function decideUsage(result, usageKey) {
   };
 }
 
+function normalizeAsset(asset, pageUrl) {
+  if (!asset || typeof asset !== 'object') return null;
+  if (typeof asset.url !== 'string' || asset.url === '' || typeof asset.type !== 'string') return null;
+  let resolved = asset.url;
+  if (pageUrl && !/^(https?:)?\/\//i.test(resolved)) {
+    try {
+      resolved = new URL(resolved, pageUrl).toString();
+    } catch (error) {
+      resolved = asset.url;
+    }
+  }
+  const normalized = { url: resolved, type: asset.type };
+  for (const key of ['mime', 'title', 'alt', 'sha-256']) {
+    if (typeof asset[key] === 'string' && asset[key] !== '') normalized[key] = asset[key];
+  }
+  if (Number.isInteger(asset.size) && asset.size >= 0) normalized.size = asset.size;
+  return normalized;
+}
+
+function listAssets(result, options = {}) {
+  const source = result && result.frontmatter ? result.frontmatter : result;
+  const assets = source && source.aifeed && Array.isArray(source.aifeed.assets) ? source.aifeed.assets : [];
+  const pageUrl = options.pageUrl || (result && typeof result.url === 'string' ? result.url : null);
+  return assets.map((asset) => normalizeAsset(asset, pageUrl)).filter(Boolean);
+}
+
+function verifyAsset(bytes, asset) {
+  const buffer = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
+  const errors = [];
+  const warnings = [];
+  if (!asset || typeof asset !== 'object') {
+    return {
+      ok: false,
+      verified: false,
+      size: buffer.length,
+      'sha-256': null,
+      errors: [{ code: 'asset_invalid', message: 'asset entry missing' }],
+      warnings
+    };
+  }
+  if (Number.isInteger(asset.size) && asset.size >= 0 && buffer.length !== asset.size) {
+    errors.push({
+      code: 'asset_size_mismatch',
+      message: 'expected ' + asset.size + ' bytes, got ' + buffer.length
+    });
+  }
+  if (typeof asset['sha-256'] === 'string' && asset['sha-256'] !== '') {
+    const digest = digestLib.sha256Base64(buffer);
+    if (digest !== asset['sha-256']) {
+      errors.push({ code: 'asset_digest_mismatch', message: 'sha-256 mismatch' });
+    }
+  }
+  const verified = Number.isInteger(asset.size) || typeof asset['sha-256'] === 'string';
+  if (!verified) {
+    warnings.push({ code: 'asset_no_integrity', message: 'asset has no size or sha-256 to verify' });
+  }
+  return { ok: errors.length === 0, verified, size: buffer.length, 'sha-256': verified ? digestLib.sha256Base64(buffer) : null, errors, warnings };
+}
+
 function normalizeTerms(query) {
   return String(query || '')
     .toLowerCase()
@@ -255,6 +314,8 @@ module.exports = {
   fetchAimd,
   fetchIndexDelta,
   decideUsage,
+  listAssets,
+  verifyAsset,
   selectEntries,
   verifyAimdDocument: makoLib.verifyAimdDocument,
   verifyAimdIndex: makoLib.verifyAimdIndex,

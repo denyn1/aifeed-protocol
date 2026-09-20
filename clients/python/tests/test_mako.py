@@ -128,6 +128,35 @@ class MakoParserTests(unittest.TestCase):
         self.assertEqual(parsed['frontmatter']['actions'][0]['name'], 'add_to_cart')
         self.assertEqual(parsed['frontmatter']['actions'][0]['method'], 'POST')
 
+    def test_asset_integrity_fields_pass_through(self):
+        text = '\n'.join([
+            '---',
+            'mako: "1.0"',
+            'type: article',
+            'entity: "Aset"',
+            'updated: 2026-09-14',
+            'tokens: 10',
+            'language: id',
+            'aifeed:',
+            '  policy_version: "0.2"',
+            '  assets:',
+            '    - url: /laporan.pdf',
+            '      type: document',
+            '      mime: application/pdf',
+            '      size: 2048',
+            '      sha-256: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="',
+            '---',
+            '',
+            'body',
+            ''
+        ])
+        parsed = am.parse_frontmatter(text.encode('utf-8'))
+        self.assertEqual(parsed['errors'], [])
+        asset = parsed['frontmatter']['aifeed']['assets'][0]
+        self.assertEqual(asset['mime'], 'application/pdf')
+        self.assertEqual(asset['size'], 2048)
+        self.assertEqual(asset['sha-256'], 'A' * 43 + '=')
+
     def test_restrict_only_rejects_loosening(self):
         result = am.resolve_permissions(
             {'default': 'allow', 'usage': {'training': 'deny'}, 'attribution': 'required'},

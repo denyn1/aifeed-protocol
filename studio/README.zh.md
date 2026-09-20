@@ -45,6 +45,8 @@ npm run studio -- --port 8080 --workspace ./studio-data
 - **高级 manifest 字段**：`types`、`capabilities` 与 `actions` 的 JSON 编辑器，按
   v0.2 schema 校验，并支持 OpenAPI 导入（粘贴规范），为电商智能体起草 capabilities
   与 purchase 类动作。
+- **资源完整性**：页面声明图片/PDF/下载并携带本地文件的 `mime`、`size` 与 `sha-256`；
+  构建与验证摘要显示资源总数与摘要覆盖率。
 - **审计日志**：每个项目保存 `journal.ndjson`（项目创建、来源、扫描、构建、验证、轮换、
   高级字段），便于追溯。
 - **增量构建**：未变更页面（按 HTML 哈希）会被跳过；状态文件保存逐页索引条目，大型站点

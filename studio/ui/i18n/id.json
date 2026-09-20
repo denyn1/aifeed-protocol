@@ -162,5 +162,8 @@
   "diag.hint.schema": "perbaiki field manifest agar sesuai schema, lalu build ulang",
   "diag.hint.signature": "tandatangani ulang manifest dengan kunci yang cocok dengan identity.public_key",
   "diag.hint.rotation": "lihat docs/rotation.md; selesaikan cutover atau terbitkan kunci baru",
-  "diag.hint.path": "pastikan path ada dan bisa dibaca"
+  "diag.hint.path": "pastikan path ada dan bisa dibaca",
+  "build.assets": "Aset",
+  "build.assetsHashed": "dengan digest",
+  "verify.assets": "Aset"
 }

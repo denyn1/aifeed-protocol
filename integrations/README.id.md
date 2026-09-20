@@ -42,6 +42,16 @@ profil MAKO, `type="text/mako+markdown" href="/path.mako.md"`). `aifeed site bui
 `{file}.sig` (misalnya `/artikel/satu.aifeed.md.sig`) dan konteksnya cocok dengan media
 type.
 
+## Berkas aset (gambar, PDF, unduhan)
+
+Halaman mendaftarkan media dan berkas unduhan di `aifeed.assets` pada frontmatter
+bertanda tangan — hanya referensi, tidak pernah di-inline. `aifeed site build` mengisi
+`mime` dari ekstensi berkas dan, untuk berkas yang ada di direktori sumber (≤16 MiB),
+menambahkan `size` dan `sha-256`; agen dapat memverifikasi unduhan dengan
+`sdk.verifyAsset(bytes, asset)` sebelum memakainya. Kebijakan edge juga berlaku untuk
+path aset: pada origin demo strict, `/assets/logo.svg` mengembalikan 403 untuk crawler
+training dan 200 untuk klien lain.
+
 ## Penamaan file
 
 `aifeed site build` sadar-profil:

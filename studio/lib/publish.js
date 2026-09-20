@@ -120,6 +120,9 @@ function publishProject(options) {
     if (pageInputs.length === 0) throw new Error('no HTML files found in ' + sourceDir);
   }
 
+  const assetDetails = sourceDir && fs.existsSync(sourceDir) && fs.statSync(sourceDir).isDirectory()
+    ? siteLib.assetDetailsReader(sourceDir)
+    : null;
   const baseUrl = 'https://' + project.domain;
   const profile = project.profile;
   const profileList = writtenProfiles(profile);
@@ -158,6 +161,7 @@ function publishProject(options) {
         entry,
         files: previous.files || [],
         primary: previous.primary || null,
+        assets_hashed: previous.assets_hashed || 0,
         built_at: previous.built_at || signedAt
       };
       skipped++;
@@ -172,7 +176,8 @@ function publishProject(options) {
         useMetaDates: freshness,
         useMetaTags: freshness,
         alternates: siteLib.extractAlternates(htmlText, baseUrl),
-        aifeed: override || undefined
+        aifeed: override || undefined,
+        assetDetails: assetDetails || undefined
       });
       for (const warning of converted.warnings) {
         warnings.push({ file: relative.split(path.sep).join('/'), ...warning });
@@ -185,6 +190,7 @@ function publishProject(options) {
         entry,
         files: written.files,
         primary: written.primary,
+        assets_hashed: converted.assets.filter((asset) => typeof asset['sha-256'] === 'string').length,
         built_at: signedAt
       };
       processed++;
@@ -288,12 +294,19 @@ function publishProject(options) {
   };
   if (statePath) fs.writeFileSync(statePath, JSON.stringify(state, null, 2) + '\n');
 
+  const assetSummary = { total: 0, hashed: 0 };
+  for (const page of Object.values(pages)) {
+    if (page.entry && Number.isInteger(page.entry.assets)) assetSummary.total += page.entry.assets;
+    if (Number.isInteger(page.assets_hashed)) assetSummary.hashed += page.assets_hashed;
+  }
+
   return {
     result: 'BUILT',
     total: htmlFiles.length,
     processed,
     skipped,
     warnings,
+    assets: assetSummary,
     outDir,
     domain: project.domain,
     fingerprint: key.fingerprint,

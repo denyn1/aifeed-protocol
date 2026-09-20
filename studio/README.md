@@ -52,6 +52,9 @@ build, verify, and export.
 - **Advanced manifest fields**: `types`, `capabilities`, and `actions` JSON editors
   validated against the v0.2 schema, plus OpenAPI import (paste a spec) to draft
   capabilities and purchase-style actions for e-commerce agents.
+- **Asset integrity**: pages declare images/PDFs/downloads with `mime`, `size`, and
+  `sha-256` for local files; build and verify summaries show asset totals and digest
+  coverage.
 - **Audit journal**: every project keeps a `journal.ndjson` (project created, source,
   scan, build, verify, rotation, advanced fields) for traceability.
 - **Incremental builds**: unchanged pages (by HTML hash) are skipped; the state file

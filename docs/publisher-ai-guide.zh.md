@@ -329,6 +329,32 @@ Gate: pack complete, every number traceable to an artifact.
 
 PX-3 门禁连续两次通过且证据包归档时，Track XL 完成。
 
+## 资源 — 图片、PDF 与下载
+
+非 HTML 文件（图片、视频、音频、PDF、压缩包，以及任何 `download` 链接）按页面声明在
+签名 frontmatter 的 `aifeed.assets` 中：
+
+```yaml
+aifeed:
+  assets:
+    - url: /uploads/sampul.webp
+      type: image
+      mime: image/webp
+      size: 48213
+      sha-256: "9GyqhORj/l1nnxteUlVZjHyf83us13ziRunVmf97e6M="
+    - url: /laporan.pdf
+      type: document
+      mime: application/pdf
+```
+
+- **仅为引用** — 资源绝不内联；是否下载由代理决定。
+- **相同许可** — 获取资源遵循页面的 usage 与限额（`retrieval`、`commercial_use` 等），
+  边缘模板同样覆盖资源路径。
+- **完整性** — 存在 `size` 或 `sha-256` 时，用 `sdk.verifyAsset(bytes, asset)` 在使用前
+  验证下载字节。`aifeed site build`（与 Studio）会按扩展名填写 `mime`，并哈希源目录中的
+  本地文件（≤16 MiB）；抓取或远程资源在代理下载前没有哈希。
+- **预取分流** — 索引条目携带 `assets` 数量，代理可在下载任何内容前判断页面是否值得抓取。
+
 ## 更喜欢应用？使用 AIFeed Studio
 
 如果你更愿意点击而不是输入提示词，本仓库提供了一个完成同样工作的本地应用：

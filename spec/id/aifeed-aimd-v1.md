@@ -90,8 +90,9 @@ Aturan:
 ### 2.1 Aset
 
 Sama seperti v0.2: `aifeed.assets` mencantumkan media dan berkas unduhan sebagai
-tautan rujukan (image, video, audio, document, archive, file); pengambilannya tunduk
-pada izin dan limit yang sama seperti konten halaman.
+tautan rujukan (image, video, audio, document, archive, file) dengan opsional `mime`,
+`size`, dan `sha-256`; pengambilannya tunduk pada izin dan limit yang sama seperti konten
+halaman, dan klien MUST memverifikasi `size`/`sha-256` terhadap byte yang diunduh bila ada.
 
 ### 2.2 Field dokumen opsional
 

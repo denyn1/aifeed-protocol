@@ -3,9 +3,9 @@
   "context": "aimd",
   "url": "https://berita.example/artikel/aimd",
   "key_fingerprint": "sha256:oFCDfYUHBYLM9zlLCYiEfMMSy4glm4lImfbyOc8XkaU",
-  "signature": "base64url:trF-mVRMy5K33Z3SXbflgR5usWKBvB6Ucif2JBmvLHoSt40Ya2nvn0qYOZNkcFxh5d1oT03JLxzIkNUOVg8VBw",
+  "signature": "base64url:3HtcESJ0APxYIatL-pHax_x6-zGSDnng_C1WTK91nfiwB1Ee5DQ76kJOh3AmENEbbFUKBT20Sz3jv9TW7ldzBg",
   "raw_digest": {
-    "sha-256": "kLOiiXJcg6uo/f21UB6ohRhBsxnfATvCdbVgkR4f8AI=",
+    "sha-256": "Q1jn60iEJW49OVogliAFksmLLs6EKDj3UfbsgmnibFU=",
     "applies_to": "raw-bytes"
   },
   "signed_at": "2026-09-15T08:00:00Z"

@@ -210,6 +210,9 @@ aifeed:
     - url: /uploads/sampul.webp
       type: image
       alt: "Foto sampul"
+      mime: image/webp
+      size: 48213
+      sha-256: "9GyqhORj/l1nnxteUlVZjHyf83us13ziRunVmf97e6M="
     - url: /media/demo.mp4
       type: video
       title: "Video demo"
@@ -221,12 +224,15 @@ aifeed:
 `assets` mencantumkan media dan berkas unduhan yang dirujuk halaman (gambar, video,
 audio, dokumen, arsip, berkas lain yang biasanya ditandai atribut HTML `download`).
 Setiap entri membawa `url`, `type` (`image`, `video`, `audio`, `document`, `archive`,
-`file`), serta opsional `mime`, `title`, dan `alt`. Daftar ini **hanya rujukan**: aset
-tidak pernah disisipkan ke dalam dokumen, pengambilannya tunduk pada izin dan limit
-yang sama dengan konten halaman, dan klien yang memutuskan apakah akan mengunduhnya.
-Konverter SHOULD tetap mempertahankan rujukan inline di badan markdown (misalnya gambar
-sebagai `![alt](url)`) dan SHOULD menambahkan bagian "Media & Unduhan" yang
-mencantumkan tautan aset agar konsumen MAKO non-AIFeed juga dapat menemukannya.
+`file`), serta opsional `mime`, `size` (byte), `sha-256` (base64), `title`, dan `alt`.
+Daftar ini **hanya rujukan**: aset tidak pernah disisipkan ke dalam dokumen,
+pengambilannya tunduk pada izin dan limit yang sama dengan konten halaman, dan klien
+yang memutuskan apakah akan mengunduhnya. Bila `size` atau `sha-256` ada, klien MUST
+memverifikasi byte yang diunduh terhadapnya sebelum dipakai; aset tanpa bidang
+integritas MAY tetap diunduh, dengan risiko klien sendiri. Konverter SHOULD tetap
+mempertahankan rujukan inline di badan markdown (misalnya gambar sebagai `![alt](url)`)
+dan SHOULD menambahkan bagian "Media & Unduhan" yang mencantumkan tautan aset agar
+konsumen MAKO non-AIFeed juga dapat menemukannya.
 
 ### 6.2 Pewarisan
 
@@ -386,6 +392,7 @@ TIDAK menandatangani dokumen yang disajikan berbeda antar-klien.
       "related": ["/product/adidas-ultraboost"],
       "updated": "2026-09-14T12:00:00Z",
       "etag": "\"mako-a1b2c3\"",
+      "assets": 2,
       "sha-256": "<43 chars + '='>"
     }
   ]
@@ -411,8 +418,8 @@ agen memahami apa yang diterbitkan origin sebelum mengambil halaman apa pun. Des
 WAJIB informasi publik (teks yang sama yang penerbit tampilkan ke pengunjung).
 
 Entri MAY membawa bidang triase agar agen dapat memutuskan **halaman mana yang diambil**
-tanpa mengunduhnya: `title` (≤500), `summary` (≤160), `tags` (≤10), `lang`, dan
-`related` (≤20 path URL). Aturan:
+tanpa mengunduhnya: `title` (≤500), `summary` (≤160), `tags` (≤10), `lang`, `related`
+(≤20 path URL), dan `assets` (jumlah aset yang dideklarasikan). Aturan:
 
 - Bidang triase WAJIB berasal dari konten terbit saja; draf, halaman privat, dan
   metadata belum terbit WAJIB TIDAK muncul.

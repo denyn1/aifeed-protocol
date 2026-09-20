@@ -98,8 +98,9 @@ Rules:
 ### 2.1 Assets
 
 Same as v0.2: `aifeed.assets` lists media and downloadable files as reference links
-(image, video, audio, document, archive, file); fetching them follows the same
-permissions and limits as page content.
+(image, video, audio, document, archive, file) with optional `mime`, `size`, and
+`sha-256`; fetching them follows the same permissions and limits as page content, and
+clients MUST verify `size`/`sha-256` against the downloaded bytes when present.
 
 ### 2.2 Optional document fields
 

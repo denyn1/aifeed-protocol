@@ -39,6 +39,13 @@ MAKO 配置则用 `type="text/mako+markdown" href="/path.mako.md"`）。`aifeed 
 --inject` 会自动添加这些 link 标签。签名位于 `{file}.sig` 边车（例如
 `/artikel/satu.aifeed.md.sig`），其上下文与媒体类型匹配。
 
+## 资源文件（图片、PDF、下载）
+
+页面在签名 frontmatter 的 `aifeed.assets` 中列出媒体与可下载文件——仅为引用，永不内联。
+`aifeed site build` 根据扩展名填写 `mime`；对于源目录中存在的文件（≤16 MiB），还会添加
+`size` 与 `sha-256`；代理可用 `sdk.verifyAsset(bytes, asset)` 在使用前验证下载。边缘策略同样
+适用于资源路径：在 strict 演示源上，`/assets/logo.svg` 对训练爬虫返回 403，对其他客户端返回 200。
+
 ## 文件命名
 
 `aifeed site build` 感知配置：

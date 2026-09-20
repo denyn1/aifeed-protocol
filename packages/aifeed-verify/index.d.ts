@@ -356,6 +356,31 @@ export function fetchAimd(url: string, options?: FetchMakoOptions): Promise<Fetc
 export function fetchIndexDelta(indexUrl: string, options?: FetchIndexDeltaOptions): Promise<FetchIndexDeltaResult>;
 export function decideUsage(result: Pick<MakoVerifyResult, 'usage' | 'attribution'>, usageKey: string): { allowed: boolean; attribution: string | null; reason: string };
 
+export interface AssetEntry {
+  url: string;
+  type: 'image' | 'video' | 'audio' | 'document' | 'archive' | 'file' | string;
+  mime?: string;
+  size?: number;
+  'sha-256'?: string;
+  title?: string;
+  alt?: string;
+}
+
+export interface AssetVerifyResult {
+  ok: boolean;
+  verified: boolean;
+  size: number;
+  'sha-256': string | null;
+  errors: Issue[];
+  warnings: Issue[];
+}
+
+export function listAssets(
+  result: { frontmatter?: MakoFrontmatter | null; url?: string } | MakoFrontmatter,
+  options?: { pageUrl?: string }
+): AssetEntry[];
+export function verifyAsset(bytes: Buffer | Uint8Array | string, asset: AssetEntry | Partial<AssetEntry>): AssetVerifyResult;
+
 export const AIMD_MEDIA_TYPE: string;
 export const MAKO_MEDIA_TYPE: string;
 export const AIMD_SEPARATION: string;
@@ -376,6 +401,7 @@ export interface IndexEntry {
   tags?: string[];
   lang?: string;
   related?: string[];
+  assets?: number;
 }
 
 export interface SelectEntriesOptions {

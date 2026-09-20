@@ -697,9 +697,11 @@
 
   async function startBuild() {
     await runJob('/build', async (result) => {
+      const assets = result.assets ? ', ' + t('build.assets') + ': ' + result.assets.total +
+        ' (' + t('build.assetsHashed') + ': ' + result.assets.hashed + ')' : '';
       logLine(t('build.done') + ' — ' + t('build.total') + ': ' + result.total + ', ' +
         t('build.processed') + ': ' + result.processed + ', ' + t('build.skipped') + ': ' + result.skipped +
-        ', ' + t('build.warnings') + ': ' + result.warnings.length);
+        ', ' + t('build.warnings') + ': ' + result.warnings.length + assets);
       showToast(t('build.done'), true);
       await openProject(state.current.project.id);
       state.tab = 'build';
@@ -717,6 +719,7 @@
         row(t('verify.result'), pill(report.result)) +
         row(t('verify.manifest'), pill(report.manifest.result) + (report.manifest.errors.length ? ' ' + esc(report.manifest.errors.map((error) => error.code).join(', ')) : '')) +
         row(t('verify.pages'), report.pages.total + ' · ok ' + report.pages.ok + ' · fail ' + report.pages.failed.length) +
+        (report.assets ? row(t('verify.assets'), report.assets.total + ' (' + t('build.assetsHashed') + ': ' + report.assets.hashed + ')') : '') +
         row(t('verify.indexes'), report.indexes.map((entry) => entry.file + ' ' + (entry.ok ? 'ok' : 'fail')).join(', ') || '—') +
         '</table>';
       if (report.pages.failed.length > 0) {

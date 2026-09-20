@@ -19,6 +19,9 @@ aifeed:
     - url: /laporan.pdf
       type: document
       title: "Laporan"
+      mime: application/pdf
+      size: 2048
+      sha-256: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
 alternates:
   - url: https://contoh.example/en/aimd
     lang: en

@@ -135,20 +135,21 @@ Exit code: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage atau error internal
   collection ditolak), tanda tangan Ed25519 atas
   `"aifeed.mako.v0.2\n" || url || LF || byte mentah`, pengikatan izin dengan override
   restrict-only, indeks delta terpaginasi dengan digest SHA-256 per entri, dan daftar tautan
-  `aifeed.assets` (gambar, video, audio, dokumen, arsip) agar agen dapat memutuskan apa yang
-  diunduh; konverter juga menghasilkan bagian body "Media & Unduhan".
+  `aifeed.assets` (gambar, video, audio, dokumen, arsip) dengan opsional `mime`, `size`,
+  dan `sha-256` agar agen dapat memutuskan apa yang diunduh dan memverifikasi byte yang
+  diperoleh (`sdk.verifyAsset`); konverter juga menghasilkan bagian "Media & Unduhan".
 - Triage situs (v0.2): indeks delta membawa resume `site` opsional
   (nama, deskripsi, tipe, bahasa) dan field triage per entri
-  (`title`, `summary`, `tags`, `lang`, `related`) agar agen dapat memeringkat dan memilih
-  halaman sebelum fetch; SDK mengekspos `selectEntries()` untuk pemeringkatan itu.
+  (`title`, `summary`, `tags`, `lang`, `related`, `assets`) agar agen dapat memeringkat dan
+  memilih halaman sebelum fetch; SDK mengekspos `selectEntries()` untuk pemeringkatan itu.
 
 ---
 
 ## Tes
 
 ```bash
-npm test                 # suite tes Node (251 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci)
-npm run test:py          # suite verifier Python (44 tes: vektor, paritas AIFeed Markdown/MAKO, revokasi, bundel, contoh)
+npm test                 # suite tes Node (254 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci)
+npm run test:py          # suite verifier Python (45 tes: vektor, paritas AIFeed Markdown/MAKO, revokasi, bundel, contoh)
 npm run vectors          # regenerasi vektor manifest deterministik + self-check (34)
 npm run mako:vectors     # regenerasi vektor konformansi MAKO + self-check (39)
 npm run aimd:vectors     # regenerasi vektor konformansi AIFeed Markdown + self-check (11)
@@ -242,8 +243,8 @@ kecil, menengah, besar, dan raksasa, masing-masing berakhir di manifest terverif
 - **Klien AI — `@aifeed/verify`** (`packages/aifeed-verify/`): paket npm mandiri yang
   dibangun dari `lib/` dan `schema/` via `npm run build:sdk`; menyertakan deklarasi
   TypeScript (`index.d.ts`) dan API MAKO v0.2 (`fetchMako`, `fetchIndexDelta`,
-  `selectEntries`, `decideUsage`, primitif `mako.*`, schema v0.2); pengemasan diuji dengan
-  `npm pack --dry-run`.
+  `selectEntries`, `decideUsage`, `listAssets`, `verifyAsset`, primitif `mako.*`, schema
+  v0.2); pengemasan diuji dengan `npm pack --dry-run`.
 - **Penerbit — WordPress** (`wp-plugin/`): SDK penerbit referensi (manajemen kunci,
   pembangun manifest, JCS di PHP, penandatanganan, penyajian `/.well-known`, UI admin,
   instruksi DNS, badge, re-sign bulanan) plus lapisan MAKO v0.2 (negosiasi konten, dokumen

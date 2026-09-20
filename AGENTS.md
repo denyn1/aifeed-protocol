@@ -58,8 +58,8 @@ benchmarks, the website, and the paper.
 npm run verify            # everything below, one gate
 npm run lint:syntax       # parse-check every .js file
 npm run check:consistency # versions, deps, secrets, spec pairs, script targets
-npm test                  # Node suite (251 tests)
-npm run test:py           # independent Python verifier (44 tests)
+npm test                  # Node suite (254 tests)
+npm run test:py           # independent Python verifier (45 tests)
 npm run bench:mako        # regenerate benchmarks/mako-*.json + report
 npm run bench:enforcement # regenerate benchmarks/enforcement-*.json|md
 npm run fuzz:mako -- --iterations 3000   # parser fuzzing (fixed seeds)

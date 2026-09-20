@@ -32,6 +32,11 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   (0600) and are never served; UI in EN/ID/ZH. The manifest builder (`lib/site.js`)
   gained optional `limits`, `license`,
   `attribution_text/url`, and `maxCheckIntervalHours` options (backward compatible).
+- **Asset integrity and index visibility** — page `aifeed.assets` entries may carry
+  `mime`, `size`, and `sha-256` (hashed from local files at build time, ≤16 MiB);
+  delta-index entries expose an `assets` count, the SDK adds `listAssets()` and
+  `verifyAsset()`, Studio shows asset totals and digest coverage, and `verify:live`
+  proves edge enforcement on asset paths.
 - **Website** — new `studio.html` (Publish) and `updates.html` (release notes rendered
   from the changelog in EN/ID/ZH at build time) pages, linked from the navbar, the
   artifacts grid, and the apex sitemap; both pages ship signed AIFeed Markdown.

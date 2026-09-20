@@ -18,7 +18,8 @@ test('sdk exposes the public API surface', () => {
     'verifyAll', 'verifyDirectory', 'checkManifest', 'normalizeDomain', 'canonicalRevocationUrl',
     'parseStrict', 'verifyRevocationDocument', 'verifyBundle', 'createBundle',
     'rawDigestOf', 'verifyRawDigest', 'parseContentDigest', 'verifyContentDigest',
-    'fetchText', 'lookupAifeedTxt', 'resolvePinnedAddress'
+    'fetchText', 'lookupAifeedTxt', 'resolvePinnedAddress',
+    'listAssets', 'verifyAsset'
   ];
   for (const name of functions) {
     assert.strictEqual(typeof sdk[name], 'function', 'missing function export: ' + name);
@@ -64,6 +65,40 @@ test('sdk verifies a revocation fixture', () => {
   );
   assert.strictEqual(result.result, expected.result, JSON.stringify(result.errors));
   assert.strictEqual(result.valid_signatures, 2);
+});
+
+test('sdk lists assets and verifies downloaded bytes', () => {
+  const digest = sdk.digest.sha256Base64(Buffer.from('test'));
+  const frontmatter = {
+    aifeed: {
+      assets: [
+        { url: '/media/cover.webp', type: 'image', mime: 'image/webp', size: 4, 'sha-256': digest },
+        { url: 'https://cdn.example/report.pdf', type: 'document' }
+      ]
+    }
+  };
+  const assets = sdk.listAssets({ frontmatter, url: 'https://example.com/page' });
+  assert.strictEqual(assets.length, 2);
+  assert.strictEqual(assets[0].url, 'https://example.com/media/cover.webp');
+  assert.strictEqual(assets[0].mime, 'image/webp');
+  assert.strictEqual(assets[1].url, 'https://cdn.example/report.pdf');
+  assert.deepStrictEqual(sdk.listAssets({ frontmatter: { aifeed: {} } }), []);
+
+  const ok = sdk.verifyAsset(Buffer.from('test'), { size: 4, 'sha-256': digest });
+  assert.strictEqual(ok.ok, true, JSON.stringify(ok.errors));
+  assert.strictEqual(ok.verified, true);
+
+  const tampered = sdk.verifyAsset(Buffer.from('tampered!'), { size: 4, 'sha-256': digest });
+  assert.strictEqual(tampered.ok, false);
+  assert.deepStrictEqual(
+    tampered.errors.map((error) => error.code).sort(),
+    ['asset_digest_mismatch', 'asset_size_mismatch']
+  );
+
+  const unchecked = sdk.verifyAsset(Buffer.from('test'), { url: '/x.png', type: 'image' });
+  assert.strictEqual(unchecked.ok, true);
+  assert.strictEqual(unchecked.verified, false);
+  assert.strictEqual(unchecked.warnings[0].code, 'asset_no_integrity');
 });
 
 test('sdk ships TypeScript declarations', () => {

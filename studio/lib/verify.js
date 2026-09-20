@@ -29,16 +29,33 @@ function verifyBuild(options) {
   const pageFiles = walkFiles(outDir).filter((file) => /\.(aifeed|mako)\.md$/.test(file));
   const failed = [];
   let ok = 0;
+  let assetsTotal = 0;
+  let assetsHashed = 0;
+  const seenUrls = new Set();
   for (const file of pageFiles) {
     const relative = path.relative(outDir, file).split(path.sep).join('/');
     const context = relative.endsWith('.aifeed.md') ? 'aimd' : 'mako';
     const urlPath = siteLib.pagePathFor(relative.replace(/\.(aifeed|mako)\.md$/, '.html'));
+    const bytes = fs.readFileSync(file);
+    if (!seenUrls.has(urlPath)) {
+      seenUrls.add(urlPath);
+      try {
+        const parsed = makoLib.parseFrontmatter(bytes.toString('utf8'));
+        const list = parsed && parsed.frontmatter && parsed.frontmatter.aifeed && Array.isArray(parsed.frontmatter.aifeed.assets)
+          ? parsed.frontmatter.aifeed.assets
+          : [];
+        assetsTotal += list.length;
+        assetsHashed += list.filter((asset) => typeof asset['sha-256'] === 'string').length;
+      } catch (error) {
+        // frontmatter problems surface through container verification
+      }
+    }
     let result;
     try {
       result = makoLib.verifyMakoContainer({
         containerText: fs.readFileSync(file + '.sig', 'utf8'),
         pageUrl: 'https://' + domain + urlPath,
-        bodyBytes: fs.readFileSync(file),
+        bodyBytes: bytes,
         publicKey,
         context
       });
@@ -68,6 +85,7 @@ function verifyBuild(options) {
     result: okAll ? 'VERIFIED' : 'UNVERIFIED',
     manifest: { result: manifestResult.result, errors: manifestResult.errors, warnings: manifestResult.warnings },
     pages: { total: pageFiles.length, ok, failed },
+    assets: { total: assetsTotal, hashed: assetsHashed },
     indexes
   };
 }
