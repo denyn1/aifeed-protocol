@@ -331,6 +331,15 @@ Gate: pack complete, every number traceable to an artifact.
 
 Track XL is complete when PX-3's gates pass twice and the evidence pack is filed.
 
+## Prefer an app? Use AIFeed Studio
+
+If you would rather click than prompt, the repository ships a local app that does the
+same work: `npm run studio` serves a zero-dependency UI on <http://127.0.0.1:7777>.
+Create a project, point it at a local HTML directory or crawl the live site, edit the
+restrict-only policy (presets for news/ecommerce included), build incrementally, verify,
+and export — folder or `.tar.gz`, DNS TXT record, and adapter hints for your stack. Keys
+stay on your machine. See [`../studio/README.md`](../studio/README.md).
+
 ## Appendix A — AI tool capability matrix
 
 Facts below were verified against the vendors' official docs on 2026-09-16, except

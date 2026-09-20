@@ -173,6 +173,7 @@ function createServer(options = {}) {
     if (parts.length === 2 && parts[1] === 'projects' && method === 'POST') {
       const body = await readBody(req);
       const created = workspace.create(body);
+      workspace.appendJournal(created.id, 'project_created', { domain: created.domain, preset: created.preset });
       return json(res, 201, { project: created, policy: workspace.policy(created.id) });
     }
 
@@ -233,6 +234,7 @@ function createServer(options = {}) {
         const errors = policyLib.validatePolicy(body.policy || body);
         if (errors.length > 0) return json(res, 400, { error: 'invalid policy', errors });
         const saved = workspace.savePolicy(id, body.policy || body);
+        workspace.appendJournal(id, 'policy_saved', null);
         return json(res, 200, { policy: saved });
       }
 
@@ -246,6 +248,7 @@ function createServer(options = {}) {
           if (advanced[key] !== undefined) project.advanced[key] = advanced[key];
         }
         workspace.saveProject(id, project);
+        workspace.appendJournal(id, 'advanced_saved', { fields: Object.keys(project.advanced) });
         return json(res, 200, { advanced: project.advanced });
       }
 
@@ -284,6 +287,7 @@ function createServer(options = {}) {
             stack: body.stack ? { id: body.stack, adapter: STACK_ADAPTERS[body.stack] } : (project.source && project.source.stack) || null
           };
           workspace.saveProject(id, project);
+          workspace.appendJournal(id, 'source_set', { type: 'local', pages });
           return json(res, 200, { source: project.source });
         }
         if (body.type === 'crawl') {
@@ -311,6 +315,7 @@ function createServer(options = {}) {
             sitemap: project.source && project.source.origin === origin ? Boolean(project.source.sitemap) : false
           };
           workspace.saveProject(id, project);
+          workspace.appendJournal(id, 'source_set', { type: 'crawl', origin: project.source.origin });
           return json(res, 200, { source: project.source });
         }
         return json(res, 400, { error: 'source type must be "local" or "crawl"' });
@@ -340,6 +345,7 @@ function createServer(options = {}) {
           source.stack = result.stats.stack || source.stack || null;
           source.last_scan = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
           workspace.saveProject(id, project);
+          workspace.appendJournal(id, 'scan', { total: result.stats.total, fetched: result.stats.fetched, unchanged: result.stats.unchanged, errors: result.stats.errors });
           return result.stats;
         });
         return json(res, 202, { jobId });
@@ -366,7 +372,7 @@ function createServer(options = {}) {
         }
         const jobId = jobs.start('build', async (emit) => {
           emit({ type: 'progress', phase: 'start', done: 0, total: pages ? pages.length : (project.source.pages || 0) });
-          return publishProject({
+          const result = await publishProject({
             project,
             policy: workspace.policy(id),
             sourceDir,
@@ -383,6 +389,8 @@ function createServer(options = {}) {
             incremental: true,
             onProgress: emit
           });
+          workspace.appendJournal(id, 'build', { total: result.total, processed: result.processed, skipped: result.skipped });
+          return result;
         });
         return json(res, 202, { jobId });
       }
@@ -430,6 +438,7 @@ function createServer(options = {}) {
           domain: project.domain,
           keyPath: workspace.paths(id).keyPath
         });
+        workspace.appendJournal(id, 'verify', { result: report.result, pages: report.pages.total, failed: report.pages.failed.length });
         return json(res, 200, report);
       }
 
@@ -498,7 +507,9 @@ function createServer(options = {}) {
 
       if (parts.length === 4 && parts[3] === 'verify-live' && method === 'POST') {
         try {
-          return json(res, 200, await liveVerify({ domain: project.domain }));
+          const live = await liveVerify({ domain: project.domain });
+          workspace.appendJournal(id, 'verify_live', { result: live.result, dns_anchored: live.dns_anchored });
+          return json(res, 200, live);
         } catch (error) {
           return json(res, 502, { error: error.message });
         }
@@ -525,6 +536,7 @@ function createServer(options = {}) {
           const overlap = JSON.parse(fs.readFileSync(path.join(paths.outDir, '.well-known', 'ai.json'), 'utf8'));
           project.rotation = overlap.rotation || null;
           workspace.saveProject(id, project);
+          workspace.appendJournal(id, 'rotation_prepare', { successor_fp: plan.successor_fingerprint, effective_at: plan.effective_at });
           return json(res, 200, plan);
         } catch (error) {
           return json(res, 500, { error: error.message });
@@ -570,6 +582,7 @@ function createServer(options = {}) {
             statePath: paths.statePath,
             incremental: false
           });
+          workspace.appendJournal(id, 'rotation_cutover', { signing_key: plan.signing_key, processed: rebuild.processed });
           return json(res, 200, { plan, rebuild: { total: rebuild.total, processed: rebuild.processed } });
         } catch (error) {
           return json(res, 500, { error: error.message });

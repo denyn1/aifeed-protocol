@@ -329,6 +329,14 @@ Gate: pack complete, every number traceable to an artifact.
 
 PX-3 门禁连续两次通过且证据包归档时，Track XL 完成。
 
+## 更喜欢应用？使用 AIFeed Studio
+
+如果你更愿意点击而不是输入提示词，本仓库提供了一个完成同样工作的本地应用：
+`npm run studio` 在 <http://127.0.0.1:7777> 提供零依赖 UI。创建项目、指向本地 HTML
+目录或抓取线上站点、编辑 restrict-only 策略（内置 news/ecommerce 预设）、增量构建、
+验证并导出——文件夹或 `.tar.gz`、DNS TXT 记录，以及针对你的技术栈的适配器提示。
+密钥保留在你的机器上。见 [`../studio/README.zh.md`](../studio/README.zh.md)。
+
 ## 附录 A — AI 工具能力矩阵
 
 以下事实截至 2026-09-16 已对照厂商官方文档核实，标有*以厂商文档为准*的格子除外

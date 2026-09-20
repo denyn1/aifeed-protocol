@@ -71,8 +71,19 @@
     toastTimer = setTimeout(() => { toastEl.hidden = true; }, 4200);
   }
 
+  const FAILURE_HINTS = [
+    [/dns_mismatch/, 'diag.hint.dns'],
+    [/schema_violation/, 'diag.hint.schema'],
+    [/bad_signature/, 'diag.hint.signature'],
+    [/rotation_|key_revoked/, 'diag.hint.rotation'],
+    [/ENOENT|not found/, 'diag.hint.path']
+  ];
+
   function fail(error) {
-    showToast(t('common.error') + ': ' + (error && error.message ? error.message : String(error)), false);
+    let message = error && error.message ? error.message : String(error);
+    const match = FAILURE_HINTS.find(([pattern]) => pattern.test(message));
+    if (match) message += ' — ' + t(match[1]);
+    showToast(t('common.error') + ': ' + message, false);
   }
 
   function option(value, label, selected) {

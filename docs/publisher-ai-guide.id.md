@@ -333,6 +333,16 @@ Gate: pack complete, every number traceable to an artifact.
 
 Track XL selesai saat gate PX-3 lolos dua kali berturut-turut dan paket bukti terarsip.
 
+## Lebih suka aplikasi? Pakai AIFeed Studio
+
+Kalau Anda lebih suka klik daripada prompt, repositori ini menyertakan aplikasi lokal
+yang mengerjakan hal yang sama: `npm run studio` menyajikan UI tanpa dependensi di
+<http://127.0.0.1:7777>. Buat proyek, arahkan ke direktori HTML lokal atau crawl situs
+live, sunting kebijakan restrict-only (termasuk preset news/ecommerce), build
+incremental, verifikasi, lalu ekspor — folder atau `.tar.gz`, record DNS TXT, dan
+petunjuk adapter sesuai stack Anda. Kunci tetap di mesin Anda. Lihat
+[`../studio/README.id.md`](../studio/README.id.md).
+
 ## Lampiran A — matriks kapabilitas AI tool
 
 Fakta di bawah diverifikasi terhadap docs resmi vendor pada 2026-09-16, kecuali sel

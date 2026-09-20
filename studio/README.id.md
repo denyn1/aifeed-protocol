@@ -54,6 +54,8 @@ lalu ekspor.
 - **Field manifest lanjutan**: editor JSON `types`, `capabilities`, dan `actions` yang
   divalidasi terhadap schema v0.2, plus impor OpenAPI (tempel spec) untuk menyusun
   capabilities dan aksi bergaya purchase bagi agen e-commerce.
+- **Jurnal audit**: setiap proyek menyimpan `journal.ndjson` (proyek dibuat, sumber,
+  scan, build, verifikasi, rotasi, field lanjutan) untuk ketertelusuran.
 - **Build incremental**: halaman tak berubah (hash HTML) dilewati; state menyimpan entri
   indeks per halaman agar rebuild tetap cepat untuk situs besar.
 - **Verifikasi**: manifest, semua tanda tangan halaman, dan kedua indeks diverifikasi
@@ -109,8 +111,8 @@ Semua panggilan API butuh header `x-studio-token` (SSE memakai `?token=`).
   freshness untuk situs news dan e-commerce.
 - **M3 (selesai):** ekspor `.tar.gz`, deteksi stack dengan petunjuk adapter, verifikasi
   live dari UI, dan upacara rotasi kunci terjaga dengan penandatanganan ulang halaman.
-- **M4 (berjalan):** editor lanjutan `types`/`capabilities`/`actions` dengan impor
-  OpenAPI selesai; diagnostik ramah, jurnal audit, dan tangkapan layar menyusul.
+- **M4 (hampir selesai):** editor lanjutan, impor OpenAPI, petunjuk error ramah, dan
+  jurnal audit sudah dikirim; tinggal tangkapan layar.
 
 ## Terkait
 

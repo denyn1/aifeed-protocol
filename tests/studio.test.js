@@ -220,6 +220,12 @@ test('studio API creates, builds, verifies, and exports a project', async () => 
     assert.ok(exportInfo.dns.value.includes('manifest=https://'));
     assert.deepStrictEqual(exportInfo.instructions, ['upload_overlay', 'add_dns_txt', 'verify_live']);
 
+    const journal = fs.readFileSync(path.join(workspace.projectDir(id), 'journal.ndjson'), 'utf8');
+    assert.ok(journal.includes('"project_created"'), journal);
+    assert.ok(journal.includes('"source_set"'), journal);
+    assert.ok(journal.includes('"build"'), journal);
+    assert.ok(journal.includes('"verify"'), journal);
+
     const previewResponse = await call('/projects/' + id + '/preview?path=' + encodeURIComponent('/cart'));
     const preview = await previewResponse.json();
     assert.strictEqual(preview.built, true);

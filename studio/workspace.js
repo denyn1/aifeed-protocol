@@ -154,6 +154,15 @@ class Workspace {
     writeJson(this.paths(id).statePath, state);
   }
 
+  appendJournal(id, event, detail = null) {
+    const line = JSON.stringify({
+      at: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
+      event,
+      detail
+    }) + '\n';
+    fs.appendFileSync(path.join(this.paths(id).dir, 'journal.ndjson'), line);
+  }
+
   fingerprint(id) {
     const paths = this.paths(id);
     try {

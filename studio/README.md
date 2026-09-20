@@ -52,6 +52,8 @@ build, verify, and export.
 - **Advanced manifest fields**: `types`, `capabilities`, and `actions` JSON editors
   validated against the v0.2 schema, plus OpenAPI import (paste a spec) to draft
   capabilities and purchase-style actions for e-commerce agents.
+- **Audit journal**: every project keeps a `journal.ndjson` (project created, source,
+  scan, build, verify, rotation, advanced fields) for traceability.
 - **Incremental builds**: unchanged pages (by HTML hash) are skipped; the state file
   keeps a per-page index entry so rebuilds stay fast for large sites.
 - **Verify**: manifest, every page signature, and both indexes are verified locally
@@ -107,8 +109,8 @@ All API calls need the `x-studio-token` header (SSE uses `?token=`).
   extraction for news and e-commerce sites.
 - **M3 (done):** `.tar.gz` export, stack detection with adapter hints, live verification
   from the UI, and the guarded key-rotation ceremony with page re-signing.
-- **M4 (in progress):** advanced `types`/`capabilities`/`actions` editor with OpenAPI
-  import done; friendlier diagnostics, audit journal, and screenshots next.
+- **M4 (mostly done):** advanced editor, OpenAPI import, friendly error hints, and the
+  audit journal shipped; screenshots remain.
 
 ## Related
 
