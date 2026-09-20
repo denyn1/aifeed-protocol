@@ -61,7 +61,8 @@ berbentuk browser.
 `/.well-known/ai.json`, ber-anchor DNS, dapat diverifikasi offline, dengan revokasi
 multi-tanda-tangan dan staleness terbatas. (2) Profil konten: AIFeed Markdown v1.0 (native)
 dan kompatibilitas MAKO atas byte bertanda tangan yang sama, override per halaman
-restrict-only, serta indeks delta ber-digest dengan resume situs dan field triage. (3)
+restrict-only, metadata integritas aset (`mime`, `size`, `sha-256`), serta indeks delta
+ber-digest dengan resume situs dan field triage. (3)
 Tumpukan referensi tanpa dependensi: CLI, SDK JavaScript, verifier Python independen,
 plugin WordPress, site builder statis, dan delapan adapter server. (4) Evaluasi yang dapat
 direproduksi dengan artefak ter-commit, vektor konformansi, fuzzing, dan tes diferensial
@@ -126,11 +127,13 @@ Registry revokasi dengan dokumen multi-tanda-tangan, status due-process (`active
 (`text/mako+markdown`) [makoSpec]. Server dual-stack mengirim byte identik di kedua media
 type dengan konteks tanda tangan berbeda (`aimd` / `mako`), mencegah replay lintas format.
 Blok `aifeed` per halaman default restrict-only; tautan aset membiarkan agen memilih apa
-yang di-fetch; parser frontmatter hanya menerima subset YAML aman.
+yang di-fetch, dengan opsi `mime`, `size`, dan `sha-256` (di-hash lokal saat build) yang
+diverifikasi setelah unduh (`verifyAsset`); parser frontmatter hanya menerima subset YAML
+aman.
 
 **Konsumsi delta.** `/.well-known/aifeed-index.json` (+ `.sig`, konteks `aimd-index`)
 dengan `sha-256`, ETag, token, resume situs, dan field triage per halaman (title, summary,
-tags, language, related). Klien mem-diff digest dan hanya fetch halaman yang berubah;
+tags, language, related, jumlah aset). Klien mem-diff digest dan hanya fetch halaman yang berubah;
 halaman tak berubah berbiaya nol byte (permintaan kondisional [rfc9110, rfc7231], digest
 fields [rfc9530], linking [rfc8288]). Entri indeks adalah klaim tak terpercaya sampai
 diverifikasi.
@@ -141,7 +144,9 @@ Tercakup konformansi: manifest domain asing, edit pasca-tanda-tangan, penggantia
 kompromi origin/DNS, modifikasi jaringan, CDN basi, replay, korupsi transport, reformat
 lokal, dokumen diubah, ketidakcocokan digest, replay lintas URL dan lintas konteks, tanda
 tangan yang dilepas saat kebijakan mewajibkannya, override fail-open, dan penyalahgunaan
-parser YAML. Secara eksplisit tidak diklaim: kompromi origin+DNS pada kontak pertama;
+parser YAML. Unduhan aset hanya terikat ke halaman lewat rujukan: bila penerbit
+mendeklarasikan `size` atau `sha-256`, klien memverifikasi byte sebelum dipakai; tanpa itu,
+integritas aset bergantung pada TLS saja. Secara eksplisit tidak diklaim: kompromi origin+DNS pada kontak pertama;
 kesetiaan derivatif markdown terhadap render HTML. Enforcement diperlukan agar berdampak:
 1,9 miliar peristiwa bypass menunjukkan preferensi tanpa penegakan hanya saran [tollbit].
 Penggantian kunci ditangani upacara rotasi (v0.2 §14): direktif penerus bertanda tangan
@@ -154,7 +159,8 @@ dan DNS origin.
 
 Tumpukan referensi tanpa dependensi [aifeedRepo]: parser ketat + subset YAML aman; JCS +
 Ed25519; CLI (`keygen`, `sign`, `validate`, `bundle`,
-`aimd|mako generate|sign|verify|index|fetch`, `site build`); SDK npm `@aifeed/verify`;
+`aimd|mako generate|sign|verify|index|fetch`, `site build`); SDK npm `@aifeed/verify`
+(manifest, dokumen, indeks, pemilihan triage, verifikasi aset);
 verifier Python independen; plugin WordPress (penyajian dual-stack, indeks bertanda tangan,
 aset, triage, `llms.txt`); site builder statis; delapan adapter server. Spesifikasi:
 AIFeed v0.1 [aifeedSpec01], v0.2 [aifeedSpec02], AIFeed Markdown v1.0 [aimdSpec].
@@ -194,7 +200,8 @@ secara konstruksi.
 
 **Kebenaran dan ketahanan.** Nol kegagalan verifikasi tanda tangan; replay lintas konteks
 dan lintas URL ditolak; tamper tertangkap oleh ketidakcocokan digest; 90.000+ eksekusi
-fuzz tanpa pelanggaran invarian; WordPress end-to-end lulus negosiasi, tanda tangan inline
+fuzz tanpa pelanggaran invarian; integritas aset diverifikasi end-to-end (hashing lokal,
+cek unduhan byte-per-byte); WordPress end-to-end lulus negosiasi, tanda tangan inline
 dan indeks, aset, triage, dan `llms.txt`.
 
 ## 7. Diskusi dan Batasan

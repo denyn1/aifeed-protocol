@@ -85,9 +85,10 @@ We make four contributions:
   staleness semantics.
   \item \textbf{Content profiles.} \aifeed{} v0.2 adds signed per-page content delivery:
   the native \aimd{} profile (\code{text/aifeed+markdown}) with first-class permission,
-  asset, and triage metadata; the \mako{} compatibility profile; restrict-only per-page
-  overrides; and a digest-bearing delta index with a site resume and per-entry triage
-  fields.
+  asset, and triage metadata (including optional \code{mime}, \code{size}, and
+  \code{sha-256} for verifiable asset downloads); the \mako{} compatibility profile;
+  restrict-only per-page overrides; and a digest-bearing delta index with a site resume
+  and per-entry triage fields.
   \item \textbf{Implementation.} A zero-dependency reference stack: CLI, JavaScript SDK,
   independent Python verifier, WordPress publisher plugin, static-site builder, and
   server adapters for nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, and Go.
@@ -226,15 +227,17 @@ Two profiles are supported over the same signed body bytes:
 A signature container binds the signed bytes to the canonical page URL
 (\code{UTF-8("aifeed.aimd.v1\textbackslash n") || url || LF || raw bytes}); sidecar or
 inline delivery is permitted. Converters emit referenced media and downloadable files as
-links (\code{aifeed.assets}) so agents decide what to fetch, and the safe YAML subset
-used for frontmatter rejects anchors, aliases, tags, flow collections, and oversized
-scalars.
+links (\code{aifeed.assets}) so agents decide what to fetch; entries may carry
+\code{mime}, \code{size}, and \code{sha-256} (hashed locally at build time), and clients
+verify downloaded bytes against them before use (\code{verifyAsset}). The safe YAML
+subset used for frontmatter rejects anchors, aliases, tags, flow collections, and
+oversized scalars.
 
 \subsection{Delta consumption}
 
 The delta index (\code{/.well-known/aifeed-index.json}, signed with context
 \code{aimd-index}) lists pages with \code{sha-256} digests, ETags, token counts, a site
-resume, and triage fields (title, summary, tags, language, related). Clients diff digests
+resume, and triage fields (title, summary, tags, language, related, asset count). Clients diff digests
 against stored state and fetch only changed pages; unchanged pages cost zero bytes
 (conditional requests per HTTP semantics~\citep{rfc9110,rfc7231}, content digests per
 RFC~9530~\citep{rfc9530}, and index discovery via web linking~\citep{rfc8288}). Index
@@ -249,7 +252,10 @@ network modification, stale CDN copies, replays, transport corruption, and local
 reformatting. The suite also covers content-profile attacks: tampered documents, digest
 mismatch, cross-URL replay, cross-format/context replay, stripped signatures with
 manifest policy \code{signature: required}, fail-open permission overrides, and YAML
-parser abuses (anchors, aliases, tags, duplicate keys, depth/size bombs). Two properties
+parser abuses (anchors, aliases, tags, duplicate keys, depth/size bombs). Asset downloads
+are bound to the page only by reference: when publishers declare \code{size} or
+\code{sha-256}, clients verify the bytes before use; without them, asset integrity relies
+on TLS alone. Two properties
 are explicitly \emph{not} claimed: first-contact origin+DNS compromise is undetectable
 without out-of-band state; and signatures attest provenance, not the fidelity of a
 markdown derivative to the HTML rendering. Enforcement is required to make declarations
@@ -270,7 +276,8 @@ JSON parser (duplicate keys, NFC, integer bounds) and a safe YAML-subset frontma
 parser; JCS canonicalization and Ed25519 signing/verification; a CLI (\code{keygen},
 \code{sign}, \code{validate}, \code{bundle},
 \code{aimd|mako generate|sign|verify|index|fetch}, \code{site build}); an npm SDK
-(\code{@aifeed/verify}) with manifest, document, index, and triage-selection APIs; an
+(\code{@aifeed/verify}) with manifest, document, index, triage-selection, and asset
+verification APIs; an
 independent Python verifier; a WordPress publisher plugin serving dual-stack content with
 signed manifests, indices, assets, triage, and \code{llms.txt}; a static-site builder;
 and server adapters for eight platforms. Conformance is verified by 34 manifest, 39
@@ -348,7 +355,9 @@ Across the conformance suites, signature verification failed zero times, cross-c
 and cross-URL replays were rejected, and tampered documents were detected by digest
 mismatch. Frontmatter and container parsers withstood 90{,}000+ fuzz executions without
 invariant violations; the safe YAML subset rejects anchor, alias, tag, flow, duplicate,
-and oversized inputs. The WordPress end-to-end test verifies negotiation, inline
+and oversized inputs. Asset integrity is exercised end-to-end: local builds hash declared
+files, and downloads are verified byte-for-byte against \code{size}/\code{sha-256} in
+unit and live checks. The WordPress end-to-end test verifies negotiation, inline
 signatures, index signatures, assets, triage fields, and \code{llms.txt} on a real
 installation.
 

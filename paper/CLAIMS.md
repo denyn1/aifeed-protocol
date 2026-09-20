@@ -64,6 +64,7 @@ Bib keys refer to `refs.bib`. Access dates for web sources: 2026-09-14/15.
 | M13 | Vendor claim vs faithful conversion | MAKO claims up to −94% tokens (semantic optimization); our faithful converter measures −68.8% bytes — the gap is publisher-chosen summarization, not achieved by the protocol | `makoSpec` vs `benchmarks/` | comparison |
 | M14 | Key rotation (v0.2 §14) | 4 positive + 5 negative conformance vectors; successor bound by an old-key-signed directive with an advisory DNS `pk2` cross-check; 1 h hard overlap floor | `conformance/vectors/*/0{08..11,119..123}-rotation*` | meas |
 | M15 | Savings without adoption/enforcement | ≈0 (baseline S0 serves everything; bypass evidence C8) | idem | analysis |
+| M16 | Asset integrity metadata (v0.2 §6.1) | optional `mime`/`size`/`sha-256` on declared assets; local builds hash source files (≤16 MiB) and SDK `verifyAsset` matches downloads byte-for-byte (unit + live check); index entries expose an asset count for pre-fetch triage | `conformance/mako/positive/009-aifeed-assets`, `tests/sdk.test.js`, live `shop.aifeed.md` | meas |
 
 ## Non-quantitative claims (stated with scope)
 

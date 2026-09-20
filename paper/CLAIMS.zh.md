@@ -64,6 +64,7 @@ Bib 键指向 `refs.bib`。网络来源访问日期：2026-09-14/15。
 | M13 | 厂商主张 vs 忠实转换 | MAKO 宣称最高 −94% token（语义优化）；我们的忠实转换器实测字节 −68.8%——差距来自发布方选择的摘要，并非协议所实现 | `makoSpec` vs `benchmarks/` | 对比 |
 | M14 | 密钥轮换（v0.2 §14） | 4 个正例 + 5 个反例一致性向量；后继密钥由旧密钥签名指令绑定，辅以建议性 DNS `pk2` 交叉校验；1 小时硬重叠下限 | `conformance/vectors/*/0{08..11,119..123}-rotation*` | meas |
 | M15 | 无采用/执行时的节省 | ≈0（S0 基线提供一切；绕过证据 C8） | 同上 | 分析 |
+| M16 | 资源完整性元数据（v0.2 §6.1） | 已声明资源可选 `mime`/`size`/`sha-256`；本地构建哈希源文件（≤16 MiB），SDK `verifyAsset` 逐字节校验下载（单元 + 线上检查）；索引条目暴露资源数量用于预取分流 | `conformance/mako/positive/009-aifeed-assets`、`tests/sdk.test.js`、线上 `shop.aifeed.md` | meas |
 
 ## 非定量主张（随范围声明）
 

@@ -64,6 +64,7 @@ Kunci Bib merujuk `refs.bib`. Tanggal akses untuk sumber web: 2026-09-14/15.
 | M13 | Klaim vendor vs konversi jujur | MAKO mengklaim hingga −94% token (optimasi semantik); konverter jujur kami mengukur −68,8% byte — selisihnya adalah summarisasi pilihan penerbit, bukan dicapai protokol | `makoSpec` vs `benchmarks/` | perbandingan |
 | M14 | Rotasi kunci (v0.2 §14) | 4 vektor konformansi positif + 5 negatif; penerus terikat direktif bertanda tangan kunci lama dengan cross-check DNS `pk2` advisory; batas keras overlap 1 jam | `conformance/vectors/*/0{08..11,119..123}-rotation*` | meas |
 | M15 | Penghematan tanpa adopsi/enforcement | ≈0 (baseline S0 menyajikan semuanya; bukti bypass C8) | idem | analisis |
+| M16 | Metadata integritas aset (v0.2 §6.1) | opsi `mime`/`size`/`sha-256` pada aset yang dideklarasikan; build lokal menghitung hash berkas sumber (≤16 MiB) dan `verifyAsset` SDK mencocokkan unduhan byte-per-byte (unit + cek live); entri indeks mengekspos jumlah aset untuk triase pra-fetch | `conformance/mako/positive/009-aifeed-assets`, `tests/sdk.test.js`, live `shop.aifeed.md` | meas |
 
 ## Klaim non-kuantitatif (dinyatakan dengan cakupan)
 

@@ -45,7 +45,8 @@ Signals、RSL 与 W3C TDM Reservation Protocol 各自表达某种许可或许可
 **贡献。**（1）AIFeed v0.1 的设计：Ed25519 签名、JCS 规范化、位于
 `/.well-known/ai.json` 的 manifest，DNS 锚定、可离线验证，带多签名撤销与有界陈旧度。
 （2）内容配置：AIFeed Markdown v1.0（原生）与 MAKO 兼容共享同一份签名字节、仅收紧的
-逐页覆盖，以及带站点摘要与分流字段的摘要增量索引。（3）零依赖参考栈：CLI、JavaScript
+逐页覆盖、资源完整性元数据（`mime`、`size`、`sha-256`），以及带站点摘要与分流字段的
+摘要增量索引。（3）零依赖参考栈：CLI、JavaScript
 SDK、独立 Python 验证器、WordPress 插件、静态站点构建器与八个服务器适配器。
 （4）可复现评估：已提交产物、一致性向量、模糊测试、跨语言差分测试；不利结果一并报告。
 
@@ -96,11 +97,12 @@ summarize、reproduce、translate、modify、embed、commercial use）、署名�
 `aimd: "1.0"`、媒体类型程序 [rfc6838, rfc7763]）与 MAKO 1.0
 （`text/mako+markdown`）[makoSpec]。双栈服务器在两种媒体类型下交付相同字节，签名上下文
 不同（`aimd` / `mako`），防止跨格式重放。逐页 `aifeed` 块默认仅收紧；资源链接让智能体
-自选抓取内容；frontmatter 解析器只接受安全 YAML 子集。
+自选抓取内容，并可携带 `mime`、`size`、`sha-256`（构建时本地哈希），下载后经
+`verifyAsset` 验证；frontmatter 解析器只接受安全 YAML 子集。
 
 **增量消费。** `/.well-known/aifeed-index.json`（+ `.sig`，上下文 `aimd-index`）带逐页
 `sha-256`、ETag、tokens、站点摘要与分流字段（title、summary、tags、language、
-related）。客户端比较摘要，只抓取变化的页面；未变更页面成本为零字节（条件请求
+related、资源数量）。客户端比较摘要，只抓取变化的页面；未变更页面成本为零字节（条件请求
 [rfc9110, rfc7231]、摘要字段 [rfc9530]、链接 [rfc8288]）。索引条目在被验证前是不可信
 声明。
 
@@ -108,7 +110,9 @@ related）。客户端比较摘要，只抓取变化的页面；未变更页面�
 
 一致性覆盖：外部域名 manifest、签名后编辑、密钥替换、源站/DNS 攻陷、网络修改、过期
 CDN、重放、传输损坏、本地重排、文档篡改、摘要不匹配、跨 URL 与跨上下文重放、策略要求
-签名时的剥离、fail-open 覆盖，以及 YAML 解析器滥用。明确不主张：首次接触的源站+DNS
+签名时的剥离、fail-open 覆盖，以及 YAML 解析器滥用。资源下载仅通过引用绑定页面：
+发布方声明 `size` 或 `sha-256` 时，客户端在使用前验证字节；否则资源完整性仅依赖 TLS。
+明确不主张：首次接触的源站+DNS
 联合攻陷；markdown 衍生品对 HTML 渲染的忠实度。执行是生效的前提：19 亿次绕过事件表明
 未执行的偏好只是建议 [tollbit]。密钥替换由轮换仪式处理（v0.2 §14）：旧密钥签名的后继
 指令加建议性 DNS `pk2` 交叉校验、有界重叠窗口、切换后永久撤销。这限定但不消除被泄露
@@ -118,7 +122,8 @@ CDN、重放、传输损坏、本地重排、文档篡改、摘要不匹配、�
 
 零依赖参考栈 [aifeedRepo]：严格解析器 + 安全 YAML 子集；JCS + Ed25519；CLI
 （`keygen`、`sign`、`validate`、`bundle`、`aimd|mako generate|sign|verify|index|fetch`、
-`site build`）；npm SDK `@aifeed/verify`；独立 Python 验证器；WordPress 插件（双栈服务、
+`site build`）；npm SDK `@aifeed/verify`（manifest、文档、索引、分流选择、资源验证）；
+独立 Python 验证器；WordPress 插件（双栈服务、
 签名索引、资源、分流、`llms.txt`）；静态站点构建器；八个服务器适配器。规范：AIFeed
 v0.1 [aifeedSpec01]、v0.2 [aifeedSpec02]、AIFeed Markdown v1.0 [aimdSpec]。一致性：
 JavaScript 与 Python 中的 34 个 manifest + 39 个 MAKO + 11 个 AIFeed Markdown 向量；
@@ -154,8 +159,8 @@ PHP 差分夹具；WordPress 端到端测试。
 标注）。没有执行时，节省按构造为零。
 
 **正确性与稳健性。** 零签名验证失败；跨上下文与跨 URL 重放被拒绝；篡改被摘要不匹配
-捕获；90,000+ 次模糊执行无违反不变量；WordPress 端到端通过协商、内联与索引签名、
-资源、分流与 `llms.txt`。
+捕获；90,000+ 次模糊执行无违反不变量；资源完整性端到端验证（本地哈希、逐字节下载校验）；
+WordPress 端到端通过协商、内联与索引签名、资源、分流与 `llms.txt`。
 
 ## 7. 讨论与局限
 

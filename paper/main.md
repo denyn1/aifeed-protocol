@@ -58,7 +58,8 @@ cost untouched, because agents keep pulling unchanged pages as browser-shaped HT
 **Contributions.** (1) Design of AIFeed v0.1: Ed25519-signed, JCS-canonicalized manifest
 at `/.well-known/ai.json`, DNS-anchored, offline-verifiable, with multi-signature
 revocation and bounded staleness. (2) Content profiles: AIFeed Markdown v1.0 (native) and MAKO
-compatibility over the same signed bytes, restrict-only per-page overrides, and a
+compatibility over the same signed bytes, restrict-only per-page overrides,
+asset integrity metadata (`mime`, `size`, `sha-256`), and a
 digest-bearing delta index with site resume and triage fields. (3) A zero-dependency
 reference stack: CLI, JavaScript SDK, independent Python verifier, WordPress plugin,
 static-site builder, and eight server adapters. (4) Reproducible evaluation with
@@ -122,11 +123,13 @@ Trust levels `VERIFIED` / `UNVERIFIED` / `SUSPENDED`.
 (`text/mako+markdown`) [makoSpec]. Dual-stack servers deliver identical bytes under both
 media types with distinct signature contexts (`aimd` / `mako`), preventing cross-format
 replay. Per-page `aifeed` block is restrict-only by default; asset links let agents
-choose what to fetch; the frontmatter parser accepts only a safe YAML subset.
+choose what to fetch, with optional `mime`, `size`, and `sha-256` (hashed locally at
+build time) verified after download (`verifyAsset`); the frontmatter parser accepts only
+a safe YAML subset.
 
 **Delta consumption.** `/.well-known/aifeed-index.json` (+ `.sig`, context
 `aimd-index`) with per-page `sha-256`, ETag, tokens, site resume, and triage fields
-(title, summary, tags, language, related). Clients diff digests and fetch only changed
+(title, summary, tags, language, related, asset count). Clients diff digests and fetch only changed
 pages; unchanged pages cost zero bytes (conditional requests [rfc9110, rfc7231], digest
 fields [rfc9530], linking [rfc8288]). Index entries are untrusted claims until verified.
 
@@ -136,7 +139,9 @@ Covered by conformance: foreign-domain manifests, post-signature edits, key repl
 origin/DNS compromise, network modification, stale CDNs, replays, transport corruption,
 local reformatting, tampered documents, digest mismatch, cross-URL and cross-context
 replay, stripped signatures when policy requires them, fail-open overrides, and YAML
-parser abuses. Explicitly not claimed: first-contact origin+DNS compromise; fidelity of
+parser abuses. Asset downloads are bound to the page only by reference: when publishers
+declare `size` or `sha-256`, clients verify the bytes before use; without them, integrity
+relies on TLS alone. Explicitly not claimed: first-contact origin+DNS compromise; fidelity of
 the markdown derivative to HTML rendering. Enforcement is required for effect: 1.9B
 bypass events show unenforced preferences are advisory [tollbit]. Key replacement is
 handled by a rotation ceremony (v0.2 §14): an old-key-signed successor directive plus an
@@ -149,7 +154,8 @@ content and DNS.
 
 Zero-dependency reference stack [aifeedRepo]: strict parser + safe YAML subset; JCS +
 Ed25519; CLI (`keygen`, `sign`, `validate`, `bundle`,
-`aimd|mako generate|sign|verify|index|fetch`, `site build`); npm SDK `@aifeed/verify`;
+`aimd|mako generate|sign|verify|index|fetch`, `site build`); npm SDK `@aifeed/verify`
+(manifest, document, index, triage selection, asset verification);
 independent Python verifier; WordPress plugin (dual-stack serving, signed indices,
 assets, triage, `llms.txt`); static-site builder; eight server adapters. Specifications:
 AIFeed v0.1 [aifeedSpec01], v0.2 [aifeedSpec02], AIFeed Markdown v1.0 [aimdSpec]. Conformance:
@@ -189,7 +195,8 @@ construction.
 
 **Correctness and robustness.** Zero signature-verification failures; cross-context and
 cross-URL replay rejected; tampering caught by digest mismatch; 90,000+ fuzz executions
-with no invariant violations; WordPress end-to-end passes negotiation, inline and index
+with no invariant violations; asset integrity verified end-to-end (local hashing, byte-for-byte
+download checks); WordPress end-to-end passes negotiation, inline and index
 signatures, assets, triage, and `llms.txt`.
 
 ## 7. Discussion and Limitations
