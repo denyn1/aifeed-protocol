@@ -39,6 +39,9 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   single-command CLI `aifeed rotate [--dry-run]`, SDK `rotation` export, Python directive
   parity, PHP manifest validation, vectors 008–011 / 119–123, and the runbook in
   `docs/rotation.md`.
+- **SDK republished as `1.0.0-draft.2`** — includes the key-rotation helpers
+  (`rotation.*`), the v0.2 manifest builder options used by Studio (limits, license,
+  attribution text/URL), and the `htmlToMako` page-type and opt-in freshness options.
 - **AIFeed Markdown v1.0** — native content profile: `text/aifeed+markdown`, `.aifeed.md`,
   `aimd: "1.0"`, first-class `aifeed` policy block, token budget up to the publisher's
   choice (reference default 4,000 in AIFeed Markdown-only mode).

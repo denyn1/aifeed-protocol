@@ -1,6 +1,6 @@
 {
   "name": "@aifeed/verify",
-  "version": "1.0.0-draft.1",
+  "version": "1.0.0-draft.2",
   "description": "Verify AIFeed signed declarations and content profiles: manifests (v0.1/v0.2), native AIFeed Markdown, MAKO trust layer, revocations, bundles, delta index, and Content-Digest",
   "license": "MIT",
   "homepage": "https://aifeed.md",

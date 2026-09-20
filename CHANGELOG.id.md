@@ -39,6 +39,9 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   di `lib/rotation.js`, CLI satu perintah `aifeed rotate [--dry-run]`, ekspor SDK
   `rotation`, paritas direktif Python, validasi manifest PHP, vektor 008–011 / 119–123,
   dan runbook di `docs/rotation.md`.
+- **SDK diterbitkan ulang sebagai `1.0.0-draft.2`** — mencakup helper rotasi kunci
+  (`rotation.*`), opsi pembangun manifest v0.2 yang dipakai Studio (limits, license,
+  attribution text/URL), serta opsi tipe halaman dan freshness opt-in di `htmlToMako`.
 - **AIFeed Markdown v1.0** — profil konten native: `text/aifeed+markdown`, `.aifeed.md`,
   `aimd: "1.0"`, blok kebijakan `aifeed` kelas satu, budget token sesuai pilihan penerbit
   (default referensi 4.000 pada mode AIFeed Markdown-only).

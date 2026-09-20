@@ -34,6 +34,9 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   `lib/rotation.js`、单命令 CLI `aifeed rotate [--dry-run]`、SDK `rotation` 导出、
   Python 指令对等、PHP manifest 校验、向量 008–011 / 119–123，操作手册见
   `docs/rotation.md`。
+- **SDK 重新发布为 `1.0.0-draft.2`** —— 包含密钥轮换辅助（`rotation.*`）、Studio 使用的
+  v0.2 manifest 构建器选项（limits、license、attribution 文本/URL），以及 `htmlToMako`
+  的页面类型与可选 freshness 选项。
 - **AIFeed Markdown v1.0**——原生内容配置：`text/aifeed+markdown`、`.aifeed.md`、
   `aimd: "1.0"`、一等 `aifeed` 政策块、token 预算由发布方自选（仅 AIFeed Markdown 模式
   下参考默认 4,000）。
