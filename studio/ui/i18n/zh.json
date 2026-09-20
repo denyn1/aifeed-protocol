@@ -134,5 +134,22 @@
   "policy.pageTypeType": "页面类型",
   "policy.pageTypeAdd": "添加页面类型",
   "policy.pageTypeRemove": "删除",
-  "policy.saveContent": "保存内容设置"
+  "policy.saveContent": "保存内容设置",
+  "export.download": "下载 .tar.gz",
+  "export.stack": "检测到的技术栈",
+  "export.adapterHint": "适配器：{adapter}",
+  "verify.live": "线上验证",
+  "verify.liveRun": "线上验证",
+  "verify.dns": "DNS 锚点",
+  "setup.stack": "技术栈（用于适配器说明）",
+  "setup.stackAuto": "自动",
+  "rotation.title": "密钥轮换",
+  "rotation.status": "状态",
+  "rotation.prepare": "准备轮换",
+  "rotation.cutover": "切换",
+  "rotation.window": "重叠窗口（小时）",
+  "rotation.confirmPrepare": "我了解重叠窗口",
+  "rotation.confirmCutover": "输入 ROTATE 以确认",
+  "rotation.successor": "后继指纹",
+  "rotation.done": "轮换完成，页面已重新签名"
 }

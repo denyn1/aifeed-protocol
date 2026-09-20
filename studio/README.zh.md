@@ -37,6 +37,11 @@ npm run studio -- --port 8080 --workspace ./studio-data
 - **Freshness 元数据**：页面 `updated` 日期取自 `article:modified_time` /
   `og:updated_time` / `<time datetime>`，标签取自 `<meta name="keywords">`，可按项目
   开关（库中默认关闭，Studio 中默认开启）。
+- **部署辅助**：构建覆盖层的 `.tar.gz` 下载、技术栈检测（WordPress、nginx、Caddy、
+  Apache、Next.js、Node、PHP、Python、Go、Cloudflare）并在导出中显示对应的
+  `integrations/` 适配器，以及一键**线上验证**（manifest、签名、DNS 锚点）。
+- **密钥轮换仪式**：受保护的准备（后继密钥 + 重叠期 manifest）、确认切换、自动换钥，
+  并用新密钥重新签名所有页面。上传覆盖层永不包含私钥。
 - **增量构建**：未变更页面（按 HTML 哈希）会被跳过；状态文件保存逐页索引条目，大型站点
   重建依然快速。
 - **验证**：发布前在本地验证 manifest、所有页面签名与两个索引。
@@ -87,8 +92,10 @@ npm run studio -- --port 8080 --workspace ./studio-data
   请求的缓存），并从缓存构建。
 - **M2.5（已完成）：** 站点类型预设、按路径的页面类型，以及面向新闻与电商站点的
   freshness 元数据提取。
-- **M3（下一步）：** tar.gz 导出、栈检测生成适配器说明、UI 内线上验证、密钥轮换仪式。
-- **M4：** 更友好的诊断、审计日志、截图。
+- **M3（已完成）：** `.tar.gz` 导出、带适配器提示的技术栈检测、UI 内线上验证，以及
+  带页面重新签名的受保护密钥轮换仪式。
+- **M4：** 更友好的诊断、审计日志、截图，以及带 OpenAPI 导入的高级
+  `types`/`capabilities`/`actions` 编辑器。
 
 ## 相关
 

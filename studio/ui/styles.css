@@ -86,6 +86,16 @@ button:hover { border-color: var(--accent); }
 button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 button.ghost { background: transparent; }
 button:disabled { opacity: .55; cursor: not-allowed; }
+a.button {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  text-decoration: none;
+}
+a.button:hover { border-color: var(--accent); }
 
 .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0; }
 .tabs button.active { border-color: var(--accent); color: var(--accent); font-weight: 600; }

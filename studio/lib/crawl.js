@@ -14,6 +14,45 @@ const DEFAULT_TIMEOUT = 15000;
 const DEFAULT_MAX_BYTES = 5 * 1024 * 1024;
 const PAGE_EXTENSIONS_BLOCK = /\.(png|jpe?g|gif|webp|svg|ico|css|js|mjs|json|xml|rss|atom|pdf|zip|gz|tgz|tar|rar|7z|mp4|webm|mov|mp3|wav|ogg|woff2?|ttf|eot|exe|dmg|apk)$/i;
 
+const STACK_ADAPTERS = {
+  wordpress: 'wp-plugin',
+  nginx: 'integrations/nginx',
+  caddy: 'integrations/caddy',
+  apache: 'integrations/apache',
+  nextjs: 'integrations/nextjs',
+  node: 'integrations/node',
+  php: 'integrations/php',
+  python: 'integrations/python',
+  go: 'integrations/go',
+  cloudflare: 'functions',
+  unknown: null
+};
+
+function detectStack(headers = {}, html = '') {
+  const server = String(headers.server || '').toLowerCase();
+  const powered = String(headers['x-powered-by'] || '').toLowerCase();
+  const generatorMatch = /<meta[^>]+name=["']generator["'][^>]*content=["']([^"']+)["']/i.exec(String(html));
+  const generator = generatorMatch ? generatorMatch[1].toLowerCase() : '';
+  let id = 'unknown';
+  if (generator.includes('wordpress') || powered.includes('wordpress')) id = 'wordpress';
+  else if (powered.includes('next.js') || generator.includes('next.js')) id = 'nextjs';
+  else if (powered.includes('express') || powered.includes('node')) id = 'node';
+  else if (powered.includes('php') || server.includes('php')) id = 'php';
+  else if (server.includes('cloudflare')) id = 'cloudflare';
+  else if (server.includes('nginx')) id = 'nginx';
+  else if (server.includes('caddy')) id = 'caddy';
+  else if (server.includes('apache')) id = 'apache';
+  else if (server.includes('gunicorn') || server.includes('uvicorn') || server.includes('werkzeug')) id = 'python';
+  else if (server === 'go' || server.includes('net/http')) id = 'go';
+  return {
+    id,
+    adapter: STACK_ADAPTERS[id] || null,
+    server: headers.server || null,
+    powered_by: headers['x-powered-by'] || null,
+    generator: generator || null
+  };
+}
+
 function sleep(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
@@ -392,6 +431,7 @@ async function crawlSite(options) {
   const limiter = createLimiter(effectiveRate);
   const results = [];
   let position = 0;
+  let stackSample = null;
 
   async function worker() {
     while (queue.length > 0) {
@@ -407,6 +447,10 @@ async function crawlSite(options) {
           stats.unchanged += 1;
           results.push({ url: item.url, urlPath: item.urlPath, htmlPath: path.join(pagesDir, previous.file), html_sha256: previous.html_sha256, unchanged: true });
         } else if (response.status === 200 && /text\/html/i.test(String(response.headers['content-type'] || ''))) {
+          if (item.urlPath === '/' || stackSample === null) {
+            stackSample = detectStack(response.headers, response.text);
+            stats.stack = stackSample;
+          }
           const html_sha256 = sha256Base64(response.body);
           const fileName = html_sha256.slice('sha256:'.length).replace(/[^A-Za-z0-9_-]/g, '') + '.html';
           fs.writeFileSync(path.join(pagesDir, fileName), response.body);
@@ -456,6 +500,8 @@ module.exports = {
   robotsCrawlDelay,
   extractLocs,
   extractLinks,
+  detectStack,
+  STACK_ADAPTERS,
   outputBaseFor,
   normalizePath,
   pagePathFromUrl,

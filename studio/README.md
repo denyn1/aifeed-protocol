@@ -42,6 +42,13 @@ build, verify, and export.
 - **Freshness metadata**: page `updated` dates from `article:modified_time` /
   `og:updated_time` / `<time datetime>` and tags from `<meta name="keywords">`,
   toggleable per project (off by default in the library, on in Studio).
+- **Deploy helpers**: `.tar.gz` download of the build overlay, detected stack
+  (WordPress, nginx, Caddy, Apache, Next.js, Node, PHP, Python, Go, Cloudflare) with the
+  matching `integrations/` adapter shown in Export, and one-click **live verification**
+  (manifest, signature, DNS anchor).
+- **Key rotation ceremony**: guarded prepare (successor + overlap manifest), confirmed
+  cutover, automatic key swap, and a full re-sign of every page with the new key. The
+  upload overlay never contains a private key.
 - **Incremental builds**: unchanged pages (by HTML hash) are skipped; the state file
   keeps a per-page index entry so rebuilds stay fast for large sites.
 - **Verify**: manifest, every page signature, and both indexes are verified locally
@@ -95,9 +102,10 @@ All API calls need the `x-studio-token` header (SSE uses `?token=`).
   rate-limited, cached with conditional requests) and build from the cache.
 - **M2.5 (done):** site-type presets, per-path page types, and freshness metadata
   extraction for news and e-commerce sites.
-- **M3 (next):** tar.gz export, stack detection for adapter instructions, live
-  verification from the UI, key rotation ceremony.
-- **M4:** friendlier diagnostics, audit journal, screenshots.
+- **M3 (done):** `.tar.gz` export, stack detection with adapter hints, live verification
+  from the UI, and the guarded key-rotation ceremony with page re-signing.
+- **M4:** friendlier diagnostics, audit journal, screenshots, advanced
+  `types`/`capabilities`/`actions` editor with OpenAPI import.
 
 ## Related
 

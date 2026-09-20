@@ -44,6 +44,13 @@ lalu ekspor.
 - **Metadata freshness**: tanggal `updated` halaman dari `article:modified_time` /
   `og:updated_time` / `<time datetime>` dan tag dari `<meta name="keywords">`, bisa
   diaktifkan per proyek (default off di library, on di Studio).
+- **Pembantu deploy**: unduhan `.tar.gz` overlay build, deteksi stack (WordPress, nginx,
+  Caddy, Apache, Next.js, Node, PHP, Python, Go, Cloudflare) dengan adapter `integrations/`
+  yang cocok ditampilkan di Ekspor, dan **verifikasi live** sekali klik (manifest, tanda
+  tangan, anchor DNS).
+- **Upacara rotasi kunci**: prepare terjaga (penerus + manifest overlap), cutover
+  terkonfirmasi, tukar kunci otomatis, dan tanda tangan ulang seluruh halaman dengan
+  kunci baru. Overlay unggahan tidak pernah memuat private key.
 - **Build incremental**: halaman tak berubah (hash HTML) dilewati; state menyimpan entri
   indeks per halaman agar rebuild tetap cepat untuk situs besar.
 - **Verifikasi**: manifest, semua tanda tangan halaman, dan kedua indeks diverifikasi
@@ -97,9 +104,10 @@ Semua panggilan API butuh header `x-studio-token` (SSE memakai `?token=`).
   rate limit, cache dengan conditional request) dan build dari cache.
 - **M2.5 (selesai):** preset jenis situs, tipe halaman per-path, dan ekstraksi metadata
   freshness untuk situs news dan e-commerce.
-- **M3 (berikutnya):** ekspor tar.gz, deteksi stack untuk instruksi adapter, verifikasi
-  live dari UI, upacara rotasi kunci.
-- **M4:** diagnostik ramah, jurnal audit, tangkapan layar.
+- **M3 (selesai):** ekspor `.tar.gz`, deteksi stack dengan petunjuk adapter, verifikasi
+  live dari UI, dan upacara rotasi kunci terjaga dengan penandatanganan ulang halaman.
+- **M4:** diagnostik ramah, jurnal audit, tangkapan layar, editor lanjutan
+  `types`/`capabilities`/`actions` dengan impor OpenAPI.
 
 ## Terkait
 

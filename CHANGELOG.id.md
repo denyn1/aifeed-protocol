@@ -21,7 +21,10 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   limit, cache ETag/Last-Modified) menangani situs live; preset jenis situs (news,
   ecommerce, marketplace, government, open, restrictive, blog), tipe halaman per-path
   (`product`, `article`, `listing`, …), dan metadata freshness opt-in (tanggal/tag
-  halaman) melengkapi dukungan jenis situs. Private key tetap di
+  halaman) melengkapi dukungan jenis situs. M3 menambahkan unduhan overlay `.tar.gz`,
+  deteksi stack dengan petunjuk adapter `integrations/`, verifikasi live sekali klik
+  (manifest, tanda tangan, anchor DNS), dan upacara rotasi kunci terjaga yang menukar
+  kunci dan menandatangani ulang seluruh halaman. Private key tetap di
   workspace (0600) dan tidak pernah disajikan; UI EN/ID/ZH. Pembangun manifest
   (`lib/site.js`) mendapat opsi opsional `limits`,
   `license`, `attribution_text/url`, dan `maxCheckIntervalHours` (backward-compatible).

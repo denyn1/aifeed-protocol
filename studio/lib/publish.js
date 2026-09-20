@@ -248,6 +248,7 @@ function publishProject(options) {
     license: policy.license || undefined,
     maxCheckIntervalHours: policy.max_check_interval_hours
   });
+  if (options.rotation) manifest.rotation = options.rotation;
   const manifestCheck = validateLib.checkManifest(manifest, { domain: project.domain, now });
   if (manifestCheck.errors.length > 0) {
     throw new Error('manifest invalid: ' + manifestCheck.errors.map((error) => error.code).join(', '));

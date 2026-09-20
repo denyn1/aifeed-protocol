@@ -10,7 +10,10 @@ const policyLib = require('./lib/policy');
 const siteLib = require('../lib/site');
 const { publishProject } = require('./lib/publish');
 const { verifyBuild } = require('./lib/verify');
-const { crawlSite } = require('./lib/crawl');
+const { crawlSite, STACK_ADAPTERS } = require('./lib/crawl');
+const { createTarGz } = require('./lib/archive');
+const { liveVerify } = require('./lib/live-verify');
+const { manifestStatus, prepareRotation, cutoverRotation } = require('./lib/rotation');
 const { listPresets, TYPE_PRESETS } = require('./lib/presets');
 const { createJobManager } = require('./jobs');
 
@@ -235,7 +238,15 @@ function createServer(options = {}) {
           } catch (error) {
             return json(res, 400, { error: error.message });
           }
-          project.source = { type: 'local', dir, pages };
+          if (body.stack !== undefined && !Object.prototype.hasOwnProperty.call(STACK_ADAPTERS, body.stack)) {
+            return json(res, 400, { error: 'unknown stack: ' + body.stack });
+          }
+          project.source = {
+            type: 'local',
+            dir,
+            pages,
+            stack: body.stack ? { id: body.stack, adapter: STACK_ADAPTERS[body.stack] } : (project.source && project.source.stack) || null
+          };
           workspace.saveProject(id, project);
           return json(res, 200, { source: project.source });
         }
@@ -289,6 +300,7 @@ function createServer(options = {}) {
           });
           source.pages = result.stats.total;
           source.sitemap = result.stats.sitemap;
+          source.stack = result.stats.stack || source.stack || null;
           source.last_scan = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
           workspace.saveProject(id, project);
           return result.stats;
@@ -325,6 +337,7 @@ function createServer(options = {}) {
             sitemap,
             pageTypes: project.page_types || [],
             freshness: project.freshness !== false,
+            rotation: project.rotation || undefined,
             outDir: paths.outDir,
             keyPath: paths.keyPath,
             statePath: paths.statePath,
@@ -423,8 +436,105 @@ function createServer(options = {}) {
             type: 'TXT',
             value: 'v=aifeed1; pk=' + pk + '; fp=' + fp + '; manifest=https://' + project.domain + '/.well-known/ai.json'
           },
+          stack: project.source && project.source.stack ? project.source.stack : null,
+          adapter: project.source && project.source.stack && project.source.stack.adapter ? project.source.stack.adapter : null,
           instructions: ['upload_overlay', 'add_dns_txt', 'verify_live']
         });
+      }
+
+      if (parts.length === 4 && parts[3] === 'export.tar.gz' && method === 'GET') {
+        const state = workspace.state(id);
+        if (!state || !fs.existsSync(workspace.paths(id).outDir)) {
+          return json(res, 400, { error: 'nothing built yet' });
+        }
+        const archive = createTarGz(workspace.paths(id).outDir);
+        res.writeHead(200, {
+          'content-type': 'application/gzip',
+          'content-disposition': 'attachment; filename="aifeed-' + project.domain + '.tar.gz"',
+          'content-length': archive.length,
+          'cache-control': 'no-store'
+        });
+        res.end(archive);
+        return undefined;
+      }
+
+      if (parts.length === 4 && parts[3] === 'verify-live' && method === 'POST') {
+        try {
+          return json(res, 200, await liveVerify({ domain: project.domain }));
+        } catch (error) {
+          return json(res, 502, { error: error.message });
+        }
+      }
+
+      if (parts.length === 4 && parts[3] === 'rotation' && method === 'GET') {
+        if (!workspace.state(id)) return json(res, 400, { error: 'nothing built yet' });
+        return json(res, 200, manifestStatus(workspace.paths(id).outDir));
+      }
+
+      if (parts.length === 5 && parts[3] === 'rotation' && parts[4] === 'prepare' && method === 'POST') {
+        if (!workspace.state(id)) return json(res, 400, { error: 'nothing built yet' });
+        const body = await readBody(req);
+        if (body.confirm !== true) return json(res, 400, { error: 'prepare requires { confirm: true }' });
+        const paths = workspace.paths(id);
+        try {
+          const plan = prepareRotation({
+            outDir: paths.outDir,
+            workspaceDir: paths.dir,
+            keyPath: paths.keyPath,
+            windowHours: body.window,
+            leadHours: body.lead
+          });
+          const overlap = JSON.parse(fs.readFileSync(path.join(paths.outDir, '.well-known', 'ai.json'), 'utf8'));
+          project.rotation = overlap.rotation || null;
+          workspace.saveProject(id, project);
+          return json(res, 200, plan);
+        } catch (error) {
+          return json(res, 500, { error: error.message });
+        }
+      }
+
+      if (parts.length === 5 && parts[3] === 'rotation' && parts[4] === 'cutover' && method === 'POST') {
+        if (!workspace.state(id)) return json(res, 400, { error: 'nothing built yet' });
+        const body = await readBody(req);
+        if (body.confirm !== 'ROTATE') return json(res, 400, { error: 'cutover requires { confirm: "ROTATE" }' });
+        const paths = workspace.paths(id);
+        try {
+          const plan = cutoverRotation({
+            outDir: paths.outDir,
+            workspaceDir: paths.dir,
+            keyPath: paths.keyPath,
+            publicKeyPath: paths.publicKeyPath
+          });
+          const cutoverManifest = JSON.parse(fs.readFileSync(path.join(paths.outDir, '.well-known', 'ai.json'), 'utf8'));
+          project.rotation = cutoverManifest.rotation || null;
+          workspace.saveProject(id, project);
+          let sourceDir = null;
+          let pages = null;
+          let sitemap;
+          if (project.source && project.source.type === 'local') {
+            sourceDir = project.source.dir;
+          } else if (project.source && project.source.type === 'crawl') {
+            pages = loadCrawlPages(paths);
+            sitemap = project.source.sitemap === true;
+          }
+          const rebuild = publishProject({
+            project,
+            policy: workspace.policy(id),
+            sourceDir,
+            pages,
+            sitemap,
+            pageTypes: project.page_types || [],
+            freshness: project.freshness !== false,
+            rotation: project.rotation || undefined,
+            outDir: paths.outDir,
+            keyPath: paths.keyPath,
+            statePath: paths.statePath,
+            incremental: false
+          });
+          return json(res, 200, { plan, rebuild: { total: rebuild.total, processed: rebuild.processed } });
+        } catch (error) {
+          return json(res, 500, { error: error.message });
+        }
       }
     }
 

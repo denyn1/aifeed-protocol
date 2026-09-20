@@ -134,5 +134,22 @@
   "policy.pageTypeType": "Page type",
   "policy.pageTypeAdd": "Add page type",
   "policy.pageTypeRemove": "Remove",
-  "policy.saveContent": "Save content settings"
+  "policy.saveContent": "Save content settings",
+  "export.download": "Download .tar.gz",
+  "export.stack": "Detected stack",
+  "export.adapterHint": "Adapter: {adapter}",
+  "verify.live": "Live verification",
+  "verify.liveRun": "Verify live",
+  "verify.dns": "DNS anchor",
+  "setup.stack": "Stack (for adapter instructions)",
+  "setup.stackAuto": "auto",
+  "rotation.title": "Key rotation",
+  "rotation.status": "Status",
+  "rotation.prepare": "Prepare rotation",
+  "rotation.cutover": "Cut over",
+  "rotation.window": "Overlap window (hours)",
+  "rotation.confirmPrepare": "I understand the overlap window",
+  "rotation.confirmCutover": "Type ROTATE to confirm",
+  "rotation.successor": "Successor fingerprint",
+  "rotation.done": "Rotation completed and pages re-signed"
 }

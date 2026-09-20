@@ -19,6 +19,9 @@
     policyDraft: null,
     pageTypesDraft: null,
     verifyReport: null,
+    liveReport: null,
+    rotationStatus: undefined,
+    rotationMessage: null,
     exportInfo: null,
     log: [],
     busy: false
@@ -189,8 +192,11 @@
       state.current = data;
       state.policyDraft = JSON.parse(JSON.stringify(data.policy));
       state.pageTypesDraft = null;
-      state.tab = 'setup';
       state.verifyReport = null;
+      state.liveReport = null;
+      state.rotationStatus = undefined;
+      state.rotationMessage = null;
+      state.tab = 'setup';
       state.exportInfo = null;
       state.log = [];
       state.view = 'project';
@@ -296,7 +302,8 @@
           respectRobots: checked('s-respect-robots')
         } : {
           type,
-          dir: value('s-source')
+          dir: value('s-source'),
+          stack: value('s-stack') === 'auto' ? undefined : value('s-stack')
         };
         const result = await api('/projects/' + state.current.project.id + '/source', {
           method: 'PUT',
@@ -328,7 +335,12 @@
       return;
     }
     container.innerHTML =
-      '<div><label>' + t('setup.sourceDir') + '</label><input id="s-source" type="text" placeholder="C:\\\\sites\\\\example\\\\public" value="' + esc(source && source.type === 'local' ? source.dir : '') + '"></div>';
+      '<div><label>' + t('setup.sourceDir') + '</label><input id="s-source" type="text" placeholder="C:\\\\sites\\\\example\\\\public" value="' + esc(source && source.type === 'local' ? source.dir : '') + '"></div>' +
+      '<div style="margin-top:10px"><label>' + t('setup.stack') + '</label><select id="s-stack">' +
+      ['auto', 'wordpress', 'nginx', 'caddy', 'apache', 'nextjs', 'node', 'php', 'python', 'go', 'cloudflare', 'unknown']
+        .map((id) => option(id, id === 'auto' ? t('setup.stackAuto') : id, source && source.stack && source.type === 'local' ? source.stack.id : 'auto'))
+        .join('') +
+      '</select></div>';
   }
 
   function fieldValue(id, label, current) {
@@ -643,7 +655,30 @@
         body += '<h2>' + t('verify.failed') + '</h2><pre>' + esc(JSON.stringify(report.pages.failed, null, 2)) + '</pre>';
       }
     }
+    body += '<h2>' + t('verify.live') + '</h2><p><button id="verify-live-run">' + t('verify.liveRun') + '</button></p>';
+    if (state.liveReport) {
+      body += '<table>' +
+        row(t('verify.result'), pill(state.liveReport.result)) +
+        row(t('verify.dns'), state.liveReport.dns_anchored === null ? '—' : String(state.liveReport.dns_anchored)) +
+        row(t('verify.failed'), state.liveReport.errors.length === 0 ? '—' : esc(state.liveReport.errors.map((entry) => entry.code).join(', '))) +
+        '</table>';
+    }
+    body += '<h2>' + t('rotation.title') + '</h2>' +
+      '<p class="muted small">' + t('rotation.status') + ': <code>' +
+      esc(state.rotationStatus && state.rotationStatus.phase ? state.rotationStatus.phase : (state.rotationStatus ? '—' : '…')) + '</code></p>' +
+      '<div class="grid">' +
+      '<div><label>' + t('rotation.window') + '</label><input id="rotation-window" type="number" min="1" value="72"></div>' +
+      '<div><label>' + t('rotation.prepare') + '</label><label class="check"><input id="rotation-prepare-confirm" type="checkbox"> ' + t('rotation.confirmPrepare') + '</label></div>' +
+      '<div><label>' + t('rotation.confirmCutover') + '</label><input id="rotation-cutover-confirm" type="text" placeholder="ROTATE"></div>' +
+      '</div>' +
+      '<p><button id="rotation-prepare">' + t('rotation.prepare') + '</button> ' +
+      '<button id="rotation-cutover">' + t('rotation.cutover') + '</button></p>' +
+      (state.rotationMessage ? '<pre>' + esc(state.rotationMessage) + '</pre>' : '');
     tab.innerHTML = '<div class="card"><h2>' + t('verify.title') + '</h2>' + body + '</div>';
+    if (state.rotationStatus === undefined) {
+      state.rotationStatus = null;
+      loadRotationStatus();
+    }
     document.getElementById('verify-run').addEventListener('click', async () => {
       try {
         state.verifyReport = await api('/projects/' + state.current.project.id + '/verify', { method: 'POST' });
@@ -652,6 +687,61 @@
         fail(error);
       }
     });
+    document.getElementById('verify-live-run').addEventListener('click', async () => {
+      try {
+        state.liveReport = await api('/projects/' + state.current.project.id + '/verify-live', { method: 'POST' });
+        render();
+      } catch (error) {
+        fail(error);
+      }
+    });
+    document.getElementById('rotation-prepare').addEventListener('click', async () => {
+      if (!checked('rotation-prepare-confirm')) {
+        showToast(t('rotation.confirmPrepare'), false);
+        return;
+      }
+      try {
+        const plan = await api('/projects/' + state.current.project.id + '/rotation/prepare', {
+          method: 'POST',
+          body: JSON.stringify({ confirm: true, window: number('rotation-window') || 72, lead: 0 })
+        });
+        state.rotationMessage = JSON.stringify({
+          successor_fingerprint: plan.successor_fingerprint,
+          effective_at: plan.effective_at,
+          grace_until: plan.grace_until,
+          dns_txt: plan.dns_txt
+        }, null, 2);
+        await loadRotationStatus();
+      } catch (error) {
+        fail(error);
+      }
+    });
+    document.getElementById('rotation-cutover').addEventListener('click', async () => {
+      if (value('rotation-cutover-confirm') !== 'ROTATE') {
+        showToast(t('rotation.confirmCutover'), false);
+        return;
+      }
+      try {
+        const result = await api('/projects/' + state.current.project.id + '/rotation/cutover', {
+          method: 'POST',
+          body: JSON.stringify({ confirm: 'ROTATE' })
+        });
+        state.rotationMessage = t('rotation.done') + ' — ' + t('build.total') + ': ' + result.rebuild.total;
+        state.verifyReport = null;
+        await loadRotationStatus();
+      } catch (error) {
+        fail(error);
+      }
+    });
+  }
+
+  async function loadRotationStatus() {
+    try {
+      state.rotationStatus = await api('/projects/' + state.current.project.id + '/rotation');
+    } catch (error) {
+      state.rotationStatus = null;
+    }
+    render();
   }
 
   function row(label, valueHtml) {
@@ -678,6 +768,8 @@
         '<h2>' + t('export.dns') + '</h2><pre id="dns">' + esc(info.dns.name + ' ' + info.dns.type + ' "' + info.dns.value + '"') + '</pre>' +
         '<p><button class="ghost" id="copy-dns">' + t('common.copy') + '</button></p>' +
         '<ol>' + steps + '</ol>' +
+        '<p><a class="button" href="/api/projects/' + state.current.project.id + '/export.tar.gz?token=' + encodeURIComponent(TOKEN) + '">' + t('export.download') + '</a></p>' +
+        (info.stack ? '<p class="muted small">' + t('export.stack') + ': <code>' + esc(info.stack.id) + '</code>' + (info.adapter ? ' · ' + esc(t('export.adapterHint', { adapter: info.adapter })) : '') + '</p>' : '') +
         '<p class="muted small">' + t('export.adapter') + '</p></div>';
       document.getElementById('copy-dns').addEventListener('click', async () => {
         try {

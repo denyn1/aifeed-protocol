@@ -134,5 +134,22 @@
   "policy.pageTypeType": "Tipe halaman",
   "policy.pageTypeAdd": "Tambah tipe halaman",
   "policy.pageTypeRemove": "Hapus",
-  "policy.saveContent": "Simpan pengaturan konten"
+  "policy.saveContent": "Simpan pengaturan konten",
+  "export.download": "Unduh .tar.gz",
+  "export.stack": "Stack terdeteksi",
+  "export.adapterHint": "Adapter: {adapter}",
+  "verify.live": "Verifikasi live",
+  "verify.liveRun": "Verifikasi live",
+  "verify.dns": "Anchor DNS",
+  "setup.stack": "Stack (untuk instruksi adapter)",
+  "setup.stackAuto": "otomatis",
+  "rotation.title": "Rotasi kunci",
+  "rotation.status": "Status",
+  "rotation.prepare": "Siapkan rotasi",
+  "rotation.cutover": "Cutover",
+  "rotation.window": "Jendela overlap (jam)",
+  "rotation.confirmPrepare": "Saya memahami jendela overlap",
+  "rotation.confirmCutover": "Ketik ROTATE untuk konfirmasi",
+  "rotation.successor": "Fingerprint penerus",
+  "rotation.done": "Rotasi selesai dan halaman ditandatangani ulang"
 }

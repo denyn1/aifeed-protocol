@@ -21,8 +21,11 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   record; a robots-aware crawler (sitemap or link discovery, rate limits,
   ETag/Last-Modified cache) covers live sites; site-type presets (news, ecommerce,
   marketplace, government, open, restrictive, blog), per-path page types (`product`,
-  `article`, `listing`, …), and opt-in freshness metadata (page dates/tags) complete the
-  site-type support. Private keys stay in the workspace
+  `  article`, `listing`, …), and opt-in freshness metadata (page dates/tags) complete the
+  site-type support. M3 adds `.tar.gz` overlay download, stack detection wired to
+  `integrations/` adapter hints, one-click live verification (manifest, signature, DNS
+  anchor), and a guarded key-rotation ceremony that swaps the key and re-signs every
+  page. Private keys stay in the workspace
   (0600) and are never served; UI in EN/ID/ZH. The manifest builder (`lib/site.js`)
   gained optional `limits`, `license`,
   `attribution_text/url`, and `maxCheckIntervalHours` options (backward compatible).
