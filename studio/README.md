@@ -49,6 +49,9 @@ build, verify, and export.
 - **Key rotation ceremony**: guarded prepare (successor + overlap manifest), confirmed
   cutover, automatic key swap, and a full re-sign of every page with the new key. The
   upload overlay never contains a private key.
+- **Advanced manifest fields**: `types`, `capabilities`, and `actions` JSON editors
+  validated against the v0.2 schema, plus OpenAPI import (paste a spec) to draft
+  capabilities and purchase-style actions for e-commerce agents.
 - **Incremental builds**: unchanged pages (by HTML hash) are skipped; the state file
   keeps a per-page index entry so rebuilds stay fast for large sites.
 - **Verify**: manifest, every page signature, and both indexes are verified locally
@@ -104,8 +107,8 @@ All API calls need the `x-studio-token` header (SSE uses `?token=`).
   extraction for news and e-commerce sites.
 - **M3 (done):** `.tar.gz` export, stack detection with adapter hints, live verification
   from the UI, and the guarded key-rotation ceremony with page re-signing.
-- **M4:** friendlier diagnostics, audit journal, screenshots, advanced
-  `types`/`capabilities`/`actions` editor with OpenAPI import.
+- **M4 (in progress):** advanced `types`/`capabilities`/`actions` editor with OpenAPI
+  import done; friendlier diagnostics, audit journal, and screenshots next.
 
 ## Related
 

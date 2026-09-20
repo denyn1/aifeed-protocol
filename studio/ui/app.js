@@ -396,6 +396,16 @@
       '<h2>' + t('policy.pageTypes') + '</h2><div id="page-types">' + pageTypes.map((entry, index) => pageTypeRow(entry, index)).join('') + '</div>' +
       '<p><button class="ghost" id="pt-add">+ ' + t('policy.pageTypeAdd') + '</button></p>' +
       '<p><button class="primary" id="pt-save">' + t('policy.saveContent') + '</button></p></div>' +
+      '<div class="card"><h2>' + t('policy.advanced') + '</h2><p class="muted small">' + t('policy.advancedHint') + '</p>' +
+      '<div class="grid">' +
+      '<div><label>types</label><textarea id="adv-types" rows="5">' + esc(JSON.stringify((state.current.project.advanced && state.current.project.advanced.types) || {}, null, 2)) + '</textarea></div>' +
+      '<div><label>capabilities</label><textarea id="adv-capabilities" rows="5">' + esc(JSON.stringify((state.current.project.advanced && state.current.project.advanced.capabilities) || {}, null, 2)) + '</textarea></div>' +
+      '<div><label>actions</label><textarea id="adv-actions" rows="5">' + esc(JSON.stringify((state.current.project.advanced && state.current.project.advanced.actions) || {}, null, 2)) + '</textarea></div>' +
+      '</div>' +
+      '<p><button class="primary" id="advanced-save">' + t('policy.advancedSave') + '</button></p>' +
+      '<h2>' + t('policy.openapiImport') + '</h2>' +
+      '<textarea id="adv-openapi" rows="4" placeholder="{ &quot;openapi&quot;: &quot;3.0.0&quot;, &quot;paths&quot;: { ... } }"></textarea>' +
+      '<p><button id="openapi-run">' + t('policy.openapiRun') + '</button></p></div>' +
       '<div class="card"><h2>' + t('policy.preview') + '</h2>' +
       '<div class="row"><div><label>' + t('policy.previewPath') + '</label><input id="preview-path" type="text" placeholder="/cart/checkout"></div>' +
       '<div style="flex:0 0 auto"><label>&nbsp;</label><button id="preview-run">' + t('policy.previewRun') + '</button></div></div>' +
@@ -472,6 +482,53 @@
         fail(error);
       }
     });
+    document.getElementById('advanced-save').addEventListener('click', async () => {
+      try {
+        const advanced = {
+          types: parseJsonArea('adv-types', 'types'),
+          capabilities: parseJsonArea('adv-capabilities', 'capabilities'),
+          actions: parseJsonArea('adv-actions', 'actions')
+        };
+        const saved = await api('/projects/' + state.current.project.id + '/advanced', {
+          method: 'PUT',
+          body: JSON.stringify({ advanced })
+        });
+        state.current.project.advanced = saved.advanced;
+        showToast(t('common.saved'), true);
+        render();
+      } catch (error) {
+        fail(error);
+      }
+    });
+    document.getElementById('openapi-run').addEventListener('click', async () => {
+      try {
+        const spec = parseJsonArea('adv-openapi', 'OpenAPI');
+        const result = await api('/projects/' + state.current.project.id + '/advanced/import-openapi', {
+          method: 'POST',
+          body: JSON.stringify({ spec })
+        });
+        const merge = (current, incoming) => JSON.stringify({ ...current, ...incoming }, null, 2);
+        document.getElementById('adv-types').value = merge(parseJsonArea('adv-types', 'types'), result.fragment.types || {});
+        document.getElementById('adv-capabilities').value = merge(parseJsonArea('adv-capabilities', 'capabilities'), result.fragment.capabilities || {});
+        document.getElementById('adv-actions').value = merge(parseJsonArea('adv-actions', 'actions'), result.fragment.actions || {});
+        showToast(t('policy.imported', {
+          capabilities: result.stats.capabilities,
+          actions: result.stats.actions
+        }), true);
+      } catch (error) {
+        fail(error);
+      }
+    });
+  }
+
+  function parseJsonArea(id, label) {
+    const raw = value(id);
+    if (raw === '') return {};
+    try {
+      return JSON.parse(raw);
+    } catch (error) {
+      throw new Error(label + ': invalid JSON');
+    }
   }
 
   function presetOptions(selected) {

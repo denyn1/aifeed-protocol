@@ -151,5 +151,11 @@
   "rotation.confirmPrepare": "I understand the overlap window",
   "rotation.confirmCutover": "Type ROTATE to confirm",
   "rotation.successor": "Successor fingerprint",
-  "rotation.done": "Rotation completed and pages re-signed"
+  "rotation.done": "Rotation completed and pages re-signed",
+  "policy.advanced": "Advanced manifest fields",
+  "policy.advancedHint": "JSON for types, capabilities, and actions, validated against the v0.2 schema.",
+  "policy.advancedSave": "Save advanced fields",
+  "policy.openapiImport": "Import OpenAPI (paste spec)",
+  "policy.openapiRun": "Import",
+  "policy.imported": "Imported {capabilities} capabilities, {actions} actions"
 }

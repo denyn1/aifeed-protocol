@@ -248,6 +248,11 @@ function publishProject(options) {
     license: policy.license || undefined,
     maxCheckIntervalHours: policy.max_check_interval_hours
   });
+  if (options.advanced) {
+    for (const key of ['types', 'capabilities', 'actions']) {
+      if (options.advanced[key] !== undefined) manifest[key] = options.advanced[key];
+    }
+  }
   if (options.rotation) manifest.rotation = options.rotation;
   const manifestCheck = validateLib.checkManifest(manifest, { domain: project.domain, now });
   if (manifestCheck.errors.length > 0) {

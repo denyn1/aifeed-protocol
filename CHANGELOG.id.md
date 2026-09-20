@@ -24,7 +24,9 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   halaman) melengkapi dukungan jenis situs. M3 menambahkan unduhan overlay `.tar.gz`,
   deteksi stack dengan petunjuk adapter `integrations/`, verifikasi live sekali klik
   (manifest, tanda tangan, anchor DNS), dan upacara rotasi kunci terjaga yang menukar
-  kunci dan menandatangani ulang seluruh halaman. Private key tetap di
+  kunci dan menandatangani ulang seluruh halaman. G4 menambahkan editor
+  `types`/`capabilities`/`actions` tervalidasi schema dan impor OpenAPI untuk aksi
+  e-commerce. Private key tetap di
   workspace (0600) dan tidak pernah disajikan; UI EN/ID/ZH. Pembangun manifest
   (`lib/site.js`) mendapat opsi opsional `limits`,
   `license`, `attribution_text/url`, dan `maxCheckIntervalHours` (backward-compatible).

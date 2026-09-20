@@ -51,6 +51,9 @@ lalu ekspor.
 - **Upacara rotasi kunci**: prepare terjaga (penerus + manifest overlap), cutover
   terkonfirmasi, tukar kunci otomatis, dan tanda tangan ulang seluruh halaman dengan
   kunci baru. Overlay unggahan tidak pernah memuat private key.
+- **Field manifest lanjutan**: editor JSON `types`, `capabilities`, dan `actions` yang
+  divalidasi terhadap schema v0.2, plus impor OpenAPI (tempel spec) untuk menyusun
+  capabilities dan aksi bergaya purchase bagi agen e-commerce.
 - **Build incremental**: halaman tak berubah (hash HTML) dilewati; state menyimpan entri
   indeks per halaman agar rebuild tetap cepat untuk situs besar.
 - **Verifikasi**: manifest, semua tanda tangan halaman, dan kedua indeks diverifikasi
@@ -106,8 +109,8 @@ Semua panggilan API butuh header `x-studio-token` (SSE memakai `?token=`).
   freshness untuk situs news dan e-commerce.
 - **M3 (selesai):** ekspor `.tar.gz`, deteksi stack dengan petunjuk adapter, verifikasi
   live dari UI, dan upacara rotasi kunci terjaga dengan penandatanganan ulang halaman.
-- **M4:** diagnostik ramah, jurnal audit, tangkapan layar, editor lanjutan
-  `types`/`capabilities`/`actions` dengan impor OpenAPI.
+- **M4 (berjalan):** editor lanjutan `types`/`capabilities`/`actions` dengan impor
+  OpenAPI selesai; diagnostik ramah, jurnal audit, dan tangkapan layar menyusul.
 
 ## Terkait
 

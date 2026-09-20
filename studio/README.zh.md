@@ -42,6 +42,9 @@ npm run studio -- --port 8080 --workspace ./studio-data
   `integrations/` 适配器，以及一键**线上验证**（manifest、签名、DNS 锚点）。
 - **密钥轮换仪式**：受保护的准备（后继密钥 + 重叠期 manifest）、确认切换、自动换钥，
   并用新密钥重新签名所有页面。上传覆盖层永不包含私钥。
+- **高级 manifest 字段**：`types`、`capabilities` 与 `actions` 的 JSON 编辑器，按
+  v0.2 schema 校验，并支持 OpenAPI 导入（粘贴规范），为电商智能体起草 capabilities
+  与 purchase 类动作。
 - **增量构建**：未变更页面（按 HTML 哈希）会被跳过；状态文件保存逐页索引条目，大型站点
   重建依然快速。
 - **验证**：发布前在本地验证 manifest、所有页面签名与两个索引。
@@ -94,8 +97,8 @@ npm run studio -- --port 8080 --workspace ./studio-data
   freshness 元数据提取。
 - **M3（已完成）：** `.tar.gz` 导出、带适配器提示的技术栈检测、UI 内线上验证，以及
   带页面重新签名的受保护密钥轮换仪式。
-- **M4：** 更友好的诊断、审计日志、截图，以及带 OpenAPI 导入的高级
-  `types`/`capabilities`/`actions` 编辑器。
+- **M4（进行中）：** 带 OpenAPI 导入的高级 `types`/`capabilities`/`actions` 编辑器
+  已完成；更友好的诊断、审计日志与截图待办。
 
 ## 相关
 

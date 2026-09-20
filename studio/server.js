@@ -14,6 +14,7 @@ const { crawlSite, STACK_ADAPTERS } = require('./lib/crawl');
 const { createTarGz } = require('./lib/archive');
 const { liveVerify } = require('./lib/live-verify');
 const { manifestStatus, prepareRotation, cutoverRotation } = require('./lib/rotation');
+const { validateAdvanced, importOpenApi } = require('./lib/advanced');
 const { listPresets, TYPE_PRESETS } = require('./lib/presets');
 const { createJobManager } = require('./jobs');
 
@@ -77,6 +78,15 @@ function readBody(req) {
     });
     req.on('error', reject);
   });
+}
+
+function readPublicKeyValue(paths) {
+  try {
+    const lines = fs.readFileSync(paths.publicKeyPath, 'utf8').trim().split('\n');
+    return lines[0] || '';
+  } catch (error) {
+    return '';
+  }
 }
 
 function loadCrawlPages(paths) {
@@ -222,6 +232,28 @@ function createServer(options = {}) {
         return json(res, 200, { policy: saved });
       }
 
+      if (parts.length === 4 && parts[3] === 'advanced' && method === 'PUT') {
+        const body = await readBody(req);
+        const advanced = body.advanced !== undefined ? body.advanced : body;
+        const errors = validateAdvanced(advanced, project, readPublicKeyValue(workspace.paths(id)));
+        if (errors.length > 0) return json(res, 400, { error: 'invalid advanced manifest fields', errors });
+        project.advanced = {};
+        for (const key of ['types', 'capabilities', 'actions']) {
+          if (advanced[key] !== undefined) project.advanced[key] = advanced[key];
+        }
+        workspace.saveProject(id, project);
+        return json(res, 200, { advanced: project.advanced });
+      }
+
+      if (parts.length === 5 && parts[3] === 'advanced' && parts[4] === 'import-openapi' && method === 'POST') {
+        const body = await readBody(req);
+        const spec = body.spec || body;
+        if (!spec || typeof spec !== 'object') {
+          return json(res, 400, { error: 'import requires { spec: {...} }' });
+        }
+        return json(res, 200, importOpenApi(spec));
+      }
+
       if (parts.length === 4 && parts[3] === 'source' && method === 'PUT') {
         const body = await readBody(req);
         if (body.type === 'local') {
@@ -337,6 +369,7 @@ function createServer(options = {}) {
             sitemap,
             pageTypes: project.page_types || [],
             freshness: project.freshness !== false,
+            advanced: project.advanced || undefined,
             rotation: project.rotation || undefined,
             outDir: paths.outDir,
             keyPath: paths.keyPath,
@@ -526,6 +559,7 @@ function createServer(options = {}) {
             pageTypes: project.page_types || [],
             freshness: project.freshness !== false,
             rotation: project.rotation || undefined,
+            advanced: project.advanced || undefined,
             outDir: paths.outDir,
             keyPath: paths.keyPath,
             statePath: paths.statePath,

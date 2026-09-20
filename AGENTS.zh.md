@@ -54,7 +54,7 @@ WordPress 发布插件、基准、网站与论文。
 npm run verify            # 以下全部，一个门禁
 npm run lint:syntax       # 解析检查所有 .js 文件
 npm run check:consistency # 版本、依赖、密钥、规范镜像、脚本目标
-npm test                  # Node 套件（243 项测试）
+npm test                  # Node 套件（246 项测试）
 npm run test:py           # 独立 Python 验证器（44 项测试）
 npm run bench:mako        # 重新生成 benchmarks/mako-*.json + 报告
 npm run bench:enforcement # 重新生成 benchmarks/enforcement-*.json|md

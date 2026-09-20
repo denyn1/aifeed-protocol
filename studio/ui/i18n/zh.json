@@ -151,5 +151,11 @@
   "rotation.confirmPrepare": "我了解重叠窗口",
   "rotation.confirmCutover": "输入 ROTATE 以确认",
   "rotation.successor": "后继指纹",
-  "rotation.done": "轮换完成，页面已重新签名"
+  "rotation.done": "轮换完成，页面已重新签名",
+  "policy.advanced": "高级 manifest 字段",
+  "policy.advancedHint": "types、capabilities 与 actions 的 JSON，按 v0.2 schema 校验。",
+  "policy.advancedSave": "保存高级字段",
+  "policy.openapiImport": "导入 OpenAPI（粘贴规范）",
+  "policy.openapiRun": "导入",
+  "policy.imported": "已导入 {capabilities} 个 capabilities、{actions} 个 actions"
 }

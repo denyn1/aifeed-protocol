@@ -151,5 +151,11 @@
   "rotation.confirmPrepare": "Saya memahami jendela overlap",
   "rotation.confirmCutover": "Ketik ROTATE untuk konfirmasi",
   "rotation.successor": "Fingerprint penerus",
-  "rotation.done": "Rotasi selesai dan halaman ditandatangani ulang"
+  "rotation.done": "Rotasi selesai dan halaman ditandatangani ulang",
+  "policy.advanced": "Field manifest lanjutan",
+  "policy.advancedHint": "JSON untuk types, capabilities, dan actions, divalidasi terhadap schema v0.2.",
+  "policy.advancedSave": "Simpan field lanjutan",
+  "policy.openapiImport": "Impor OpenAPI (tempel spec)",
+  "policy.openapiRun": "Impor",
+  "policy.imported": "Terimpor {capabilities} capabilities, {actions} actions"
 }
