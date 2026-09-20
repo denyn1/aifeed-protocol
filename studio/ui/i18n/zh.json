@@ -111,5 +111,17 @@
   "export.step.upload_overlay": "把输出目录中的每个文件按相同路径上传到服务器。",
   "export.step.add_dns_txt": "在 DNS 服务商添加上述 TXT 记录；等待生效。",
   "export.step.verify_live": "线上验证：node bin/cli.js validate {domain} --require-dns-anchor",
-  "export.adapter": "内容协商配置见 AIFeed 仓库的 integrations/。"
+  "export.adapter": "内容协商配置见 AIFeed 仓库的 integrations/。",
+  "setup.sourceType": "来源类型",
+  "setup.sourceType.local": "本地 HTML 目录",
+  "setup.sourceType.crawl": "线上站点（抓取）",
+  "setup.origin": "站点源",
+  "setup.maxPages": "最大页面数",
+  "setup.requestsPerSecond": "每秒请求数",
+  "setup.include": "包含路径（逗号分隔）",
+  "setup.exclude": "排除路径（逗号分隔）",
+  "setup.respectRobots": "遵守 robots.txt",
+  "setup.scanStatus": "已缓存 {count} 个页面 · 上次扫描 {at}",
+  "build.scan": "扫描站点",
+  "build.scanDone": "扫描完成——抓取 {fetched}，未变更 {unchanged}，robots 跳过 {robots}，错误 {errors}"
 }

@@ -26,6 +26,9 @@ build, verify, and export.
 - **Local source ingestion**: scans an HTML directory, converts pages with the same
   converter as `aifeed site build`, and writes output to a separate `build/` overlay —
   your source files are never modified.
+- **Live site crawl**: discovers pages from `sitemap.xml` (sitemap indexes supported) or
+  link crawling, respects `robots.txt` (including `Crawl-delay`), rate-limits and caches
+  every fetch with ETag/Last-Modified so re-scans reuse unchanged pages.
 - **Policy editor**: usage permissions (search, retrieval, input, training, quote,
   summarize, reproduce, translate, modify, embed, commercial use), attribution
   requirement plus text/URL, crawl limits, license, `llms.txt`, revocation check
@@ -79,10 +82,10 @@ All API calls need the `x-studio-token` header (SSE uses `?token=`).
 
 ## Roadmap
 
-- **M2 (next):** crawl a live site via `sitemap.xml` (robots-aware, rate-limited,
-  cached), per-path rules in the UI flow for crawled sources, resumable jobs.
-- **M3:** tar.gz export, stack detection for adapter instructions, live verification
-  from the UI, key rotation ceremony.
+- **M2 (done):** crawl a live site via `sitemap.xml` or links (robots-aware,
+  rate-limited, cached with conditional requests) and build from the cache.
+- **M3 (next):** tar.gz export, stack detection for adapter instructions, live
+  verification from the UI, key rotation ceremony.
 - **M4:** friendlier diagnostics, audit journal, screenshots.
 
 ## Related

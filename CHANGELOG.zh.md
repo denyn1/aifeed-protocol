@@ -16,7 +16,8 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   零依赖 Web UI：按域名的工作区、本地 HTML 来源接入、restrict-only 策略编辑器
   （使用许可、署名文本/URL、抓取限额、许可证、`llms.txt`、撤销间隔、路径规则）、
   增量构建、manifest/页面/索引的本地验证，以及带 `_aifeed` DNS TXT 记录的导出。
-  私钥保留在工作区（0600）且永不对外提供；界面支持 EN/ID/ZH。manifest 构建器
+  遵守 robots 的抓取器（sitemap 或链接发现、限速、ETag/Last-Modified 缓存）覆盖线上
+  站点。私钥保留在工作区（0600）且永不对外提供；界面支持 EN/ID/ZH。manifest 构建器
   （`lib/site.js`）新增可选 `limits`、`license`、`attribution_text/url` 与
   `maxCheckIntervalHours` 选项（向后兼容）。
 - **密钥轮换（v0.2 §14）**——在不破坏验证的前提下替换 manifest 签名密钥：旧密钥签名的

@@ -111,5 +111,17 @@
   "export.step.upload_overlay": "Unggah setiap file di direktori output ke path yang sama di server Anda.",
   "export.step.add_dns_txt": "Tambahkan record TXT di atas di penyedia DNS Anda; tunggu propagasi.",
   "export.step.verify_live": "Verifikasi live: node bin/cli.js validate {domain} --require-dns-anchor",
-  "export.adapter": "Untuk negosiasi konten, lihat integrations/ di repositori AIFeed."
+  "export.adapter": "Untuk negosiasi konten, lihat integrations/ di repositori AIFeed.",
+  "setup.sourceType": "Jenis sumber",
+  "setup.sourceType.local": "Direktori HTML lokal",
+  "setup.sourceType.crawl": "Situs live (crawl)",
+  "setup.origin": "Origin situs",
+  "setup.maxPages": "Maks halaman",
+  "setup.requestsPerSecond": "Permintaan per detik",
+  "setup.include": "Path disertakan (pisahkan koma)",
+  "setup.exclude": "Path dikecualikan (pisahkan koma)",
+  "setup.respectRobots": "Hormati robots.txt",
+  "setup.scanStatus": "{count} halaman ter-cache · scan terakhir {at}",
+  "build.scan": "Scan situs",
+  "build.scanDone": "Scan selesai — diambil {fetched}, tak berubah {unchanged}, dilewati robots {robots}, error {errors}"
 }

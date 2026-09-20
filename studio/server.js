@@ -10,6 +10,7 @@ const policyLib = require('./lib/policy');
 const siteLib = require('../lib/site');
 const { publishProject } = require('./lib/publish');
 const { verifyBuild } = require('./lib/verify');
+const { crawlSite } = require('./lib/crawl');
 const { createJobManager } = require('./jobs');
 
 const VERSION = require('../package.json').version;
@@ -72,6 +73,21 @@ function readBody(req) {
     });
     req.on('error', reject);
   });
+}
+
+function loadCrawlPages(paths) {
+  let index;
+  try {
+    index = JSON.parse(fs.readFileSync(path.join(paths.cacheDir, 'crawl-index.json'), 'utf8'));
+  } catch (error) {
+    return [];
+  }
+  const pages = [];
+  for (const [urlPath, entry] of Object.entries(index)) {
+    const htmlPath = path.join(paths.cacheDir, 'pages', entry.file);
+    if (fs.existsSync(htmlPath)) pages.push({ urlPath, htmlPath });
+  }
+  return pages.sort((a, b) => (a.urlPath < b.urlPath ? -1 : a.urlPath > b.urlPath ? 1 : 0));
 }
 
 const CONTENT_TYPES = {
@@ -191,35 +207,108 @@ function createServer(options = {}) {
 
       if (parts.length === 4 && parts[3] === 'source' && method === 'PUT') {
         const body = await readBody(req);
-        if (body.type !== 'local' || typeof body.dir !== 'string') {
-          return json(res, 400, { error: 'source must be { type: "local", dir: "..." }' });
+        if (body.type === 'local') {
+          if (typeof body.dir !== 'string') {
+            return json(res, 400, { error: 'local source requires { dir: "..." }' });
+          }
+          const dir = path.resolve(body.dir);
+          if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+            return json(res, 400, { error: 'directory not found: ' + dir });
+          }
+          let pages = 0;
+          try {
+            pages = siteLib.collectHtmlFiles(dir).length;
+          } catch (error) {
+            return json(res, 400, { error: error.message });
+          }
+          project.source = { type: 'local', dir, pages };
+          workspace.saveProject(id, project);
+          return json(res, 200, { source: project.source });
         }
-        const dir = path.resolve(body.dir);
-        if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
-          return json(res, 400, { error: 'directory not found: ' + dir });
+        if (body.type === 'crawl') {
+          let origin;
+          try {
+            origin = new URL(String(body.origin)).origin;
+          } catch (error) {
+            return json(res, 400, { error: 'crawl source requires { origin: "https://..." }' });
+          }
+          if (!origin.startsWith('https://')) {
+            return json(res, 400, { error: 'crawl origin must be https://' });
+          }
+          const toList = (value) => Array.isArray(value)
+            ? value.map((entry) => String(entry)).filter(Boolean).slice(0, 100)
+            : String(value || '').split(',').map((entry) => entry.trim()).filter(Boolean).slice(0, 100);
+          project.source = {
+            type: 'crawl',
+            origin,
+            maxPages: Math.min(Math.max(Number(body.maxPages) || 500, 1), 50000),
+            requestsPerSecond: Math.min(Math.max(Number(body.requestsPerSecond) || 2, 0.1), 50),
+            include: toList(body.include),
+            exclude: toList(body.exclude),
+            respectRobots: body.respectRobots !== false,
+            pages: project.source && project.source.origin === origin ? project.source.pages || 0 : 0,
+            sitemap: project.source && project.source.origin === origin ? Boolean(project.source.sitemap) : false
+          };
+          workspace.saveProject(id, project);
+          return json(res, 200, { source: project.source });
         }
-        let pages = 0;
-        try {
-          pages = siteLib.collectHtmlFiles(dir).length;
-        } catch (error) {
-          return json(res, 400, { error: error.message });
+        return json(res, 400, { error: 'source type must be "local" or "crawl"' });
+      }
+
+      if (parts.length === 4 && parts[3] === 'scan' && method === 'POST') {
+        if (!project.source || project.source.type !== 'crawl') {
+          return json(res, 400, { error: 'set a crawl source first' });
         }
-        project.source = { type: 'local', dir, pages };
-        workspace.saveProject(id, project);
-        return json(res, 200, { source: project.source });
+        const paths = workspace.paths(id);
+        const source = project.source;
+        const jobId = jobs.start('scan', async (emit) => {
+          emit({ type: 'progress', phase: 'start', done: 0, total: source.maxPages });
+          const result = await crawlSite({
+            origin: source.origin,
+            cacheDir: paths.cacheDir,
+            maxPages: source.maxPages,
+            requestsPerSecond: source.requestsPerSecond,
+            include: source.include,
+            exclude: source.exclude,
+            respectRobots: source.respectRobots,
+            onProgress: emit
+          });
+          source.pages = result.stats.total;
+          source.sitemap = result.stats.sitemap;
+          source.last_scan = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+          workspace.saveProject(id, project);
+          return result.stats;
+        });
+        return json(res, 202, { jobId });
       }
 
       if (parts.length === 4 && parts[3] === 'build' && method === 'POST') {
-        if (!project.source || project.source.type !== 'local') {
-          return json(res, 400, { error: 'set a local source directory first' });
+        if (!project.source) {
+          return json(res, 400, { error: 'set a source first' });
         }
         const paths = workspace.paths(id);
+        let sourceDir = null;
+        let pages = null;
+        let sitemap;
+        if (project.source.type === 'local') {
+          sourceDir = project.source.dir;
+        } else if (project.source.type === 'crawl') {
+          pages = loadCrawlPages(paths);
+          if (pages.length === 0) {
+            return json(res, 400, { error: 'scan the site first' });
+          }
+          sitemap = project.source.sitemap === true;
+        } else {
+          return json(res, 400, { error: 'unknown source type: ' + project.source.type });
+        }
         const jobId = jobs.start('build', async (emit) => {
-          emit({ type: 'progress', phase: 'start', done: 0, total: project.source.pages || 0 });
+          emit({ type: 'progress', phase: 'start', done: 0, total: pages ? pages.length : (project.source.pages || 0) });
           return publishProject({
             project,
             policy: workspace.policy(id),
-            sourceDir: project.source.dir,
+            sourceDir,
+            pages,
+            sitemap,
             outDir: paths.outDir,
             keyPath: paths.keyPath,
             statePath: paths.statePath,

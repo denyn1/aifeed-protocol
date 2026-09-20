@@ -9,6 +9,7 @@ const cryptoLib = require('../../lib/crypto');
 const siteLib = require('../../lib/site');
 const validateLib = require('../../lib/validate');
 const policyLib = require('./policy');
+const { outputBaseFor } = require('./crawl');
 const { sha256Base64, rawDigestOf } = require('../../lib/digest');
 
 const SUFFIX = { aimd: '.aifeed.md', mako: '.mako.md' };
@@ -98,8 +99,23 @@ function publishProject(options) {
     onProgress = () => {}
   } = options;
 
-  if (!fs.existsSync(sourceDir) || !fs.statSync(sourceDir).isDirectory()) {
-    throw new Error('source directory not found: ' + sourceDir);
+  let pageInputs;
+  if (Array.isArray(options.pages) && options.pages.length > 0) {
+    pageInputs = options.pages.map((page) => ({
+      relative: outputBaseFor(page.urlPath) + '.html',
+      urlPath: page.urlPath,
+      htmlPath: page.htmlPath || null,
+      htmlText: page.htmlText !== undefined ? page.htmlText : null
+    }));
+  } else {
+    if (!sourceDir || !fs.existsSync(sourceDir) || !fs.statSync(sourceDir).isDirectory()) {
+      throw new Error('source directory not found: ' + sourceDir);
+    }
+    pageInputs = siteLib.collectHtmlFiles(path.resolve(sourceDir)).map((htmlPath) => {
+      const relative = path.relative(path.resolve(sourceDir), htmlPath);
+      return { relative, urlPath: siteLib.pagePathFor(relative), htmlPath, htmlText: null };
+    });
+    if (pageInputs.length === 0) throw new Error('no HTML files found in ' + sourceDir);
   }
 
   const baseUrl = 'https://' + project.domain;
@@ -111,8 +127,8 @@ function publishProject(options) {
   const previousState = incremental ? (options.previousState || null) : null;
   const reuse = previousState && previousState.policy_hash === policyHash ? previousState : null;
 
-  const htmlFiles = siteLib.collectHtmlFiles(path.resolve(sourceDir));
-  if (htmlFiles.length === 0) throw new Error('no HTML files found in ' + sourceDir);
+  const htmlFiles = pageInputs;
+  if (htmlFiles.length === 0) throw new Error('no pages to build');
 
   fs.mkdirSync(outDir, { recursive: true });
   fs.mkdirSync(path.join(outDir, '.well-known'), { recursive: true });
@@ -123,11 +139,11 @@ function publishProject(options) {
   let processed = 0;
   let skipped = 0;
 
-  htmlFiles.forEach((htmlPath, position) => {
-    const relative = path.relative(path.resolve(sourceDir), htmlPath);
-    const urlPath = siteLib.pagePathFor(relative);
+  htmlFiles.forEach((input, position) => {
+    const relative = input.relative;
+    const urlPath = input.urlPath;
     const pageUrl = baseUrl + urlPath;
-    const htmlText = fs.readFileSync(htmlPath, 'utf8');
+    const htmlText = input.htmlText !== null ? input.htmlText : fs.readFileSync(input.htmlPath, 'utf8');
     const htmlHash = sha256Base64(Buffer.from(htmlText, 'utf8'));
     const previous = reuse && reuse.pages ? reuse.pages[urlPath] : null;
 

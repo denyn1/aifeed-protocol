@@ -27,6 +27,10 @@ lalu ekspor.
 - **Sumber lokal**: memindai direktori HTML, mengonversi dengan konverter yang sama
   seperti `aifeed site build`, dan menulis output ke overlay `build/` terpisah — file
   sumber Anda tidak pernah diubah.
+- **Crawl situs live**: menemukan halaman dari `sitemap.xml` (indeks sitemap didukung)
+  atau penjelajahan tautan, menghormati `robots.txt` (termasuk `Crawl-delay`),
+  membatasi laju, dan meng-cache setiap fetch dengan ETag/Last-Modified sehingga scan
+  ulang memakai ulang halaman yang tak berubah.
 - **Editor kebijakan**: izin penggunaan (search, retrieval, input, training, quote,
   summarize, reproduce, translate, modify, embed, commercial use), atribusi + teks/URL,
   batas crawl, lisensi, `llms.txt`, interval cek revokasi, dan aturan per-path yang hanya
@@ -80,10 +84,10 @@ Semua panggilan API butuh header `x-studio-token` (SSE memakai `?token=`).
 
 ## Peta jalan
 
-- **M2 (berikutnya):** crawl situs live via `sitemap.xml` (hormati robots, kena rate
-  limit, ber-cache), aturan per-path untuk sumber crawl, job yang bisa dilanjutkan.
-- **M3:** ekspor tar.gz, deteksi stack untuk instruksi adapter, verifikasi live dari UI,
-  upacara rotasi kunci.
+- **M2 (selesai):** crawl situs live via `sitemap.xml` atau tautan (hormati robots,
+  rate limit, cache dengan conditional request) dan build dari cache.
+- **M3 (berikutnya):** ekspor tar.gz, deteksi stack untuk instruksi adapter, verifikasi
+  live dari UI, upacara rotasi kunci.
 - **M4:** diagnostik ramah, jurnal audit, tangkapan layar.
 
 ## Terkait

@@ -24,6 +24,9 @@ npm run studio -- --port 8080 --workspace ./studio-data
 - **按域名的项目工作区**：身份、策略、密钥对、增量状态。
 - **本地来源接入**：扫描 HTML 目录，使用与 `aifeed site build` 相同的转换器转换页面，
   输出写入独立的 `build/` 覆盖层——你的源文件永不被修改。
+- **线上站点抓取**：从 `sitemap.xml`（支持 sitemap 索引）或链接发现页面，遵守
+  `robots.txt`（含 `Crawl-delay`），限速并用 ETag/Last-Modified 缓存每次抓取，
+  重新扫描时复用未变更页面。
 - **策略编辑器**：使用许可（search、retrieval、input、training、quote、summarize、
   reproduce、translate、modify、embed、commercial use）、署名要求与文本/URL、抓取限额、
   许可证、`llms.txt`、撤销检查间隔，以及只能收紧的路径规则（规范 `restrict-only`）。
@@ -73,9 +76,9 @@ npm run studio -- --port 8080 --workspace ./studio-data
 
 ## 路线图
 
-- **M2（下一步）：** 通过 `sitemap.xml` 抓取线上站点（遵守 robots、限速、缓存）、为抓取
-  来源提供路径规则流程、可恢复的作业。
-- **M3：** tar.gz 导出、栈检测生成适配器说明、UI 内线上验证、密钥轮换仪式。
+- **M2（已完成）：** 通过 `sitemap.xml` 或链接抓取线上站点（遵守 robots、限速、带条件
+  请求的缓存），并从缓存构建。
+- **M3（下一步）：** tar.gz 导出、栈检测生成适配器说明、UI 内线上验证、密钥轮换仪式。
 - **M4：** 更友好的诊断、审计日志、截图。
 
 ## 相关

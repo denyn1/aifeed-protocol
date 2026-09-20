@@ -111,5 +111,17 @@
   "export.step.upload_overlay": "Upload every file in the output directory to the same paths on your server.",
   "export.step.add_dns_txt": "Add the TXT record above at your DNS provider; wait for propagation.",
   "export.step.verify_live": "Verify live: node bin/cli.js validate {domain} --require-dns-anchor",
-  "export.adapter": "For content negotiation, see integrations/ in the AIFeed repository."
+  "export.adapter": "For content negotiation, see integrations/ in the AIFeed repository.",
+  "setup.sourceType": "Source type",
+  "setup.sourceType.local": "Local HTML directory",
+  "setup.sourceType.crawl": "Live site (crawl)",
+  "setup.origin": "Site origin",
+  "setup.maxPages": "Max pages",
+  "setup.requestsPerSecond": "Requests per second",
+  "setup.include": "Include paths (comma separated)",
+  "setup.exclude": "Exclude paths (comma separated)",
+  "setup.respectRobots": "Respect robots.txt",
+  "setup.scanStatus": "{count} pages cached · last scan {at}",
+  "build.scan": "Scan site",
+  "build.scanDone": "Scan finished — fetched {fetched}, unchanged {unchanged}, skipped by robots {robots}, errors {errors}"
 }

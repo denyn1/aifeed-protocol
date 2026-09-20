@@ -227,10 +227,20 @@
       '<p class="muted small">' + t('setup.outDir') + ': <code>' + esc(data.outDir) + '</code></p>' +
       '<p style="margin-top:12px"><button class="primary" id="save-identity">' + t('setup.saveIdentity') + '</button></p></div>' +
       '<div class="card"><h2>' + t('setup.source') + '</h2>' +
-      '<div class="row"><div><label>' + t('setup.sourceDir') + '</label><input id="s-source" type="text" placeholder="C:\\\\sites\\\\example\\\\public" value="' + esc(project.source ? project.source.dir : '') + '"></div>' +
-      '<div style="flex:0 0 auto"><label>&nbsp;</label><button id="save-source">' + t('setup.sourceSave') + '</button></div></div>' +
-      (project.source ? '<p class="muted small">' + t('setup.sourcePages', { count: project.source.pages }) + '</p>' : '') +
+      '<div class="grid"><div><label>' + t('setup.sourceType') + '</label><select id="s-source-type">' +
+      option('local', t('setup.sourceType.local'), project.source ? project.source.type : 'local') +
+      option('crawl', t('setup.sourceType.crawl'), project.source ? project.source.type : 'local') +
+      '</select></div></div>' +
+      '<div id="source-fields" style="margin-top:12px"></div>' +
+      (project.source && project.source.pages ? '<p class="muted small">' + t('setup.scanStatus', { count: project.source.pages, at: project.source.last_scan || '' }) + '</p>' : '') +
+      '<p style="margin-top:12px"><button id="save-source">' + t('setup.sourceSave') + '</button></p>' +
       '<p class="muted small">' + t('setup.keyNote') + '</p></div>';
+
+    const sourceType = project.source ? project.source.type : 'local';
+    renderSourceFields(sourceType);
+    document.getElementById('s-source-type').addEventListener('change', (event) => {
+      renderSourceFields(event.target.value);
+    });
 
     document.getElementById('save-identity').addEventListener('click', async () => {
       try {
@@ -254,9 +264,22 @@
     });
     document.getElementById('save-source').addEventListener('click', async () => {
       try {
+        const type = value('s-source-type');
+        const body = type === 'crawl' ? {
+          type,
+          origin: value('s-origin'),
+          maxPages: number('s-max-pages') || 500,
+          requestsPerSecond: number('s-rps') || 2,
+          include: value('s-include'),
+          exclude: value('s-exclude'),
+          respectRobots: checked('s-respect-robots')
+        } : {
+          type,
+          dir: value('s-source')
+        };
         const result = await api('/projects/' + state.current.project.id + '/source', {
           method: 'PUT',
-          body: JSON.stringify({ type: 'local', dir: value('s-source') })
+          body: JSON.stringify(body)
         });
         state.current.project.source = result.source;
         showToast(t('common.saved'), true);
@@ -265,6 +288,26 @@
         fail(error);
       }
     });
+  }
+
+  function renderSourceFields(type) {
+    const project = state.current.project;
+    const source = project.source;
+    const container = document.getElementById('source-fields');
+    if (type === 'crawl') {
+      container.innerHTML =
+        '<div class="grid">' +
+        '<div><label>' + t('setup.origin') + '</label><input id="s-origin" type="text" placeholder="https://' + esc(project.domain) + '" value="' + esc(source && source.type === 'crawl' ? source.origin : 'https://' + project.domain) + '"></div>' +
+        '<div><label>' + t('setup.maxPages') + '</label><input id="s-max-pages" type="number" min="1" max="50000" value="' + esc(source && source.type === 'crawl' ? source.maxPages : 500) + '"></div>' +
+        '<div><label>' + t('setup.requestsPerSecond') + '</label><input id="s-rps" type="number" min="0.1" step="0.1" value="' + esc(source && source.type === 'crawl' ? source.requestsPerSecond : 2) + '"></div>' +
+        '<div><label>' + t('setup.include') + '</label><input id="s-include" type="text" placeholder="/blog,/docs" value="' + esc(source && source.type === 'crawl' ? (source.include || []).join(',') : '') + '"></div>' +
+        '<div><label>' + t('setup.exclude') + '</label><input id="s-exclude" type="text" placeholder="/cart, /account" value="' + esc(source && source.type === 'crawl' ? (source.exclude || []).join(',') : '') + '"></div>' +
+        '</div>' +
+        '<label class="check" style="margin-top:10px"><input id="s-respect-robots" type="checkbox"' + (!source || source.type !== 'crawl' || source.respectRobots !== false ? ' checked' : '') + '> ' + t('setup.respectRobots') + '</label>';
+      return;
+    }
+    container.innerHTML =
+      '<div><label>' + t('setup.sourceDir') + '</label><input id="s-source" type="text" placeholder="C:\\\\sites\\\\example\\\\public" value="' + esc(source && source.type === 'local' ? source.dir : '') + '"></div>';
   }
 
   function fieldValue(id, label, current) {
@@ -423,11 +466,16 @@
   function renderBuild() {
     const tab = document.getElementById('tab');
     const project = state.current.project;
+    const source = project.source;
+    const isCrawl = Boolean(source && source.type === 'crawl');
     tab.innerHTML =
       '<div class="card"><h2>' + t('build.title') + '</h2>' +
-      (project.source ? '' : '<p class="muted">' + t('build.needSource') + '</p>') +
-      '<p><button class="primary" id="build-start"' + (project.source ? '' : ' disabled') + '>' + t('build.start') + '</button></p>' +
+      (source ? '' : '<p class="muted">' + t('build.needSource') + '</p>') +
+      '<p>' +
+      (isCrawl ? '<button id="scan-start">' + t('build.scan') + '</button> ' : '') +
+      '<button class="primary" id="build-start"' + (source ? '' : ' disabled') + '>' + t('build.start') + '</button></p>' +
       '<pre id="build-log">' + esc(state.log.join('\n')) + '</pre></div>';
+    if (isCrawl) document.getElementById('scan-start').addEventListener('click', startScan);
     document.getElementById('build-start').addEventListener('click', startBuild);
   }
 
@@ -437,33 +485,56 @@
     if (element) element.textContent = state.log.join('\n');
   }
 
-  async function startBuild() {
+  async function runJob(jobPath, onDone) {
     try {
-      const { jobId } = await api('/projects/' + state.current.project.id + '/build', { method: 'POST' });
+      const { jobId } = await api('/projects/' + state.current.project.id + jobPath, { method: 'POST' });
       logLine('job ' + jobId);
-      const source = new EventSource('/api/projects/' + state.current.project.id + '/events?job=' + jobId + '&token=' + encodeURIComponent(TOKEN));
-      source.onmessage = (message) => {
+      const events = new EventSource('/api/projects/' + state.current.project.id + '/events?job=' + jobId + '&token=' + encodeURIComponent(TOKEN));
+      events.onmessage = (message) => {
         const event = JSON.parse(message.data);
         if (event.type === 'progress') {
           logLine('[' + event.phase + '] ' + event.done + '/' + event.total + ' ' + (event.current || ''));
         } else if (event.type === 'done') {
-          const result = event.result;
-          logLine(t('build.done') + ' — ' + t('build.total') + ': ' + result.total + ', ' +
-            t('build.processed') + ': ' + result.processed + ', ' + t('build.skipped') + ': ' + result.skipped +
-            ', ' + t('build.warnings') + ': ' + result.warnings.length);
-          source.close();
-          showToast(t('build.done'), true);
-          openProject(state.current.project.id).then(() => { state.tab = 'build'; render(); });
+          events.close();
+          onDone(event.result);
         } else if (event.type === 'error') {
+          events.close();
           logLine('error: ' + event.message);
-          source.close();
           showToast(event.message, false);
         }
       };
-      source.onerror = () => source.close();
+      events.onerror = () => events.close();
     } catch (error) {
       fail(error);
     }
+  }
+
+  async function startScan() {
+    await runJob('/scan', async (stats) => {
+      const message = t('build.scanDone', {
+        fetched: stats.fetched,
+        unchanged: stats.unchanged,
+        robots: stats.skippedRobots,
+        errors: stats.errors
+      });
+      logLine(message);
+      showToast(message, true);
+      await openProject(state.current.project.id);
+      state.tab = 'build';
+      render();
+    });
+  }
+
+  async function startBuild() {
+    await runJob('/build', async (result) => {
+      logLine(t('build.done') + ' — ' + t('build.total') + ': ' + result.total + ', ' +
+        t('build.processed') + ': ' + result.processed + ', ' + t('build.skipped') + ': ' + result.skipped +
+        ', ' + t('build.warnings') + ': ' + result.warnings.length);
+      showToast(t('build.done'), true);
+      await openProject(state.current.project.id);
+      state.tab = 'build';
+      render();
+    });
   }
 
   function renderVerify() {
