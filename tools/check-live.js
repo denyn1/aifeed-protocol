@@ -106,6 +106,27 @@ async function checkOrigin(domain) {
     report.steps.index = delta.entries.length + ' entries';
     if (!delta.ok) report.errors.push('index invalid');
 
+    if (delta.ok && delta.entries.length > 0) {
+      const candidates = delta.entries.filter((entry) => {
+        const raw = entry && typeof entry.url === 'string' ? entry.url : '';
+        const pathname = raw.startsWith('http') ? new URL(raw).pathname : raw;
+        return pathname !== '/' && pathname !== '/404' && pathname !== '/404/';
+      });
+      const first = candidates.length > 0 ? candidates[0] : delta.entries[0];
+      const raw = first && typeof first.url === 'string' ? first.url : '';
+      const pageUrl = raw.startsWith('http') ? raw : 'https://' + domain + (raw.startsWith('/') ? raw : '/' + raw);
+      try {
+        if (new URL(pageUrl).hostname === domain) {
+          const deep = await sdk.fetchAimd(pageUrl, { publicKeyValue: publicKey });
+          report.steps.deep = pageUrl + ' · ' + deep.content_type + ' · signature ' + (deep.mako_verified ? 'verified' : 'not verified');
+          if (!deep.mako_verified) report.errors.push('deep page signature not verified: ' + pageUrl);
+        }
+      } catch (error) {
+        report.steps.deep = 'error: ' + error.message;
+        report.errors.push('deep page failed: ' + pageUrl + ' — ' + error.message);
+      }
+    }
+
     const revocationUrl = verified.manifest.revocation && verified.manifest.revocation.list_url;
     if (revocationUrl) {
       const document = await sdk.fetchText(revocationUrl);

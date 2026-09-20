@@ -22,7 +22,8 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   元数据（页面日期/标签）补齐了站点类型支持。M3 新增 `.tar.gz` 覆盖层下载、与
   `integrations/` 适配器提示相连的技术栈检测、一键线上验证（manifest、签名、DNS
   锚点），以及会换钥并重新签名所有页面的受保护密钥轮换仪式。G4 新增经 schema 校验的
-  `types`/`capabilities`/`actions` 编辑器，以及面向电商动作的 OpenAPI 导入。私钥保留在工作区（0600）且永不对外提供；
+  `types`/`capabilities`/`actions` 编辑器、面向电商动作的 OpenAPI 导入，以及审计日志
+  （`journal.ndjson`）和针对常见 DNS、schema、签名与轮换失败的内联修复提示。私钥保留在工作区（0600）且永不对外提供；
   界面支持 EN/ID/ZH。manifest 构建器
   （`lib/site.js`）新增可选 `limits`、`license`、`attribution_text/url` 与
   `maxCheckIntervalHours` 选项（向后兼容）。
