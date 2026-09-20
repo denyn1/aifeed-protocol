@@ -11,11 +11,15 @@ test('cloudflare worker negotiates AIFeed markdown from its assets binding', asy
   assert.strictEqual(worker.negotiateTarget('/dir/', 'text/aifeed+markdown').target, '/dir/index.aifeed.md');
   assert.strictEqual(worker.negotiateTarget('/dir/page', 'text/aifeed+markdown').target, '/dir/page.aifeed.md');
   assert.strictEqual(worker.negotiateTarget('/dir/page.html', 'text/mako+markdown').target, '/dir/page.mako.md');
+  assert.strictEqual(worker.negotiateTarget('/dir/page', 'text/aifeed+markdown').alt, '/dir/page/index.aifeed.md');
+  assert.strictEqual(worker.negotiateTarget('/dir/', 'text/aifeed+markdown').alt, null);
   assert.strictEqual(worker.negotiateTarget('/page', 'text/html'), null);
 
   const store = {
     '/page.aifeed.md': '---\naimd: "1.0"\n---\n\nbody\n',
-    '/page.aifeed.md.sig': '{"algorithm":"ed25519","context":"aimd"}'
+    '/page.aifeed.md.sig': '{"algorithm":"ed25519","context":"aimd"}',
+    '/dir/index.aifeed.md': '---\naimd: "1.0"\n---\n\ndir body\n',
+    '/dir/index.aifeed.md.sig': '{"algorithm":"ed25519","context":"aimd"}'
   };
   const env = {
     ASSETS: {
@@ -37,6 +41,14 @@ test('cloudflare worker negotiates AIFeed markdown from its assets binding', asy
   assert.strictEqual(negotiated.headers.get('x-aifeed-profile'), 'aimd');
   assert.ok(String(negotiated.headers.get('x-aifeed-signature')).startsWith('aimd1:'));
   assert.strictEqual(await negotiated.text(), store['/page.aifeed.md']);
+
+  const directoryPage = await worker.default.fetch(new Request('https://example.com/dir', {
+    headers: { accept: 'text/aifeed+markdown' }
+  }), env);
+  assert.strictEqual(directoryPage.status, 200);
+  assert.strictEqual(directoryPage.headers.get('content-type'), 'text/aifeed+markdown; charset=utf-8');
+  assert.ok(String(directoryPage.headers.get('x-aifeed-signature')).startsWith('aimd1:'));
+  assert.strictEqual(await directoryPage.text(), store['/dir/index.aifeed.md']);
 
   const plain = await worker.default.fetch(new Request('https://example.com/page', {
     headers: { accept: 'text/html' }

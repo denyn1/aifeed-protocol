@@ -21,7 +21,8 @@ export function negotiateTarget(pathname, accept) {
     : pathname.endsWith('/')
       ? pathname + 'index'
       : pathname.replace(/\.html$/, '');
-  return { profile, target: base + SUFFIX[profile], mediaType: MEDIA[profile] };
+  const alt = pathname.endsWith('/') ? null : base + '/index' + SUFFIX[profile];
+  return { profile, target: base + SUFFIX[profile], alt, mediaType: MEDIA[profile] };
 }
 
 function base64UrlEncode(text) {
@@ -39,13 +40,21 @@ export default {
     const url = new URL(request.url);
     const target = negotiateTarget(url.pathname, String(request.headers.get('accept') || ''));
     if (target) {
-      const response = await env.ASSETS.fetch(new Request(new URL(target.target, url), request));
+      let response = await env.ASSETS.fetch(new Request(new URL(target.target, url), request));
+      let resolved = target.target;
+      if (!response.ok && target.alt) {
+        const altResponse = await env.ASSETS.fetch(new Request(new URL(target.alt, url), request));
+        if (altResponse.ok) {
+          response = altResponse;
+          resolved = target.alt;
+        }
+      }
       if (response.ok) {
         const headers = new Headers(response.headers);
         headers.set('content-type', target.mediaType + '; charset=utf-8');
         headers.set('vary', 'accept');
         headers.set('x-aifeed-profile', target.profile);
-        const signature = await env.ASSETS.fetch(new Request(new URL(target.target + '.sig', url), request));
+        const signature = await env.ASSETS.fetch(new Request(new URL(resolved + '.sig', url), request));
         if (signature.ok) {
           headers.set('x-aifeed-signature', target.profile + '1:' + base64UrlEncode(await signature.text()));
         }

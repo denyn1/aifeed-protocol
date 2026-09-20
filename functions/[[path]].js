@@ -82,8 +82,16 @@ export async function negotiate(request, env, prefix, pathname, accept, host) {
   const context = wantsAimd ? 'aimd' : 'mako';
   const mediaType = wantsAimd ? 'text/aifeed+markdown' : 'text/mako+markdown';
   const basePath = pathname.endsWith('/') ? pathname + 'index' : pathname.replace(/\.html$/, '');
-  const mdPath = prefix + basePath + suffix;
-  const mdResponse = await env.ASSETS.fetch(new Request(new URL(mdPath, request.url).toString(), request));
+  let mdPath = prefix + basePath + suffix;
+  let mdResponse = await env.ASSETS.fetch(new Request(new URL(mdPath, request.url).toString(), request));
+  if (!mdResponse.ok && !pathname.endsWith('/')) {
+    const altPath = prefix + basePath + '/index' + suffix;
+    const altResponse = await env.ASSETS.fetch(new Request(new URL(altPath, request.url).toString(), request));
+    if (altResponse.ok) {
+      mdPath = altPath;
+      mdResponse = altResponse;
+    }
+  }
   if (!mdResponse.ok) return null;
   const headers = new Headers(mdResponse.headers);
   headers.set('content-type', mediaType + '; charset=utf-8');
@@ -131,6 +139,17 @@ export async function onRequest(context) {
   const assetUrl = new URL(request.url);
   assetUrl.pathname = prefix + url.pathname;
   const assetResponse = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
+
+  if (assetResponse.status >= 300 && assetResponse.status < 400) {
+    const location = assetResponse.headers.get('location');
+    if (location) {
+      const target = new URL(location, assetUrl);
+      const headers = new Headers(assetResponse.headers);
+      const publicPath = target.pathname.startsWith(prefix) ? target.pathname.slice(prefix.length) || '/' : target.pathname;
+      headers.set('location', publicPath + target.search);
+      return withCommonHeaders(new Response(null, { status: assetResponse.status, headers }), host);
+    }
+  }
 
   if (assetResponse.status === 404) {
     const notFoundUrl = new URL(prefix + '/404.html', url);
