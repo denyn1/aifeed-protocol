@@ -33,7 +33,13 @@ match(read('wp-plugin/aifeed.php'), /^[\s*]*Version:\s*(\S+)/m, 'plugin header V
 match(read('wp-plugin/aifeed.php'), /define\('AIFEED_VERSION',\s*'([^']+)'\)/, 'AIFEED_VERSION', releaseVersion, 'wp-plugin/aifeed.php');
 match(read('wp-plugin/readme.txt'), /Stable tag:\s*(\S+)/, 'readme.txt Stable tag', releaseVersion, 'wp-plugin/readme.txt');
 match(read('site/index.html'), /class="chip">v([^<]+)</, 'site version chip', releaseVersion, 'site/index.html');
-match(read('CHANGELOG.md'), /^##\s*\[([^\]]+)\]/m, 'CHANGELOG top section', releaseVersion, 'CHANGELOG.md');
+const changelogHeadings = [...read('CHANGELOG.md').matchAll(/^##\s*\[([^\]]+)\]/gm)].map((found) => found[1]);
+const changelogTop = changelogHeadings.find((heading) => heading !== 'Unreleased') || null;
+if (changelogTop === null) {
+  failures.push('CHANGELOG.md: could not find top version section');
+} else if (changelogTop !== releaseVersion) {
+  failures.push('CHANGELOG.md: CHANGELOG top section is "' + changelogTop + '", expected "' + releaseVersion + '"');
+}
 
 const sdkVersion = sdkPkg.version;
 if (sdkVersion.split('-')[0] !== releaseVersion.split('-')[0]) {

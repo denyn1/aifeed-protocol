@@ -8,6 +8,17 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 > Label bukti yang dipakai di seluruh proyek: [F] fakta terverifikasi, [M] masuk akal,
 > [E] estimasi model, [S] terukur di harness simulasi lokal, [H] butuh review hukum.
 
+## [Unreleased]
+
+### Ditambahkan
+
+- **MCP server (`aifeed-mcp-server`)** — server Model Context Protocol tanpa dependensi
+  lewat stdio: `verify_manifest`, `fetch_aifeed` (markdown berbujet token dengan cek
+  tanda tangan), `list_assets`, `verify_asset` (bukti `size`/`sha-256` level byte),
+  `select_index` (pemeringkatan query dalam bujet halaman/token), dan `decide_usage`;
+  hanya HTTPS (loopback dengan `AIFEED_MCP_ALLOW_PRIVATE=1`); jalankan via `npm run mcp`
+  atau `npx aifeed-mcp-server`.
+
 ## [1.0.0-draft] — 2026-09-16
 
 ### Ditambahkan

@@ -54,6 +54,19 @@ npm dist-tag add @aifeed/verify@<version> latest --//registry.npmjs.org/:_authTo
   或 `npm view @aifeed/verify version dist-tags`。
 - 绝不把 token 粘贴进文件、提交或 issue；只放在环境变量里。
 
+## 发布 MCP 服务器
+
+与 SDK 相同的流程，先在仓库根目录重建生成副本：
+
+```bash
+npm run build:mcp
+cd packages/aifeed-mcp-server
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- `files` 列表发布 `index.js`、`README.md`、`lib/`、`schema/` 与 `LICENSE`，零依赖。
+  预发布版本必须 `--tag next`。
+
 ## WordPress 插件
 
 插件从本仓库的 `wp-plugin/` 发布。面向 WordPress.org 发布时：升头部/`Stable tag`，

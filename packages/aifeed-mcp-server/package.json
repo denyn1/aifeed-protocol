@@ -1,0 +1,41 @@
+{
+  "name": "aifeed-mcp-server",
+  "version": "1.0.0-draft.1",
+  "description": "Model Context Protocol server for AIFeed: verify signed manifests, fetch token-budgeted markdown, list and verify assets, select delta-index entries",
+  "license": "MIT",
+  "homepage": "https://aifeed.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denyn1/aifeed-protocol.git",
+    "directory": "packages/aifeed-mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/denyn1/aifeed-protocol/issues"
+  },
+  "main": "index.js",
+  "bin": {
+    "aifeed-mcp-server": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "lib",
+    "schema",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "aifeed",
+    "ai",
+    "verification",
+    "markdown",
+    "ed25519"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

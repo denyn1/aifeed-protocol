@@ -58,6 +58,19 @@ npm dist-tag add @aifeed/verify@<version> latest --//registry.npmjs.org/:_authTo
   atau `npm view @aifeed/verify version dist-tags`.
 - Jangan pernah menempelkan token ke file, commit, atau issue; simpan di environment.
 
+## Menerbitkan MCP server
+
+Alur yang sama seperti SDK, setelah membangun ulang salinan hasil generate dari root repo:
+
+```bash
+npm run build:mcp
+cd packages/aifeed-mcp-server
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- Daftar `files` mengirim `index.js`, `README.md`, `lib/`, `schema/`, dan `LICENSE` tanpa
+  dependensi. Versi prerelease mewajibkan `--tag next`.
+
 ## Plugin WordPress
 
 Plugin dikirim dari `wp-plugin/` di repositori ini. Untuk rilis WordPress.org, naikkan

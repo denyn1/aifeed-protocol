@@ -8,6 +8,16 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
 > 全项目使用的证据标签：[F] 已验证事实、[M] 可信、[E] 模型估计、[S] 本地模拟装置实测、
 > [H] 需法律审查。
 
+## [Unreleased]
+
+### 新增
+
+- **MCP 服务器（`aifeed-mcp-server`）** — 零依赖的 stdio Model Context Protocol 服务器：
+  `verify_manifest`、`fetch_aifeed`（按 token 预算获取 markdown 并验签）、`list_assets`、
+  `verify_asset`（字节级 `size`/`sha-256` 证明）、`select_index`（在页面/token 预算内按
+  查询排序）、`decide_usage`；仅限 HTTPS（回环需 `AIFEED_MCP_ALLOW_PRIVATE=1`）；用
+  `npm run mcp` 或 `npx aifeed-mcp-server` 运行。
+
 ## [1.0.0-draft] — 2026-09-16
 
 ### 新增

@@ -143,7 +143,7 @@ node bin/cli.js rotate --dir ./my-site
 ## 测试
 
 ```bash
-npm test                 # Node 测试套件（254 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换）
+npm test                 # Node 测试套件（258 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换、MCP 服务器）
 npm run test:py          # Python 验证器套件（45 项：向量、AIFeed Markdown/MAKO 对等、撤销、离线包、示例）
 npm run vectors          # 重新生成确定性 manifest 向量并自检（34）
 npm run mako:vectors     # 重新生成 MAKO 一致性向量并自检（39）
@@ -228,6 +228,10 @@ HTML 页面声明 alternate 链接，签名增量索引与逐条摘要匹配。�
   声明（`index.d.ts`）与 v0.2 MAKO API（`fetchMako`、`fetchIndexDelta`、
   `selectEntries`、`decideUsage`、`listAssets`、`verifyAsset`、`mako.*` 原语、v0.2 schema）；打包经
   `npm pack --dry-run` 测试。
+- **AI 客户端 — `aifeed-mcp-server`**（`packages/aifeed-mcp-server/`）：零依赖的 stdio
+  Model Context Protocol 服务器，由 `lib/` 与 `schema/` 经 `npm run build:mcp` 构建；
+  工具 `verify_manifest`、`fetch_aifeed`、`list_assets`、`verify_asset`、`select_index`、
+  `decide_usage`；用 `npm run mcp` 或 `npx aifeed-mcp-server` 运行。
 - **发布方 — WordPress**（`wp-plugin/`）：参考发布方 SDK（密钥管理、manifest 构建器、
   PHP 版 JCS、签名、`/.well-known` 服务、管理界面、DNS 指引、徽章、每月重签），以及
   v0.2 MAKO 层（内容协商、签名 MAKO 文档、增量索引、mako-wp 共存）。已在真实

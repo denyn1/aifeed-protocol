@@ -58,6 +58,19 @@ npm dist-tag add @aifeed/verify@<version> latest --//registry.npmjs.org/:_authTo
   or `npm view @aifeed/verify version dist-tags`.
 - Never paste tokens into files, commits, or issues; keep them in the environment.
 
+## Publishing the MCP server
+
+Same flow as the SDK, after rebuilding the generated copies from the repo root:
+
+```bash
+npm run build:mcp
+cd packages/aifeed-mcp-server
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- The `files` list ships `index.js`, `README.md`, `lib/`, `schema/`, and `LICENSE` with
+  zero dependencies. Prerelease versions require `--tag next`.
+
 ## WordPress plugin
 
 The plugin ships from `wp-plugin/` in this repository. For a WordPress.org release,

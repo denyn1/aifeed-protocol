@@ -9,6 +9,17 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
 > [E] model estimate, [S] measured in the local simulation harness, [H] needs legal
 > review.
 
+## [Unreleased]
+
+### Added
+
+- **MCP server (`aifeed-mcp-server`)** — zero-dependency Model Context Protocol server
+  over stdio: `verify_manifest`, `fetch_aifeed` (token-budgeted markdown with signature
+  check), `list_assets`, `verify_asset` (byte-level `size`/`sha-256` proof),
+  `select_index` (query ranking within page/token budgets), and `decide_usage`; HTTPS
+  only (loopback with `AIFEED_MCP_ALLOW_PRIVATE=1`); run with `npm run mcp` or
+  `npx aifeed-mcp-server`.
+
 ## [1.0.0-draft] — 2026-09-16
 
 ### Added

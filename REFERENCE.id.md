@@ -148,7 +148,7 @@ Exit code: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage atau error internal
 ## Tes
 
 ```bash
-npm test                 # suite tes Node (254 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci)
+npm test                 # suite tes Node (258 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci, server MCP)
 npm run test:py          # suite verifier Python (45 tes: vektor, paritas AIFeed Markdown/MAKO, revokasi, bundel, contoh)
 npm run vectors          # regenerasi vektor manifest deterministik + self-check (34)
 npm run mako:vectors     # regenerasi vektor konformansi MAKO + self-check (39)
@@ -245,6 +245,11 @@ kecil, menengah, besar, dan raksasa, masing-masing berakhir di manifest terverif
   TypeScript (`index.d.ts`) dan API MAKO v0.2 (`fetchMako`, `fetchIndexDelta`,
   `selectEntries`, `decideUsage`, `listAssets`, `verifyAsset`, primitif `mako.*`, schema
   v0.2); pengemasan diuji dengan `npm pack --dry-run`.
+- **Klien AI — `aifeed-mcp-server`** (`packages/aifeed-mcp-server/`): server Model
+  Context Protocol tanpa dependensi lewat stdio, dibangun dari `lib/` dan `schema/`
+  via `npm run build:mcp`; tools `verify_manifest`, `fetch_aifeed`, `list_assets`,
+  `verify_asset`, `select_index`, `decide_usage`; jalankan via `npm run mcp` atau
+  `npx aifeed-mcp-server`.
 - **Penerbit — WordPress** (`wp-plugin/`): SDK penerbit referensi (manajemen kunci,
   pembangun manifest, JCS di PHP, penandatanganan, penyajian `/.well-known`, UI admin,
   instruksi DNS, badge, re-sign bulanan) plus lapisan MAKO v0.2 (negosiasi konten, dokumen

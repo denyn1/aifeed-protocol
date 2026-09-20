@@ -152,7 +152,7 @@ Exit codes: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage or internal error.
 ## Tests
 
 ```bash
-npm test                 # Node test suite (254 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation)
+npm test                 # Node test suite (258 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation, MCP server)
 npm run test:py          # Python verifier suite (45 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
 npm run vectors          # regenerate deterministic manifest vectors and self-check (34)
 npm run mako:vectors     # regenerate MAKO conformance vectors and self-check (39)
@@ -247,6 +247,11 @@ medium, large, and giant sites, every track ending in a verified manifest.
   declarations (`index.d.ts`) and the v0.2 MAKO API (`fetchMako`, `fetchIndexDelta`,
   `selectEntries`, `decideUsage`, `listAssets`, `verifyAsset`, `mako.*` primitives,
   v0.2 schemas); packaging is tested with `npm pack --dry-run`.
+- **AI client — `aifeed-mcp-server`** (`packages/aifeed-mcp-server/`): zero-dependency
+  Model Context Protocol server over stdio, built from `lib/` and `schema/` via
+  `npm run build:mcp`; tools `verify_manifest`, `fetch_aifeed`, `list_assets`,
+  `verify_asset`, `select_index`, `decide_usage`; run with `npm run mcp` or
+  `npx aifeed-mcp-server`.
 - **Publisher — WordPress** (`wp-plugin/`): reference publisher SDK (key
   management, manifest builder, JCS in PHP, signing, `/.well-known` serving, admin UI,
   DNS instructions, badge, monthly re-sign) plus the v0.2 MAKO layer (content
