@@ -19,6 +19,11 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   `select_index` (query ranking within page/token budgets), and `decide_usage`; HTTPS
   only (loopback with `AIFEED_MCP_ALLOW_PRIVATE=1`); run with `npm run mcp` or
   `npx aifeed-mcp-server`.
+- **PyPI package `aifeed`** — the independent Python verifier now ships as a
+  standard-library-only wheel (`pip install aifeed`): `aifeed.verify` and `aifeed.mako`
+  modules, `aifeed-verify`/`aifeed-mako` console scripts, PEP 440 pre-release `1.0.0a1`
+  mirroring the `1.0.0-draft` core; the historical `aifeed_verify`/`aifeed_mako` imports
+  remain as aliases.
 
 ## [1.0.0-draft] — 2026-09-16
 

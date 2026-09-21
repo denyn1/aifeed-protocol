@@ -67,6 +67,23 @@ npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_T
 - `files` 列表发布 `index.js`、`README.md`、`lib/`、`schema/` 与 `LICENSE`，零依赖。
   预发布版本必须 `--tag next`。
 
+## 发布 Python 包
+
+独立验证器从 `clients/python/` 以 PyPI 发行名 `aifeed` 发布（导入包 `aifeed/`，仅标准库）。
+版本以 PEP 440 预发布形式镜像发布核心（`1.0.0-draft` 对应 `1.0.0a1`），
+`check-consistency` 会校验这一对：
+
+```bash
+cd clients/python
+python -m build
+python -m twine upload dist/* -u __token__ -p "$PYPI_TOKEN" --non-interactive
+```
+
+- 在没有稳定版时 `pip install aifeed` 会安装预发布；如有疑问记录
+  `pip install --pre aifeed`。上传后用 `https://pypi.org/pypi/aifeed/json` 验证。
+- wheel 包含 `aifeed/`、别名模块 `aifeed_verify`/`aifeed_mako` 以及控制台脚本
+  `aifeed-verify`/`aifeed-mako`。
+
 ## WordPress 插件
 
 插件从本仓库的 `wp-plugin/` 发布。面向 WordPress.org 发布时：升头部/`Stable tag`，

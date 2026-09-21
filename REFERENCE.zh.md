@@ -68,8 +68,8 @@ node bin/cli.js validate ./my-site
 # 4. 验证线上域名（HTTPS + DNS 锚点 + 可选撤销检查）
 node bin/cli.js validate tokobuku.example --revocation-url https://aifeed.md/revoke/v1/tokobuku.example.json
 
-# 5. 用独立 Python 验证器执行同样的检查
-python clients/python/aifeed_verify.py ./my-site --json
+# 5. 用独立 Python 验证器执行同样的检查（`pip install aifeed`）
+aifeed-verify ./my-site --json    # 或：python clients/python/aifeed_verify.py ./my-site --json
 
 # 6. 离线包（气隙环境 / 审计）
 node bin/cli.js bundle create ./my-site --out ./my-bundle --domain example.com
@@ -232,6 +232,11 @@ HTML 页面声明 alternate 链接，签名增量索引与逐条摘要匹配。�
   Model Context Protocol 服务器，由 `lib/` 与 `schema/` 经 `npm run build:mcp` 构建；
   工具 `verify_manifest`、`fetch_aifeed`、`list_assets`、`verify_asset`、`select_index`、
   `decide_usage`；用 `npm run mcp` 或 `npx aifeed-mcp-server` 运行。
+- **独立验证器 — Python（`aifeed`）**（`clients/python/`）：仅标准库的包，已发布到 PyPI
+  （`pip install aifeed`，预发布）；模块 `aifeed.verify`（manifest、JCS、Ed25519、撤销、
+  离线包、Content-Digest）与 `aifeed.mako`（AIFEED Markdown/MAKO frontmatter、容器、索引），
+  以及 `aifeed-verify` 与 `aifeed-mako` 控制台脚本；历史 `aifeed_verify`/`aifeed_mako`
+  导入仍作为别名可用。
 - **发布方 — WordPress**（`wp-plugin/`）：参考发布方 SDK（密钥管理、manifest 构建器、
   PHP 版 JCS、签名、`/.well-known` 服务、管理界面、DNS 指引、徽章、每月重签），以及
   v0.2 MAKO 层（内容协商、签名 MAKO 文档、增量索引、mako-wp 共存）。已在真实

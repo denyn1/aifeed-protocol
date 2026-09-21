@@ -71,6 +71,24 @@ npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_T
 - The `files` list ships `index.js`, `README.md`, `lib/`, `schema/`, and `LICENSE` with
   zero dependencies. Prerelease versions require `--tag next`.
 
+## Publishing the Python package
+
+The independent verifier ships from `clients/python/` as the PyPI distribution `aifeed`
+(import package `aifeed/`; stdlib only). The version mirrors the release core as a PEP 440
+pre-release (`1.0.0a1` for `1.0.0-draft`), and `check-consistency` guards the pair:
+
+```bash
+cd clients/python
+python -m build
+python -m twine upload dist/* -u __token__ -p "$PYPI_TOKEN" --non-interactive
+```
+
+- `pip install aifeed` installs the pre-release while no stable version exists; document
+  `pip install --pre aifeed` when in doubt. Verify with
+  `https://pypi.org/pypi/aifeed/json` after the upload.
+- The wheel ships `aifeed/` plus the `aifeed_verify`/`aifeed_mako` alias modules and the
+  `aifeed-verify`/`aifeed-mako` console scripts.
+
 ## WordPress plugin
 
 The plugin ships from `wp-plugin/` in this repository. For a WordPress.org release,

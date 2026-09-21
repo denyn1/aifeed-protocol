@@ -248,6 +248,7 @@ footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-t
 <h4>Added</h4>
 <ul>
 <li><strong>MCP server (<code>aifeed-mcp-server</code>)</strong> — zero-dependency Model Context Protocol server over stdio: <code>verify_manifest</code>, <code>fetch_aifeed</code> (token-budgeted markdown with signature check), <code>list_assets</code>, <code>verify_asset</code> (byte-level <code>size</code>/<code>sha-256</code> proof), <code>select_index</code> (query ranking within page/token budgets), and <code>decide_usage</code>; HTTPS only (loopback with <code>AIFEED_MCP_ALLOW_PRIVATE=1</code>); run with <code>npm run mcp</code> or <code>npx aifeed-mcp-server</code>.</li>
+<li><strong>PyPI package <code>aifeed</code></strong> — the independent Python verifier now ships as a standard-library-only wheel (<code>pip install aifeed</code>): <code>aifeed.verify</code> and <code>aifeed.mako</code> modules, <code>aifeed-verify</code>/<code>aifeed-mako</code> console scripts, PEP 440 pre-release <code>1.0.0a1</code> mirroring the <code>1.0.0-draft</code> core; the historical <code>aifeed_verify</code>/<code>aifeed_mako</code> imports remain as aliases.</li>
 </ul>
 <h3>[1.0.0-draft] — 2026-09-16</h3>
 <h4>Added</h4>
@@ -323,6 +324,7 @@ footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-t
 <h4>Ditambahkan</h4>
 <ul>
 <li><strong>MCP server (<code>aifeed-mcp-server</code>)</strong> — server Model Context Protocol tanpa dependensi lewat stdio: <code>verify_manifest</code>, <code>fetch_aifeed</code> (markdown berbujet token dengan cek tanda tangan), <code>list_assets</code>, <code>verify_asset</code> (bukti <code>size</code>/<code>sha-256</code> level byte), <code>select_index</code> (pemeringkatan query dalam bujet halaman/token), dan <code>decide_usage</code>; hanya HTTPS (loopback dengan <code>AIFEED_MCP_ALLOW_PRIVATE=1</code>); jalankan via <code>npm run mcp</code> atau <code>npx aifeed-mcp-server</code>.</li>
+<li><strong>Paket PyPI <code>aifeed</code></strong> — verifier Python independen kini terbit sebagai wheel hanya pustaka standar (<code>pip install aifeed</code>): modul <code>aifeed.verify</code> dan <code>aifeed.mako</code>, skrip konsol <code>aifeed-verify</code>/<code>aifeed-mako</code>, pra-rilis PEP 440 <code>1.0.0a1</code> yang mencerminkan inti <code>1.0.0-draft</code>; impor lama <code>aifeed_verify</code>/<code>aifeed_mako</code> tetap sebagai alias.</li>
 </ul>
 <h3>[1.0.0-draft] — 2026-09-16</h3>
 <h4>Ditambahkan</h4>
@@ -398,6 +400,7 @@ footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-t
 <h4>新增</h4>
 <ul>
 <li><strong>MCP 服务器（<code>aifeed-mcp-server</code>）</strong> — 零依赖的 stdio Model Context Protocol 服务器： <code>verify_manifest</code>、<code>fetch_aifeed</code>（按 token 预算获取 markdown 并验签）、<code>list_assets</code>、 <code>verify_asset</code>（字节级 <code>size</code>/<code>sha-256</code> 证明）、<code>select_index</code>（在页面/token 预算内按 查询排序）、<code>decide_usage</code>；仅限 HTTPS（回环需 <code>AIFEED_MCP_ALLOW_PRIVATE=1</code>）；用 <code>npm run mcp</code> 或 <code>npx aifeed-mcp-server</code> 运行。</li>
+<li><strong>PyPI 包 <code>aifeed</code></strong> — 独立 Python 验证器现以仅标准库 wheel 发布（<code>pip install aifeed</code>）： <code>aifeed.verify</code> 与 <code>aifeed.mako</code> 模块、<code>aifeed-verify</code>/<code>aifeed-mako</code> 控制台脚本、 镜像 <code>1.0.0-draft</code> 核心的 PEP 440 预发布 <code>1.0.0a1</code>；历史 <code>aifeed_verify</code>/<code>aifeed_mako</code> 导入仍作为别名。</li>
 </ul>
 <h3>[1.0.0-draft] — 2026-09-16</h3>
 <h4>新增</h4>

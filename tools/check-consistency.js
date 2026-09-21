@@ -48,6 +48,20 @@ if (sdkVersion.split('-')[0] !== releaseVersion.split('-')[0]) {
   notes.push('SDK version ' + sdkVersion + ' differs from release ' + releaseVersion + ' (allowed: prerelease suffix)');
 }
 
+const coreVersion = releaseVersion.split('-')[0];
+const pyprojectVersion = /^version\s*=\s*"([^"]+)"/m.exec(read('clients/python/pyproject.toml'));
+const pyInitVersion = /^__version__\s*=\s*'([^']+)'/m.exec(read('clients/python/aifeed/__init__.py'));
+if (!pyprojectVersion) {
+  failures.push('clients/python/pyproject.toml: could not find project version');
+} else if (pyprojectVersion[1].replace(/(a|b|rc|\.dev)\d+$/, '') !== coreVersion) {
+  failures.push('clients/python/pyproject.toml: version "' + pyprojectVersion[1] + '" does not mirror core "' + coreVersion + '"');
+}
+if (!pyInitVersion) {
+  failures.push('clients/python/aifeed/__init__.py: could not find __version__');
+} else if (pyprojectVersion && pyInitVersion[1] !== pyprojectVersion[1]) {
+  failures.push('clients/python/aifeed/__init__.py: __version__ "' + pyInitVersion[1] + '" differs from pyproject "' + pyprojectVersion[1] + '"');
+}
+
 for (const [file, pkg] of [['package.json', rootPkg], ['packages/aifeed-verify/package.json', sdkPkg]]) {
   const deps = Object.keys(pkg.dependencies || {});
   const devDeps = Object.keys(pkg.devDependencies || {});

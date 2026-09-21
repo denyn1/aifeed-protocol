@@ -44,7 +44,9 @@ WordPress 发布插件、基准、网站与论文。
    [H] 法律审查）。见 `paper/CLAIMS.md`。
 8. **版本：** 发布号位于 `package.json`、`packages/aifeed-verify/package.json`、
    `wp-plugin/aifeed.php`（头部 + `AIFEED_VERSION`）、`wp-plugin/readme.txt`
-   （Stable tag）、`site/index.html`（徽章）与 `CHANGELOG.md` 顶部章节。一次变更中全部
+   （Stable tag）、`site/index.html`（徽章）与 `CHANGELOG.md` 顶部章节。Python 包以
+   PEP 440 预发布形式镜像同一核心（`clients/python/pyproject.toml` 与
+   `clients/python/aifeed/__init__.py`：核心 `1.0.0` 对应 `1.0.0a1`）。一次变更中全部
    一起升；`npm run check:consistency` 会证明一致。线格式版本（manifest `0.1`/`0.2`、
    AIFeed Markdown `1.0`、MAKO `0.2`）相互独立——不要随意重新编号。发布步骤：
    `docs/release.md`。
@@ -77,7 +79,7 @@ node bin/cli.js --help    # CLI 界面
 | `bin/cli.js` | CLI 入口（`keygen`、`sign`、`rotate`、`validate`、`bundle`、`aimd\|mako …`、`site build`） |
 | `packages/aifeed-verify/` | 已发布 SDK（`@aifeed/verify`）；`index.js`/`index.d.ts` 手写，`lib/`+`schema/` 为生成副本 |
 | `packages/aifeed-mcp-server/` | 已发布 MCP 服务器（`aifeed-mcp-server`）；`index.js` 手写，`lib/`+`schema/` 为生成副本 |
-| `clients/python/` | 独立验证器 + 测试（差分一致性） |
+| `clients/python/` | 独立验证器 + 测试（差分一致性）；以 `aifeed` 发布到 PyPI（`aifeed/` 包，仅标准库） |
 | `conformance/` | 向量：34 manifest、39 MAKO、11 AIFeed Markdown、撤销 + 离线包 |
 | `integrations/` | 发布方适配器：nginx、Caddy、Apache、Node、Next.js、PHP、Python ASGI、Go、GitHub Action |
 | `wp-plugin/` | WordPress 发布插件（PHP；自带 `tests/`） |

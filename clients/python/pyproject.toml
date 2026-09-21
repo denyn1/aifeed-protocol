@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aifeed"
+version = "1.0.0a1"
+description = "Independent Python verifier for AIFeed signed declarations: manifests, AIFeed Markdown, MAKO, revocation, bundles, and delta indexes"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["aifeed", "ai", "verification", "ed25519", "markdown", "mako", "content-permissions"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Security :: Cryptography",
+]
+
+[project.urls]
+Homepage = "https://aifeed.md"
+Repository = "https://github.com/denyn1/aifeed-protocol"
+Specification = "https://github.com/denyn1/aifeed-protocol/blob/main/spec/en/aifeed-v0.2.md"
+Changelog = "https://github.com/denyn1/aifeed-protocol/blob/main/CHANGELOG.md"
+
+[project.scripts]
+aifeed-verify = "aifeed.verify:main"
+aifeed-mako = "aifeed.mako:main"
+
+[tool.setuptools]
+packages = ["aifeed"]
+py-modules = ["aifeed_verify", "aifeed_mako"]

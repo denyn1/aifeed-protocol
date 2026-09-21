@@ -71,6 +71,25 @@ npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_T
 - Daftar `files` mengirim `index.js`, `README.md`, `lib/`, `schema/`, dan `LICENSE` tanpa
   dependensi. Versi prerelease mewajibkan `--tag next`.
 
+## Menerbitkan paket Python
+
+Verifier independen dikirim dari `clients/python/` sebagai distribusi PyPI `aifeed`
+(paket impor `aifeed/`; hanya stdlib). Versinya mencerminkan inti rilis sebagai
+pra-rilis PEP 440 (`1.0.0a1` untuk `1.0.0-draft`), dan `check-consistency` menjaga
+pasangannya:
+
+```bash
+cd clients/python
+python -m build
+python -m twine upload dist/* -u __token__ -p "$PYPI_TOKEN" --non-interactive
+```
+
+- `pip install aifeed` memasang pra-rilis selama belum ada versi stabil; dokumentasikan
+  `pip install --pre aifeed` bila ragu. Verifikasi lewat
+  `https://pypi.org/pypi/aifeed/json` setelah unggah.
+- Wheel mengirim `aifeed/` plus modul alias `aifeed_verify`/`aifeed_mako` dan skrip
+  konsol `aifeed-verify`/`aifeed-mako`.
+
 ## Plugin WordPress
 
 Plugin dikirim dari `wp-plugin/` di repositori ini. Untuk rilis WordPress.org, naikkan

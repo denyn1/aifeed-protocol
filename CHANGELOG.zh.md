@@ -17,6 +17,10 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   `verify_asset`（字节级 `size`/`sha-256` 证明）、`select_index`（在页面/token 预算内按
   查询排序）、`decide_usage`；仅限 HTTPS（回环需 `AIFEED_MCP_ALLOW_PRIVATE=1`）；用
   `npm run mcp` 或 `npx aifeed-mcp-server` 运行。
+- **PyPI 包 `aifeed`** — 独立 Python 验证器现以仅标准库 wheel 发布（`pip install aifeed`）：
+  `aifeed.verify` 与 `aifeed.mako` 模块、`aifeed-verify`/`aifeed-mako` 控制台脚本、
+  镜像 `1.0.0-draft` 核心的 PEP 440 预发布 `1.0.0a1`；历史
+  `aifeed_verify`/`aifeed_mako` 导入仍作为别名。
 
 ## [1.0.0-draft] — 2026-09-16
 

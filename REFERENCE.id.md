@@ -71,8 +71,8 @@ node bin/cli.js validate ./my-site
 # 4. Verifikasi domain live (HTTPS + anchor DNS + revokasi opsional)
 node bin/cli.js validate tokobuku.example --revocation-url https://aifeed.md/revoke/v1/tokobuku.example.json
 
-# 5. Pemeriksaan yang sama dengan verifier Python independen
-python clients/python/aifeed_verify.py ./my-site --json
+# 5. Pemeriksaan yang sama dengan verifier Python independen (`pip install aifeed`)
+aifeed-verify ./my-site --json    # atau: python clients/python/aifeed_verify.py ./my-site --json
 
 # 6. Bundel offline (air-gapped / audit)
 node bin/cli.js bundle create ./my-site --out ./my-bundle --domain example.com
@@ -250,6 +250,11 @@ kecil, menengah, besar, dan raksasa, masing-masing berakhir di manifest terverif
   via `npm run build:mcp`; tools `verify_manifest`, `fetch_aifeed`, `list_assets`,
   `verify_asset`, `select_index`, `decide_usage`; jalankan via `npm run mcp` atau
   `npx aifeed-mcp-server`.
+- **Verifier independen — Python (`aifeed`)** (`clients/python/`): paket hanya pustaka
+  standar yang terbit di PyPI (`pip install aifeed`, pra-rilis); modul `aifeed.verify`
+  (manifest, JCS, Ed25519, revokasi, bundel, Content-Digest) dan `aifeed.mako`
+  (frontmatter AIFEED Markdown/MAKO, kontainer, indeks), plus skrip konsol `aifeed-verify`
+  dan `aifeed-mako`; impor lama `aifeed_verify`/`aifeed_mako` tetap sebagai alias.
 - **Penerbit — WordPress** (`wp-plugin/`): SDK penerbit referensi (manajemen kunci,
   pembangun manifest, JCS di PHP, penandatanganan, penyajian `/.well-known`, UI admin,
   instruksi DNS, badge, re-sign bulanan) plus lapisan MAKO v0.2 (negosiasi konten, dokumen

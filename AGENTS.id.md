@@ -49,7 +49,9 @@ situs web, dan paper.
    estimasi, [S] simulasi terukur, [H] review hukum). Lihat `paper/CLAIMS.md`.
 8. **Versi:** nomor rilis hidup di `package.json`, `packages/aifeed-verify/package.json`,
    `wp-plugin/aifeed.php` (header + `AIFEED_VERSION`), `wp-plugin/readme.txt` (Stable
-   tag), `site/index.html` (chip), dan bagian teratas `CHANGELOG.md`. Naikkan semuanya
+   tag), `site/index.html` (chip), dan bagian teratas `CHANGELOG.md`. Paket Python
+   mencerminkan inti yang sama sebagai pra-rilis PEP 440 (`clients/python/pyproject.toml`
+   dan `clients/python/aifeed/__init__.py`: `1.0.0a1` untuk inti `1.0.0`). Naikkan semuanya
    dalam satu perubahan; `npm run check:consistency` membuktikannya. Versi wire (manifest
    `0.1`/`0.2`, AIFeed Markdown `1.0`, MAKO `0.2`) independen — jangan menomori ulang
    dengan sembarangan. Langkah rilis: `docs/release.md`.
@@ -82,7 +84,7 @@ node bin/cli.js --help    # permukaan CLI
 | `bin/cli.js` | Entri CLI (`keygen`, `sign`, `rotate`, `validate`, `bundle`, `aimd\|mako …`, `site build`) |
 | `packages/aifeed-verify/` | SDK terbit (`@aifeed/verify`); `index.js`/`index.d.ts` tulisan tangan, `lib/`+`schema/` salinan hasil generate |
 | `packages/aifeed-mcp-server/` | Server MCP terbit (`aifeed-mcp-server`); `index.js` tulisan tangan, `lib/`+`schema/` salinan hasil generate |
-| `clients/python/` | Verifier independen + tes (konformansi diferensial) |
+| `clients/python/` | Verifier independen + tes (konformansi diferensial); terbit di PyPI sebagai `aifeed` (paket `aifeed/`, hanya stdlib) |
 | `conformance/` | Vektor: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revokasi + bundel |
 | `integrations/` | Adapter penerbit: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, GitHub Action |
 | `wp-plugin/` | Plugin penerbit WordPress (PHP; punya `tests/` sendiri) |

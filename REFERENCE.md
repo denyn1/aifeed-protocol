@@ -75,8 +75,8 @@ node bin/cli.js validate ./my-site
 # 4. Verify a live domain (HTTPS + DNS anchor + optional revocation)
 node bin/cli.js validate tokobuku.example --revocation-url https://aifeed.md/revoke/v1/tokobuku.example.json
 
-# 5. Same check with the independent Python verifier
-python clients/python/aifeed_verify.py ./my-site --json
+# 5. Same check with the independent Python verifier (`pip install aifeed`)
+aifeed-verify ./my-site --json    # or: python clients/python/aifeed_verify.py ./my-site --json
 
 # 6. Offline bundle (air-gapped / audit)
 node bin/cli.js bundle create ./my-site --out ./my-bundle --domain example.com
@@ -252,6 +252,12 @@ medium, large, and giant sites, every track ending in a verified manifest.
   `npm run build:mcp`; tools `verify_manifest`, `fetch_aifeed`, `list_assets`,
   `verify_asset`, `select_index`, `decide_usage`; run with `npm run mcp` or
   `npx aifeed-mcp-server`.
+- **Independent verifier — Python (`aifeed`)** (`clients/python/`): standard-library-only
+  package published on PyPI (`pip install aifeed`, pre-release); modules `aifeed.verify`
+  (manifests, JCS, Ed25519, revocation, bundles, Content-Digest) and `aifeed.mako`
+  (AIFEED Markdown/MAKO frontmatter, containers, indices), plus the `aifeed-verify` and
+  `aifeed-mako` console scripts; historical `aifeed_verify`/`aifeed_mako` imports remain
+  as aliases.
 - **Publisher — WordPress** (`wp-plugin/`): reference publisher SDK (key
   management, manifest builder, JCS in PHP, signing, `/.well-known` serving, admin UI,
   DNS instructions, badge, monthly re-sign) plus the v0.2 MAKO layer (content

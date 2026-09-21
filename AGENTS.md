@@ -48,7 +48,9 @@ benchmarks, the website, and the paper.
    [E] model/estimate, [S] measured simulation, [H] legal review). See `paper/CLAIMS.md`.
 8. **Versions:** release number lives in `package.json`, `packages/aifeed-verify/package.json`,
    `wp-plugin/aifeed.php` (header + `AIFEED_VERSION`), `wp-plugin/readme.txt` (Stable
-   tag), `site/index.html` (chip), and the top `CHANGELOG.md` section. Bump everything
+   tag), `site/index.html` (chip), and the top `CHANGELOG.md` section. The Python package
+   mirrors the same core as a PEP 440 pre-release (`clients/python/pyproject.toml` and
+   `clients/python/aifeed/__init__.py`: `1.0.0a1` for core `1.0.0`). Bump everything
    in one change; `npm run check:consistency` proves it. Wire versions (manifest
    `0.1`/`0.2`, AIFeed Markdown `1.0`, MAKO `0.2`) are independent — do not renumber
    them casually. Release steps: `docs/release.md`.
@@ -81,7 +83,7 @@ node bin/cli.js --help    # CLI surface
 | `bin/cli.js` | CLI entry (`keygen`, `sign`, `rotate`, `validate`, `bundle`, `aimd\|mako …`, `site build`) |
 | `packages/aifeed-verify/` | Published SDK (`@aifeed/verify`); `index.js`/`index.d.ts` are hand-written, `lib/`+`schema/` are generated copies |
 | `packages/aifeed-mcp-server/` | Published MCP server (`aifeed-mcp-server`); `index.js` is hand-written, `lib/`+`schema/` are generated copies |
-| `clients/python/` | Independent verifier + tests (differential conformance) |
+| `clients/python/` | Independent verifier + tests (differential conformance); published on PyPI as `aifeed` (`aifeed/` package, stdlib only) |
 | `conformance/` | Vectors: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revocation + bundles |
 | `integrations/` | Publisher adapters: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, GitHub Action |
 | `wp-plugin/` | WordPress publisher plugin (PHP; its own `tests/`) |

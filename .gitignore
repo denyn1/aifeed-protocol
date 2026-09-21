@@ -37,3 +37,4 @@ site/*.sig
 site/robots.txt
 site/sitemap.xml
 site/og-image.png
+*.egg-info/
