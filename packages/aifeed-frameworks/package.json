@@ -1,0 +1,75 @@
+{
+  "name": "@aifeed/frameworks",
+  "version": "1.0.0-draft.1",
+  "description": "Drop-in build plugins that sign static output for AIFeed: Vite, Astro, Next.js, and a generic CLI",
+  "license": "MIT",
+  "homepage": "https://aifeed.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denyn1/aifeed-protocol.git",
+    "directory": "packages/aifeed-frameworks"
+  },
+  "bugs": {
+    "url": "https://github.com/denyn1/aifeed-protocol/issues"
+  },
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./vite": {
+      "types": "./vite.d.ts",
+      "default": "./vite.js"
+    },
+    "./astro": {
+      "types": "./astro.d.ts",
+      "default": "./astro.js"
+    },
+    "./next": {
+      "types": "./next.d.ts",
+      "default": "./next.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "aifeed-build": "cli.js",
+    "aifeed-next": "next-cli.js"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "vite.js",
+    "vite.d.ts",
+    "astro.js",
+    "astro.d.ts",
+    "next.js",
+    "next.d.ts",
+    "next-cli.js",
+    "cli.js",
+    "cli-args.js",
+    "lib",
+    "schema",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "aifeed",
+    "vite",
+    "vite-plugin",
+    "astro",
+    "astro-integration",
+    "nextjs",
+    "static-site",
+    "markdown",
+    "ed25519",
+    "ai",
+    "content-permissions"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

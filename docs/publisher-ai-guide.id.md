@@ -98,6 +98,11 @@ time; each phase ends with its gate; on any gate failure follow rule 5.
 
 Tujuan: manifest bertanda tangan + konten delta live, terverifikasi end-to-end.
 
+Memakai Vite, Astro, atau Next.js (`output: 'export'`)? Plugin drop-in menandatangani
+output build secara otomatis: `npm i -D @aifeed/frameworks@next`, `npx aifeed-build keygen
+--out .aifeed`, lalu tambahkan `aifeed({ domain })` ke konfigurasi framework (Next.js:
+`"postbuild": "aifeed-next --domain …"`). Sisa track ini berlaku tanpa perubahan.
+
 **PS-1 — kunci (hanya lokal).** Prompt:
 
 ```text

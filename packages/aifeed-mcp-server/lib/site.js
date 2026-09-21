@@ -325,7 +325,11 @@ function buildSite(options) {
     profile,
     languages: [options.locale.split('-')[0].toLowerCase()],
     llms: options.llms,
-    permissions: options.permissions
+    permissions: options.permissions,
+    limits: options.limits,
+    license: options.license,
+    sitemap: options.sitemap,
+    maxCheckIntervalHours: options.maxCheckIntervalHours
   });
   const manifestText = JSON.stringify(manifest, null, 2) + '\n';
   const manifestBytes = Buffer.from(manifestText, 'utf8');

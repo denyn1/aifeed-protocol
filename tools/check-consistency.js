@@ -27,6 +27,8 @@ function match(text, regex, label, expected, file) {
 
 const rootPkg = JSON.parse(read('package.json'));
 const sdkPkg = JSON.parse(read('packages/aifeed-verify/package.json'));
+const mcpPkg = JSON.parse(read('packages/aifeed-mcp-server/package.json'));
+const fwPkg = JSON.parse(read('packages/aifeed-frameworks/package.json'));
 const releaseVersion = rootPkg.version;
 
 match(read('wp-plugin/aifeed.php'), /^[\s*]*Version:\s*(\S+)/m, 'plugin header Version', releaseVersion, 'wp-plugin/aifeed.php');
@@ -62,11 +64,25 @@ if (!pyInitVersion) {
   failures.push('clients/python/aifeed/__init__.py: __version__ "' + pyInitVersion[1] + '" differs from pyproject "' + pyprojectVersion[1] + '"');
 }
 
-for (const [file, pkg] of [['package.json', rootPkg], ['packages/aifeed-verify/package.json', sdkPkg]]) {
+for (const [file, pkg] of [
+  ['package.json', rootPkg],
+  ['packages/aifeed-verify/package.json', sdkPkg],
+  ['packages/aifeed-mcp-server/package.json', mcpPkg],
+  ['packages/aifeed-frameworks/package.json', fwPkg]
+]) {
   const deps = Object.keys(pkg.dependencies || {});
   const devDeps = Object.keys(pkg.devDependencies || {});
   if (deps.length > 0 || devDeps.length > 0) {
     failures.push(file + ': zero-dependency rule violated (deps=' + deps.length + ', devDeps=' + devDeps.length + ')');
+  }
+}
+
+for (const [file, pkg] of [
+  ['packages/aifeed-mcp-server/package.json', mcpPkg],
+  ['packages/aifeed-frameworks/package.json', fwPkg]
+]) {
+  if (pkg.version.split('-')[0] !== releaseVersion.split('-')[0]) {
+    failures.push(file + ': version core "' + pkg.version.split('-')[0] + '" differs from release core "' + releaseVersion.split('-')[0] + '"');
   }
 }
 

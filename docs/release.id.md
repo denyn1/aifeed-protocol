@@ -90,6 +90,22 @@ python -m twine upload dist/* -u __token__ -p "$PYPI_TOKEN" --non-interactive
 - Wheel mengirim `aifeed/` plus modul alias `aifeed_verify`/`aifeed_mako` dan skrip
   konsol `aifeed-verify`/`aifeed-mako`.
 
+## Menerbitkan plugin framework
+
+`@aifeed/frameworks` membundel mesin builder (salinan hasil generate) dengan plugin Vite,
+Astro, dan Next.js plus bin `aifeed-build`/`aifeed-next`:
+
+```bash
+npm run build:fw && npm run fw:check
+cd packages/aifeed-frameworks
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- Versi prerelease mewajibkan `--tag next`; verifikasi dengan
+  `npm view @aifeed/frameworks version dist-tags`.
+- `check-consistency` menegakkan nol dependensi dan inti versi untuk paket ini (dan MCP
+  server).
+
 ## Plugin WordPress
 
 Plugin dikirim dari `wp-plugin/` di repositori ini. Untuk rilis WordPress.org, naikkan

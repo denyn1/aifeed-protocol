@@ -24,6 +24,7 @@ situs web, dan paper.
    |---|---|---|---|
    | `packages/aifeed-verify/{lib,schema,index.js,index.d.ts}` | `lib/`, `schema/` (+ `index.js` SDK tulisan tangan) | `npm run build:sdk` | `npm run sdk:check` |
    | `packages/aifeed-mcp-server/{lib,schema}` | `lib/`, `schema/` (+ `index.js` MCP tulisan tangan) | `npm run build:mcp` | `npm run mcp:check` |
+   | `packages/aifeed-frameworks/{lib,schema}` | `lib/`, `schema/` (+ `index.js` plugin, `vite.js`, `astro.js`, `next.js`, CLI tulisan tangan) | `npm run build:fw` | `npm run fw:check` |
    | `conformance/vectors/**` (34) | `tools/gen-vectors.js` | `npm run vectors` | `npm run vectors:check` |
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
@@ -51,7 +52,9 @@ situs web, dan paper.
    `wp-plugin/aifeed.php` (header + `AIFEED_VERSION`), `wp-plugin/readme.txt` (Stable
    tag), `site/index.html` (chip), dan bagian teratas `CHANGELOG.md`. Paket Python
    mencerminkan inti yang sama sebagai pra-rilis PEP 440 (`clients/python/pyproject.toml`
-   dan `clients/python/aifeed/__init__.py`: `1.0.0a1` untuk inti `1.0.0`). Naikkan semuanya
+   dan `clients/python/aifeed/__init__.py`: `1.0.0a1` untuk inti `1.0.0`). Inti versi paket
+   (`aifeed-verify`, `aifeed-mcp-server`, `@aifeed/frameworks`) harus sama dengan inti
+   rilis; `check-consistency` membuktikannya. Naikkan semuanya
    dalam satu perubahan; `npm run check:consistency` membuktikannya. Versi wire (manifest
    `0.1`/`0.2`, AIFeed Markdown `1.0`, MAKO `0.2`) independen — jangan menomori ulang
    dengan sembarangan. Langkah rilis: `docs/release.md`.
@@ -62,7 +65,7 @@ situs web, dan paper.
 npm run verify            # semuanya di bawah, satu gerbang
 npm run lint:syntax       # cek parse setiap file .js
 npm run check:consistency # versi, deps, secret, pasangan spec, target skrip
-npm test                  # suite Node (258 tes)
+npm test                  # suite Node (266 tes)
 npm run test:py           # verifier Python independen (45 tes)
 npm run bench:mako        # regenerasi benchmarks/mako-*.json + laporan
 npm run bench:enforcement # regenerasi benchmarks/enforcement-*.json|md
@@ -84,6 +87,7 @@ node bin/cli.js --help    # permukaan CLI
 | `bin/cli.js` | Entri CLI (`keygen`, `sign`, `rotate`, `validate`, `bundle`, `aimd\|mako …`, `site build`) |
 | `packages/aifeed-verify/` | SDK terbit (`@aifeed/verify`); `index.js`/`index.d.ts` tulisan tangan, `lib/`+`schema/` salinan hasil generate |
 | `packages/aifeed-mcp-server/` | Server MCP terbit (`aifeed-mcp-server`); `index.js` tulisan tangan, `lib/`+`schema/` salinan hasil generate |
+| `packages/aifeed-frameworks/` | Plugin build terbit (`@aifeed/frameworks`): Vite/Astro/Next.js + `aifeed-build`/`aifeed-next`; `lib/`+`schema/` salinan hasil generate |
 | `clients/python/` | Verifier independen + tes (konformansi diferensial); terbit di PyPI sebagai `aifeed` (paket `aifeed/`, hanya stdlib) |
 | `conformance/` | Vektor: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revokasi + bundel |
 | `integrations/` | Adapter penerbit: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, GitHub Action |

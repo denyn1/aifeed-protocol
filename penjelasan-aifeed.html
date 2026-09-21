@@ -485,7 +485,11 @@ footer.foot a:hover { color: var(--accent); }
     <div class="grid">
       <div class="card">
         <h3>Any static site</h3>
-        <p><code>npx aifeed site build ./public</code> generates the manifest, signed content, and indexes for Hugo, Jekyll, Astro, Next export, or plain HTML.</p>
+        <p><code>npx aifeed-build ./public --domain example.com</code> signs Hugo, Jekyll, Eleventy, or plain HTML output in place — manifest, per-page markdown, indexes, and <code>llms.txt</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Framework plugins</h3>
+        <p><code>@aifeed/frameworks</code> turns Vite, Astro, and Next.js builds into signed AIFeed origins with one line of config — no manual CLI step.</p>
       </div>
       <div class="card">
         <h3>WordPress</h3>

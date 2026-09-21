@@ -96,6 +96,11 @@ time; each phase ends with its gate; on any gate failure follow rule 5.
 
 Goal: signed manifest + delta content live, verified end-to-end.
 
+Using Vite, Astro, or Next.js (`output: 'export'`)? The drop-in plugins sign the build
+output automatically: `npm i -D @aifeed/frameworks@next`, `npx aifeed-build keygen --out
+.aifeed`, then add `aifeed({ domain })` to the framework config (Next.js:
+`"postbuild": "aifeed-next --domain …"`). The rest of this track applies unchanged.
+
 **PS-1 — keys (local only).** Prompt:
 
 ```text

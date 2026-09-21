@@ -24,6 +24,13 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   modules, `aifeed-verify`/`aifeed-mako` console scripts, PEP 440 pre-release `1.0.0a1`
   mirroring the `1.0.0-draft` core; the historical `aifeed_verify`/`aifeed_mako` imports
   remain as aliases.
+- **Drop-in framework plugins (`@aifeed/frameworks`)** — one-line build integrations:
+  `aifeed()` for Vite and Astro, `withAifeed()` plus the `aifeed-next` postbuild bin for
+  Next.js, and the generic `aifeed-build` CLI (with `keygen`) for any static generator;
+  signs the build output in place (manifest, per-page AIFeed Markdown/MAKO, delta index,
+  `llms.txt`), injects `<link rel="alternate">`, prunes stale generated files, and
+  self-verifies signatures/digests; environment fallbacks `AIFEED_DOMAIN`, `AIFEED_KEY`,
+  `AIFEED_BASE_URL`.
 
 ## [1.0.0-draft] — 2026-09-16
 

@@ -52,10 +52,12 @@
     "sdk:check": "node tools/build-sdk.js --check",
     "build:mcp": "node tools/build-mcp.js",
     "mcp:check": "node tools/build-mcp.js --check",
+    "build:fw": "node tools/build-frameworks.js",
+    "fw:check": "node tools/build-frameworks.js --check",
     "mcp": "node packages/aifeed-mcp-server/index.js",
     "lint:syntax": "node tools/check-syntax.js",
     "check:consistency": "node tools/check-consistency.js",
-    "verify": "npm run lint:syntax && npm run check:consistency && npm test && npm run test:py && npm run vectors:check && npm run mako:vectors:check && npm run aimd:vectors:check && npm run build:sdk && npm run sdk:check && npm run build:mcp && npm run mcp:check && npm run paper:check && npm run render:html && npm run build:site && npm run demos:check"
+    "verify": "npm run lint:syntax && npm run check:consistency && npm test && npm run test:py && npm run vectors:check && npm run mako:vectors:check && npm run aimd:vectors:check && npm run build:sdk && npm run sdk:check && npm run build:mcp && npm run mcp:check && npm run build:fw && npm run fw:check && npm run paper:check && npm run render:html && npm run build:site && npm run demos:check"
   },
   "engines": {
     "node": ">=20"

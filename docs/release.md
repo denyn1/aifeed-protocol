@@ -89,6 +89,22 @@ python -m twine upload dist/* -u __token__ -p "$PYPI_TOKEN" --non-interactive
 - The wheel ships `aifeed/` plus the `aifeed_verify`/`aifeed_mako` alias modules and the
   `aifeed-verify`/`aifeed-mako` console scripts.
 
+## Publishing the framework plugins
+
+`@aifeed/frameworks` bundles the builder engine (generated copies) with the Vite, Astro,
+and Next.js plugins plus the `aifeed-build`/`aifeed-next` bins:
+
+```bash
+npm run build:fw && npm run fw:check
+cd packages/aifeed-frameworks
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- Prerelease versions require `--tag next`; verify with
+  `npm view @aifeed/frameworks version dist-tags`.
+- `check-consistency` enforces zero dependencies and the version core for this package
+  (and the MCP server).
+
 ## WordPress plugin
 
 The plugin ships from `wp-plugin/` in this repository. For a WordPress.org release,

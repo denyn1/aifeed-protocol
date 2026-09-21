@@ -18,6 +18,9 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | 平台 | 服务方式（协商） | 使用的文件 |
 |---|---|---|
 | 静态托管（Netlify、GitHub Pages、S3……） | 显式端点（`/path.aifeed.md`、`/path.mako.md` + `<link rel="alternate">`；`--inject` 会写入） | `aifeed site build` 输出 |
+| Vite（构建插件） | 为 `build.outDir` 签名并注入 alternate | [`@aifeed/frameworks/vite`](../packages/aifeed-frameworks/README.zh.md) |
+| Astro（集成） | 为 `astro:build:done` 输出签名 | [`@aifeed/frameworks/astro`](../packages/aifeed-frameworks/README.zh.md) |
+| Next.js 静态导出 | `postbuild` → `aifeed-next` 为 `out/` 签名 | [`@aifeed/frameworks/next`](../packages/aifeed-frameworks/README.zh.md) |
 | nginx | Accept → `.aifeed.md` / `.mako.md` 重写 | [`nginx/aifeed-content.conf`](nginx/aifeed-content.conf) |
 | Caddy | Accept → `.aifeed.md` / `.mako.md` 重写 | [`caddy/Caddyfile`](caddy/Caddyfile) |
 | Apache | mod_rewrite + ForceType | [`apache/.htaccess`](apache/.htaccess) |
@@ -63,6 +66,32 @@ SDK 拒绝。
 ## 平台快速上手
 
 ### 静态 / SSG（Hugo、Jekyll、Astro、Eleventy、Vite、Next export）
+
+框架插件会自动为构建输出签名：
+
+```bash
+npm install --save-dev @aifeed/frameworks@next
+npx aifeed-build keygen --out .aifeed    # 每个项目一次
+```
+
+```js
+// vite.config.js
+import { aifeed } from '@aifeed/frameworks/vite';
+export default { plugins: [aifeed({ domain: 'example.com', keyPath: '.aifeed/aifeed-private.pem' })] };
+```
+
+```js
+// astro.config.mjs
+import aifeed from '@aifeed/frameworks/astro';
+export default { integrations: [aifeed({ domain: 'example.com', keyPath: '.aifeed/aifeed-private.pem' })] };
+```
+
+```jsonc
+// Next.js 静态导出 —— package.json
+{ "scripts": { "postbuild": "aifeed-next --domain example.com --key .aifeed/aifeed-private.pem" } }
+```
+
+或用 CLI 手动为任意输出签名：
 
 ```bash
 aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \

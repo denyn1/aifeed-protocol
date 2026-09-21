@@ -84,6 +84,20 @@ python -m twine upload dist/* -u __token__ -p "$PYPI_TOKEN" --non-interactive
 - wheel 包含 `aifeed/`、别名模块 `aifeed_verify`/`aifeed_mako` 以及控制台脚本
   `aifeed-verify`/`aifeed-mako`。
 
+## 发布框架插件
+
+`@aifeed/frameworks` 打包构建引擎（生成副本）与 Vite、Astro、Next.js 插件，以及
+`aifeed-build`/`aifeed-next` 命令：
+
+```bash
+npm run build:fw && npm run fw:check
+cd packages/aifeed-frameworks
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- 预发布版本必须 `--tag next`；用 `npm view @aifeed/frameworks version dist-tags` 验证。
+- `check-consistency` 对该包（以及 MCP 服务器）强制零依赖与版本核心一致。
+
 ## WordPress 插件
 
 插件从本仓库的 `wp-plugin/` 发布。面向 WordPress.org 发布时：升头部/`Stable tag`，

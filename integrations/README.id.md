@@ -19,6 +19,9 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | Platform | Menyajikan (negosiasi) | File yang dipakai |
 |---|---|---|
 | Hosting statis (Netlify, GitHub Pages, S3, …) | endpoint eksplisit (`/path.aifeed.md`, `/path.mako.md` + `<link rel="alternate">`; `--inject` menulisnya) | output `aifeed site build` |
+| Vite (plugin build) | menandatangani `build.outDir` dan menyuntik alternate | [`@aifeed/frameworks/vite`](../packages/aifeed-frameworks/README.id.md) |
+| Astro (integrasi) | menandatangani output `astro:build:done` | [`@aifeed/frameworks/astro`](../packages/aifeed-frameworks/README.id.md) |
+| Next.js static export | `postbuild` → `aifeed-next` menandatangani `out/` | [`@aifeed/frameworks/next`](../packages/aifeed-frameworks/README.id.md) |
 | nginx | Accept → rewrite `.aifeed.md` / `.mako.md` | [`nginx/aifeed-content.conf`](nginx/aifeed-content.conf) |
 | Caddy | Accept → rewrite `.aifeed.md` / `.mako.md` | [`caddy/Caddyfile`](caddy/Caddyfile) |
 | Apache | mod_rewrite + ForceType | [`apache/.htaccess`](apache/.htaccess) |
@@ -69,6 +72,32 @@ bersih (`/dir`). Konteks tanda tangan di dalam tiap `.sig` cocok dengan media ty
 ## Quickstart platform
 
 ### Statis / SSG (Hugo, Jekyll, Astro, Eleventy, Vite, Next export)
+
+Plugin framework menandatangani output build secara otomatis:
+
+```bash
+npm install --save-dev @aifeed/frameworks@next
+npx aifeed-build keygen --out .aifeed    # sekali per proyek
+```
+
+```js
+// vite.config.js
+import { aifeed } from '@aifeed/frameworks/vite';
+export default { plugins: [aifeed({ domain: 'example.com', keyPath: '.aifeed/aifeed-private.pem' })] };
+```
+
+```js
+// astro.config.mjs
+import aifeed from '@aifeed/frameworks/astro';
+export default { integrations: [aifeed({ domain: 'example.com', keyPath: '.aifeed/aifeed-private.pem' })] };
+```
+
+```jsonc
+// Next.js static export — package.json
+{ "scripts": { "postbuild": "aifeed-next --domain example.com --key .aifeed/aifeed-private.pem" } }
+```
+
+Atau tandatangani output apa pun secara manual dengan CLI:
 
 ```bash
 aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \

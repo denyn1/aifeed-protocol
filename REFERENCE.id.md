@@ -148,7 +148,7 @@ Exit code: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage atau error internal
 ## Tes
 
 ```bash
-npm test                 # suite tes Node (258 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci, server MCP)
+npm test                 # suite tes Node (266 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci, server MCP)
 npm run test:py          # suite verifier Python (45 tes: vektor, paritas AIFeed Markdown/MAKO, revokasi, bundel, contoh)
 npm run vectors          # regenerasi vektor manifest deterministik + self-check (34)
 npm run mako:vectors     # regenerasi vektor konformansi MAKO + self-check (39)
@@ -250,6 +250,11 @@ kecil, menengah, besar, dan raksasa, masing-masing berakhir di manifest terverif
   via `npm run build:mcp`; tools `verify_manifest`, `fetch_aifeed`, `list_assets`,
   `verify_asset`, `select_index`, `decide_usage`; jalankan via `npm run mcp` atau
   `npx aifeed-mcp-server`.
+- **Plugin build — `@aifeed/frameworks`** (`packages/aifeed-frameworks/`): plugin drop-in
+  Vite, Astro, dan Next.js plus bin `aifeed-build`/`aifeed-next` yang menandatangani output
+  build statis (manifest, markdown per halaman, indeks delta, `llms.txt`) dengan fallback
+  environment (`AIFEED_DOMAIN`, `AIFEED_KEY`, `AIFEED_BASE_URL`); salinan mesin dihasilkan
+  via `npm run build:fw`.
 - **Verifier independen — Python (`aifeed`)** (`clients/python/`): paket hanya pustaka
   standar yang terbit di PyPI (`pip install aifeed`, pra-rilis); modul `aifeed.verify`
   (manifest, JCS, Ed25519, revokasi, bundel, Content-Digest) dan `aifeed.mako`

@@ -143,7 +143,7 @@ node bin/cli.js rotate --dir ./my-site
 ## 测试
 
 ```bash
-npm test                 # Node 测试套件（258 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换、MCP 服务器）
+npm test                 # Node 测试套件（266 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换、MCP 服务器）
 npm run test:py          # Python 验证器套件（45 项：向量、AIFeed Markdown/MAKO 对等、撤销、离线包、示例）
 npm run vectors          # 重新生成确定性 manifest 向量并自检（34）
 npm run mako:vectors     # 重新生成 MAKO 一致性向量并自检（39）
@@ -232,6 +232,10 @@ HTML 页面声明 alternate 链接，签名增量索引与逐条摘要匹配。�
   Model Context Protocol 服务器，由 `lib/` 与 `schema/` 经 `npm run build:mcp` 构建；
   工具 `verify_manifest`、`fetch_aifeed`、`list_assets`、`verify_asset`、`select_index`、
   `decide_usage`；用 `npm run mcp` 或 `npx aifeed-mcp-server` 运行。
+- **构建插件 — `@aifeed/frameworks`**（`packages/aifeed-frameworks/`）：即插即用的 Vite、
+  Astro 与 Next.js 插件，以及为静态构建输出签名的 `aifeed-build`/`aifeed-next` 命令
+  （manifest、逐页 markdown、增量索引、`llms.txt`），支持环境变量回退
+  （`AIFEED_DOMAIN`、`AIFEED_KEY`、`AIFEED_BASE_URL`）；引擎副本经 `npm run build:fw` 生成。
 - **独立验证器 — Python（`aifeed`）**（`clients/python/`）：仅标准库的包，已发布到 PyPI
   （`pip install aifeed`，预发布）；模块 `aifeed.verify`（manifest、JCS、Ed25519、撤销、
   离线包、Content-Digest）与 `aifeed.mako`（AIFEED Markdown/MAKO frontmatter、容器、索引），

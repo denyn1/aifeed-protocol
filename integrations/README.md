@@ -18,6 +18,9 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | Platform | Serve (negotiation) | Files to use |
 |---|---|---|
 | Static hosting (Netlify, GitHub Pages, S3, …) | explicit endpoints (`/path.aifeed.md`, `/path.mako.md` + `<link rel="alternate">`; `--inject` writes them) | `aifeed site build` output |
+| Vite (build plugin) | signs `build.outDir` and injects alternates | [`@aifeed/frameworks/vite`](../packages/aifeed-frameworks/README.md) |
+| Astro (integration) | signs the `astro:build:done` output | [`@aifeed/frameworks/astro`](../packages/aifeed-frameworks/README.md) |
+| Next.js static export | `postbuild` → `aifeed-next` signs `out/` | [`@aifeed/frameworks/next`](../packages/aifeed-frameworks/README.md) |
 | nginx | Accept → `.aifeed.md` / `.mako.md` rewrite | [`nginx/aifeed-content.conf`](nginx/aifeed-content.conf) |
 | Caddy | Accept → `.aifeed.md` / `.mako.md` rewrite | [`caddy/Caddyfile`](caddy/Caddyfile) |
 | Apache | mod_rewrite + ForceType | [`apache/.htaccess`](apache/.htaccess) |
@@ -66,6 +69,32 @@ path (`/dir`). Signature context inside each `.sig` matches its media type
 ## Platform quickstarts
 
 ### Static / SSG (Hugo, Jekyll, Astro, Eleventy, Vite, Next export)
+
+Framework plugins sign the build output automatically:
+
+```bash
+npm install --save-dev @aifeed/frameworks@next
+npx aifeed-build keygen --out .aifeed    # once per project
+```
+
+```js
+// vite.config.js
+import { aifeed } from '@aifeed/frameworks/vite';
+export default { plugins: [aifeed({ domain: 'example.com', keyPath: '.aifeed/aifeed-private.pem' })] };
+```
+
+```js
+// astro.config.mjs
+import aifeed from '@aifeed/frameworks/astro';
+export default { integrations: [aifeed({ domain: 'example.com', keyPath: '.aifeed/aifeed-private.pem' })] };
+```
+
+```jsonc
+// Next.js static export — package.json
+{ "scripts": { "postbuild": "aifeed-next --domain example.com --key .aifeed/aifeed-private.pem" } }
+```
+
+Or sign any output manually with the CLI:
 
 ```bash
 aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \

@@ -21,6 +21,11 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   `aifeed.verify` 与 `aifeed.mako` 模块、`aifeed-verify`/`aifeed-mako` 控制台脚本、
   镜像 `1.0.0-draft` 核心的 PEP 440 预发布 `1.0.0a1`；历史
   `aifeed_verify`/`aifeed_mako` 导入仍作为别名。
+- **即插即用框架插件（`@aifeed/frameworks`）** — 一行构建集成：Vite 与 Astro 用
+  `aifeed()`，Next.js 用 `withAifeed()` 加 `aifeed-next` postbuild 命令，任意静态生成器
+  用通用 `aifeed-build` CLI（含 `keygen`）；就地签名构建输出（manifest、逐页 AIFeed
+  Markdown/MAKO、增量索引、`llms.txt`）、注入 `<link rel="alternate">`、清理过期生成文件、
+  自校验签名/摘要；环境变量回退 `AIFEED_DOMAIN`、`AIFEED_KEY`、`AIFEED_BASE_URL`。
 
 ## [1.0.0-draft] — 2026-09-16
 

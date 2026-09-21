@@ -152,7 +152,7 @@ Exit codes: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage or internal error.
 ## Tests
 
 ```bash
-npm test                 # Node test suite (258 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation, MCP server)
+npm test                 # Node test suite (266 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation, MCP server)
 npm run test:py          # Python verifier suite (45 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
 npm run vectors          # regenerate deterministic manifest vectors and self-check (34)
 npm run mako:vectors     # regenerate MAKO conformance vectors and self-check (39)
@@ -252,6 +252,11 @@ medium, large, and giant sites, every track ending in a verified manifest.
   `npm run build:mcp`; tools `verify_manifest`, `fetch_aifeed`, `list_assets`,
   `verify_asset`, `select_index`, `decide_usage`; run with `npm run mcp` or
   `npx aifeed-mcp-server`.
+- **Build plugins — `@aifeed/frameworks`** (`packages/aifeed-frameworks/`): drop-in Vite,
+  Astro, and Next.js plugins plus the `aifeed-build`/`aifeed-next` binaries that sign the
+  static build output (manifest, per-page markdown, delta index, `llms.txt`) with
+  environment fallbacks (`AIFEED_DOMAIN`, `AIFEED_KEY`, `AIFEED_BASE_URL`); engine copies
+  are generated via `npm run build:fw`.
 - **Independent verifier — Python (`aifeed`)** (`clients/python/`): standard-library-only
   package published on PyPI (`pip install aifeed`, pre-release); modules `aifeed.verify`
   (manifests, JCS, Ed25519, revocation, bundles, Content-Digest) and `aifeed.mako`

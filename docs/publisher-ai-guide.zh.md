@@ -95,6 +95,11 @@ time; each phase ends with its gate; on any gate failure follow rule 5.
 
 目标：签名 manifest + 增量内容上线，端到端验证通过。
 
+使用 Vite、Astro 或 Next.js（`output: 'export'`）？即插即用插件会自动为构建输出签名：
+`npm i -D @aifeed/frameworks@next`、`npx aifeed-build keygen --out .aifeed`，然后在框架
+配置中加入 `aifeed({ domain })`（Next.js：`"postbuild": "aifeed-next --domain …"`）。
+本轨道其余步骤不变。
+
 **PS-1 — 密钥（仅本机）。** 提示词：
 
 ```text

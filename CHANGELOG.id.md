@@ -22,6 +22,13 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   pustaka standar (`pip install aifeed`): modul `aifeed.verify` dan `aifeed.mako`, skrip
   konsol `aifeed-verify`/`aifeed-mako`, pra-rilis PEP 440 `1.0.0a1` yang mencerminkan inti
   `1.0.0-draft`; impor lama `aifeed_verify`/`aifeed_mako` tetap sebagai alias.
+- **Plugin framework drop-in (`@aifeed/frameworks`)** — integrasi build satu baris:
+  `aifeed()` untuk Vite dan Astro, `withAifeed()` plus bin postbuild `aifeed-next` untuk
+  Next.js, dan CLI generik `aifeed-build` (dengan `keygen`) untuk generator statis apa pun;
+  menandatangani output build di tempat (manifest, AIFeed Markdown/MAKO per halaman, indeks
+  delta, `llms.txt`), menyuntikkan `<link rel="alternate">`, memangkas berkas generate
+  basi, dan memverifikasi sendiri tanda tangan/digest; fallback environment
+  `AIFEED_DOMAIN`, `AIFEED_KEY`, `AIFEED_BASE_URL`.
 
 ## [1.0.0-draft] — 2026-09-16
 
