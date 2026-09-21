@@ -13,7 +13,7 @@ it phase by phase. Each phase ends in a machine-checkable gate. Nothing proceeds
 assumptions.
 
 > Companion for crawlers/consumers: [`agent-quickstart.md`](agent-quickstart.md).
-> Command reference: [`../REFERENCE.md`](../REFERENCE.md). Rotation runbook:
+> Command reference: [`REFERENCE.md`](REFERENCE.md). Rotation runbook:
 > [`rotation.md`](rotation.md). Deploy notes: [`deploy-site.md`](deploy-site.md).
 
 ## 0. Ground rules — paste once, enforce always
@@ -428,7 +428,7 @@ Common causes:
 ## Links
 
 - Consumer side: [`agent-quickstart.md`](agent-quickstart.md)
-- Command reference: [`../REFERENCE.md`](../REFERENCE.md)
+- Command reference: [`REFERENCE.md`](REFERENCE.md)
 - Rotation runbook: [`rotation.md`](rotation.md)
 - Deploy + DNS: [`deploy-site.md`](deploy-site.md)
 - Platform adapters: [`../integrations/README.md`](../integrations/README.md)

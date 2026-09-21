@@ -13,7 +13,7 @@ informasional; bila berbeda, versi Inggris yang berlaku.
 
 Dokumen terkait di luar `spec/`:
 
-- [`../EXTENSION.md`](../EXTENSION.md) — proposal kepada komunitas MAKO untuk lapisan trust
+- [`../docs/EXTENSION.md`](../docs/EXTENSION.md) — proposal kepada komunitas MAKO untuk lapisan trust
   (tanda tangan + izin + delta) sebagai ekstensi hulu.
 - [`../paper/main.md`](../paper/main.md) — draf preprint arXiv (judul kerja:
   *AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the

@@ -77,11 +77,11 @@ AIFeed 如何组成、各层负责什么，以及在哪里扩展。智能体/人
 |---|---|
 | 新增许可键 | `schema/ai-json.v0.2.json` + `lib/validate.js` + 两个验证器 + 一个向量 |
 | 新增向量 | 在 `tools/` 写生成器，运行，保持 `…:vectors:check` 绿 |
-| 新增 CLI 命令 | `bin/cli.js` + 帮助 + `tests/cli*.test.js` + `REFERENCE.md` |
+| 新增 CLI 命令 | `bin/cli.js` + 帮助 + `tests/cli*.test.js` + `docs/REFERENCE.md` |
 | 新增平台适配器 | 在 `integrations/` 新建目录 + `integrations/README.md` 一行（+ Node handler 测试） |
 | 改变内容形态 | `lib/mako.js` / `lib/mako-html.js` + AIMD/MAKO 生成器 + 规范镜像 + Python 对等 |
 | 改动 SDK API | `packages/aifeed-verify/index.js` + `index.d.ts`，然后 `npm run build:sdk && npm run sdk:check` |
-| 改动站点 | `site/index.html` + 根目录 `penjelasan-aifeed.html`；用 `npm run verify` 重新生成 |
+| 改动站点 | `site/index.html` + 根目录 `docs/penjelasan-aifeed.html`；用 `npm run verify` 重新生成 |
 | 新增演示源站 | `demos/sites.js`（可选 `demos/verifier/` 资源），然后 `npm run demos:check` |
 | 改变边缘策略 | `functions/[[path]].js`；helper 在 `tests/gen-demos.test.js` 有单元测试 |
 
@@ -92,5 +92,5 @@ AIFeed 如何组成、各层负责什么，以及在哪里扩展。智能体/人
 `conformance/**` 来自 `tools/gen-*`；报告/站点 HTML 来自
 `tools/render-html.js` + `tools/build-site.js`；arXiv 包从 `paper/` 构建。
 手写：`spec/`、`schema/`、`lib/`、`bin/`、`clients/`、`integrations/`、
-`wp-plugin/`、`tools/`、`site/index.html`、`penjelasan-aifeed.html`、`paper/*.tex|md`、
+`wp-plugin/`、`tools/`、`site/index.html`、`docs/penjelasan-aifeed.html`、`paper/*.tex|md`、
 SDK 的 `index.js`/`index.d.ts`，以及全部文档。

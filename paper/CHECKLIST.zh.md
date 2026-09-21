@@ -79,6 +79,6 @@
 
 ## arXiv 之后
 
-- **[ ]** 把 `EXTENSION.md` 提交给 mako-spec（上游信任层提案）。
+- **[ ]** 把 `docs/EXTENSION.md` 提交给 mako-spec（上游信任层提案）。
 - **[ ]** 把协议核心转化为 IETF Internet-Draft（AIFeed Markdown/MAKO 配置作为附录）。
 - **[ ]** 与论文一起发布开放核心许可政策摘要（已在 `GOVERNANCE.md`）。

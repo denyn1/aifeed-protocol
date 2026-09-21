@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="aifeed-logo.svg" width="92" alt="AIFeed 标志">
+  <img src="assets/aifeed-logo.svg" width="92" alt="AIFeed 标志">
 </p>
 
 <h1 align="center">AIFeed</h1>
@@ -9,7 +9,7 @@
 <p align="center"><strong>面向 AI 网络的内容许可签名标准。</strong><br>
 声明、签名并撤销 AI 智能体可以对你的内容做什么——并让智能体能够验证它。</p>
 
-<p align="center"><a href="How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ 观看：AIFeed 如何阻止网页抓取浪费</strong></a></p>
+<p align="center"><a href="assets/How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ 观看：AIFeed 如何阻止网页抓取浪费</strong></a></p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="npm 版本"></a>
@@ -160,18 +160,18 @@ node bin/cli.js site build ./public --domain example.com --key keys/aifeed-priva
 | [`paper/`](paper/) | 预印本：LaTeX 源码、PDF、主张台账、arXiv 打包 |
 | [`docs/`](docs/) | 智能体快速上手、部署与命名空间指南、项目说明 |
 | [`studio/`](studio/) | 零依赖本地发布应用：抓取、声明、构建、验证、导出、轮换 |
-| [`REFERENCE.md`](REFERENCE.md) | 参考实现细节、验证内容、CLI 快速上手 |
+| [`docs/REFERENCE.md`](docs/REFERENCE.md) | 参考实现细节、验证内容、CLI 快速上手 |
 
 ## 文档
 
 - 规范：[`spec/en`](spec/en) · [`spec/id`](spec/id) · [`spec/zh`](spec/zh) · [schema](schema)
-- 参考实现：[`REFERENCE.md`](REFERENCE.md)
+- 参考实现：[`docs/REFERENCE.md`](docs/REFERENCE.md)
 - 维护契约（AI 智能体与开发者）：[`AGENTS.md`](AGENTS.md)
 - 架构：[`docs/architecture.md`](docs/architecture.md) · 发布指南：[`docs/release.md`](docs/release.md)
 - 智能体快速上手（客户端侧）：[`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - 发布方 AI 指南（所有者侧）：[`docs/publisher-ai-guide.zh.md`](docs/publisher-ai-guide.zh.md)
 - 发布方 Studio（本地应用）：[`studio/README.zh.md`](studio/README.zh.md)
-- 完整指南：[`penjelasan-aifeed.html`](penjelasan-aifeed.html)（<https://aifeed.md/penjelasan.html> 的源码）
+- 完整指南：[`docs/penjelasan-aifeed.html`](docs/penjelasan-aifeed.html)（<https://aifeed.md/penjelasan.html> 的源码）
 - 安全政策：[`SECURITY.md`](SECURITY.md)
 - 治理与开放核心政策：[`GOVERNANCE.md`](GOVERNANCE.md)
 - 部署站点：[`docs/deploy-site.md`](docs/deploy-site.md)

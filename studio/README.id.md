@@ -120,5 +120,5 @@ Semua panggilan API butuh header `x-studio-token` (SSE memakai `?token=`).
 ## Terkait
 
 - Panduan AI publisher (setup via agen): [`../docs/publisher-ai-guide.id.md`](../docs/publisher-ai-guide.id.md)
-- Referensi perintah: [`../REFERENCE.id.md`](../REFERENCE.id.md)
+- Referensi perintah: [`../docs/REFERENCE.id.md`](../docs/REFERENCE.id.md)
 - Runbook rotasi: [`../docs/rotation.id.md`](../docs/rotation.id.md)

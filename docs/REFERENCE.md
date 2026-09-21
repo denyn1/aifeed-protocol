@@ -234,14 +234,14 @@ delta index verifies with matching per-entry digests. See `wp-plugin/README.md`.
 
 Before crawling, an agent should discover and verify the publisher's declaration, honour
 permissions and crawl limits, and use the delta index. Guide:
-[`docs/agent-quickstart.md`](docs/agent-quickstart.md); runnable example:
-[`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js) —
+[`agent-quickstart.md`](agent-quickstart.md); runnable example:
+[`../examples/agent/compliant-agent.js`](../examples/agent/compliant-agent.js) —
 `node examples/agent/compliant-agent.js https://example.com --use retrieval --fetch`.
 
 ## Publisher AI guide
 
 Website owners: hand your AI coding agent this guide and it installs AIFeed end-to-end:
-[`docs/publisher-ai-guide.md`](docs/publisher-ai-guide.md) — one track each for small,
+[`publisher-ai-guide.md`](publisher-ai-guide.md) — one track each for small,
 medium, large, and giant sites, every track ending in a verified manifest.
 
 ## SDKs

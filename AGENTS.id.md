@@ -30,7 +30,7 @@ situs web, dan paper.
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | file root + `paper/` + `tools/render-html.js` (`updates.html` dari `CHANGELOG*.md`; `feed.xml` dari `CHANGELOG.md`; `badge.svg` dari `badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | `assets/` + `docs/` + file root + `paper/` + `tools/render-html.js` (`updates.html` dari `CHANGELOG*.md`; `feed.xml` dari `CHANGELOG.md`; `badge.svg` dari `assets/badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`, apex `site/.well-known/**`, `site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check` (di dalam `verify`) |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | plugin `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`, `refs.bib`, `00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json` (di `paper/`) | untar + baca `00README.json` |
@@ -99,7 +99,7 @@ node bin/cli.js --help    # permukaan CLI
 | `tools/` | Generator, renderer, benchmark, fuzzer, pemeriksa — zero-dep |
 | `demos/` | Konten origin demo (`sites.js`) dan kunci demo publik (`keys.js`) |
 | `functions/` | Cloudflare Pages Function: routing host, CORS, enforcement `strict` |
-| `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md` |
+| `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md`, `REFERENCE.md`, `EXTENSION.md`, `penjelasan-aifeed.html` |
 | `studio/` | Aplikasi publisher lokal: workspace proyek, editor kebijakan (restrict-only), build/verifikasi/ekspor incremental, UI tiga bahasa |
 | `site/` | Sumber situs: `index.html` (tulisan tangan); file lain hasil generate |
 | `paper/` | Preprint: `main.tex` (sumber), `main.md` (cermin), `refs.bib`, `CLAIMS.md`, `CHECKLIST.md`, bundel |
@@ -115,15 +115,15 @@ node bin/cli.js --help    # permukaan CLI
 - **Mengubah aturan validasi:** `lib/validate.js` + `schema/*.json` + kedua verifier
   (`clients/python/`), lalu vektor. Paritas lintas bahasa adalah tes penerimaannya.
 - **Menambah perintah CLI:** `bin/cli.js` (+ teks help), tes di `tests/cli*.test.js`, dan
-  satu baris di `REFERENCE.md`/`README.md` bila menghadap pengguna.
+  satu baris di `docs/REFERENCE.md`/`README.md` bila menghadap pengguna.
 - **Menyentuh permukaan SDK:** file tulisan tangan adalah
   `packages/aifeed-verify/index.js` dan `index.d.ts`. Jangan pernah mengedit
   `packages/aifeed-verify/lib/*` (hasil generate). Jalankan
   `npm run build:sdk && npm run sdk:check`.
-- **Mengubah situs web:** `site/index.html` dan `penjelasan-aifeed.html` root adalah
+- **Mengubah situs web:** `site/index.html` dan `docs/penjelasan-aifeed.html` adalah
   sumber; `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
   `docs/updates.html` berasal dari `tools/render-html.js` (`updates.html` merender
-  `CHANGELOG*.md`; `docs/feed.xml` juga; `site/badge.svg` menyalin `badge-aifeed.svg` root). Jalankan `npm run verify`. Tautan GitHub di situs harus memuat
+  `CHANGELOG*.md`; `docs/feed.xml` juga; `site/badge.svg` menyalin `assets/badge-aifeed.svg`). Jalankan `npm run verify`. Tautan GitHub di situs harus memuat
   nama repositori: `https://github.com/denyn1/aifeed-protocol/...`.
 - **Menambah atau mengubah origin demo:** edit `demos/sites.js` (halaman, override
   kebijakan via `permissions`, tema), jalankan `npm run demos:check`. Kunci penanda tangan

@@ -82,11 +82,11 @@ Verify (client): `discoverManifestUrl` → fetch manifest + signature → `verif
 |---|---|
 | Add a permission key | `schema/ai-json.v0.2.json` + `lib/validate.js` + both verifiers + a vector |
 | Add a vector | generator in `tools/`, run it, keep `…:vectors:check` green |
-| Add a CLI command | `bin/cli.js` + help + `tests/cli*.test.js` + `REFERENCE.md` |
+| Add a CLI command | `bin/cli.js` + help + `tests/cli*.test.js` + `docs/REFERENCE.md` |
 | Add a platform adapter | new folder in `integrations/` + row in `integrations/README.md` (+ Node handler test) |
 | Change content shape | `lib/mako.js` / `lib/mako-html.js` + AIMD/MAKO generators + spec mirrors + Python parity |
 | Touch the SDK API | `packages/aifeed-verify/index.js` + `index.d.ts`, then `npm run build:sdk && npm run sdk:check` |
-| Change the site | `site/index.html` + root `penjelasan-aifeed.html`; regenerate via `npm run verify` |
+| Change the site | `site/index.html` + root `docs/penjelasan-aifeed.html`; regenerate via `npm run verify` |
 | Add a demo origin | `demos/sites.js` (+ optional `demos/verifier/` assets), then `npm run demos:check` |
 | Change edge policy | `functions/[[path]].js`; helpers are unit-tested in `tests/gen-demos.test.js` |
 
@@ -97,5 +97,5 @@ version: everything under `packages/aifeed-verify/{lib,schema}` is copied from r
 `lib/`/`schema/`; `conformance/**` comes from `tools/gen-*`; report/site HTML comes from
 `tools/render-html.js` + `tools/build-site.js`; the arXiv bundle is built from `paper/`.
 Hand-written: `spec/`, `schema/`, `lib/`, `bin/`, `clients/`, `integrations/`,
-`wp-plugin/`, `tools/`, `site/index.html`, `penjelasan-aifeed.html`, `paper/*.tex|md`,
+`wp-plugin/`, `tools/`, `site/index.html`, `docs/penjelasan-aifeed.html`, `paper/*.tex|md`,
 SDK `index.js`/`index.d.ts`, and all docs.

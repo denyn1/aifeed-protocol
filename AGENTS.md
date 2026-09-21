@@ -29,7 +29,7 @@ benchmarks, the website, and the paper.
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | root files + `paper/` + `tools/render-html.js` (`updates.html` from `CHANGELOG*.md`; `feed.xml` from `CHANGELOG.md`; `badge.svg` from `badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | `assets/` + `docs/` + root files + `paper/` + `tools/render-html.js` (`updates.html` from `CHANGELOG*.md`; `feed.xml` from `CHANGELOG.md`; `badge.svg` from `assets/badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`, apex `site/.well-known/**`, `site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check` (inside `verify`) |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | plugin `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`, `refs.bib`, `00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json` (in `paper/`) | untar + read `00README.json` |
@@ -98,7 +98,7 @@ node bin/cli.js --help    # CLI surface
 | `tools/` | Generators, renderers, benchmarks, fuzzers, checkers — zero-dep |
 | `demos/` | Demo origin content (`sites.js`) and public demo keys (`keys.js`) |
 | `functions/` | Cloudflare Pages Function: host routing, CORS, `strict` enforcement |
-| `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `publisher-ai-guide.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md` |
+| `docs/` | `architecture.md`, `release.md`, `agent-quickstart.md`, `publisher-ai-guide.md`, `rotation.md`, `deploy-site.md`, `namespace-setup.md`, `REFERENCE.md`, `EXTENSION.md`, `penjelasan-aifeed.html` |
 | `studio/` | Local publisher app: project workspace, policy editor (restrict-only), incremental build/verify/export, trilingual UI |
 | `site/` | Website sources: `index.html` (hand-written); other files are generated |
 | `paper/` | Preprint: `main.tex` (source), `main.md` (mirror), `refs.bib`, `CLAIMS.md`, `CHECKLIST.md`, bundles |
@@ -114,14 +114,14 @@ node bin/cli.js --help    # CLI surface
 - **Change validation rules:** `lib/validate.js` + `schema/*.json` + both verifiers
   (`clients/python/`), then vectors. Cross-language parity is the acceptance test.
 - **Add a CLI command:** `bin/cli.js` (+ help text), a test in `tests/cli*.test.js`, and
-  a line in `REFERENCE.md`/`README.md` if user-facing.
+  a line in `docs/REFERENCE.md`/`README.md` if user-facing.
 - **Touch the SDK surface:** hand-written files are `packages/aifeed-verify/index.js`
   and `index.d.ts`. Never edit `packages/aifeed-verify/lib/*` (generated). Run
   `npm run build:sdk && npm run sdk:check`.
-- **Change the website:** `site/index.html` and root `penjelasan-aifeed.html` are
+- **Change the website:** `site/index.html` and `docs/penjelasan-aifeed.html` are
   sources; `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
   `docs/updates.html` come from `tools/render-html.js` (`updates.html` renders
-  `CHANGELOG*.md`; `docs/feed.xml` too; `site/badge.svg` copies root `badge-aifeed.svg`). Run `npm run verify`. Site links to GitHub must include the
+  `CHANGELOG*.md`; `docs/feed.xml` too; `site/badge.svg` copies `assets/badge-aifeed.svg`). Run `npm run verify`. Site links to GitHub must include the
   repository name: `https://github.com/denyn1/aifeed-protocol/...`.
 - **Add or change a demo origin:** edit `demos/sites.js` (pages, policy overrides via
   `permissions`, theme), run `npm run demos:check`. Signing keys are deterministic and

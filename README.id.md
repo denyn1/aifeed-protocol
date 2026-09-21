@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="aifeed-logo.svg" width="92" alt="Logo AIFeed">
+  <img src="assets/aifeed-logo.svg" width="92" alt="Logo AIFeed">
 </p>
 
 <h1 align="center">AIFeed</h1>
@@ -10,7 +10,7 @@
 Deklarasikan, tanda tangani, dan cabut apa yang boleh dilakukan agen AI terhadap konten
 Anda — dan biarkan agen membuktikannya.</p>
 
-<p align="center"><a href="How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ Tonton: Bagaimana AIFeed menghentikan pemborosan scraping web</strong></a></p>
+<p align="center"><a href="assets/How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ Tonton: Bagaimana AIFeed menghentikan pemborosan scraping web</strong></a></p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="versi npm"></a>
@@ -166,18 +166,18 @@ yang tidak dilakukan proyek ini secara otomatis.
 | [`paper/`](paper/) | Preprint: sumber LaTeX, PDF, ledger klaim, bundel arXiv |
 | [`docs/`](docs/) | Quickstart agen, panduan deploy dan namespace, catatan proyek |
 | [`studio/`](studio/) | Aplikasi penerbit lokal tanpa dependensi: crawl, deklarasi, build, verifikasi, ekspor, rotasi |
-| [`REFERENCE.md`](REFERENCE.md) | Detail implementasi referensi, apa yang diverifikasi, quickstart CLI |
+| [`docs/REFERENCE.md`](docs/REFERENCE.md) | Detail implementasi referensi, apa yang diverifikasi, quickstart CLI |
 
 ## Dokumentasi
 
 - Spesifikasi: [`spec/en`](spec/en) · [`spec/id`](spec/id) · [`spec/zh`](spec/zh) · [schema](schema)
-- Implementasi referensi: [`REFERENCE.md`](REFERENCE.md)
+- Implementasi referensi: [`docs/REFERENCE.md`](docs/REFERENCE.md)
 - Kontrak pemeliharaan (agen AI & dev): [`AGENTS.md`](AGENTS.md)
 - Arsitektur: [`docs/architecture.md`](docs/architecture.md) · Panduan rilis: [`docs/release.md`](docs/release.md)
 - Quickstart agen (sisi klien): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - Panduan AI publisher (sisi pemilik): [`docs/publisher-ai-guide.id.md`](docs/publisher-ai-guide.id.md)
 - Publisher Studio (aplikasi lokal): [`studio/README.id.md`](studio/README.id.md)
-- Panduan lengkap: [`penjelasan-aifeed.html`](penjelasan-aifeed.html) (sumber <https://aifeed.md/penjelasan.html>)
+- Panduan lengkap: [`docs/penjelasan-aifeed.html`](docs/penjelasan-aifeed.html) (sumber <https://aifeed.md/penjelasan.html>)
 - Kebijakan keamanan: [`SECURITY.md`](SECURITY.md)
 - Governance & kebijakan open-core: [`GOVERNANCE.md`](GOVERNANCE.md)
 - Deploy situs: [`docs/deploy-site.md`](docs/deploy-site.md)

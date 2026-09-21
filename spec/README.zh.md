@@ -12,7 +12,7 @@
 
 `spec/` 之外的相关文档：
 
-- [`../EXTENSION.md`](../EXTENSION.md) —— 向 MAKO 社区提交的信任层（签名 + 许可 + 增量）
+- [`../docs/EXTENSION.md`](../docs/EXTENSION.md) —— 向 MAKO 社区提交的信任层（签名 + 许可 + 增量）
   上游扩展提案。
 - [`../paper/main.md`](../paper/main.md) —— arXiv 预印本草案（工作标题：
   *AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the

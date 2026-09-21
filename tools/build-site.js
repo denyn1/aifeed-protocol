@@ -8,16 +8,16 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 
 const COPIES = [
-  ['aifeed-logo.svg', 'logo.svg'],
+  ['assets/aifeed-logo.svg', 'logo.svg'],
   ['docs/process.html', 'process.html'],
   ['benchmarks/enforcement-report.html', 'enforcement-report.html'],
-  ['penjelasan-aifeed.html', 'penjelasan.html'],
+  ['docs/penjelasan-aifeed.html', 'penjelasan.html'],
   ['docs/studio.html', 'studio.html'],
   ['docs/updates.html', 'updates.html'],
   ['docs/feed.xml', 'feed.xml'],
-  ['badge-aifeed.svg', 'badge.svg'],
+  ['assets/badge-aifeed.svg', 'badge.svg'],
   ['paper/aifeed-preprint.pdf', 'aifeed-preprint.pdf'],
-  ['How_AIFeed_Stops_Web_Scraping_Waste.mp4', 'How_AIFeed_Stops_Web_Scraping_Waste.mp4']
+  ['assets/How_AIFeed_Stops_Web_Scraping_Waste.mp4', 'How_AIFeed_Stops_Web_Scraping_Waste.mp4']
 ];
 
 fs.mkdirSync(SITE, { recursive: true });

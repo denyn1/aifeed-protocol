@@ -83,11 +83,11 @@ Verifikasi (klien): `discoverManifestUrl` → fetch manifest + tanda tangan → 
 |---|---|
 | Menambah kunci izin | `schema/ai-json.v0.2.json` + `lib/validate.js` + kedua verifier + vektor |
 | Menambah vektor | generator di `tools/`, jalankan, jaga `…:vectors:check` hijau |
-| Menambah perintah CLI | `bin/cli.js` + help + `tests/cli*.test.js` + `REFERENCE.md` |
+| Menambah perintah CLI | `bin/cli.js` + help + `tests/cli*.test.js` + `docs/REFERENCE.md` |
 | Menambah adapter platform | folder baru di `integrations/` + baris di `integrations/README.md` (+ tes handler Node) |
 | Mengubah bentuk konten | `lib/mako.js` / `lib/mako-html.js` + generator AIMD/MAKO + cermin spec + paritas Python |
 | Menyentuh API SDK | `packages/aifeed-verify/index.js` + `index.d.ts`, lalu `npm run build:sdk && npm run sdk:check` |
-| Mengubah situs | `site/index.html` + `penjelasan-aifeed.html` root; regenerasi via `npm run verify` |
+| Mengubah situs | `site/index.html` + `docs/penjelasan-aifeed.html` root; regenerasi via `npm run verify` |
 | Menambah origin demo | `demos/sites.js` (+ aset `demos/verifier/` opsional), lalu `npm run demos:check` |
 | Mengubah kebijakan edge | `functions/[[path]].js`; helper diuji unit di `tests/gen-demos.test.js` |
 
@@ -98,5 +98,5 @@ singkatnya: semua di bawah `packages/aifeed-verify/{lib,schema}` disalin dari `l
 root; `conformance/**` berasal dari `tools/gen-*`; HTML laporan/situs berasal dari
 `tools/render-html.js` + `tools/build-site.js`; bundel arXiv dibangun dari `paper/`.
 Tulisan tangan: `spec/`, `schema/`, `lib/`, `bin/`, `clients/`, `integrations/`,
-`wp-plugin/`, `tools/`, `site/index.html`, `penjelasan-aifeed.html`, `paper/*.tex|md`,
+`wp-plugin/`, `tools/`, `site/index.html`, `docs/penjelasan-aifeed.html`, `paper/*.tex|md`,
 `index.js`/`index.d.ts` SDK, dan semua dokumen.

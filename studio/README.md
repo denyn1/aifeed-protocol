@@ -118,5 +118,5 @@ All API calls need the `x-studio-token` header (SSE uses `?token=`).
 ## Related
 
 - Publisher AI guide (agent-driven setup): [`../docs/publisher-ai-guide.md`](../docs/publisher-ai-guide.md)
-- Command reference: [`../REFERENCE.md`](../REFERENCE.md)
+- Command reference: [`../docs/REFERENCE.md`](../docs/REFERENCE.md)
 - Rotation runbook: [`../docs/rotation.md`](../docs/rotation.md)

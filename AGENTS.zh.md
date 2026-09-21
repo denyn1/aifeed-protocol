@@ -27,7 +27,7 @@ WordPress 发布插件、基准、网站与论文。
    | `conformance/mako/**`（39） | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**`（11） | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`、`benchmarks/enforcement-report.html` | `tools/render-html.js`（+ `benchmarks/*.json`） | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | 根目录文件 + `paper/` + `tools/render-html.js`（`updates.html` 由 `CHANGELOG*.md` 生成；`feed.xml` 由 `CHANGELOG.md` 生成；`badge.svg` 来自 `badge-aifeed.svg`） | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | `assets/` + `docs/` + 根目录文件 + `paper/` + `tools/render-html.js`（`updates.html` 由 `CHANGELOG*.md` 生成；`feed.xml` 由 `CHANGELOG.md` 生成；`badge.svg` 来自 `assets/badge-aifeed.svg`） | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`、apex `site/.well-known/**`、`site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check`（在 `verify` 内） |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | 插件 `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`、`refs.bib`、`00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json`（在 `paper/`） | 解包并阅读 `00README.json` |
@@ -94,7 +94,7 @@ node bin/cli.js --help    # CLI 界面
 | `tools/` | 生成器、渲染器、基准、模糊测试、检查器——零依赖 |
 | `demos/` | 演示源站内容（`sites.js`）与公开演示密钥（`keys.js`） |
 | `functions/` | Cloudflare Pages Function：主机路由、CORS、`strict` 执行 |
-| `docs/` | `architecture.md`、`release.md`、`agent-quickstart.md`、`rotation.md`、`deploy-site.md`、`namespace-setup.md` |
+| `docs/` | `architecture.md`、`release.md`、`agent-quickstart.md`、`rotation.md`、`deploy-site.md`、`namespace-setup.md`、`REFERENCE.md`、`EXTENSION.md`、`penjelasan-aifeed.html` |
 | `studio/` | 本地发布方应用：项目工作区、策略编辑器（restrict-only）、增量构建/验证/导出、三语 UI |
 | `site/` | 网站源：`index.html`（手写）；其他文件为生成产物 |
 | `paper/` | 预印本：`main.tex`（源）、`main.md`（镜像）、`refs.bib`、`CLAIMS.md`、`CHECKLIST.md`、打包 |
@@ -108,14 +108,14 @@ node bin/cli.js --help    # CLI 界面
 - **修改验证规则：** `lib/validate.js` + `schema/*.json` + 两个验证器
   （`clients/python/`），然后向量。跨语言对等是验收测试。
 - **新增 CLI 命令：** `bin/cli.js`（+ 帮助文本）、`tests/cli*.test.js` 中的测试，若面向
-  用户则在 `REFERENCE.md`/`README.md` 加一行。
+  用户则在 `docs/REFERENCE.md`/`README.md` 加一行。
 - **改动 SDK 界面：** 手写文件是 `packages/aifeed-verify/index.js` 与 `index.d.ts`。
   绝不编辑 `packages/aifeed-verify/lib/*`（生成）。运行
   `npm run build:sdk && npm run sdk:check`。
-- **修改网站：** `site/index.html` 与根目录 `penjelasan-aifeed.html` 是源文件；
+- **修改网站：** `site/index.html` 与 `docs/penjelasan-aifeed.html` 是源文件；
   `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
   `docs/updates.html` 来自 `tools/render-html.js`（`updates.html` 渲染 `CHANGELOG*.md`；
-  `docs/feed.xml` 亦然；`site/badge.svg` 复制根目录 `badge-aifeed.svg`）。
+  `docs/feed.xml` 亦然；`site/badge.svg` 复制 `assets/badge-aifeed.svg`）。
   运行 `npm run verify`。网站上的 GitHub 链接必须包含仓库名：
   `https://github.com/denyn1/aifeed-protocol/...`。
 - **新增或修改演示源站：** 编辑 `demos/sites.js`（页面、通过 `permissions` 的政策覆盖、

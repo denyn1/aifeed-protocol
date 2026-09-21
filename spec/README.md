@@ -13,7 +13,7 @@ informational; when they diverge, English wins.
 
 Related documents outside `spec/`:
 
-- [`../EXTENSION.md`](../EXTENSION.md) — proposal to the MAKO community for the trust
+- [`../docs/EXTENSION.md`](../docs/EXTENSION.md) — proposal to the MAKO community for the trust
   layer (signature + permissions + delta) as an upstream extension.
 - [`../paper/main.md`](../paper/main.md) — arXiv preprint draft (working title:
   *AIFeed: Verifiable Content Permissions and Efficient Agent Delivery for the

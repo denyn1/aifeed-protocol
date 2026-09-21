@@ -12,7 +12,7 @@
 门禁结束。不基于假设推进任何步骤。
 
 > 爬虫/消费者 companion：[`agent-quickstart.md`](agent-quickstart.md)。
-> 命令参考：[`../REFERENCE.md`](../REFERENCE.md)。轮换操作手册：
+> 命令参考：[`REFERENCE.md`](REFERENCE.md)。轮换操作手册：
 > [`rotation.md`](rotation.md)。部署说明：[`deploy-site.md`](deploy-site.md)。
 
 ## 0. 基本规则 — 粘贴一次，全程执行
@@ -421,7 +421,7 @@ array only, propose exactly one fix, wait for approval." 常见原因：
 ## 链接
 
 - 消费者侧：[`agent-quickstart.md`](agent-quickstart.md)
-- 命令参考：[`../REFERENCE.md`](../REFERENCE.md)
+- 命令参考：[`REFERENCE.md`](REFERENCE.md)
 - 轮换操作手册：[`rotation.md`](rotation.md)
 - 部署 + DNS：[`deploy-site.md`](deploy-site.md)
 - 平台适配器：[`../integrations/README.md`](../integrations/README.md)

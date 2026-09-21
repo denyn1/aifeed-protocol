@@ -54,7 +54,7 @@ test('updates feed renders dated changelog sections as RSS', () => {
 });
 
 test('publisher badge is a self-contained SVG and the index links the feed', () => {
-  const badge = fs.readFileSync(path.join(__dirname, '..', 'badge-aifeed.svg'), 'utf8');
+  const badge = fs.readFileSync(path.join(__dirname, '..', 'assets', 'badge-aifeed.svg'), 'utf8');
   assert.ok(badge.startsWith('<svg'), 'svg root');
   assert.ok(badge.includes('verified by AIFeed'), 'badge text');
   assert.ok(!badge.includes('<script'), 'no scripts in badge');
@@ -68,7 +68,7 @@ test('index page embeds the explainer video and the site build ships it', () => 
   const index = fs.readFileSync(path.join(root, 'site', 'index.html'), 'utf8');
   assert.ok(index.includes('<video'), 'video element');
   assert.ok(index.includes('How_AIFeed_Stops_Web_Scraping_Waste.mp4'), 'video source');
-  const video = path.join(root, 'How_AIFeed_Stops_Web_Scraping_Waste.mp4');
+  const video = path.join(root, 'assets', 'How_AIFeed_Stops_Web_Scraping_Waste.mp4');
   assert.ok(fs.existsSync(video) && fs.statSync(video).size > 0, 'video asset');
   const buildSite = fs.readFileSync(path.join(root, 'tools', 'build-site.js'), 'utf8');
   assert.ok(buildSite.includes('How_AIFeed_Stops_Web_Scraping_Waste.mp4'), 'copied at build time');

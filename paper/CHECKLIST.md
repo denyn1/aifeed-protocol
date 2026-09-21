@@ -84,7 +84,7 @@ Status keys: **[x]** done and verified · **[ ]** pending · **[!]** blocker for
 
 ## After arXiv
 
-- **[ ]** Submit `EXTENSION.md` to mako-spec (upstream trust-layer proposal).
+- **[ ]** Submit `docs/EXTENSION.md` to mako-spec (upstream trust-layer proposal).
 - **[ ]** Convert the protocol core into an IETF Internet-Draft (with the AIFeed Markdown/MAKO
   profiles as appendices).
 - **[ ]** Publish the open-core licensing policy summary alongside the paper (already in

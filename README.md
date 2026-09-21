@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="aifeed-logo.svg" width="92" alt="AIFeed logo">
+  <img src="assets/aifeed-logo.svg" width="92" alt="AIFeed logo">
 </p>
 
 <h1 align="center">AIFeed</h1>
@@ -9,7 +9,7 @@
 <p align="center"><strong>Signed content permissions for the AI web.</strong><br>
 Declare, sign, and revoke what AI agents may do with your content — and let agents prove it.</p>
 
-<p align="center"><a href="How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ Watch: How AIFeed stops web scraping waste</strong></a></p>
+<p align="center"><a href="assets/How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ Watch: How AIFeed stops web scraping waste</strong></a></p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="npm version"></a>
@@ -164,18 +164,18 @@ summarization this project does not perform automatically.
 | [`paper/`](paper/) | Preprint: LaTeX source, PDF, claim ledger, arXiv bundle |
 | [`docs/`](docs/) | Agent quickstart, deploy and namespace guides, Indonesian project notes |
 | [`studio/`](studio/) | Zero-dependency local publisher app: crawl, declare, build, verify, export, and rotate |
-| [`REFERENCE.md`](REFERENCE.md) | Reference implementation details, what gets verified, CLI quickstart |
+| [`docs/REFERENCE.md`](docs/REFERENCE.md) | Reference implementation details, what gets verified, CLI quickstart |
 
 ## Documentation
 
 - Specifications: [`spec/en`](spec/en) · [`spec/id`](spec/id) · [schemas](schema)
-- Reference implementation: [`REFERENCE.md`](REFERENCE.md)
+- Reference implementation: [`docs/REFERENCE.md`](docs/REFERENCE.md)
 - Maintenance contract (AI agents & devs): [`AGENTS.md`](AGENTS.md)
 - Architecture: [`docs/architecture.md`](docs/architecture.md) · Release guide: [`docs/release.md`](docs/release.md)
 - Agent quickstart (client side): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - Publisher AI guide (owner side): [`docs/publisher-ai-guide.md`](docs/publisher-ai-guide.md)
 - Publisher Studio (local app): [`studio/README.md`](studio/README.md)
-- Complete guide: [`penjelasan-aifeed.html`](penjelasan-aifeed.html) (source of <https://aifeed.md/penjelasan.html>)
+- Complete guide: [`docs/penjelasan-aifeed.html`](docs/penjelasan-aifeed.html) (source of <https://aifeed.md/penjelasan.html>)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Governance & open-core policy: [`GOVERNANCE.md`](GOVERNANCE.md)
 - Deploying the site: [`docs/deploy-site.md`](docs/deploy-site.md)

@@ -107,5 +107,5 @@ npm run studio -- --port 8080 --workspace ./studio-data
 ## 相关
 
 - 发布方 AI 指南（智能体驱动安装）：[`../docs/publisher-ai-guide.zh.md`](../docs/publisher-ai-guide.zh.md)
-- 命令参考：[`../REFERENCE.zh.md`](../REFERENCE.zh.md)
+- 命令参考：[`../docs/REFERENCE.zh.md`](../docs/REFERENCE.zh.md)
 - 轮换操作手册：[`../docs/rotation.zh.md`](../docs/rotation.zh.md)

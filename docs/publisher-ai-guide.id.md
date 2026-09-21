@@ -14,7 +14,7 @@ lalu mengeksekusinya fase per fase. Setiap fase diakhiri gate yang bisa dicek me
 Tidak ada yang jalan berdasarkan asumsi.
 
 > Pendamping sisi crawler/konsumen: [`agent-quickstart.md`](agent-quickstart.md).
-> Referensi perintah: [`../REFERENCE.md`](../REFERENCE.md). Runbook rotasi:
+> Referensi perintah: [`REFERENCE.md`](REFERENCE.md). Runbook rotasi:
 > [`rotation.md`](rotation.md). Catatan deploy: [`deploy-site.md`](deploy-site.md).
 
 ## 0. Aturan dasar — tempel sekali, tegakkan selalu
@@ -431,7 +431,7 @@ Penyebab umum:
 ## Tautan
 
 - Sisi konsumen: [`agent-quickstart.md`](agent-quickstart.md)
-- Referensi perintah: [`../REFERENCE.md`](../REFERENCE.md)
+- Referensi perintah: [`REFERENCE.md`](REFERENCE.md)
 - Runbook rotasi: [`rotation.md`](rotation.md)
 - Deploy + DNS: [`deploy-site.md`](deploy-site.md)
 - Adapter platform: [`../integrations/README.md`](../integrations/README.md)

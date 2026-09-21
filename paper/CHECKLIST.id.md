@@ -88,7 +88,7 @@ Kunci status: **[x]** selesai dan terverifikasi · **[ ]** tertunda · **[!]** b
 
 ## Setelah arXiv
 
-- **[ ]** Kirim `EXTENSION.md` ke mako-spec (proposal lapisan trust hulu).
+- **[ ]** Kirim `docs/EXTENSION.md` ke mako-spec (proposal lapisan trust hulu).
 - **[ ]** Ubah inti protokol menjadi Internet-Draft IETF (dengan profil AIFeed Markdown/
   MAKO sebagai lampiran).
 - **[ ]** Terbitkan ringkasan kebijakan lisensi open-core bersama paper (sudah ada di
