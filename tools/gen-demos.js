@@ -1019,7 +1019,7 @@ function generateApex(siteRoot) {
 
 function writeApexSeo(siteRoot) {
   const today = new Date().toISOString().slice(0, 10);
-  const apexPages = ['/', '/process.html', '/enforcement-report.html', '/penjelasan.html', '/studio.html', '/updates.html', '/aifeed-preprint.pdf'];
+  const apexPages = ['/', '/process.html', '/enforcement-report.html', '/penjelasan.html', '/studio.html', '/updates.html', '/feed.xml', '/aifeed-preprint.pdf'];
   const urls = [];
   for (const pagePath of apexPages) urls.push({ loc: 'https://aifeed.md' + pagePath, priority: pagePath === '/' ? '1.0' : '0.8' });
   for (const site of siteDefinitions) {

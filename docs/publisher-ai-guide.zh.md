@@ -360,6 +360,22 @@ aifeed:
   本地文件（≤16 MiB）；抓取或远程资源在代理下载前没有哈希。
 - **预取分流** — 索引条目携带 `assets` 数量，代理可在下载任何内容前判断页面是否值得抓取。
 
+## 发布者徽章
+
+向访客和智能体展示源站已签名：
+
+```html
+<a href="https://aifeed.md"><img src="https://aifeed.md/badge.svg" alt="verified by AIFeed"></a>
+```
+
+Markdown 版本：
+
+```md
+[![verified by AIFeed](https://aifeed.md/badge.svg)](https://aifeed.md)
+```
+
+请链接徽章而不要复制，以便后续更新自动生效。
+
 ## 更喜欢应用？使用 AIFeed Studio
 
 如果你更愿意点击而不是输入提示词，本仓库提供了一个完成同样工作的本地应用：

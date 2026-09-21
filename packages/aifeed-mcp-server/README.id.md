@@ -52,6 +52,12 @@ docker run -i --rm aifeed-mcp-server
 Dockerfile yang sama diterima [Glama](https://glama.ai/mcp/servers) saat mendaftarkan
 server (konteks build: root repositori). `glama.json` di root menyatakan maintainer.
 
+## Deploy di Smithery
+
+`smithery.yaml` di sebelah README ini mendeskripsikan perintah start stdio untuk
+[Smithery](https://smithery.ai/): instal CLI mereka, login, lalu jalankan
+`smithery publish` dari `packages/aifeed-mcp-server`.
+
 ## Sumber
 
 Bagian dari [aifeed-protocol](https://github.com/denyn1/aifeed-protocol):

@@ -44,6 +44,16 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   `v1.0.0-draft.2`, gates on `validate` without `|| true`, and points at
   `@aifeed/frameworks` for Vite/Astro/Next.js; `check-consistency` rejects stale
   `aifeed/aifeed-protocol` URLs.
+- **Rust adapter (`integrations/rust`)** — `AifeedLayer` Axum middleware (content
+  negotiation, inline signatures, traversal guard), verified by 11 `cargo test` cases.
+- **Updates RSS feed** — `site/feed.xml` rendered from `CHANGELOG.md` at build time and
+  linked from the homepage head; the sitemap lists it.
+- **Publisher badge** — static `badge.svg` ("verified by AIFeed") with copy-paste HTML
+  and Markdown snippets in the publisher guide, so signed origins can link back.
+- **Python framework examples** — copy-paste LangChain, LlamaIndex, and Crawl4AI loaders
+  in `examples/python/`, covered by `test_examples.py` (+11 tests).
+- **Agent skill + Smithery descriptor** — `skills/aifeed/SKILL.md` teaches coding agents
+  the verify/publish flows; `smithery.yaml` ships the MCP stdio start command.
 
 ## [1.0.0-draft] — 2026-09-16
 

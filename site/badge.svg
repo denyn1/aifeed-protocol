@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="142" height="20" role="img" aria-label="AIFeed — verified content permissions">
+  <title>verified by AIFeed</title>
+  <rect width="142" height="20" rx="4" fill="#12100f"/>
+  <path d="M11 4.2l6.6 2.7v4.6c0 3.8-2.8 6.6-6.6 8.3-3.8-1.7-6.6-4.5-6.6-8.3V6.9Z" fill="#f55036"/>
+  <path d="M8.4 11.1l1.9 1.9 3.2-3.7" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="22" y="14" font-family="Verdana, sans-serif" font-size="10" fill="#f8f8f7">verified by AIFeed</text>
+</svg>

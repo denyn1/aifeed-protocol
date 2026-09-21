@@ -366,6 +366,22 @@ aifeed:
 - **Triase pra-fetch** — entri indeks membawa jumlah `assets`, jadi agen bisa menilai
   apakah halaman layak diambil sebelum mengunduh apa pun.
 
+## Lencana penerbit
+
+Tunjukkan kepada pengunjung dan agen bahwa origin sudah ditandatangani:
+
+```html
+<a href="https://aifeed.md"><img src="https://aifeed.md/badge.svg" alt="verified by AIFeed"></a>
+```
+
+Versi Markdown:
+
+```md
+[![verified by AIFeed](https://aifeed.md/badge.svg)](https://aifeed.md)
+```
+
+Tautkan lencana, jangan salin, agar pembaruan berikutnya ikut terbawa otomatis.
+
 ## Lebih suka aplikasi? Pakai AIFeed Studio
 
 Kalau Anda lebih suka klik daripada prompt, repositori ini menyertakan aplikasi lokal

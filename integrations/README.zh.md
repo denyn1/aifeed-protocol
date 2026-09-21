@@ -30,6 +30,7 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | PHP（非 WordPress） | `aifeed_serve()` 前端控制器检查 | [`php/aifeed-serve.php`](php/aifeed-serve.php) |
 | Python ASGI（FastAPI/Starlette/Django） | `AifeedMiddleware` | [`python/aifeed_middleware.py`](python/aifeed_middleware.py) |
 | Go（net/http） | `aifeed.Handler(next, root, aimd, mako)` | [`go/aifeed.go`](go/aifeed.go) |
+| Rust（Axum） | `AifeedLayer` 中间件（协商 + 内联签名） | [`rust/`](rust/) |
 | Cloudflare Workers（静态资源） | Accept → 通过 `ASSETS` binding 返回 `.aifeed.md` / `.mako.md` | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | 部署前 build + 签名 + 验证 | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
 | WordPress | 双栈服务 + 管理界面的插件 | `wp-plugin/` |
@@ -159,6 +160,25 @@ app.add_middleware(AifeedMiddleware, root="public", mako=True)
 
 ```go
 http.Handle("/", aifeed.Handler(http.FileServer(http.Dir("public")), "public", true, true))
+```
+
+### Rust（Axum）
+
+```rust
+use axum::{routing::get, Router};
+use aifeed_axum::AifeedLayer;
+
+async fn index() -> &'static str { "hello" }
+
+// 先注册 routes（以及 fallback）再调用 .layer()：axum 只为调用 layer() 时
+// 已存在的路由包装中间件。
+let app: Router = Router::new()
+    .route("/", get(index))
+    .layer(AifeedLayer::new("./public"));
+```
+
+```bash
+cd integrations/rust && cargo test   # 协商、响应头、遍历防护
 ```
 
 ### Traefik（v2/v3）

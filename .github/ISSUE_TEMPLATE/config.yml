@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Publisher guide (AI-assisted install)
+    url: https://github.com/denyn1/aifeed-protocol/blob/main/docs/publisher-ai-guide.md
+    about: Let an AI coding agent install AIFeed end-to-end (Tracks S/M/L/XL).
+  - name: Agent quickstart (client side)
+    url: https://github.com/denyn1/aifeed-protocol/blob/main/docs/agent-quickstart.md
+    about: Discovery, verification, permission decisions, and delta consumption.
+  - name: Community chat
+    url: https://github.com/denyn1/aifeed-protocol/discussions
+    about: Questions and showcase (enable Discussions in repo settings first).

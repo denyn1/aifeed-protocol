@@ -14,7 +14,7 @@ Anda — dan biarkan agen membuktikannya.</p>
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="versi npm"></a>
   <a href="https://www.npmjs.com/package/aifeed"><img src="https://img.shields.io/npm/v/aifeed?color=f55036&label=cli" alt="CLI aifeed"></a>
   <a href="https://pypi.org/project/aifeed/"><img src="https://img.shields.io/pypi/v/aifeed?color=3775a9&label=pypi" alt="PyPI"></a>
-  <img src="https://img.shields.io/badge/tests-271%20JS%20%C2%B7%2045%20Python-3ddc97" alt="suite pengujian">
+  <img src="https://img.shields.io/badge/tests-275%20JS%20%C2%B7%2056%20Python-3ddc97" alt="suite pengujian">
   <img src="https://img.shields.io/badge/conformance-84%20vectors-f55036" alt="vektor konformansi">
   <img src="https://img.shields.io/badge/specs-CC%20BY%204.0-6ea8fe" alt="lisensi spesifikasi">
   <img src="https://img.shields.io/badge/code-MIT-3ddc97" alt="lisensi kode">

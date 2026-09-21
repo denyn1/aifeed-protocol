@@ -364,6 +364,22 @@ aifeed:
 - **Pre-fetch triage** — index entries carry an `assets` count, so an agent can decide
   whether fetching the page is worth it before downloading anything.
 
+## Publisher badge
+
+Show visitors and agents that the origin is signed:
+
+```html
+<a href="https://aifeed.md"><img src="https://aifeed.md/badge.svg" alt="verified by AIFeed"></a>
+```
+
+Markdown version:
+
+```md
+[![verified by AIFeed](https://aifeed.md/badge.svg)](https://aifeed.md)
+```
+
+Link the badge, don't copy it, so future updates propagate automatically.
+
 ## Prefer an app? Use AIFeed Studio
 
 If you would rather click than prompt, the repository ships a local app that does the

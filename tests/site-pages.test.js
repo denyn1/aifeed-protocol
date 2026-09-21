@@ -2,7 +2,9 @@
 
 const test = require('node:test');
 const assert = require('node:assert');
-const { renderStudioHtml, renderUpdatesHtml, renderMarkdown } = require('../tools/render-html');
+const fs = require('node:fs');
+const path = require('node:path');
+const { renderStudioHtml, renderUpdatesHtml, renderFeedXml, renderMarkdown } = require('../tools/render-html');
 
 test('studio page documents the local publisher app and links the guides', () => {
   const html = renderStudioHtml();
@@ -39,4 +41,24 @@ test('markdown renderer keeps list continuations and escapes html', () => {
   const html = renderMarkdown('- one\n  continued\n- two <script>alert(1)</script>\n');
   assert.ok(html.includes('<li>one continued</li>'), html);
   assert.ok(!html.includes('<script>'), 'escaped');
+});
+
+test('updates feed renders dated changelog sections as RSS', () => {
+  const xml = renderFeedXml('# Changelog\n\n## [2.0.0] — 2026-09-21\n\n- fast **safe** sites & "quotes"\n\n## [1.0.0] - 2026-09-20\n\n- old news\n');
+  assert.ok(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>'), 'xml prolog');
+  assert.ok(xml.includes('<rss version="2.0">'), 'rss root');
+  assert.ok(xml.includes('<title>AIFeed 2.0.0</title>'), 'item title');
+  assert.ok(xml.includes('<pubDate>Mon, 21 Sep 2026'), 'pub date');
+  assert.ok(xml.includes('fast safe sites &amp; &quot;quotes&quot;'), 'escaped description');
+  assert.ok(!xml.includes('<script>'), 'no markup leak');
+});
+
+test('publisher badge is a self-contained SVG and the index links the feed', () => {
+  const badge = fs.readFileSync(path.join(__dirname, '..', 'badge-aifeed.svg'), 'utf8');
+  assert.ok(badge.startsWith('<svg'), 'svg root');
+  assert.ok(badge.includes('verified by AIFeed'), 'badge text');
+  assert.ok(!badge.includes('<script'), 'no scripts in badge');
+  const index = fs.readFileSync(path.join(__dirname, '..', 'site', 'index.html'), 'utf8');
+  assert.ok(index.includes('rel="alternate" type="application/rss+xml"'), 'feed discovery link');
+  assert.ok(index.includes('href="/feed.xml"'), 'feed path');
 });

@@ -30,6 +30,7 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | PHP (non-WordPress) | `aifeed_serve()` front-controller check | [`php/aifeed-serve.php`](php/aifeed-serve.php) |
 | Python ASGI (FastAPI/Starlette/Django) | `AifeedMiddleware` | [`python/aifeed_middleware.py`](python/aifeed_middleware.py) |
 | Go (net/http) | `aifeed.Handler(next, root, aimd, mako)` | [`go/aifeed.go`](go/aifeed.go) |
+| Rust (Axum) | `AifeedLayer` middleware (negotiation + inline signatures) | [`rust/`](rust/) |
 | Cloudflare Workers (static assets) | Accept → `.aifeed.md` / `.mako.md` via the `ASSETS` binding | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | build + sign + verify before deploy | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
 | WordPress | plugin with dual-stack serving + admin | `wp-plugin/` |
@@ -162,6 +163,25 @@ app.add_middleware(AifeedMiddleware, root="public", mako=True)
 
 ```go
 http.Handle("/", aifeed.Handler(http.FileServer(http.Dir("public")), "public", true, true))
+```
+
+### Rust (Axum)
+
+```rust
+use axum::{routing::get, Router};
+use aifeed_axum::AifeedLayer;
+
+async fn index() -> &'static str { "hello" }
+
+// Register routes (and any fallback) BEFORE .layer(): axum only wraps
+// middleware around routes that exist when layer() is called.
+let app: Router = Router::new()
+    .route("/", get(index))
+    .layer(AifeedLayer::new("./public"));
+```
+
+```bash
+cd integrations/rust && cargo test   # negotiation, headers, traversal guard
 ```
 
 ### Traefik (v2/v3)

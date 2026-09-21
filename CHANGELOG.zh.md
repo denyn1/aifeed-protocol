@@ -37,6 +37,16 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   tag `v1.0.0-draft.2`，用不带 `|| true` 的 `validate` 作为门禁，并指向
   `@aifeed/frameworks`（Vite/Astro/Next.js）；`check-consistency` 会拒绝过期的
   `aifeed/aifeed-protocol` URL。
+- **Rust 适配器（`integrations/rust`）** — Axum 中间件 `AifeedLayer`（内容协商、内联签名、
+  遍历防护），经 11 个 `cargo test` 用例验证。
+- **更新 RSS 源** — `site/feed.xml` 在构建时由 `CHANGELOG.md` 渲染，并从首页 head 链接；
+  sitemap 收录它。
+- **发布者徽章** — 静态 `badge.svg`（"verified by AIFeed"），发布者指南附可复制的 HTML
+  与 Markdown 片段，已签名源站可借此回链。
+- **Python 框架示例** — `examples/python/` 下可复制的 LangChain、LlamaIndex 与 Crawl4AI
+  加载器，由 `test_examples.py` 覆盖（+11 测试）。
+- **智能体技能 + Smithery 描述符** — `skills/aifeed/SKILL.md` 教编程智能体验证/发布流程；
+  `smithery.yaml` 给出 MCP stdio 启动命令。
 
 ## [1.0.0-draft] — 2026-09-16
 

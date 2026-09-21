@@ -30,7 +30,7 @@ situs web, dan paper.
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,aifeed-preprint.pdf}` | file root + `paper/` + `tools/render-html.js` (`updates.html` dari `CHANGELOG*.md`) | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,aifeed-preprint.pdf}` | file root + `paper/` + `tools/render-html.js` (`updates.html` dari `CHANGELOG*.md`; `feed.xml` dari `CHANGELOG.md`; `badge.svg` dari `badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`, apex `site/.well-known/**`, `site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check` (di dalam `verify`) |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | plugin `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`, `refs.bib`, `00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json` (di `paper/`) | untar + baca `00README.json` |
@@ -66,8 +66,8 @@ situs web, dan paper.
 npm run verify            # semuanya di bawah, satu gerbang
 npm run lint:syntax       # cek parse setiap file .js
 npm run check:consistency # versi, deps, secret, pasangan spec, target skrip
-npm test                  # suite Node (271 tes)
-npm run test:py           # verifier Python independen (45 tes)
+npm test                  # suite Node (275 tes)
+npm run test:py           # verifier Python independen (56 tes)
 npm run bench:mako        # regenerasi benchmarks/mako-*.json + laporan
 npm run bench:enforcement # regenerasi benchmarks/enforcement-*.json|md
 npm run fuzz:mako -- --iterations 3000   # fuzzing parser (seed tetap)
@@ -92,7 +92,9 @@ node bin/cli.js --help    # permukaan CLI
 | `packages/aifeed-cli/` | CLI terbit (`aifeed`): keygen/init/sign/validate/rotate/bundle/site build; `bin/`+`lib/`+`schema/` salinan hasil generate |
 | `clients/python/` | Verifier independen + tes (konformansi diferensial); terbit di PyPI sebagai `aifeed` (paket `aifeed/`, hanya stdlib) |
 | `conformance/` | Vektor: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revokasi + bundel |
-| `integrations/` | Adapter penerbit: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, GitHub Action |
+| `integrations/` | Adapter penerbit: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, Rust/Axum, GitHub Action |
+| `skills/` | Skill agen (`aifeed/SKILL.md`): alur verify/publish untuk coding agent |
+| `examples/` | Fixture manifest bertanda tangan per kategori situs + loader framework Python siap salin |
 | `wp-plugin/` | Plugin penerbit WordPress (PHP; punya `tests/` sendiri) |
 | `tools/` | Generator, renderer, benchmark, fuzzer, pemeriksa — zero-dep |
 | `demos/` | Konten origin demo (`sites.js`) dan kunci demo publik (`keys.js`) |
@@ -121,7 +123,7 @@ node bin/cli.js --help    # permukaan CLI
 - **Mengubah situs web:** `site/index.html` dan `penjelasan-aifeed.html` root adalah
   sumber; `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
   `docs/updates.html` berasal dari `tools/render-html.js` (`updates.html` merender
-  `CHANGELOG*.md`). Jalankan `npm run verify`. Tautan GitHub di situs harus memuat
+  `CHANGELOG*.md`; `docs/feed.xml` juga; `site/badge.svg` menyalin `badge-aifeed.svg` root). Jalankan `npm run verify`. Tautan GitHub di situs harus memuat
   nama repositori: `https://github.com/denyn1/aifeed-protocol/...`.
 - **Menambah atau mengubah origin demo:** edit `demos/sites.js` (halaman, override
   kebijakan via `permissions`, tema), jalankan `npm run demos:check`. Kunci penanda tangan

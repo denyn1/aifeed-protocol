@@ -42,6 +42,16 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   memverifikasi dengan `validate` tanpa `|| true`, dan menunjuk `@aifeed/frameworks`
   untuk Vite/Astro/Next.js; `check-consistency` menolak URL
   `aifeed/aifeed-protocol` yang usang.
+- **Adapter Rust (`integrations/rust`)** — middleware Axum `AifeedLayer` (negosiasi konten,
+  tanda tangan inline, penjaga traversal), diverifikasi 11 kasus `cargo test`.
+- **Feed RSS pembaruan** — `site/feed.xml` dirender dari `CHANGELOG.md` saat build dan
+  ditautkan dari head beranda; sitemap memuatnya.
+- **Lencana penerbit** — `badge.svg` statis ("verified by AIFeed") dengan snippet HTML
+  dan Markdown siap salin di panduan penerbit, agar origin bertanda tangan bisa menaut balik.
+- **Contoh framework Python** — loader LangChain, LlamaIndex, dan Crawl4AI siap salin di
+  `examples/python/`, tercakup `test_examples.py` (+11 tes).
+- **Skill agen + deskriptor Smithery** — `skills/aifeed/SKILL.md` mengajarkan agen coding
+  alur verify/publish; `smithery.yaml` mengirim perintah start MCP stdio.
 
 ## [1.0.0-draft] — 2026-09-16
 

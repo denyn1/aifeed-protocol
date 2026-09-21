@@ -2,6 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert');
+const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const { spawn } = require('node:child_process');
@@ -12,6 +13,14 @@ const cryptoLib = require('../lib/crypto');
 const digestLib = require('../lib/digest');
 
 buildMcp();
+
+test('smithery descriptor points at the published stdio server', () => {
+  const text = fs.readFileSync(path.join(__dirname, '..', 'packages', 'aifeed-mcp-server', 'smithery.yaml'), 'utf8');
+  assert.ok(/^startCommand:$/m.test(text), 'startCommand block');
+  assert.ok(/type:\s*stdio/.test(text), 'stdio transport');
+  assert.ok(text.includes('aifeed-mcp-server'), 'server command');
+  assert.ok(/configSchema:/.test(text), 'config schema block');
+});
 const SERVER = path.join(__dirname, '..', 'packages', 'aifeed-mcp-server', 'index.js');
 
 const ASSET_BYTES = Buffer.from('demo asset bytes');

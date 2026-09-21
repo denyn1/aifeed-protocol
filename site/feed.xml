@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>AIFeed updates</title>
+  <link>https://aifeed.md/updates.html</link>
+  <description>Release notes for the AIFeed protocol, rendered from the repository changelog.</description>
+  <language>en</language>
+  <lastBuildDate>Wed, 16 Sep 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>AIFeed 1.0.0-draft</title>
+    <link>https://aifeed.md/updates.html</link>
+    <guid isPermaLink="false">aifeed-1.0.0-draft</guid>
+    <pubDate>Wed, 16 Sep 2026 00:00:00 GMT</pubDate>
+    <description>AIFeed Studio (local publisher app) — npm run studio serves a zero-dependency</description>
+  </item>
+  <item>
+    <title>AIFeed 0.2.0-draft</title>
+    <link>https://aifeed.md/updates.html</link>
+    <guid isPermaLink="false">aifeed-0.2.0-draft</guid>
+    <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
+    <description>MAKO trust profile: signed MAKO documents (aifeed.mako.v0.2), permission binding</description>
+  </item>
+  <item>
+    <title>AIFeed 0.1.0-rc1</title>
+    <link>https://aifeed.md/updates.html</link>
+    <guid isPermaLink="false">aifeed-0.1.0-rc1</guid>
+    <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+    <description>AIFeed v0.1: signed manifests at /.well-known/ai.json, Ed25519 + JCS, DNS anchor</description>
+  </item>
+</channel>
+</rss>

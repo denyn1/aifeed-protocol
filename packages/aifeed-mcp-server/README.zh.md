@@ -49,6 +49,11 @@ docker run -i --rm aifeed-mcp-server
 在 [Glama](https://glama.ai/mcp/servers) 上架时可直接使用同一 Dockerfile（构建上下文：仓库根目录）。
 根目录的 `glama.json` 声明维护者。
 
+## 在 Smithery 上部署
+
+本 README 旁的 `smithery.yaml` 描述了 [Smithery](https://smithery.ai/) 的 stdio 启动命令：
+安装其 CLI、登录，然后在 `packages/aifeed-mcp-server` 下运行 `smithery publish`。
+
 ## 源码
 
 [aifeed-protocol](https://github.com/denyn1/aifeed-protocol) 的一部分：

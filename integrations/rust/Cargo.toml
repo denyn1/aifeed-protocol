@@ -1,0 +1,18 @@
+[package]
+name = "aifeed-axum"
+version = "1.0.0-draft.1"
+edition = "2021"
+description = "AIFeed content negotiation middleware for Axum (Rust)"
+license = "MIT"
+repository = "https://github.com/denyn1/aifeed-protocol"
+homepage = "https://aifeed.md"
+keywords = ["aifeed", "mcp", "markdown", "ed25519", "middleware"]
+categories = ["web-programming"]
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tower = "0.4"
+
+[dev-dependencies]
+tower = { version = "0.4", features = ["util"] }

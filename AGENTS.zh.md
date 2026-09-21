@@ -27,7 +27,7 @@ WordPress 发布插件、基准、网站与论文。
    | `conformance/mako/**`（39） | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**`（11） | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`、`benchmarks/enforcement-report.html` | `tools/render-html.js`（+ `benchmarks/*.json`） | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,aifeed-preprint.pdf}` | 根目录文件 + `paper/` + `tools/render-html.js`（`updates.html` 由 `CHANGELOG*.md` 生成） | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,aifeed-preprint.pdf}` | 根目录文件 + `paper/` + `tools/render-html.js`（`updates.html` 由 `CHANGELOG*.md` 生成；`feed.xml` 由 `CHANGELOG.md` 生成；`badge.svg` 来自 `badge-aifeed.svg`） | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`、apex `site/.well-known/**`、`site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check`（在 `verify` 内） |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | 插件 `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`、`refs.bib`、`00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json`（在 `paper/`） | 解包并阅读 `00README.json` |
@@ -61,7 +61,7 @@ WordPress 发布插件、基准、网站与论文。
 npm run verify            # 以下全部，一个门禁
 npm run lint:syntax       # 解析检查所有 .js 文件
 npm run check:consistency # 版本、依赖、密钥、规范镜像、脚本目标
-npm test                  # Node 套件（271 项测试）
+npm test                  # Node 套件（275 项测试）
 npm run test:py           # 独立 Python 验证器（45 项测试）
 npm run bench:mako        # 重新生成 benchmarks/mako-*.json + 报告
 npm run bench:enforcement # 重新生成 benchmarks/enforcement-*.json|md
@@ -87,7 +87,9 @@ node bin/cli.js --help    # CLI 界面
 | `packages/aifeed-cli/` | 已发布 CLI（`aifeed`）：keygen/init/sign/validate/rotate/bundle/site build；`bin/`+`lib/`+`schema/` 为生成副本 |
 | `clients/python/` | 独立验证器 + 测试（差分一致性）；以 `aifeed` 发布到 PyPI（`aifeed/` 包，仅标准库） |
 | `conformance/` | 向量：34 manifest、39 MAKO、11 AIFeed Markdown、撤销 + 离线包 |
-| `integrations/` | 发布方适配器：nginx、Caddy、Apache、Node、Next.js、PHP、Python ASGI、Go、GitHub Action |
+| `integrations/` | 发布方适配器：nginx、Caddy、Apache、Node、Next.js、PHP、Python ASGI、Go、Rust/Axum、GitHub Action |
+| `skills/` | 智能体技能（`aifeed/SKILL.md`）：面向编程智能体的验证/发布流程 |
+| `examples/` | 按站点类别签名的 manifest fixture + 可复制的 Python 框架加载器 |
 | `wp-plugin/` | WordPress 发布插件（PHP；自带 `tests/`） |
 | `tools/` | 生成器、渲染器、基准、模糊测试、检查器——零依赖 |
 | `demos/` | 演示源站内容（`sites.js`）与公开演示密钥（`keys.js`） |
@@ -112,7 +114,8 @@ node bin/cli.js --help    # CLI 界面
   `npm run build:sdk && npm run sdk:check`。
 - **修改网站：** `site/index.html` 与根目录 `penjelasan-aifeed.html` 是源文件；
   `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
-  `docs/updates.html` 来自 `tools/render-html.js`（`updates.html` 渲染 `CHANGELOG*.md`）。
+  `docs/updates.html` 来自 `tools/render-html.js`（`updates.html` 渲染 `CHANGELOG*.md`；
+  `docs/feed.xml` 亦然；`site/badge.svg` 复制根目录 `badge-aifeed.svg`）。
   运行 `npm run verify`。网站上的 GitHub 链接必须包含仓库名：
   `https://github.com/denyn1/aifeed-protocol/...`。
 - **新增或修改演示源站：** 编辑 `demos/sites.js`（页面、通过 `permissions` 的政策覆盖、

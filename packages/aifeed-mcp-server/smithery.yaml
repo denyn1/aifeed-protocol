@@ -1,0 +1,11 @@
+# Smithery deployment descriptor for aifeed-mcp-server.
+# Publish flow (needs a Smithery account): install the Smithery CLI, log in,
+# then run `smithery publish` from packages/aifeed-mcp-server.
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties: {}
+  commandFunction: |-
+    (config) => ({ command: 'npx', args: ['-y', 'aifeed-mcp-server'] })
+  exampleConfig: {}

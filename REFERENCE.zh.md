@@ -148,7 +148,7 @@ node bin/cli.js rotate --dir ./my-site
 ## 测试
 
 ```bash
-npm test                 # Node 测试套件（271 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换、MCP 服务器）
+npm test                 # Node 测试套件（275 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换、MCP 服务器）
 npm run test:py          # Python 验证器套件（45 项：向量、AIFeed Markdown/MAKO 对等、撤销、离线包、示例）
 npm run vectors          # 重新生成确定性 manifest 向量并自检（34）
 npm run mako:vectors     # 重新生成 MAKO 一致性向量并自检（39）

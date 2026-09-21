@@ -1156,6 +1156,59 @@ function renderUpdatesHtml(options = {}) {
   });
 }
 
+function stripMarkdownInline(text) {
+  return String(text)
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[*_`~]+/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function renderFeedXml(changelogText) {
+  const source = changelogText === undefined
+    ? fs.readFileSync(path.join(ROOT, 'CHANGELOG.md'), 'utf8')
+    : String(changelogText);
+  const sections = [];
+  const headingPattern = /^## \[([^\]]+)\] [—-] (\d{4}-\d{2}-\d{2})/gm;
+  let match;
+  while ((match = headingPattern.exec(source)) !== null) {
+    sections.push({ version: match[1], date: match[2], index: match.index });
+  }
+  const newest = sections.length > 0 ? sections[0].date + 'T00:00:00Z' : '1970-01-01T00:00:00Z';
+  const items = sections.slice(0, 10).map((section, position) => {
+    const start = source.indexOf('\n', section.index) + 1;
+    const end = position + 1 < sections.length ? sections[position + 1].index : source.length;
+    const bullets = [];
+    for (const line of source.slice(start, end).split('\n')) {
+      const bullet = /^\s*-\s+(.*)$/.exec(line);
+      if (bullet) bullets.push(stripMarkdownInline(bullet[1]));
+    }
+    return [
+      '  <item>',
+      '    <title>' + escapeHtml('AIFeed ' + section.version) + '</title>',
+      '    <link>https://aifeed.md/updates.html</link>',
+      '    <guid isPermaLink="false">aifeed-' + escapeHtml(section.version) + '</guid>',
+      '    <pubDate>' + new Date(section.date + 'T00:00:00Z').toUTCString() + '</pubDate>',
+      '    <description>' + escapeHtml((bullets[0] || 'Release notes.').slice(0, 400)) + '</description>',
+      '  </item>'
+    ].join('\n');
+  });
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<rss version="2.0">',
+    '<channel>',
+    '  <title>AIFeed updates</title>',
+    '  <link>https://aifeed.md/updates.html</link>',
+    '  <description>Release notes for the AIFeed protocol, rendered from the repository changelog.</description>',
+    '  <language>en</language>',
+    '  <lastBuildDate>' + new Date(newest).toUTCString() + '</lastBuildDate>',
+    ...items,
+    '</channel>',
+    '</rss>',
+    ''
+  ].join('\n');
+}
+
 function main() {
   fs.mkdirSync(DOCS_DIR, { recursive: true });
   const enforcement = readJsonIfExists(path.join(BENCH_DIR, 'enforcement-report.json'));
@@ -1171,9 +1224,11 @@ function main() {
   process.stdout.write('html written: docs/studio.html\n');
   fs.writeFileSync(path.join(DOCS_DIR, 'updates.html'), renderUpdatesHtml({}), 'utf8');
   process.stdout.write('html written: docs/updates.html\n');
+  fs.writeFileSync(path.join(DOCS_DIR, 'feed.xml'), renderFeedXml(), 'utf8');
+  process.stdout.write('html written: docs/feed.xml\n');
 }
 
-module.exports = { renderEnforcementHtml, renderProcessHtml, renderStudioHtml, renderUpdatesHtml, renderMarkdown, STYLE, ENGINE };
+module.exports = { renderEnforcementHtml, renderProcessHtml, renderStudioHtml, renderUpdatesHtml, renderFeedXml, renderMarkdown, STYLE, ENGINE };
 
 if (require.main === module) {
   main();

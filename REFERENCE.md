@@ -156,8 +156,8 @@ Exit codes: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage or internal error.
 ## Tests
 
 ```bash
-npm test                 # Node test suite (271 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation, MCP server)
-npm run test:py          # Python verifier suite (45 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
+npm test                 # Node test suite (275 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation, MCP server)
+npm run test:py          # Python verifier suite (56 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
 npm run vectors          # regenerate deterministic manifest vectors and self-check (34)
 npm run mako:vectors     # regenerate MAKO conformance vectors and self-check (39)
 npm run aimd:vectors     # regenerate AIFeed Markdown conformance vectors and self-check (11)

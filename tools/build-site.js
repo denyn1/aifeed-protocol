@@ -14,6 +14,8 @@ const COPIES = [
   ['penjelasan-aifeed.html', 'penjelasan.html'],
   ['docs/studio.html', 'studio.html'],
   ['docs/updates.html', 'updates.html'],
+  ['docs/feed.xml', 'feed.xml'],
+  ['badge-aifeed.svg', 'badge.svg'],
   ['paper/aifeed-preprint.pdf', 'aifeed-preprint.pdf']
 ];
 

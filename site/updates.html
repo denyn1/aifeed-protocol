@@ -253,6 +253,11 @@ footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-t
 <li><strong>CLI on npm (<code>aifeed</code>)</strong> — <code>npx aifeed</code> publishes the publisher CLI (keygen, init, sign, validate, rotate, bundle, <code>site build</code>, AIFeed Markdown/MAKO tools) from <code>packages/aifeed-cli/</code>; <code>sign</code> now finds the default key next to the site directory and <code>validate</code>/<code>verifyDirectory</code> accept a site root with the manifest in <code>.well-known/</code>.</li>
 <li><strong><code>verifyRemote()</code></strong> — one-call remote verification in <code>@aifeed/verify</code>: discovery → manifest + signature → DNS <code>_aifeed</code> anchor state, enabling the 3-line consumer quickstart on the npm pages.</li>
 <li><strong>Repository URL consistency</strong> — the CI workflow template, <code>package.json</code> metadata, the WordPress plugin catalogue header, and the namespace docs now point at <code>github.com/denyn1/aifeed-protocol</code> (canonical); the workflow pins tag <code>v1.0.0-draft.2</code>, gates on <code>validate</code> without <code>|| true</code>, and points at <code>@aifeed/frameworks</code> for Vite/Astro/Next.js; <code>check-consistency</code> rejects stale <code>aifeed/aifeed-protocol</code> URLs.</li>
+<li><strong>Rust adapter (<code>integrations/rust</code>)</strong> — <code>AifeedLayer</code> Axum middleware (content negotiation, inline signatures, traversal guard), verified by 11 <code>cargo test</code> cases.</li>
+<li><strong>Updates RSS feed</strong> — <code>site/feed.xml</code> rendered from <code>CHANGELOG.md</code> at build time and linked from the homepage head; the sitemap lists it.</li>
+<li><strong>Publisher badge</strong> — static <code>badge.svg</code> (&quot;verified by AIFeed&quot;) with copy-paste HTML and Markdown snippets in the publisher guide, so signed origins can link back.</li>
+<li><strong>Python framework examples</strong> — copy-paste LangChain, LlamaIndex, and Crawl4AI loaders in <code>examples/python/</code>, covered by <code>test_examples.py</code> (+11 tests).</li>
+<li><strong>Agent skill + Smithery descriptor</strong> — <code>skills/aifeed/SKILL.md</code> teaches coding agents the verify/publish flows; <code>smithery.yaml</code> ships the MCP stdio start command.</li>
 </ul>
 <h3>[1.0.0-draft] — 2026-09-16</h3>
 <h4>Added</h4>
@@ -333,6 +338,11 @@ footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-t
 <li><strong>CLI di npm (<code>aifeed</code>)</strong> — <code>npx aifeed</code> menerbitkan CLI penerbit (keygen, init, sign, validate, rotate, bundle, <code>site build</code>, tools AIFeed Markdown/MAKO) dari <code>packages/aifeed-cli/</code>; <code>sign</code> kini menemukan kunci default di sebelah direktori situs dan <code>validate</code>/<code>verifyDirectory</code> menerima root situs dengan manifest di <code>.well-known/</code>.</li>
 <li><strong><code>verifyRemote()</code></strong> — verifikasi remote satu panggilan di <code>@aifeed/verify</code>: discovery → manifest + tanda tangan → status anchor DNS <code>_aifeed</code>, sehingga quickstart konsumen 3 baris tampil di halaman npm.</li>
 <li><strong>Konsistensi URL repositori</strong> — template workflow CI, metadata <code>package.json</code>, header katalog plugin WordPress, dan dokumen namespace kini menunjuk <code>github.com/denyn1/aifeed-protocol</code> (kanonik); workflow mem-pin tag <code>v1.0.0-draft.2</code>, memverifikasi dengan <code>validate</code> tanpa <code>|| true</code>, dan menunjuk <code>@aifeed/frameworks</code> untuk Vite/Astro/Next.js; <code>check-consistency</code> menolak URL <code>aifeed/aifeed-protocol</code> yang usang.</li>
+<li><strong>Adapter Rust (<code>integrations/rust</code>)</strong> — middleware Axum <code>AifeedLayer</code> (negosiasi konten, tanda tangan inline, penjaga traversal), diverifikasi 11 kasus <code>cargo test</code>.</li>
+<li><strong>Feed RSS pembaruan</strong> — <code>site/feed.xml</code> dirender dari <code>CHANGELOG.md</code> saat build dan ditautkan dari head beranda; sitemap memuatnya.</li>
+<li><strong>Lencana penerbit</strong> — <code>badge.svg</code> statis (&quot;verified by AIFeed&quot;) dengan snippet HTML dan Markdown siap salin di panduan penerbit, agar origin bertanda tangan bisa menaut balik.</li>
+<li><strong>Contoh framework Python</strong> — loader LangChain, LlamaIndex, dan Crawl4AI siap salin di <code>examples/python/</code>, tercakup <code>test_examples.py</code> (+11 tes).</li>
+<li><strong>Skill agen + deskriptor Smithery</strong> — <code>skills/aifeed/SKILL.md</code> mengajarkan agen coding alur verify/publish; <code>smithery.yaml</code> mengirim perintah start MCP stdio.</li>
 </ul>
 <h3>[1.0.0-draft] — 2026-09-16</h3>
 <h4>Ditambahkan</h4>
@@ -413,6 +423,11 @@ footer.foot { margin-top: 34px; color: var(--faint); font-size: 12.5px; border-t
 <li><strong>npm 上的 CLI（<code>aifeed</code>）</strong> — <code>npx aifeed</code> 发布发布方 CLI（keygen、init、sign、 validate、rotate、bundle、<code>site build</code>、AIFeed Markdown/MAKO 工具），源码位于 <code>packages/aifeed-cli/</code>；<code>sign</code> 现在会在站点目录旁查找默认密钥， <code>validate</code>/<code>verifyDirectory</code> 接受 manifest 位于 <code>.well-known/</code> 的站点根目录。</li>
 <li><strong><code>verifyRemote()</code></strong> — <code>@aifeed/verify</code> 的一次调用远程验证：discovery → manifest + 签名 → DNS <code>_aifeed</code> 锚点状态，使 npm 页面上的 3 行消费者快速上手成为可能。</li>
 <li><strong>仓库 URL 一致性</strong> — CI workflow 模板、<code>package.json</code> 元数据、WordPress 插件目录头部 与命名空间文档现已指向 <code>github.com/denyn1/aifeed-protocol</code>（规范地址）；workflow 固定 tag <code>v1.0.0-draft.2</code>，用不带 <code>|| true</code> 的 <code>validate</code> 作为门禁，并指向 <code>@aifeed/frameworks</code>（Vite/Astro/Next.js）；<code>check-consistency</code> 会拒绝过期的 <code>aifeed/aifeed-protocol</code> URL。</li>
+<li><strong>Rust 适配器（<code>integrations/rust</code>）</strong> — Axum 中间件 <code>AifeedLayer</code>（内容协商、内联签名、 遍历防护），经 11 个 <code>cargo test</code> 用例验证。</li>
+<li><strong>更新 RSS 源</strong> — <code>site/feed.xml</code> 在构建时由 <code>CHANGELOG.md</code> 渲染，并从首页 head 链接； sitemap 收录它。</li>
+<li><strong>发布者徽章</strong> — 静态 <code>badge.svg</code>（&quot;verified by AIFeed&quot;），发布者指南附可复制的 HTML 与 Markdown 片段，已签名源站可借此回链。</li>
+<li><strong>Python 框架示例</strong> — <code>examples/python/</code> 下可复制的 LangChain、LlamaIndex 与 Crawl4AI 加载器，由 <code>test_examples.py</code> 覆盖（+11 测试）。</li>
+<li><strong>智能体技能 + Smithery 描述符</strong> — <code>skills/aifeed/SKILL.md</code> 教编程智能体验证/发布流程； <code>smithery.yaml</code> 给出 MCP stdio 启动命令。</li>
 </ul>
 <h3>[1.0.0-draft] — 2026-09-16</h3>
 <h4>新增</h4>

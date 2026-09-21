@@ -29,7 +29,7 @@ benchmarks, the website, and the paper.
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,aifeed-preprint.pdf}` | root files + `paper/` + `tools/render-html.js` (`updates.html` from `CHANGELOG*.md`) | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,aifeed-preprint.pdf}` | root files + `paper/` + `tools/render-html.js` (`updates.html` from `CHANGELOG*.md`; `feed.xml` from `CHANGELOG.md`; `badge.svg` from `badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`, apex `site/.well-known/**`, `site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check` (inside `verify`) |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | plugin `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`, `refs.bib`, `00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json` (in `paper/`) | untar + read `00README.json` |
@@ -65,8 +65,8 @@ benchmarks, the website, and the paper.
 npm run verify            # everything below, one gate
 npm run lint:syntax       # parse-check every .js file
 npm run check:consistency # versions, deps, secrets, spec pairs, script targets
-npm test                  # Node suite (271 tests)
-npm run test:py           # independent Python verifier (45 tests)
+npm test                  # Node suite (275 tests)
+npm run test:py           # independent Python verifier (56 tests)
 npm run bench:mako        # regenerate benchmarks/mako-*.json + report
 npm run bench:enforcement # regenerate benchmarks/enforcement-*.json|md
 npm run fuzz:mako -- --iterations 3000   # parser fuzzing (fixed seeds)
@@ -91,7 +91,9 @@ node bin/cli.js --help    # CLI surface
 | `packages/aifeed-cli/` | Published CLI (`aifeed`): keygen/init/sign/validate/rotate/bundle/site build; `bin/`+`lib/`+`schema/` are generated copies |
 | `clients/python/` | Independent verifier + tests (differential conformance); published on PyPI as `aifeed` (`aifeed/` package, stdlib only) |
 | `conformance/` | Vectors: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revocation + bundles |
-| `integrations/` | Publisher adapters: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, GitHub Action |
+| `integrations/` | Publisher adapters: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, Rust/Axum, GitHub Action |
+| `skills/` | Agent skill (`aifeed/SKILL.md`): verify/publish flows for coding agents |
+| `examples/` | Signed manifest fixtures per site category + copy-paste Python framework loaders |
 | `wp-plugin/` | WordPress publisher plugin (PHP; its own `tests/`) |
 | `tools/` | Generators, renderers, benchmarks, fuzzers, checkers — zero-dep |
 | `demos/` | Demo origin content (`sites.js`) and public demo keys (`keys.js`) |
@@ -119,7 +121,7 @@ node bin/cli.js --help    # CLI surface
 - **Change the website:** `site/index.html` and root `penjelasan-aifeed.html` are
   sources; `docs/process.html`/`benchmarks/enforcement-report.html`/`docs/studio.html`/
   `docs/updates.html` come from `tools/render-html.js` (`updates.html` renders
-  `CHANGELOG*.md`). Run `npm run verify`. Site links to GitHub must include the
+  `CHANGELOG*.md`; `docs/feed.xml` too; `site/badge.svg` copies root `badge-aifeed.svg`). Run `npm run verify`. Site links to GitHub must include the
   repository name: `https://github.com/denyn1/aifeed-protocol/...`.
 - **Add or change a demo origin:** edit `demos/sites.js` (pages, policy overrides via
   `permissions`, theme), run `npm run demos:check`. Signing keys are deterministic and
