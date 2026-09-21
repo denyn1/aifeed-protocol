@@ -4,37 +4,30 @@
 
 Run this checklist once, then record the results in `paper/CHECKLIST.md`.
 
-## 1. GitHub repository — canonical `denyn1/aifeed-protocol`
+## 1. GitHub repository — canonical at `denyn1/aifeed-protocol`
 
-Status (2026-09-21): the `aifeed` organization has **not** been created; the canonical
-repository is <https://github.com/denyn1/aifeed-protocol>. Every published package, the
-website, and the paper already link there. Creating the org later is optional — after a
-transfer GitHub redirects the old URLs, but `package.json`, this document, and the release
-notes must be updated.
+**Status (2026-09-21):** the canonical repository is
+<https://github.com/denyn1/aifeed-protocol>. The `aifeed` organization has **not** been
+created; that is optional. If the repository is ever transferred to an `aifeed` org,
+GitHub keeps old URLs working via redirects, so links stay valid.
 
-1. (Optional, future) Create the organization <https://github.com/organizations/plan> →
-   **Free**; name `aifeed` (checked free on 2026-09-15: `users/aifeed` and `orgs/aifeed`
-   returned 404). Enable 2FA for all members and add at least one recovery method.
-2. Repository settings (current):
+1. Repository settings (re-check after any transfer):
    - Default branch `main`, squash-merge allowed, delete branch on merge.
    - Branch protection: require pull request + passing CI before merge.
    - Security: enable private vulnerability reporting (matches `SECURITY.md`).
-   - The plugin ships in this monorepo under `wp-plugin/`; a separate plugin repository is
-     optional.
-3. (Optional, future) A Marketplace Action (`aifeed/sign@v1`) would need a public action
-   repository, most naturally under the org. Until then use the CI template
-   [`../integrations/github-action/aifeed.yml`](../integrations/github-action/aifeed.yml).
-4. Point the local repository at the canonical remote:
+   - The WordPress plugin ships in this monorepo under `wp-plugin/`; a separate
+     `aifeed/aifeed-wp-plugin` repository is optional.
+2. Remote (current canonical URL):
 
    ```bash
    cd D:\Software\aifeed.org
-   git remote -v                                    # expect origin → denyn1/aifeed-protocol
    git remote set-url origin https://github.com/denyn1/aifeed-protocol.git
    git push -u origin main
    ```
 
-   (Ignore the local folder name `aifeed.org`; renaming it to `aifeed.md` is optional and
-   does not affect anything tracked by git.)
+   (Keys are excluded by `.gitignore`. The local folder name does not affect git.)
+3. Optional later: create the `aifeed` organization and transfer the repository; revisit
+   the deferred Marketplace Action `aifeed/sign@v1` at the same time.
 
 ## 2. npm scope — `@aifeed` (**published 2026-09-16**)
 

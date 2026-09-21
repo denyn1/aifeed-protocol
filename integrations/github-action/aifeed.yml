@@ -18,9 +18,9 @@ jobs:
           node-version: 22
 
       # The protocol repository ships the zero-dependency CLI. This template pins the
-      # v1.0.0-draft.2 tag; bump it (or pin a commit) for production.
-      # Alternatives: `npm i -g aifeed@1.0.0-draft.1`, or for Vite/Astro/Next.js use the
-      # @aifeed/frameworks plugins (`aifeed()` in the build config) instead of this workflow.
+      # v1.0.0-draft.2 tag; bump it (or pin a commit) when you upgrade.
+      # Alternatives: `npm install -g aifeed@1.0.0-draft.1` (published CLI), or the
+      # @aifeed/frameworks plugins for Vite/Astro/Next.js (sign inside your build).
       - name: Install AIFeed CLI
         run: |
           git clone --depth 1 --branch v1.0.0-draft.2 https://github.com/denyn1/aifeed-protocol.git .aifeed-tool

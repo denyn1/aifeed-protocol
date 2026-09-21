@@ -118,7 +118,7 @@ for (const [file, pkg] of [['package.json', rootPkg], ['packages/aifeed-verify/p
 const tracked = spawnSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' });
 if (tracked.status === 0) {
   const secretPattern = /ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY/;
-  const staleOrgPattern = /github\.com\/aifeed\//;
+  const staleOrgPattern = new RegExp('github\\.com/' + 'aifeed' + '/');
   const allowedSecretFiles = new Set(['tests/fixtures/tls/cert.pem', 'tests/fixtures/tls/key.pem', 'demos/keys.js']);
   for (const relative of tracked.stdout.split('\0').filter(Boolean)) {
     if (allowedSecretFiles.has(relative)) continue;
@@ -129,7 +129,7 @@ if (tracked.status === 0) {
       continue;
     }
     if (secretPattern.test(text)) failures.push('possible secret in tracked file: ' + relative);
-    if (staleOrgPattern.test(text)) failures.push('stale GitHub org URL in tracked file: ' + relative + ' (use github.com/denyn1/aifeed-protocol)');
+    if (staleOrgPattern.test(text)) failures.push('stale GitHub org URL in tracked file (use github.com/denyn1/aifeed-protocol): ' + relative);
   }
 } else {
   notes.push('git not available; skipped the secret scan');

@@ -6,32 +6,27 @@
 
 ## 1. GitHub 仓库 — 规范位置 `denyn1/aifeed-protocol`
 
-状态（2026-09-21）：`aifeed` 组织**尚未**创建；规范仓库是
-<https://github.com/denyn1/aifeed-protocol>。所有已发布包、网站与论文均已指向该地址。
-以后再创建组织是可选的——转移后 GitHub 会重定向旧 URL，但必须同步更新
-`package.json`、本文档与发布说明。
+**状态（2026-09-21）：** 规范仓库为
+<https://github.com/denyn1/aifeed-protocol>。`aifeed` 组织**尚未**创建，属于可选事项。
+若将来将仓库转移到 `aifeed` 组织，GitHub 会通过重定向保持旧 URL 有效，链接不会失效。
 
-1. （可选，未来）创建组织：<https://github.com/organizations/plan> → 选择 **Free**；
-   名称 `aifeed`（2026-09-15 核实可用：`users/aifeed` 与 `orgs/aifeed` 均返回 404）。
-   为所有成员启用 2FA 并至少添加一种恢复方式。
-2. 仓库设置（当前）：
+1. 仓库设置（任何转移后请复查）：
    - 默认分支 `main`，允许 squash-merge，合并后删除分支。
    - 分支保护：合并前要求 pull request + CI 通过。
    - 安全：启用私有漏洞报告（与 `SECURITY.md` 一致）。
-   - 插件在本 monorepo 的 `wp-plugin/` 下发布；单独的插件仓库可选。
-3. （可选，未来）Marketplace Action（`aifeed/sign@v1`）需要一个公开的 action 仓库，
-   最自然的位置是在组织下。在此之前使用 CI 模板
-   [`../integrations/github-action/aifeed.yml`](../integrations/github-action/aifeed.yml)。
-4. 将本地仓库指向规范远程：
+   - WordPress 插件在本 monorepo 的 `wp-plugin/` 下发布；单独的
+     `aifeed/aifeed-wp-plugin` 仓库可选。
+2. 远端（当前规范 URL）：
 
    ```bash
    cd D:\Software\aifeed.org
-   git remote -v                                    # 期望 origin → denyn1/aifeed-protocol
    git remote set-url origin https://github.com/denyn1/aifeed-protocol.git
    git push -u origin main
    ```
 
-   （本地目录名 `aifeed.org` 可以忽略；改成 `aifeed.md` 是可选的，不影响 git 跟踪的任何内容。）
+   （密钥已被 `.gitignore` 排除。本地目录名不影响 git。）
+3. 可选后续：创建 `aifeed` 组织并转移仓库；同时重新评估延期中的
+   Marketplace Action `aifeed/sign@v1`。
 
 ## 2. npm scope — `@aifeed`（**2026-09-16 已发布**）
 

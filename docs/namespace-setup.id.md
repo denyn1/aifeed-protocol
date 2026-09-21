@@ -4,38 +4,30 @@
 
 Jalankan checklist ini sekali, lalu catat hasilnya di `paper/CHECKLIST.md`.
 
-## 1. Repositori GitHub — kanonik `denyn1/aifeed-protocol`
+## 1. Repositori GitHub — kanonik di `denyn1/aifeed-protocol`
 
-Status (2026-09-21): organisasi `aifeed` **belum** dibuat; repositori kanonik adalah
-<https://github.com/denyn1/aifeed-protocol>. Semua paket terbit, situs web, dan paper sudah
-menaut ke sana. Membuat org nanti bersifat opsional — setelah transfer, GitHub
-me-redirect URL lama, tetapi `package.json`, dokumen ini, dan catatan rilis harus
-diperbarui.
+**Status (2026-09-21):** repositori kanonik adalah
+<https://github.com/denyn1/aifeed-protocol>. Organisasi `aifeed` **belum** dibuat; itu
+opsional. Jika repositori nanti dipindahkan ke org `aifeed`, GitHub menjaga URL lama
+tetap berfungsi lewat redirect, sehingga tautan tetap valid.
 
-1. (Opsional, masa depan) Buat organisasi <https://github.com/organizations/plan> →
-   **Free**; nama `aifeed` (dicek bebas 2026-09-15: `users/aifeed` dan `orgs/aifeed`
-   mengembalikan 404). Aktifkan 2FA untuk semua anggota dan tambahkan minimal satu metode
-   pemulihan.
-2. Pengaturan repositori (saat ini):
+1. Pengaturan repositori (cek ulang setelah transfer apa pun):
    - Branch default `main`, squash-merge diizinkan, hapus branch saat merge.
    - Proteksi branch: wajib pull request + CI lulus sebelum merge.
    - Keamanan: aktifkan pelaporan kerentanan privat (selaras `SECURITY.md`).
-   - Plugin dikirim di monorepo ini di bawah `wp-plugin/`; repositori plugin terpisah
-     bersifat opsional.
-3. (Opsional, masa depan) Marketplace Action (`aifeed/sign@v1`) membutuhkan repositori
-   action publik, paling natural di bawah org. Sementara ini gunakan template CI
-   [`../integrations/github-action/aifeed.yml`](../integrations/github-action/aifeed.yml).
-4. Arahkan repositori lokal ke remote kanonik:
+   - Plugin WordPress dikirim di monorepo ini di bawah `wp-plugin/`; repositori terpisah
+     `aifeed/aifeed-wp-plugin` bersifat opsional.
+2. Remote (URL kanonik saat ini):
 
    ```bash
    cd D:\Software\aifeed.org
-   git remote -v                                    # harap origin → denyn1/aifeed-protocol
    git remote set-url origin https://github.com/denyn1/aifeed-protocol.git
    git push -u origin main
    ```
 
-   (Abaikan nama folder lokal `aifeed.org`; menggantinya menjadi `aifeed.md` opsional dan
-   tidak memengaruhi apa pun yang dilacak git.)
+   (Kunci dikecualikan `.gitignore`. Nama folder lokal tidak memengaruhi git.)
+3. Opsional nanti: buat organisasi `aifeed` dan transfer repositori; tinjau ulang
+   Marketplace Action `aifeed/sign@v1` yang ditunda pada saat yang sama.
 
 ## 2. Scope npm — `@aifeed` (**terbit 2026-09-16**)
 

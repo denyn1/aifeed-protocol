@@ -32,11 +32,11 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   `validate`/`verifyDirectory` 接受 manifest 位于 `.well-known/` 的站点根目录。
 - **`verifyRemote()`** — `@aifeed/verify` 的一次调用远程验证：discovery → manifest + 签名
   → DNS `_aifeed` 锚点状态，使 npm 页面上的 3 行消费者快速上手成为可能。
-- **仓库 URL 一致性** — 修复 CI 模板、根 `package.json`、WordPress `.pot` 头与
-  namespace 文档中的过期 `aifeed/aifeed-protocol` 链接（规范位置：`denyn1/aifeed-protocol`）；
-  CI 模板现固定 tag `v1.0.0-draft.2`，以 `aifeed validate` 作为不带 `|| true` 的门禁，
-  并指向 Vite/Astro/Next.js 的 `@aifeed/frameworks`；`check-consistency` 现在拒绝旧
-  `aifeed` 属主下的任何 GitHub URL。
+- **仓库 URL 一致性** — CI workflow 模板、`package.json` 元数据、WordPress 插件目录头部
+  与命名空间文档现已指向 `github.com/denyn1/aifeed-protocol`（规范地址）；workflow 固定
+  tag `v1.0.0-draft.2`，用不带 `|| true` 的 `validate` 作为门禁，并指向
+  `@aifeed/frameworks`（Vite/Astro/Next.js）；`check-consistency` 会拒绝过期的
+  `aifeed/aifeed-protocol` URL。
 
 ## [1.0.0-draft] — 2026-09-16
 

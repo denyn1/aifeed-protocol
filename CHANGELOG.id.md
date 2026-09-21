@@ -36,12 +36,12 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 - **`verifyRemote()`** — verifikasi remote satu panggilan di `@aifeed/verify`: discovery →
   manifest + tanda tangan → status anchor DNS `_aifeed`, sehingga quickstart konsumen 3
   baris tampil di halaman npm.
-- **Konsistensi URL repositori** — memperbaiki tautan usang `aifeed/aifeed-protocol` di
-  template CI, `package.json` root, header `.pot` WordPress, dan dokumen namespace
-  (kanonik: `denyn1/aifeed-protocol`); template CI kini mem-pin tag `v1.0.0-draft.2`,
-  menjadikan `aifeed validate` sebagai gate tanpa `|| true`, dan menunjuk
-  `@aifeed/frameworks` untuk Vite/Astro/Next.js; `check-consistency` kini menolak URL
-  GitHub di bawah owner lama `aifeed`.
+- **Konsistensi URL repositori** — template workflow CI, metadata `package.json`, header
+  katalog plugin WordPress, dan dokumen namespace kini menunjuk
+  `github.com/denyn1/aifeed-protocol` (kanonik); workflow mem-pin tag `v1.0.0-draft.2`,
+  memverifikasi dengan `validate` tanpa `|| true`, dan menunjuk `@aifeed/frameworks`
+  untuk Vite/Astro/Next.js; `check-consistency` menolak URL
+  `aifeed/aifeed-protocol` yang usang.
 
 ## [1.0.0-draft] — 2026-09-16
 
