@@ -62,3 +62,14 @@ test('publisher badge is a self-contained SVG and the index links the feed', () 
   assert.ok(index.includes('rel="alternate" type="application/rss+xml"'), 'feed discovery link');
   assert.ok(index.includes('href="/feed.xml"'), 'feed path');
 });
+
+test('index page embeds the explainer video and the site build ships it', () => {
+  const root = path.join(__dirname, '..');
+  const index = fs.readFileSync(path.join(root, 'site', 'index.html'), 'utf8');
+  assert.ok(index.includes('<video'), 'video element');
+  assert.ok(index.includes('How_AIFeed_Stops_Web_Scraping_Waste.mp4'), 'video source');
+  const video = path.join(root, 'How_AIFeed_Stops_Web_Scraping_Waste.mp4');
+  assert.ok(fs.existsSync(video) && fs.statSync(video).size > 0, 'video asset');
+  const buildSite = fs.readFileSync(path.join(root, 'tools', 'build-site.js'), 'utf8');
+  assert.ok(buildSite.includes('How_AIFeed_Stops_Web_Scraping_Waste.mp4'), 'copied at build time');
+});

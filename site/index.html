@@ -158,6 +158,12 @@ html[data-theme="dark"] .icon-moon, html[data-theme="light"] .icon-sun { display
 .term .k { color: var(--accent); }
 .term .s { color: #3ddc97; }
 
+/* video */
+.video {
+  display: block; width: 100%; border-radius: 10px;
+  border: 1px solid var(--border); background: #000;
+}
+
 /* section */
 .section { margin-top: 28px; }
 .section > h2 { font-size: 1rem; font-weight: 600; margin: 0 0 12px; }
@@ -273,6 +279,15 @@ footer a:hover { color: var(--accent); }
       <div><span class="c">console.log(out.result, out.anchor.status); // VERIFIED anchored</span></div>
     </div>
   </header>
+
+  <section class="section" id="video">
+    <h2>How AIFeed stops web scraping waste</h2>
+    <video class="video" controls preload="metadata" playsinline>
+      <source src="How_AIFeed_Stops_Web_Scraping_Waste.mp4" type="video/mp4">
+      Your browser does not support the video tag — <a href="How_AIFeed_Stops_Web_Scraping_Waste.mp4">download the MP4</a>.
+    </video>
+    <p class="hint">The problem, the signed declaration, and verification in practice. Prefer reading? Start with the <a href="penjelasan.html">complete guide</a> or the <a href="process.html">protocol flow</a>.</p>
+  </section>
 
   <section class="section" id="profiles">
     <h2>What AIFeed defines</h2>

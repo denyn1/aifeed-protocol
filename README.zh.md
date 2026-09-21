@@ -9,6 +9,8 @@
 <p align="center"><strong>面向 AI 网络的内容许可签名标准。</strong><br>
 声明、签名并撤销 AI 智能体可以对你的内容做什么——并让智能体能够验证它。</p>
 
+<p align="center"><a href="How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ 观看：AIFeed 如何阻止网页抓取浪费</strong></a></p>
+
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="npm 版本"></a>
   <a href="https://www.npmjs.com/package/aifeed"><img src="https://img.shields.io/npm/v/aifeed?color=f55036&label=cli" alt="aifeed CLI"></a>
@@ -59,7 +61,8 @@ console.log(out.result, out.anchor.status);    // VERIFIED anchored
 TypeScript：`import { verifyRemote } from '@aifeed/verify';`
 
 下一步：[为什么需要 AIFeed？](#为什么需要-aifeed) · [智能体快速上手](docs/agent-quickstart.md) ·
-[发布方 AI 指南](docs/publisher-ai-guide.zh.md) · npm：[`aifeed` CLI](https://www.npmjs.com/package/aifeed) ·
+[发布方 AI 指南](docs/publisher-ai-guide.zh.md) · [Studio 发布应用](studio/README.zh.md) ·
+npm：[`aifeed` CLI](https://www.npmjs.com/package/aifeed) ·
 [`@aifeed/verify`](https://www.npmjs.com/package/@aifeed/verify)
 
 ## 为什么需要 AIFeed？
@@ -156,6 +159,7 @@ node bin/cli.js site build ./public --domain example.com --key keys/aifeed-priva
 | [`schema/`](schema/) | manifest、签名、AIFeed Markdown、MAKO 的 JSON Schema |
 | [`paper/`](paper/) | 预印本：LaTeX 源码、PDF、主张台账、arXiv 打包 |
 | [`docs/`](docs/) | 智能体快速上手、部署与命名空间指南、项目说明 |
+| [`studio/`](studio/) | 零依赖本地发布应用：抓取、声明、构建、验证、导出、轮换 |
 | [`REFERENCE.md`](REFERENCE.md) | 参考实现细节、验证内容、CLI 快速上手 |
 
 ## 文档

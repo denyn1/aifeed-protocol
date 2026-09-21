@@ -27,7 +27,7 @@ WordPress 发布插件、基准、网站与论文。
    | `conformance/mako/**`（39） | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**`（11） | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`、`benchmarks/enforcement-report.html` | `tools/render-html.js`（+ `benchmarks/*.json`） | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,aifeed-preprint.pdf}` | 根目录文件 + `paper/` + `tools/render-html.js`（`updates.html` 由 `CHANGELOG*.md` 生成；`feed.xml` 由 `CHANGELOG.md` 生成；`badge.svg` 来自 `badge-aifeed.svg`） | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | 根目录文件 + `paper/` + `tools/render-html.js`（`updates.html` 由 `CHANGELOG*.md` 生成；`feed.xml` 由 `CHANGELOG.md` 生成；`badge.svg` 来自 `badge-aifeed.svg`） | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`、apex `site/.well-known/**`、`site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check`（在 `verify` 内） |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | 插件 `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`、`refs.bib`、`00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json`（在 `paper/`） | 解包并阅读 `00README.json` |

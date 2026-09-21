@@ -29,7 +29,7 @@ benchmarks, the website, and the paper.
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
    | `docs/process.html`, `benchmarks/enforcement-report.html` | `tools/render-html.js` (+ `benchmarks/*.json`) | `npm run render:html` | `npm run verify` |
-   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,aifeed-preprint.pdf}` | root files + `paper/` + `tools/render-html.js` (`updates.html` from `CHANGELOG*.md`; `feed.xml` from `CHANGELOG.md`; `badge.svg` from `badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
+   | `site/{logo.svg,process.html,enforcement-report.html,penjelasan.html,studio.html,updates.html,feed.xml,badge.svg,How_AIFeed_Stops_Web_Scraping_Waste.mp4,aifeed-preprint.pdf}` | root files + `paper/` + `tools/render-html.js` (`updates.html` from `CHANGELOG*.md`; `feed.xml` from `CHANGELOG.md`; `badge.svg` from `badge-aifeed.svg`) | `npm run render:html && npm run build:site` | `npm run verify` |
    | `site/demos/**`, apex `site/.well-known/**`, `site/revoke/**` | `demos/sites.js` + `demos/keys.js` + `tools/gen-demos.js` | `npm run demos` | `npm run demos:check` (inside `verify`) |
    | `tools/jcs-php-fixtures.json` | `tools/gen-jcs-php-fixtures.js` | `npm run jcs:fixtures` | plugin `tests/jcs-test.php` |
    | `paper/aifeed-arxiv.tar.gz` | `paper/main.tex`, `refs.bib`, `00README.json` | `tar -czf aifeed-arxiv.tar.gz main.tex refs.bib 00README.json` (in `paper/`) | untar + read `00README.json` |

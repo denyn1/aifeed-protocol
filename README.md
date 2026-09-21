@@ -9,6 +9,8 @@
 <p align="center"><strong>Signed content permissions for the AI web.</strong><br>
 Declare, sign, and revoke what AI agents may do with your content — and let agents prove it.</p>
 
+<p align="center"><a href="How_AIFeed_Stops_Web_Scraping_Waste.mp4"><strong>▶ Watch: How AIFeed stops web scraping waste</strong></a></p>
+
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="npm version"></a>
   <a href="https://www.npmjs.com/package/aifeed"><img src="https://img.shields.io/npm/v/aifeed?color=f55036&label=cli" alt="aifeed CLI"></a>
@@ -59,7 +61,8 @@ console.log(out.result, out.anchor.status);    // VERIFIED anchored
 TypeScript: `import { verifyRemote } from '@aifeed/verify';`
 
 Where to go next: [Why AIFeed?](#why-aifeed) · [agent quickstart](docs/agent-quickstart.md) ·
-[publisher AI guide](docs/publisher-ai-guide.md) · npm: [`aifeed` CLI](https://www.npmjs.com/package/aifeed) ·
+[publisher AI guide](docs/publisher-ai-guide.md) · [Studio publisher app](studio/README.md) ·
+npm: [`aifeed` CLI](https://www.npmjs.com/package/aifeed) ·
 [`@aifeed/verify`](https://www.npmjs.com/package/@aifeed/verify)
 
 ## Why AIFeed?
@@ -160,6 +163,7 @@ summarization this project does not perform automatically.
 | [`schema/`](schema/) | JSON Schemas for manifests, signatures, AIFeed Markdown, MAKO |
 | [`paper/`](paper/) | Preprint: LaTeX source, PDF, claim ledger, arXiv bundle |
 | [`docs/`](docs/) | Agent quickstart, deploy and namespace guides, Indonesian project notes |
+| [`studio/`](studio/) | Zero-dependency local publisher app: crawl, declare, build, verify, export, and rotate |
 | [`REFERENCE.md`](REFERENCE.md) | Reference implementation details, what gets verified, CLI quickstart |
 
 ## Documentation

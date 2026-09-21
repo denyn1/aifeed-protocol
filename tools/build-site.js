@@ -16,7 +16,8 @@ const COPIES = [
   ['docs/updates.html', 'updates.html'],
   ['docs/feed.xml', 'feed.xml'],
   ['badge-aifeed.svg', 'badge.svg'],
-  ['paper/aifeed-preprint.pdf', 'aifeed-preprint.pdf']
+  ['paper/aifeed-preprint.pdf', 'aifeed-preprint.pdf'],
+  ['How_AIFeed_Stops_Web_Scraping_Waste.mp4', 'How_AIFeed_Stops_Web_Scraping_Waste.mp4']
 ];
 
 fs.mkdirSync(SITE, { recursive: true });

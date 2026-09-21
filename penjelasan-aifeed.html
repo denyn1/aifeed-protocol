@@ -475,7 +475,7 @@ footer.foot a:hover { color: var(--accent); }
     </details>
     <details class="faq">
       <summary>What is the current status?</summary>
-      <p>Release <code>1.0.0-draft</code>: specs are not frozen yet, cross-language conformance is at 75 vectors (JS and Python), and an external cryptographic review is still pending. Wire versions in use: manifest <code>0.1</code>/<code>0.2</code>, AIFeed Markdown <code>1.0</code>, MAKO <code>0.2</code>.</p>
+      <p>Release <code>1.0.0-draft</code>: specs are not frozen yet, cross-language conformance is at 84 vectors (JS and Python), and an external cryptographic review is still pending. Wire versions in use: manifest <code>0.1</code>/<code>0.2</code>, AIFeed Markdown <code>1.0</code>, MAKO <code>0.2</code>.</p>
     </details>
   </section>
 
@@ -494,6 +494,10 @@ footer.foot a:hover { color: var(--accent); }
       <div class="card">
         <h3>WordPress</h3>
         <p>The plugin publishes the signed declaration and serves AIFeed Markdown + MAKO dual-stack, plus <code>/llms.txt</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Studio (local app)</h3>
+        <p>A zero-dependency publisher app shipped in the repo (<code>npm run studio</code>): crawl a site, edit a restrict-only policy, build, verify, export, and rotate signed output.</p>
       </div>
       <div class="card">
         <h3>Servers &amp; platforms</h3>
