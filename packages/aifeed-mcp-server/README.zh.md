@@ -39,6 +39,16 @@ node packages/aifeed-mcp-server/index.js
 
 仅抓取 `https://` 源。设置 `AIFEED_MCP_ALLOW_PRIVATE=1` 可允许 `http://` 回环源（仅限本地开发与测试）。
 
+## Docker
+
+```bash
+docker build -f packages/aifeed-mcp-server/Dockerfile -t aifeed-mcp-server .
+docker run -i --rm aifeed-mcp-server
+```
+
+在 [Glama](https://glama.ai/mcp/servers) 上架时可直接使用同一 Dockerfile（构建上下文：仓库根目录）。
+根目录的 `glama.json` 声明维护者。
+
 ## 源码
 
 [aifeed-protocol](https://github.com/denyn1/aifeed-protocol) 的一部分：

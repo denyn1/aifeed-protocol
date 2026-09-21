@@ -42,6 +42,16 @@ node packages/aifeed-mcp-server/index.js
 Hanya origin `https://` yang diambil. Set `AIFEED_MCP_ALLOW_PRIVATE=1` untuk mengizinkan
 origin loopback `http://` (pengembangan lokal dan tes saja).
 
+## Docker
+
+```bash
+docker build -f packages/aifeed-mcp-server/Dockerfile -t aifeed-mcp-server .
+docker run -i --rm aifeed-mcp-server
+```
+
+Dockerfile yang sama diterima [Glama](https://glama.ai/mcp/servers) saat mendaftarkan
+server (konteks build: root repositori). `glama.json` di root menyatakan maintainer.
+
 ## Sumber
 
 Bagian dari [aifeed-protocol](https://github.com/denyn1/aifeed-protocol):

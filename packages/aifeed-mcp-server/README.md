@@ -41,6 +41,16 @@ node packages/aifeed-mcp-server/index.js
 Only `https://` origins are fetched. Set `AIFEED_MCP_ALLOW_PRIVATE=1` to permit
 `http://` loopback origins (local development and tests only).
 
+## Docker
+
+```bash
+docker build -f packages/aifeed-mcp-server/Dockerfile -t aifeed-mcp-server .
+docker run -i --rm aifeed-mcp-server
+```
+
+The same Dockerfile is accepted by [Glama](https://glama.ai/mcp/servers) when listing
+the server (build context: repository root). Root `glama.json` declares the maintainer.
+
 ## Source
 
 Part of [aifeed-protocol](https://github.com/denyn1/aifeed-protocol): `packages/aifeed-mcp-server/index.js`
