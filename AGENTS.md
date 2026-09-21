@@ -74,6 +74,7 @@ npm run demos             # generate the live demo origins + apex artifacts
 npm run demos:check       # generate, then verify every demo manifest/revocation
 npm run verify:live       # live conformance against the deployed demos (network)
 npm run studio            # local publisher app at http://127.0.0.1:7777 (zero-dep UI)
+npm run mcpb              # pack aifeed-mcp-server as an MCPB bundle (build/, needs npx)
 node bin/cli.js --help    # CLI surface
 ```
 

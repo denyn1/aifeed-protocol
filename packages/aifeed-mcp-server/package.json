@@ -1,6 +1,7 @@
 {
   "name": "aifeed-mcp-server",
-  "version": "1.0.0-draft.1",
+  "version": "1.0.0-draft.2",
+  "mcpName": "io.github.denyn1/aifeed-mcp-server",
   "description": "Model Context Protocol server for AIFeed: verify signed manifests, fetch token-budgeted markdown, list and verify assets, select delta-index entries",
   "license": "MIT",
   "homepage": "https://aifeed.md",

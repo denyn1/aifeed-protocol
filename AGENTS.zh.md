@@ -70,6 +70,7 @@ npm run demos             # 生成线上演示源站 + apex 产物
 npm run demos:check       # 生成后验证每个演示 manifest/撤销
 npm run verify:live       # 对已部署演示做线上一致性检查（联网）
 npm run studio            # 本地发布方应用，http://127.0.0.1:7777（零依赖 UI）
+npm run mcpb              # 将 aifeed-mcp-server 打包为 MCPB 包（build/，需要 npx）
 node bin/cli.js --help    # CLI 界面
 ```
 

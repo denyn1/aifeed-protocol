@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.denyn1/aifeed-mcp-server",
+  "title": "AIFeed",
+  "description": "Verify signed AIFeed permissions, fetch token-budgeted markdown, and verify assets for AI agents.",
+  "websiteUrl": "https://aifeed.md",
+  "repository": {
+    "url": "https://github.com/denyn1/aifeed-protocol",
+    "source": "github"
+  },
+  "version": "1.0.0-draft.2",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "aifeed-mcp-server",
+      "version": "1.0.0-draft.2",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

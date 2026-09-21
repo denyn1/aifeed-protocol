@@ -51,6 +51,7 @@
     "build:sdk": "node tools/build-sdk.js",
     "sdk:check": "node tools/build-sdk.js --check",
     "build:mcp": "node tools/build-mcp.js",
+    "mcpb": "node tools/build-mcpb.js",
     "mcp:check": "node tools/build-mcp.js --check",
     "build:fw": "node tools/build-frameworks.js",
     "fw:check": "node tools/build-frameworks.js --check",

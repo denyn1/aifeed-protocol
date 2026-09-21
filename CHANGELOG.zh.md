@@ -17,6 +17,10 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   `verify_asset`（字节级 `size`/`sha-256` 证明）、`select_index`（在页面/token 预算内按
   查询排序）、`decide_usage`；仅限 HTTPS（回环需 `AIFEED_MCP_ALLOW_PRIVATE=1`）；用
   `npm run mcp` 或 `npx aifeed-mcp-server` 运行。
+- **官方 MCP Registry 收录** — `aifeed-mcp-server` 重新发布为 `1.0.0-draft.2`，带上
+  registry 要求的 `mcpName`（`io.github.denyn1/aifeed-mcp-server`），并通过
+  `mcp-publisher` 发布到 `registry.modelcontextprotocol.io` 的 `io.github.denyn1` 命名空间。
+  同一构建可打包为 MCPB 包（`npm run mcpb`），并以 `denyn1/aifeed-mcp-server` 收录于 Smithery。
 - **PyPI 包 `aifeed`** — 独立 Python 验证器现以仅标准库 wheel 发布（`pip install aifeed`）：
   `aifeed.verify` 与 `aifeed.mako` 模块、`aifeed-verify`/`aifeed-mako` 控制台脚本、
   镜像 `1.0.0-draft` 核心的 PEP 440 预发布 `1.0.0a1`；历史

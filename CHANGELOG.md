@@ -19,6 +19,11 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   `select_index` (query ranking within page/token budgets), and `decide_usage`; HTTPS
   only (loopback with `AIFEED_MCP_ALLOW_PRIVATE=1`); run with `npm run mcp` or
   `npx aifeed-mcp-server`.
+- **Official MCP Registry listing** — `aifeed-mcp-server` republished as `1.0.0-draft.2`
+  with the registry-required `mcpName` (`io.github.denyn1/aifeed-mcp-server`) and published
+  to `registry.modelcontextprotocol.io` under the `io.github.denyn1` namespace via
+  `mcp-publisher`. The same build packs into an MCPB bundle (`npm run mcpb`) and is listed
+  on Smithery as `denyn1/aifeed-mcp-server`.
 - **PyPI package `aifeed`** — the independent Python verifier now ships as a
   standard-library-only wheel (`pip install aifeed`): `aifeed.verify` and `aifeed.mako`
   modules, `aifeed-verify`/`aifeed-mako` console scripts, PEP 440 pre-release `1.0.0a1`

@@ -75,6 +75,7 @@ npm run demos             # generate origin demo live + artefak apex
 npm run demos:check       # generate, lalu verifikasi setiap manifest/revokasi demo
 npm run verify:live       # konformansi live ke demo terdeploy (jaringan)
 npm run studio            # aplikasi publisher lokal di http://127.0.0.1:7777 (UI zero-dep)
+npm run mcpb              # kemas aifeed-mcp-server sebagai bundel MCPB (build/, butuh npx)
 node bin/cli.js --help    # permukaan CLI
 ```
 
