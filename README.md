@@ -30,6 +30,38 @@ Declare, sign, and revoke what AI agents may do with your content — and let ag
 
 ---
 
+## 1-Minute Quickstart
+
+**Publisher side — sign what agents may do with your content:**
+
+```bash
+npx aifeed keygen --out .aifeed                         # Ed25519 key pair
+npx aifeed site build ./public --domain example.com \
+  --key .aifeed/aifeed-private.pem --llms --inject      # manifest + page markdown + index
+npx aifeed validate ./public --domain example.com       # verify locally
+```
+
+Prefer zero config? `npx aifeed init --domain example.com --dir ./site` creates the keys,
+a signed manifest, and the DNS/host setup guide in one step.
+
+**Agent side — verify any domain in 3 lines:**
+
+```bash
+npm install @aifeed/verify
+```
+
+```js
+const { verifyRemote } = require('@aifeed/verify');
+const out = await verifyRemote('example.com'); // discovery → signature → DNS anchor
+console.log(out.result, out.anchor.status);    // VERIFIED anchored
+```
+
+TypeScript: `import { verifyRemote } from '@aifeed/verify';`
+
+Where to go next: [Why AIFeed?](#why-aifeed) · [agent quickstart](docs/agent-quickstart.md) ·
+[publisher AI guide](docs/publisher-ai-guide.md) · npm: [`aifeed` CLI](https://www.npmjs.com/package/aifeed) ·
+[`@aifeed/verify`](https://www.npmjs.com/package/@aifeed/verify)
+
 ## Why AIFeed?
 
 AI agents now drive a large and growing share of web traffic, but the signals that say
@@ -64,38 +96,9 @@ decisions → delta → failure handling) is in
 with a runnable example at
 [`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js).
 
-## Try it
+## Verify from other stacks
 
-Sign a site (publisher side, keys included):
-
-```bash
-npx aifeed init --domain example.com --dir ./site
-npx aifeed validate ./site --domain example.com
-```
-
-Verify signed declarations (agent side):
-
-```bash
-npm install @aifeed/verify
-```
-
-```js
-const sdk = require('@aifeed/verify');
-
-const base = 'https://example.com/.well-known/';
-const manifest = await sdk.fetchText(base + 'ai.json');
-const signature = await sdk.fetchText(base + 'ai-signature.json');
-
-const result = sdk.verifyAll({
-  manifestText: manifest.text,
-  manifestBytes: manifest.buffer,
-  signatureText: signature.text,
-  domain: 'example.com'
-});
-console.log(result.result, result.errors);
-```
-
-Or verify with the independent Python package (standard library only):
+Independent Python package (standard library only):
 
 ```bash
 pip install aifeed
@@ -108,7 +111,7 @@ report = verify.verify_directory('./my-site', domain='example.com')
 print(report['result'], report['errors'])
 ```
 
-The CLI lives in this repository (zero dependencies, Node ≥ 20):
+Prefer the repository? The same CLI is here (zero dependencies, Node ≥ 20):
 
 ```bash
 cd aifeed-protocol

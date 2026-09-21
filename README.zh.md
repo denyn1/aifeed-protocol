@@ -30,6 +30,38 @@
 
 ---
 
+## 1 分钟快速上手
+
+**发布方 — 为智能体可对你的内容做什么签名：**
+
+```bash
+npx aifeed keygen --out .aifeed                         # Ed25519 密钥对
+npx aifeed site build ./public --domain example.com \
+  --key .aifeed/aifeed-private.pem --llms --inject      # manifest + 页面 markdown + 索引
+npx aifeed validate ./public --domain example.com       # 本地验证
+```
+
+想要零配置？`npx aifeed init --domain example.com --dir ./site` 一步生成密钥、
+签名 manifest 以及 DNS/主机安装指南。
+
+**智能体侧 — 3 行验证任意域名：**
+
+```bash
+npm install @aifeed/verify
+```
+
+```js
+const { verifyRemote } = require('@aifeed/verify');
+const out = await verifyRemote('example.com'); // discovery → 签名 → DNS 锚点
+console.log(out.result, out.anchor.status);    // VERIFIED anchored
+```
+
+TypeScript：`import { verifyRemote } from '@aifeed/verify';`
+
+下一步：[为什么需要 AIFeed？](#为什么需要-aifeed) · [智能体快速上手](docs/agent-quickstart.md) ·
+[发布方 AI 指南](docs/publisher-ai-guide.zh.md) · npm：[`aifeed` CLI](https://www.npmjs.com/package/aifeed) ·
+[`@aifeed/verify`](https://www.npmjs.com/package/@aifeed/verify)
+
 ## 为什么需要 AIFeed？
 
 AI 智能体现在驱动着越来越大比例的网页流量，但说明“它们可以做什么”的信号却是
@@ -62,38 +94,9 @@ AIFeed 用可密码学验证的声明取代“请遵守这个文件”，并附�
 可运行示例见
 [`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js)。
 
-## 快速试用
+## 用其他技术栈验证
 
-为网站签名（发布方侧，含密钥）：
-
-```bash
-npx aifeed init --domain example.com --dir ./site
-npx aifeed validate ./site --domain example.com
-```
-
-验证签名声明（智能体侧）：
-
-```bash
-npm install @aifeed/verify
-```
-
-```js
-const sdk = require('@aifeed/verify');
-
-const base = 'https://example.com/.well-known/';
-const manifest = await sdk.fetchText(base + 'ai.json');
-const signature = await sdk.fetchText(base + 'ai-signature.json');
-
-const result = sdk.verifyAll({
-  manifestText: manifest.text,
-  manifestBytes: manifest.buffer,
-  signatureText: signature.text,
-  domain: 'example.com'
-});
-console.log(result.result, result.errors);
-```
-
-或用独立 Python 包验证（仅标准库）：
+独立 Python 包（仅标准库）：
 
 ```bash
 pip install aifeed
@@ -106,7 +109,7 @@ report = verify.verify_directory('./my-site', domain='example.com')
 print(report['result'], report['errors'])
 ```
 
-CLI 位于本仓库（零依赖，Node ≥ 20）：
+更喜欢仓库？同一个 CLI 也在这里（零依赖，Node ≥ 20）：
 
 ```bash
 cd aifeed-protocol

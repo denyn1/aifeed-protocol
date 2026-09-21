@@ -31,6 +31,38 @@ Anda — dan biarkan agen membuktikannya.</p>
 
 ---
 
+## Quickstart 1 Menit
+
+**Sisi penerbit — tandatangani apa yang boleh dilakukan agen dengan konten Anda:**
+
+```bash
+npx aifeed keygen --out .aifeed                         # pasangan kunci Ed25519
+npx aifeed site build ./public --domain example.com \
+  --key .aifeed/aifeed-private.pem --llms --inject      # manifest + markdown halaman + indeks
+npx aifeed validate ./public --domain example.com       # verifikasi lokal
+```
+
+Ingin tanpa konfigurasi? `npx aifeed init --domain example.com --dir ./site` membuat kunci,
+manifest bertanda tangan, dan panduan setup DNS/host dalam satu langkah.
+
+**Sisi agen — verifikasi domain apa pun dalam 3 baris:**
+
+```bash
+npm install @aifeed/verify
+```
+
+```js
+const { verifyRemote } = require('@aifeed/verify');
+const out = await verifyRemote('example.com'); // discovery → tanda tangan → anchor DNS
+console.log(out.result, out.anchor.status);    // VERIFIED anchored
+```
+
+TypeScript: `import { verifyRemote } from '@aifeed/verify';`
+
+Lanjut ke mana: [Mengapa AIFeed?](#mengapa-aifeed) · [quickstart agen](docs/agent-quickstart.md) ·
+[panduan AI penerbit](docs/publisher-ai-guide.id.md) · npm: [`aifeed` CLI](https://www.npmjs.com/package/aifeed) ·
+[`@aifeed/verify`](https://www.npmjs.com/package/@aifeed/verify)
+
 ## Mengapa AIFeed?
 
 Agen AI kini menghasilkan porsi besar dan terus tumbuh dari trafik web, tetapi sinyal
@@ -66,38 +98,9 @@ penanganan kegagalan) ada di
 dengan contoh yang bisa dijalankan di
 [`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js).
 
-## Coba
+## Verifikasi dari stack lain
 
-Tandatangani situs (sisi penerbit, kunci termasuk):
-
-```bash
-npx aifeed init --domain example.com --dir ./site
-npx aifeed validate ./site --domain example.com
-```
-
-Verifikasi deklarasi bertanda tangan (sisi agen):
-
-```bash
-npm install @aifeed/verify
-```
-
-```js
-const sdk = require('@aifeed/verify');
-
-const base = 'https://example.com/.well-known/';
-const manifest = await sdk.fetchText(base + 'ai.json');
-const signature = await sdk.fetchText(base + 'ai-signature.json');
-
-const result = sdk.verifyAll({
-  manifestText: manifest.text,
-  manifestBytes: manifest.buffer,
-  signatureText: signature.text,
-  domain: 'example.com'
-});
-console.log(result.result, result.errors);
-```
-
-Atau verifikasi dengan paket Python independen (hanya pustaka standar):
+Paket Python independen (hanya pustaka standar):
 
 ```bash
 pip install aifeed
@@ -110,7 +113,7 @@ report = verify.verify_directory('./my-site', domain='example.com')
 print(report['result'], report['errors'])
 ```
 
-CLI-nya ada di repositori ini (tanpa dependensi, Node ≥ 20):
+Utamakan repositori? CLI yang sama ada di sini (tanpa dependensi, Node ≥ 20):
 
 ```bash
 cd aifeed-protocol
