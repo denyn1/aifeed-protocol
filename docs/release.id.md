@@ -106,6 +106,21 @@ npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_T
 - `check-consistency` menegakkan nol dependensi dan inti versi untuk paket ini (dan MCP
   server).
 
+## Menerbitkan CLI
+
+`aifeed` membundel CLI penerbit (`bin/`, `lib/`, `schema/` sebagai salinan hasil generate):
+
+```bash
+npm run build:cli && npm run cli:check
+cd packages/aifeed-cli
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- Publikasi pertama juga menetapkan `latest`, jadi `npx aifeed` langsung berfungsi;
+  verifikasi dengan `npm view aifeed version dist-tags`.
+- Setelah terbit, perkuat kepemilikan: `npm owner add <akun-kedua> aifeed`, atau transfer
+  paket ke org npm `@aifeed` dari halaman paket.
+
 ## Plugin WordPress
 
 Plugin dikirim dari `wp-plugin/` di repositori ini. Untuk rilis WordPress.org, naikkan

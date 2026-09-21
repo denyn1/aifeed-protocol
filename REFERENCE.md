@@ -60,9 +60,13 @@ same vectors.
 ## Quickstart
 
 No dependencies required (Node >= 20 for the JS tooling, Python >= 3.10 for the Python
-verifier).
+verifier). The published CLI is `npx aifeed` (repo equivalent: `node bin/cli.js`).
 
 ```bash
+# 0. One-step scaffold: keys + signed manifest + setup guide
+npx aifeed init --domain example.com --dir ./my-site
+npx aifeed validate ./my-site --domain example.com
+
 # 1. Generate an Ed25519 keypair
 node bin/cli.js keygen --out ./my-site
 
@@ -152,7 +156,7 @@ Exit codes: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage or internal error.
 ## Tests
 
 ```bash
-npm test                 # Node test suite (266 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation, MCP server)
+npm test                 # Node test suite (271 tests: unit, vectors, AIFeed Markdown/MAKO, global i18n, site builder, server adapter, triage selection, enforcement, HTML reports, pilot kit, fuzz smoke, SDK, CLI, bundle, integration, key rotation, MCP server)
 npm run test:py          # Python verifier suite (45 tests: vectors, AIFeed Markdown/MAKO parity, revocation, bundles, examples)
 npm run vectors          # regenerate deterministic manifest vectors and self-check (34)
 npm run mako:vectors     # regenerate MAKO conformance vectors and self-check (39)
@@ -242,11 +246,14 @@ medium, large, and giant sites, every track ending in a verified manifest.
 
 ## SDKs
 
+- **Publisher CLI — `aifeed`** (`packages/aifeed-cli/`): zero-dependency `npx aifeed`
+  (keygen, init, sign, validate, rotate, bundle, `site build`, AIFeed Markdown/MAKO
+  tools); `bin/`, `lib/`, and `schema/` are generated copies via `npm run build:cli`.
 - **AI client — `@aifeed/verify`** (`packages/aifeed-verify/`): self-contained npm
   package built from `lib/` and `schema/` via `npm run build:sdk`; ships TypeScript
-  declarations (`index.d.ts`) and the v0.2 MAKO API (`fetchMako`, `fetchIndexDelta`,
-  `selectEntries`, `decideUsage`, `listAssets`, `verifyAsset`, `mako.*` primitives,
-  v0.2 schemas); packaging is tested with `npm pack --dry-run`.
+  declarations (`index.d.ts`) and the v0.2 MAKO API (`verifyRemote`, `fetchMako`,
+  `fetchIndexDelta`, `selectEntries`, `decideUsage`, `listAssets`, `verifyAsset`,
+  `mako.*` primitives, v0.2 schemas); packaging is tested with `npm pack --dry-run`.
 - **AI client — `aifeed-mcp-server`** (`packages/aifeed-mcp-server/`): zero-dependency
   Model Context Protocol server over stdio, built from `lib/` and `schema/` via
   `npm run build:mcp`; tools `verify_manifest`, `fetch_aifeed`, `list_assets`,

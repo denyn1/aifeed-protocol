@@ -11,8 +11,9 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="npm 版本"></a>
+  <a href="https://www.npmjs.com/package/aifeed"><img src="https://img.shields.io/npm/v/aifeed?color=f55036&label=cli" alt="aifeed CLI"></a>
   <a href="https://pypi.org/project/aifeed/"><img src="https://img.shields.io/pypi/v/aifeed?color=3775a9&label=pypi" alt="PyPI"></a>
-  <img src="https://img.shields.io/badge/tests-266%20JS%20%C2%B7%2045%20Python-3ddc97" alt="测试套件">
+  <img src="https://img.shields.io/badge/tests-271%20JS%20%C2%B7%2045%20Python-3ddc97" alt="测试套件">
   <img src="https://img.shields.io/badge/conformance-84%20vectors-f55036" alt="一致性向量">
   <img src="https://img.shields.io/badge/specs-CC%20BY%204.0-6ea8fe" alt="规范许可证">
   <img src="https://img.shields.io/badge/code-MIT-3ddc97" alt="代码许可证">
@@ -62,6 +63,15 @@ AIFeed 用可密码学验证的声明取代“请遵守这个文件”，并附�
 [`examples/agent/compliant-agent.js`](examples/agent/compliant-agent.js)。
 
 ## 快速试用
+
+为网站签名（发布方侧，含密钥）：
+
+```bash
+npx aifeed init --domain example.com --dir ./site
+npx aifeed validate ./site --domain example.com
+```
+
+验证签名声明（智能体侧）：
 
 ```bash
 npm install @aifeed/verify
@@ -136,7 +146,7 @@ node bin/cli.js site build ./public --domain example.com --key keys/aifeed-priva
 | 路径 | 内容 |
 |---|---|
 | [`lib/`](lib/) + [`bin/`](bin/) | 零依赖参考实现与 CLI |
-| [`packages/`](packages/) + [`clients/python/`](clients/python/) | 已发布包：SDK（`@aifeed/verify`）、MCP 服务器、构建插件（`@aifeed/frameworks`）、PyPI 验证器 `aifeed` |
+| [`packages/`](packages/) + [`clients/python/`](clients/python/) | 已发布包：CLI（`aifeed`）、SDK（`@aifeed/verify`）、MCP 服务器、构建插件（`@aifeed/frameworks`）、PyPI 验证器 `aifeed` |
 | [`conformance/`](conformance/) | 一致性向量：34 manifest · 39 MAKO · 11 AIFeed Markdown |
 | [`wp-plugin/`](wp-plugin/) | WordPress 插件：签名 manifest、AIFeed Markdown + MAKO 双栈、`/llms.txt` |
 | [`spec/`](spec/) | 规范 EN/ID/ZH：manifest v0.1/v0.2、AIFeed Markdown v1.0 |

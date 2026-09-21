@@ -57,8 +57,13 @@ benchmark, dan dua verifier independen (JavaScript dan Python) yang lulus vektor
 ## Quickstart
 
 Tanpa dependensi (Node >= 20 untuk tooling JS, Python >= 3.10 untuk verifier Python).
+CLI terbit adalah `npx aifeed` (padanan repo: `node bin/cli.js`).
 
 ```bash
+# 0. Scaffold satu langkah: kunci + manifest bertanda tangan + panduan setup
+npx aifeed init --domain example.com --dir ./my-site
+npx aifeed validate ./my-site --domain example.com
+
 # 1. Buat pasangan kunci Ed25519
 node bin/cli.js keygen --out ./my-site
 
@@ -148,7 +153,7 @@ Exit code: `0` VERIFIED, `1` UNVERIFIED/SUSPENDED, `2` usage atau error internal
 ## Tes
 
 ```bash
-npm test                 # suite tes Node (266 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci, server MCP)
+npm test                 # suite tes Node (271 tes: unit, vektor, AIFeed Markdown/MAKO, i18n global, site builder, adapter server, pemilihan triage, enforcement, laporan HTML, kit pilot, fuzz smoke, SDK, CLI, bundel, integrasi, rotasi kunci, server MCP)
 npm run test:py          # suite verifier Python (45 tes: vektor, paritas AIFeed Markdown/MAKO, revokasi, bundel, contoh)
 npm run vectors          # regenerasi vektor manifest deterministik + self-check (34)
 npm run mako:vectors     # regenerasi vektor konformansi MAKO + self-check (39)
@@ -240,9 +245,12 @@ kecil, menengah, besar, dan raksasa, masing-masing berakhir di manifest terverif
 
 ## SDK
 
+- **CLI penerbit — `aifeed`** (`packages/aifeed-cli/`): `npx aifeed` tanpa dependensi
+  (keygen, init, sign, validate, rotate, bundle, `site build`, tools AIFeed Markdown/MAKO);
+  `bin/`, `lib/`, dan `schema/` adalah salinan hasil generate via `npm run build:cli`.
 - **Klien AI — `@aifeed/verify`** (`packages/aifeed-verify/`): paket npm mandiri yang
   dibangun dari `lib/` dan `schema/` via `npm run build:sdk`; menyertakan deklarasi
-  TypeScript (`index.d.ts`) dan API MAKO v0.2 (`fetchMako`, `fetchIndexDelta`,
+  TypeScript (`index.d.ts`) dan API MAKO v0.2 (`verifyRemote`, `fetchMako`, `fetchIndexDelta`,
   `selectEntries`, `decideUsage`, `listAssets`, `verifyAsset`, primitif `mako.*`, schema
   v0.2); pengemasan diuji dengan `npm pack --dry-run`.
 - **Klien AI — `aifeed-mcp-server`** (`packages/aifeed-mcp-server/`): server Model

@@ -105,6 +105,21 @@ npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_T
 - `check-consistency` enforces zero dependencies and the version core for this package
   (and the MCP server).
 
+## Publishing the CLI
+
+`aifeed` bundles the publisher CLI (`bin/`, `lib/`, `schema/` as generated copies):
+
+```bash
+npm run build:cli && npm run cli:check
+cd packages/aifeed-cli
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- The first publish also sets `latest`, so `npx aifeed` works immediately; verify with
+  `npm view aifeed version dist-tags`.
+- After publishing, harden ownership: `npm owner add <second-account> aifeed`, or transfer
+  the package to the `@aifeed` npm org from the package page.
+
 ## WordPress plugin
 
 The plugin ships from `wp-plugin/` in this repository. For a WordPress.org release,

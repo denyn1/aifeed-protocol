@@ -31,6 +31,13 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   `llms.txt`), injects `<link rel="alternate">`, prunes stale generated files, and
   self-verifies signatures/digests; environment fallbacks `AIFEED_DOMAIN`, `AIFEED_KEY`,
   `AIFEED_BASE_URL`.
+- **CLI on npm (`aifeed`)** — `npx aifeed` publishes the publisher CLI (keygen, init,
+  sign, validate, rotate, bundle, `site build`, AIFeed Markdown/MAKO tools) from
+  `packages/aifeed-cli/`; `sign` now finds the default key next to the site directory and
+  `validate`/`verifyDirectory` accept a site root with the manifest in `.well-known/`.
+- **`verifyRemote()`** — one-call remote verification in `@aifeed/verify`: discovery →
+  manifest + signature → DNS `_aifeed` anchor state, enabling the 3-line consumer
+  quickstart on the npm pages.
 
 ## [1.0.0-draft] — 2026-09-16
 

@@ -26,6 +26,12 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   用通用 `aifeed-build` CLI（含 `keygen`）；就地签名构建输出（manifest、逐页 AIFeed
   Markdown/MAKO、增量索引、`llms.txt`）、注入 `<link rel="alternate">`、清理过期生成文件、
   自校验签名/摘要；环境变量回退 `AIFEED_DOMAIN`、`AIFEED_KEY`、`AIFEED_BASE_URL`。
+- **npm 上的 CLI（`aifeed`）** — `npx aifeed` 发布发布方 CLI（keygen、init、sign、
+  validate、rotate、bundle、`site build`、AIFeed Markdown/MAKO 工具），源码位于
+  `packages/aifeed-cli/`；`sign` 现在会在站点目录旁查找默认密钥，
+  `validate`/`verifyDirectory` 接受 manifest 位于 `.well-known/` 的站点根目录。
+- **`verifyRemote()`** — `@aifeed/verify` 的一次调用远程验证：discovery → manifest + 签名
+  → DNS `_aifeed` 锚点状态，使 npm 页面上的 3 行消费者快速上手成为可能。
 
 ## [1.0.0-draft] — 2026-09-16
 

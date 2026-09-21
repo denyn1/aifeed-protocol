@@ -98,6 +98,21 @@ npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_T
 - 预发布版本必须 `--tag next`；用 `npm view @aifeed/frameworks version dist-tags` 验证。
 - `check-consistency` 对该包（以及 MCP 服务器）强制零依赖与版本核心一致。
 
+## 发布 CLI
+
+`aifeed` 打包发布方 CLI（`bin/`、`lib/`、`schema/` 为生成副本）：
+
+```bash
+npm run build:cli && npm run cli:check
+cd packages/aifeed-cli
+npm publish --access public --tag next --//registry.npmjs.org/:_authToken=$NPM_TOKEN
+```
+
+- 首次发布同时设置 `latest`，因此 `npx aifeed` 立即可用；用
+  `npm view aifeed version dist-tags` 验证。
+- 发布后强化所有权：`npm owner add <第二个账号> aifeed`，或在包页面将包转移到
+  `@aifeed` npm 组织。
+
 ## WordPress 插件
 
 插件从本仓库的 `wp-plugin/` 发布。面向 WordPress.org 发布时：升头部/`Stable tag`，

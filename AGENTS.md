@@ -24,6 +24,7 @@ benchmarks, the website, and the paper.
    | `packages/aifeed-verify/{lib,schema,index.js,index.d.ts}` | `lib/`, `schema/` (+ hand-written SDK `index.js`) | `npm run build:sdk` | `npm run sdk:check` |
    | `packages/aifeed-mcp-server/{lib,schema}` | `lib/`, `schema/` (+ hand-written MCP `index.js`) | `npm run build:mcp` | `npm run mcp:check` |
    | `packages/aifeed-frameworks/{lib,schema}` | `lib/`, `schema/` (+ hand-written plugin `index.js`, `vite.js`, `astro.js`, `next.js`, CLIs) | `npm run build:fw` | `npm run fw:check` |
+   | `packages/aifeed-cli/{bin,lib,schema}` | `bin/`, `lib/`, `schema/` (+ hand-written `package.json`, README) | `npm run build:cli` | `npm run cli:check` |
    | `conformance/vectors/**` (34) | `tools/gen-vectors.js` | `npm run vectors` | `npm run vectors:check` |
    | `conformance/mako/**` (39) | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**` (11) | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
@@ -52,7 +53,7 @@ benchmarks, the website, and the paper.
    tag), `site/index.html` (chip), and the top `CHANGELOG.md` section. The Python package
    mirrors the same core as a PEP 440 pre-release (`clients/python/pyproject.toml` and
    `clients/python/aifeed/__init__.py`: `1.0.0a1` for core `1.0.0`). Package version cores
-   (`aifeed-verify`, `aifeed-mcp-server`, `@aifeed/frameworks`) must match the release
+   (`aifeed-verify`, `aifeed-mcp-server`, `@aifeed/frameworks`, `aifeed`) must match the release
    core; `check-consistency` proves it. Bump everything
    in one change; `npm run check:consistency` proves it. Wire versions (manifest
    `0.1`/`0.2`, AIFeed Markdown `1.0`, MAKO `0.2`) are independent — do not renumber
@@ -64,7 +65,7 @@ benchmarks, the website, and the paper.
 npm run verify            # everything below, one gate
 npm run lint:syntax       # parse-check every .js file
 npm run check:consistency # versions, deps, secrets, spec pairs, script targets
-npm test                  # Node suite (266 tests)
+npm test                  # Node suite (271 tests)
 npm run test:py           # independent Python verifier (45 tests)
 npm run bench:mako        # regenerate benchmarks/mako-*.json + report
 npm run bench:enforcement # regenerate benchmarks/enforcement-*.json|md
@@ -87,6 +88,7 @@ node bin/cli.js --help    # CLI surface
 | `packages/aifeed-verify/` | Published SDK (`@aifeed/verify`); `index.js`/`index.d.ts` are hand-written, `lib/`+`schema/` are generated copies |
 | `packages/aifeed-mcp-server/` | Published MCP server (`aifeed-mcp-server`); `index.js` is hand-written, `lib/`+`schema/` are generated copies |
 | `packages/aifeed-frameworks/` | Published build plugins (`@aifeed/frameworks`): Vite/Astro/Next.js + `aifeed-build`/`aifeed-next`; `lib/`+`schema/` are generated copies |
+| `packages/aifeed-cli/` | Published CLI (`aifeed`): keygen/init/sign/validate/rotate/bundle/site build; `bin/`+`lib/`+`schema/` are generated copies |
 | `clients/python/` | Independent verifier + tests (differential conformance); published on PyPI as `aifeed` (`aifeed/` package, stdlib only) |
 | `conformance/` | Vectors: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revocation + bundles |
 | `integrations/` | Publisher adapters: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, GitHub Action |

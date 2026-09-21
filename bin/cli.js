@@ -139,7 +139,11 @@ function runSign(args) {
     return fail('manifest does not conform to schema', 1);
   }
 
-  const keyPath = args.key || path.join(path.dirname(manifestPath), 'aifeed-private.pem');
+  const keyCandidates = [
+    path.join(path.dirname(manifestPath), 'aifeed-private.pem'),
+    path.join(path.dirname(path.dirname(manifestPath)), 'aifeed-private.pem')
+  ];
+  const keyPath = args.key || keyCandidates.find((candidate) => fs.existsSync(candidate)) || keyCandidates[0];
   let privateKey;
   try {
     privateKey = nodeCrypto.createPrivateKey(fs.readFileSync(keyPath));

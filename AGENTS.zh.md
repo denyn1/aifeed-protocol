@@ -22,6 +22,7 @@ WordPress 发布插件、基准、网站与论文。
    | `packages/aifeed-verify/{lib,schema,index.js,index.d.ts}` | `lib/`、`schema/`（+ 手写 SDK `index.js`） | `npm run build:sdk` | `npm run sdk:check` |
    | `packages/aifeed-mcp-server/{lib,schema}` | `lib/`、`schema/`（+ 手写 MCP `index.js`） | `npm run build:mcp` | `npm run mcp:check` |
    | `packages/aifeed-frameworks/{lib,schema}` | `lib/`、`schema/`（+ 手写插件 `index.js`、`vite.js`、`astro.js`、`next.js`、CLI） | `npm run build:fw` | `npm run fw:check` |
+   | `packages/aifeed-cli/{bin,lib,schema}` | `bin/`、`lib/`、`schema/`（+ 手写 `package.json`、README） | `npm run build:cli` | `npm run cli:check` |
    | `conformance/vectors/**`（34） | `tools/gen-vectors.js` | `npm run vectors` | `npm run vectors:check` |
    | `conformance/mako/**`（39） | `tools/gen-mako-vectors.js` | `npm run mako:vectors` | `npm run mako:vectors:check` |
    | `conformance/aimd/**`（11） | `tools/gen-aimd-vectors.js` | `npm run aimd:vectors` | `npm run aimd:vectors:check` |
@@ -48,7 +49,7 @@ WordPress 发布插件、基准、网站与论文。
    （Stable tag）、`site/index.html`（徽章）与 `CHANGELOG.md` 顶部章节。Python 包以
    PEP 440 预发布形式镜像同一核心（`clients/python/pyproject.toml` 与
    `clients/python/aifeed/__init__.py`：核心 `1.0.0` 对应 `1.0.0a1`）。包版本核心
-   （`aifeed-verify`、`aifeed-mcp-server`、`@aifeed/frameworks`）必须与发布核心一致；
+   （`aifeed-verify`、`aifeed-mcp-server`、`@aifeed/frameworks`、`aifeed`）必须与发布核心一致；
    `check-consistency` 会证明。一次变更中全部
    一起升；`npm run check:consistency` 会证明一致。线格式版本（manifest `0.1`/`0.2`、
    AIFeed Markdown `1.0`、MAKO `0.2`）相互独立——不要随意重新编号。发布步骤：
@@ -60,7 +61,7 @@ WordPress 发布插件、基准、网站与论文。
 npm run verify            # 以下全部，一个门禁
 npm run lint:syntax       # 解析检查所有 .js 文件
 npm run check:consistency # 版本、依赖、密钥、规范镜像、脚本目标
-npm test                  # Node 套件（266 项测试）
+npm test                  # Node 套件（271 项测试）
 npm run test:py           # 独立 Python 验证器（45 项测试）
 npm run bench:mako        # 重新生成 benchmarks/mako-*.json + 报告
 npm run bench:enforcement # 重新生成 benchmarks/enforcement-*.json|md
@@ -83,6 +84,7 @@ node bin/cli.js --help    # CLI 界面
 | `packages/aifeed-verify/` | 已发布 SDK（`@aifeed/verify`）；`index.js`/`index.d.ts` 手写，`lib/`+`schema/` 为生成副本 |
 | `packages/aifeed-mcp-server/` | 已发布 MCP 服务器（`aifeed-mcp-server`）；`index.js` 手写，`lib/`+`schema/` 为生成副本 |
 | `packages/aifeed-frameworks/` | 已发布构建插件（`@aifeed/frameworks`）：Vite/Astro/Next.js + `aifeed-build`/`aifeed-next`；`lib/`+`schema/` 为生成副本 |
+| `packages/aifeed-cli/` | 已发布 CLI（`aifeed`）：keygen/init/sign/validate/rotate/bundle/site build；`bin/`+`lib/`+`schema/` 为生成副本 |
 | `clients/python/` | 独立验证器 + 测试（差分一致性）；以 `aifeed` 发布到 PyPI（`aifeed/` 包，仅标准库） |
 | `conformance/` | 向量：34 manifest、39 MAKO、11 AIFeed Markdown、撤销 + 离线包 |
 | `integrations/` | 发布方适配器：nginx、Caddy、Apache、Node、Next.js、PHP、Python ASGI、Go、GitHub Action |

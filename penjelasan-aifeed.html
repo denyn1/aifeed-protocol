@@ -485,7 +485,7 @@ footer.foot a:hover { color: var(--accent); }
     <div class="grid">
       <div class="card">
         <h3>Any static site</h3>
-        <p><code>npx aifeed-build ./public --domain example.com</code> signs Hugo, Jekyll, Eleventy, or plain HTML output in place — manifest, per-page markdown, indexes, and <code>llms.txt</code>.</p>
+        <p><code>npx aifeed init --domain example.com --dir ./site</code> creates keys plus a signed manifest in one step; <code>npx aifeed site build ./public …</code> signs a whole static output (Hugo, Jekyll, Eleventy, or plain HTML).</p>
       </div>
       <div class="card">
         <h3>Framework plugins</h3>

@@ -261,15 +261,15 @@ footer a:hover { color: var(--accent); }
       <a class="btn btn-ghost" href="#artifacts">See it working</a>
     </div>
     <div class="term" id="verify">
-      <div><span class="c"># verify a signed declaration in seconds</span></div>
+      <div><span class="c"># sign a site in one command</span></div>
+      <div><span class="k">npx</span> aifeed init <span class="s">--domain example.com --dir ./site</span></div>
+      <div>&nbsp;</div>
+      <div><span class="c"># verify a signed declaration in 3 lines</span></div>
       <div><span class="k">npm</span> install <span class="s">@aifeed/verify</span></div>
       <div>&nbsp;</div>
-      <div><span class="c">const sdk = require('@aifeed/verify');</span></div>
-      <div><span class="c">const m = await sdk.fetchText('https://example.com/.well-known/ai.json');</span></div>
-      <div><span class="c">const s = await sdk.fetchText('https://example.com/.well-known/ai-signature.json');</span></div>
-      <div><span class="c">const out = sdk.verifyAll({ manifestText: m.text, manifestBytes: m.buffer,</span></div>
-      <div><span class="c">  signatureText: s.text, domain: 'example.com' });</span></div>
-      <div><span class="c">console.log(out.result); // VERIFIED</span></div>
+      <div><span class="c">const { verifyRemote } = require('@aifeed/verify');</span></div>
+      <div><span class="c">const out = await verifyRemote('example.com');</span></div>
+      <div><span class="c">console.log(out.result, out.anchor.status); // VERIFIED anchored</span></div>
     </div>
   </header>
 

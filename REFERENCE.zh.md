@@ -54,8 +54,13 @@ MAKO 作为兼容配置仍获完整支持。源站也可以选择运行 **AIFeed
 ## 快速上手
 
 无需依赖（JS 工具链需要 Node >= 20，Python 验证器需要 Python >= 3.10）。
+已发布 CLI 为 `npx aifeed`（仓库等价：`node bin/cli.js`）。
 
 ```bash
+# 0. 一步脚手架：密钥 + 签名 manifest + 安装指南
+npx aifeed init --domain example.com --dir ./my-site
+npx aifeed validate ./my-site --domain example.com
+
 # 1. 生成 Ed25519 密钥对
 node bin/cli.js keygen --out ./my-site
 
@@ -143,7 +148,7 @@ node bin/cli.js rotate --dir ./my-site
 ## 测试
 
 ```bash
-npm test                 # Node 测试套件（266 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换、MCP 服务器）
+npm test                 # Node 测试套件（271 项：单元、向量、AIFeed Markdown/MAKO、全局 i18n、站点构建器、服务器适配器、分流选择、执行、HTML 报告、试点套件、模糊冒烟、SDK、CLI、离线包、集成、密钥轮换、MCP 服务器）
 npm run test:py          # Python 验证器套件（45 项：向量、AIFeed Markdown/MAKO 对等、撤销、离线包、示例）
 npm run vectors          # 重新生成确定性 manifest 向量并自检（34）
 npm run mako:vectors     # 重新生成 MAKO 一致性向量并自检（39）
@@ -223,9 +228,12 @@ HTML 页面声明 alternate 链接，签名增量索引与逐条摘要匹配。�
 
 ## SDK
 
+- **发布方 CLI — `aifeed`**（`packages/aifeed-cli/`）：零依赖 `npx aifeed`
+  （keygen、init、sign、validate、rotate、bundle、`site build`、AIFeed Markdown/MAKO 工具）；
+  `bin/`、`lib/`、`schema/` 为经 `npm run build:cli` 生成的副本。
 - **AI 客户端 — `@aifeed/verify`**（`packages/aifeed-verify/`）：通过
   `npm run build:sdk` 从 `lib/` 与 `schema/` 构建的自包含 npm 包；随附 TypeScript
-  声明（`index.d.ts`）与 v0.2 MAKO API（`fetchMako`、`fetchIndexDelta`、
+  声明（`index.d.ts`）与 v0.2 MAKO API（`verifyRemote`、`fetchMako`、`fetchIndexDelta`、
   `selectEntries`、`decideUsage`、`listAssets`、`verifyAsset`、`mako.*` 原语、v0.2 schema）；打包经
   `npm pack --dry-run` 测试。
 - **AI 客户端 — `aifeed-mcp-server`**（`packages/aifeed-mcp-server/`）：零依赖的 stdio

@@ -29,6 +29,13 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   delta, `llms.txt`), menyuntikkan `<link rel="alternate">`, memangkas berkas generate
   basi, dan memverifikasi sendiri tanda tangan/digest; fallback environment
   `AIFEED_DOMAIN`, `AIFEED_KEY`, `AIFEED_BASE_URL`.
+- **CLI di npm (`aifeed`)** — `npx aifeed` menerbitkan CLI penerbit (keygen, init, sign,
+  validate, rotate, bundle, `site build`, tools AIFeed Markdown/MAKO) dari
+  `packages/aifeed-cli/`; `sign` kini menemukan kunci default di sebelah direktori situs dan
+  `validate`/`verifyDirectory` menerima root situs dengan manifest di `.well-known/`.
+- **`verifyRemote()`** — verifikasi remote satu panggilan di `@aifeed/verify`: discovery →
+  manifest + tanda tangan → status anchor DNS `_aifeed`, sehingga quickstart konsumen 3
+  baris tampil di halaman npm.
 
 ## [1.0.0-draft] — 2026-09-16
 
