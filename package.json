@@ -8,10 +8,10 @@
   "homepage": "https://aifeed.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aifeed/aifeed-protocol.git"
+    "url": "https://github.com/denyn1/aifeed-protocol.git"
   },
   "bugs": {
-    "url": "https://github.com/aifeed/aifeed-protocol/issues"
+    "url": "https://github.com/denyn1/aifeed-protocol/issues"
   },
   "keywords": [
     "aifeed",

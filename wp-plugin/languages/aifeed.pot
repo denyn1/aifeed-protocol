@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AIFeed 0.3.0-draft\n"
-"Report-Msgid-Bugs-To: https://github.com/aifeed/aifeed-protocol/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/denyn1/aifeed-protocol/issues\n"
 "POT-Creation-Date: 2026-09-15T00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

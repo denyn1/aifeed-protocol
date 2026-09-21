@@ -4,33 +4,37 @@
 
 Run this checklist once, then record the results in `paper/CHECKLIST.md`.
 
-## 1. GitHub organization — `aifeed` (verified available 2026-09-15)
+## 1. GitHub repository — canonical `denyn1/aifeed-protocol`
 
-1. Sign in to GitHub with the account that should own the organization.
-2. Create the organization: <https://github.com/organizations/plan> → choose **Free**.
-   - Organization name: `aifeed` (checked free: both `users/aifeed` and `orgs/aifeed`
-     returned 404 on 2026-09-15).
-3. Enable 2FA for all members (required by GitHub) and add at least one recovery method.
-4. Create the repository: `aifeed/aifeed-protocol` (private first, then public when the
-   preprint is submitted).
-5. Settings to apply:
+Status (2026-09-21): the `aifeed` organization has **not** been created; the canonical
+repository is <https://github.com/denyn1/aifeed-protocol>. Every published package, the
+website, and the paper already link there. Creating the org later is optional — after a
+transfer GitHub redirects the old URLs, but `package.json`, this document, and the release
+notes must be updated.
+
+1. (Optional, future) Create the organization <https://github.com/organizations/plan> →
+   **Free**; name `aifeed` (checked free on 2026-09-15: `users/aifeed` and `orgs/aifeed`
+   returned 404). Enable 2FA for all members and add at least one recovery method.
+2. Repository settings (current):
    - Default branch `main`, squash-merge allowed, delete branch on merge.
    - Branch protection: require pull request + passing CI before merge.
    - Security: enable private vulnerability reporting (matches `SECURITY.md`).
-   - The plugin ships in this monorepo under `wp-plugin/`; a separate `aifeed/aifeed-wp-plugin` repository is optional.
-6. Push the local repository (initialized with `.gitignore`, no commits yet):
+   - The plugin ships in this monorepo under `wp-plugin/`; a separate plugin repository is
+     optional.
+3. (Optional, future) A Marketplace Action (`aifeed/sign@v1`) would need a public action
+   repository, most naturally under the org. Until then use the CI template
+   [`../integrations/github-action/aifeed.yml`](../integrations/github-action/aifeed.yml).
+4. Point the local repository at the canonical remote:
 
    ```bash
    cd D:\Software\aifeed.org
-   git add .
-   git commit -m "Initial public snapshot: AIFeed protocol, tools, integrations, paper draft"
-   git remote add origin https://github.com/aifeed/aifeed-protocol.git
+   git remote -v                                    # expect origin → denyn1/aifeed-protocol
+   git remote set-url origin https://github.com/denyn1/aifeed-protocol.git
    git push -u origin main
    ```
 
-   (Commit/push only when you are ready; keys are excluded by `.gitignore`.) The local
-   folder is still named `aifeed.org`; renaming it to `aifeed.md` is optional and does
-   not affect anything tracked by git.
+   (Ignore the local folder name `aifeed.org`; renaming it to `aifeed.md` is optional and
+   does not affect anything tracked by git.)
 
 ## 2. npm scope — `@aifeed` (**published 2026-09-16**)
 

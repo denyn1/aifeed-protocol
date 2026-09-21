@@ -38,6 +38,12 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
 - **`verifyRemote()`** — one-call remote verification in `@aifeed/verify`: discovery →
   manifest + signature → DNS `_aifeed` anchor state, enabling the 3-line consumer
   quickstart on the npm pages.
+- **Repository URL consistency** — fixed the stale `aifeed/aifeed-protocol` links in the
+  CI template, root `package.json`, the WordPress `.pot` header, and the namespace docs
+  (canonical: `denyn1/aifeed-protocol`); the CI template now pins tag `v1.0.0-draft.2`,
+  gates on `aifeed validate` without `|| true`, and points to `@aifeed/frameworks` for
+  Vite/Astro/Next.js; `check-consistency` now rejects any GitHub URL under the old
+  `aifeed` owner.
 
 ## [1.0.0-draft] — 2026-09-16
 
