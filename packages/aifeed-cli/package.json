@@ -1,0 +1,45 @@
+{
+  "name": "aifeed",
+  "version": "1.0.0-draft.1",
+  "description": "AIFeed protocol CLI: keygen, sign, validate, site build, rotate, bundle, and AIFeed Markdown/MAKO tools",
+  "license": "MIT",
+  "homepage": "https://aifeed.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denyn1/aifeed-protocol.git",
+    "directory": "packages/aifeed-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/denyn1/aifeed-protocol/issues"
+  },
+  "bin": {
+    "aifeed": "bin/cli.js",
+    "aifeed-keygen": "bin/keygen.js",
+    "aifeed-sign": "bin/sign.js",
+    "aifeed-validate": "bin/validate.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "schema",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "aifeed",
+    "cli",
+    "ai",
+    "content-permissions",
+    "ed25519",
+    "signing",
+    "markdown",
+    "mako",
+    "robots"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

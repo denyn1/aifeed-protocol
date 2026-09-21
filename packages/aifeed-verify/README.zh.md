@@ -2,7 +2,23 @@
 
 <p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
 
-**AIFeed 协议**的零依赖验证器——签名 AI-Web 内容声明与内容配置：
+**AIFeed 协议**的零依赖验证器——签名 AI-Web 内容声明与内容配置。
+
+## 1 分钟快速上手
+
+```bash
+npm install @aifeed/verify
+```
+
+```js
+const { verifyRemote } = require('@aifeed/verify');
+const out = await verifyRemote('example.com');   // discovery → 签名 → DNS 锚点
+console.log(out.result, out.anchor.status);      // VERIFIED anchored
+```
+
+TypeScript：`import { verifyRemote } from '@aifeed/verify';`
+
+验证内容：
 
 - **Manifest**（`/.well-known/ai.json`，v0.1/v0.2），Ed25519 + JCS 验证
 - **原生内容配置 AIFeed Markdown**（`text/aifeed+markdown`、`.aifeed.md`）

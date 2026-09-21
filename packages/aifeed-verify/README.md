@@ -3,7 +3,23 @@
 <p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
 
 Zero-dependency verifier for the **AIFeed protocol** — signed AI-Web content
-declarations and content profiles:
+declarations and content profiles.
+
+## 1-Minute Quickstart
+
+```bash
+npm install @aifeed/verify
+```
+
+```js
+const { verifyRemote } = require('@aifeed/verify');
+const out = await verifyRemote('example.com');   // discovery → signature → DNS anchor
+console.log(out.result, out.anchor.status);      // VERIFIED anchored
+```
+
+TypeScript: `import { verifyRemote } from '@aifeed/verify';`
+
+What it verifies:
 
 - **Manifests** (`/.well-known/ai.json`, v0.1/v0.2) with Ed25519 + JCS verification
 - **Native content profile AIFeed Markdown** (`text/aifeed+markdown`, `.aifeed.md`)

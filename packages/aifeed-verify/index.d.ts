@@ -356,6 +356,39 @@ export function fetchAimd(url: string, options?: FetchMakoOptions): Promise<Fetc
 export function fetchIndexDelta(indexUrl: string, options?: FetchIndexDeltaOptions): Promise<FetchIndexDeltaResult>;
 export function decideUsage(result: Pick<MakoVerifyResult, 'usage' | 'attribution'>, usageKey: string): { allowed: boolean; attribution: string | null; reason: string };
 
+export interface VerifyRemoteOptions {
+  /** Origin to fetch from (default https://<domainOrUrl>). Useful for staging origins and tests. */
+  baseUrl?: string;
+  /** Expected domain; defaults to the hostname of baseUrl. */
+  domain?: string | null;
+  now?: Date | string;
+  /** Custom CA for pinned/self-signed fixtures. */
+  ca?: string | Buffer;
+  /** Allow loopback/private origins (tests and local development). */
+  allowPrivate?: boolean;
+  timeout?: number;
+  maxBytes?: number;
+  /** Check the DNS `_aifeed` anchor (default true); failures are reported as warnings. */
+  checkAnchor?: boolean;
+  /** Override the discovered manifest URL. */
+  manifestUrl?: string | null;
+}
+
+export interface RemoteVerifyResult {
+  result: ManifestVerifyResult['result'];
+  manifest: Record<string, unknown> | null;
+  signature: Record<string, unknown> | null;
+  manifest_url: string;
+  signature_url: string;
+  discovered_via: string;
+  anchor: { status: 'anchored' | 'missing' | 'mismatch' | 'error' | 'skipped'; key_match: boolean };
+  errors: Issue[];
+  warnings: Issue[];
+}
+
+/** Discover, fetch, and verify a remote domain in one call. */
+export function verifyRemote(domainOrUrl: string, options?: VerifyRemoteOptions): Promise<RemoteVerifyResult>;
+
 export interface AssetEntry {
   url: string;
   type: 'image' | 'video' | 'audio' | 'document' | 'archive' | 'file' | string;

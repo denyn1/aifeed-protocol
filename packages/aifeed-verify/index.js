@@ -152,6 +152,95 @@ async function fetchIndexDelta(indexUrl, options = {}) {
   return { ok: errors.length === 0, index, entries, changed, errors };
 }
 
+async function verifyRemote(domainOrUrl, options = {}) {
+  const target = String(domainOrUrl || '').trim();
+  if (target === '') throw new Error('verifyRemote: domain or URL is required');
+  let baseUrl = options.baseUrl || null;
+  if (!baseUrl) {
+    baseUrl = /^https?:\/\//i.test(target) ? new URL(target).origin : 'https://' + target.replace(/^\/+|\/+$/g, '');
+  }
+  const domain = options.domain || new URL(baseUrl).hostname;
+  const fetchOptions = {
+    timeout: options.timeout,
+    allowPrivate: options.allowPrivate,
+    ca: options.ca
+  };
+
+  const discovery = await remoteLib.discoverManifestUrl(baseUrl, fetchOptions);
+  const manifestUrl = options.manifestUrl || discovery.manifestUrl;
+  const manifestResponse = await remoteLib.fetchText(manifestUrl, {
+    ...fetchOptions,
+    accept: 'application/json',
+    allowedContentTypes: ['application/json'],
+    maxBytes: options.maxBytes ?? 256 * 1024
+  });
+
+  let hint = null;
+  try {
+    hint = parse.parseStrict(manifestResponse.text, { integersOnly: true, maxDepth: 10, requireNFC: true });
+  } catch (error) {
+    hint = null;
+  }
+  let signatureUrl = null;
+  if (hint && hint.identity && typeof hint.identity.signature_url === 'string') {
+    try {
+      signatureUrl = new URL(hint.identity.signature_url, manifestUrl).toString();
+    } catch (error) {
+      signatureUrl = null;
+    }
+  }
+  if (signatureUrl === null) signatureUrl = manifestUrl.replace(/ai\.json$/, 'ai-signature.json');
+
+  const signatureResponse = await remoteLib.fetchText(signatureUrl, {
+    ...fetchOptions,
+    accept: 'application/json',
+    allowedContentTypes: ['application/json'],
+    maxBytes: 64 * 1024
+  });
+
+  const verified = validateLib.verifyAll({
+    manifestText: manifestResponse.text,
+    manifestBytes: manifestResponse.buffer,
+    signatureText: signatureResponse.text,
+    domain,
+    now: options.now
+  });
+
+  const anchor = { status: 'skipped', key_match: false };
+  if (options.checkAnchor !== false) {
+    const publicKey = verified.manifest && verified.manifest.identity ? verified.manifest.identity.public_key : null;
+    try {
+      const records = await remoteLib.lookupAifeedTxt(domain);
+      const list = Array.isArray(records) ? records : [];
+      anchor.key_match = publicKey !== null && list.some((record) => record && record.pk === publicKey);
+      anchor.status = list.length === 0 ? 'missing' : anchor.key_match ? 'anchored' : 'mismatch';
+      if (anchor.status !== 'anchored') {
+        verified.warnings.push({
+          code: anchor.status === 'missing' ? 'dns_not_anchored' : 'dns_mismatch',
+          message: anchor.status === 'missing'
+            ? 'no _aifeed TXT record found for ' + domain
+            : 'the _aifeed TXT record does not pin the manifest key'
+        });
+      }
+    } catch (error) {
+      anchor.status = 'error';
+      verified.warnings.push({ code: 'dns_lookup_failed', message: error.message });
+    }
+  }
+
+  return {
+    result: verified.result,
+    manifest: verified.manifest,
+    signature: verified.signature,
+    manifest_url: manifestUrl,
+    signature_url: signatureUrl,
+    discovered_via: discovery.discoveredVia || 'fallback',
+    anchor,
+    errors: verified.errors,
+    warnings: verified.warnings
+  };
+}
+
 function decideUsage(result, usageKey) {
   if (!result || !result.usage) return { allowed: false, attribution: null, reason: 'no_permissions' };
   const value = result.usage[usageKey];
@@ -313,6 +402,7 @@ module.exports = {
   fetchMako,
   fetchAimd,
   fetchIndexDelta,
+  verifyRemote,
   decideUsage,
   listAssets,
   verifyAsset,

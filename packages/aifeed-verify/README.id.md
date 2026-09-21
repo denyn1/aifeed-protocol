@@ -3,7 +3,23 @@
 <p><a href="README.md">English</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.zh.md">中文</a></p>
 
 Verifier tanpa dependensi untuk **protokol AIFeed** — deklarasi konten AI-Web bertanda
-tangan dan profil kontennya:
+tangan dan profil kontennya.
+
+## 1-Menit Quickstart
+
+```bash
+npm install @aifeed/verify
+```
+
+```js
+const { verifyRemote } = require('@aifeed/verify');
+const out = await verifyRemote('example.com');   // discovery → tanda tangan → anchor DNS
+console.log(out.result, out.anchor.status);      // VERIFIED anchored
+```
+
+TypeScript: `import { verifyRemote } from '@aifeed/verify';`
+
+Yang diverifikasi:
 
 - **Manifest** (`/.well-known/ai.json`, v0.1/v0.2) dengan verifikasi Ed25519 + JCS
 - **Profil konten native AIFeed Markdown** (`text/aifeed+markdown`, `.aifeed.md`)
