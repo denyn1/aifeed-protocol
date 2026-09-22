@@ -25,7 +25,7 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   可由模型调用的工具（`aifeed_verify_manifest`、`aifeed_fetch_aifeed`、
   `aifeed_list_assets`、`aifeed_verify_asset`、`aifeed_select_index`、
   `aifeed_decide_usage`）；复用零依赖 MCP 引擎的 CJS 生成副本
-  （`npm run build:harness` / `npm run harness:check`）。
+  （`npm run build:harness` / `npm run harness:check`）。已发布到 npm：`@aifeed/deepseek-harness`。
 - **PyPI 包 `aifeed`** — 独立 Python 验证器现以仅标准库 wheel 发布（`pip install aifeed`）：
   `aifeed.verify` 与 `aifeed.mako` 模块、`aifeed-verify`/`aifeed-mako` 控制台脚本、
   镜像 `1.0.0-draft` 核心的 PEP 440 预发布 `1.0.0a1`；历史

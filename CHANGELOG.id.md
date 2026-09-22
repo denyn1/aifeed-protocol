@@ -29,6 +29,7 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   `aifeed_fetch_aifeed`, `aifeed_list_assets`, `aifeed_verify_asset`,
   `aifeed_select_index`, `aifeed_decide_usage`); memakai ulang mesin MCP tanpa dependensi
   sebagai salinan CJS yang di-generate (`npm run build:harness` / `npm run harness:check`).
+  Terbit di npm sebagai `@aifeed/deepseek-harness`.
 - **Paket PyPI `aifeed`** — verifier Python independen kini terbit sebagai wheel hanya
   pustaka standar (`pip install aifeed`): modul `aifeed.verify` dan `aifeed.mako`, skrip
   konsol `aifeed-verify`/`aifeed-mako`, pra-rilis PEP 440 `1.0.0a1` yang mencerminkan inti
