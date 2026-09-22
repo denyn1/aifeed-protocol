@@ -31,6 +31,9 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   sebagai salinan CJS yang di-generate (`npm run build:harness` / `npm run harness:check`).
   Terbit di npm sebagai `@aifeed/deepseek-harness`, bundle dsh yang bisa dipasang
   (`dsh plugin --profile web add @aifeed/deepseek-harness`).
+- **Pengajuan ke ZCode Plugins Marketplace** — PR #33 di `zai-org/zcode-plugins`
+  menambahkan plugin `aifeed` (mesin MCP zero-dependency yang divendor plus skill
+  verify-first) untuk agen ZCode milik Z.ai; menunggu review maintainer.
 - **Paket PyPI `aifeed`** — verifier Python independen kini terbit sebagai wheel hanya
   pustaka standar (`pip install aifeed`): modul `aifeed.verify` dan `aifeed.mako`, skrip
   konsol `aifeed-verify`/`aifeed-mako`, pra-rilis PEP 440 `1.0.0a1` yang mencerminkan inti
