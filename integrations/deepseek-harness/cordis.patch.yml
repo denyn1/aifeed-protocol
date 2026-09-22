@@ -1,0 +1,6 @@
+# Bundle layer shipped with @aifeed/deepseek-harness.
+# `dsh plugin --profile <name> add @aifeed/deepseek-harness` links the package and
+# appends this bundle to dsh.profile.bundles; the row below registers the plugin.
+- insert:
+    - id: aifeed
+      name: '@aifeed/deepseek-harness'

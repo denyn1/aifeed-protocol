@@ -20,16 +20,16 @@
 
 ## 安装
 
-在 DeepSeek Harness 检出目录内：
-
 ```sh
-pnpm add @aifeed/deepseek-harness
+dsh plugin --profile web add @aifeed/deepseek-harness
+dsh --profile web --dump-config   # 显示 bundle 层
+dsh web
 ```
 
-将其加入 Cordis patch，并用 `--patch` 启动 harness：
+该包自带 bundle 层（`cordis.patch.yml`），profile 列入后工具即生效。想用检出目录试用：
 
-```yaml
-- name: '@aifeed/deepseek-harness'
+```sh
+dsh plugin --profile demo add ./integrations/deepseek-harness
 ```
 
 然后让智能体调用，例如：`Use aifeed_decide_usage for shop.aifeed.md with usage "training".`

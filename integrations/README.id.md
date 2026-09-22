@@ -209,9 +209,8 @@ jatuh ke aset HTML.
 ### DeepSeek Harness (plugin Cordis)
 
 ```sh
-pnpm add @aifeed/deepseek-harness
-# tambahkan ke patch Cordis: - name: '@aifeed/deepseek-harness'
-pnpm dsh web --patch ./cordis.aifeed.yml
+dsh plugin --profile web add @aifeed/deepseek-harness
+dsh web
 ```
 
 Plugin mendaftarkan `aifeed_verify_manifest`, `aifeed_fetch_aifeed`,

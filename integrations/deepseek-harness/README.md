@@ -21,16 +21,17 @@ the repository root.
 
 ## Install
 
-Inside your DeepSeek Harness checkout:
-
 ```sh
-pnpm add @aifeed/deepseek-harness
+dsh plugin --profile web add @aifeed/deepseek-harness
+dsh --profile web --dump-config   # shows the bundle layer
+dsh web
 ```
 
-Add it to a Cordis patch and start the harness with `--patch`:
+The package ships a bundle layer (`cordis.patch.yml`), so the tools activate as soon as the
+profile lists it. To try a checkout instead:
 
-```yaml
-- name: '@aifeed/deepseek-harness'
+```sh
+dsh plugin --profile demo add ./integrations/deepseek-harness
 ```
 
 Then ask the agent, for example:

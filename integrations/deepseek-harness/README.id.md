@@ -21,16 +21,17 @@ di-generate dengan `npm run build:harness` dari root repositori.
 
 ## Pemasangan
 
-Di dalam checkout DeepSeek Harness Anda:
-
 ```sh
-pnpm add @aifeed/deepseek-harness
+dsh plugin --profile web add @aifeed/deepseek-harness
+dsh --profile web --dump-config   # memperlihatkan layer bundle
+dsh web
 ```
 
-Tambahkan ke patch Cordis lalu jalankan harness dengan `--patch`:
+Paket ini membawa layer bundle (`cordis.patch.yml`), jadi tool langsung aktif begitu profil
+mencantumkannya. Untuk mencoba dari checkout:
 
-```yaml
-- name: '@aifeed/deepseek-harness'
+```sh
+dsh plugin --profile demo add ./integrations/deepseek-harness
 ```
 
 Lalu minta agen, misalnya: `Use aifeed_decide_usage for shop.aifeed.md with usage "training".`

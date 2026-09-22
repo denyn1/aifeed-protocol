@@ -107,9 +107,13 @@ test('harness plugin package ships generated engine copies and peer deps only', 
   assert.ok(!('dependencies' in pkg) && !('devDependencies' in pkg), 'zero-dependency rule');
   assert.ok(pkg.peerDependencies['@deepseek-ai/dsh-tools'], 'dsh-tools peer');
   assert.ok(pkg.peerDependencies['@deepseek-ai/cordis'], 'cordis peer');
-  for (const file of ['index.js', 'tools.js', 'engine/server.js', 'engine/package.json', 'README.md', 'cordis.example.yml']) {
+  for (const file of ['index.js', 'tools.js', 'engine/server.js', 'engine/package.json', 'README.md', 'cordis.patch.yml']) {
     assert.ok(fs.existsSync(path.join(HARNESS_DIR, file)), file);
   }
+  assert.strictEqual(pkg.dsh.bundle.patch, './cordis.patch.yml');
+  const patch = fs.readFileSync(path.join(HARNESS_DIR, 'cordis.patch.yml'), 'utf8');
+  assert.ok(patch.includes('insert:'), 'bundle insert layer');
+  assert.ok(patch.includes('@aifeed/deepseek-harness'), 'bundle row references the package');
   const enginePkg = JSON.parse(fs.readFileSync(path.join(HARNESS_DIR, 'engine', 'package.json'), 'utf8'));
   assert.strictEqual(enginePkg.type, 'commonjs');
   const glue = fs.readFileSync(path.join(HARNESS_DIR, 'index.js'), 'utf8');

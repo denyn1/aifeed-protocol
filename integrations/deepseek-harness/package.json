@@ -1,6 +1,6 @@
 {
   "name": "@aifeed/deepseek-harness",
-  "version": "1.0.0-draft.1",
+  "version": "1.0.0-draft.2",
   "description": "DeepSeek Harness plugin exposing AIFeed tools: verify signed content permissions, fetch token-budgeted markdown, select delta-index entries, and decide usage.",
   "license": "MIT",
   "homepage": "https://aifeed.md",
@@ -24,8 +24,13 @@
     "engine",
     "LICENSE",
     "README.md",
-    "cordis.example.yml"
+    "cordis.patch.yml"
   ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
   "engines": {
     "node": ">=20"
   },

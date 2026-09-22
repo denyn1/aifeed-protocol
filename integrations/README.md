@@ -206,9 +206,8 @@ falls back to the HTML asset.
 ### DeepSeek Harness (Cordis plugin)
 
 ```sh
-pnpm add @aifeed/deepseek-harness
-# add to a Cordis patch: - name: '@aifeed/deepseek-harness'
-pnpm dsh web --patch ./cordis.aifeed.yml
+dsh plugin --profile web add @aifeed/deepseek-harness
+dsh web
 ```
 
 The plugin registers `aifeed_verify_manifest`, `aifeed_fetch_aifeed`,

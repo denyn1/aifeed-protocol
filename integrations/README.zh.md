@@ -202,9 +202,8 @@ npx wrangler deploy
 ### DeepSeek Harness（Cordis 插件）
 
 ```sh
-pnpm add @aifeed/deepseek-harness
-# 加入 Cordis patch：- name: '@aifeed/deepseek-harness'
-pnpm dsh web --patch ./cordis.aifeed.yml
+dsh plugin --profile web add @aifeed/deepseek-harness
+dsh web
 ```
 
 该插件注册 `aifeed_verify_manifest`、`aifeed_fetch_aifeed`、`aifeed_list_assets`、
