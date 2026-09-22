@@ -177,6 +177,7 @@ yang tidak dilakukan proyek ini secara otomatis.
 - Quickstart agen (sisi klien): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - Panduan AI publisher (sisi pemilik): [`docs/publisher-ai-guide.id.md`](docs/publisher-ai-guide.id.md)
 - Publisher Studio (aplikasi lokal): [`studio/README.id.md`](studio/README.id.md)
+- Skill agen: [`skills/aifeed/SKILL.md`](skills/aifeed/SKILL.md) (bisa dipasang via ClawHub: `npx clawhub install aifeed`)
 - Panduan lengkap: [`docs/penjelasan-aifeed.html`](docs/penjelasan-aifeed.html) (sumber <https://aifeed.md/penjelasan.html>)
 - Kebijakan keamanan: [`SECURITY.md`](SECURITY.md)
 - Governance & kebijakan open-core: [`GOVERNANCE.md`](GOVERNANCE.md)

@@ -29,6 +29,9 @@ AIFeed 协议与参考实现的所有重要变更都记录于此。格式遵循
   可直接作为 dsh bundle 安装（`dsh plugin --profile web add @aifeed/deepseek-harness`）。
 - **提交至 ZCode Plugins Marketplace** — `zai-org/zcode-plugins` 的 PR #33 为 Z.ai 的
   ZCode 智能体新增 `aifeed` 插件（内置零依赖 MCP 引擎 + verify-first 技能）；等待维护者审核。
+- **智能体技能已发布至 ClawHub** — `aifeed@1.0.0-draft.1` 已在
+  <https://clawhub.ai/denyn1/skills/aifeed> 公开，可用 `npx clawhub install aifeed`
+  安装；ClawHub 安全摘要显示为仅文档型技能，不包含可执行负载。
 - **PyPI 包 `aifeed`** — 独立 Python 验证器现以仅标准库 wheel 发布（`pip install aifeed`）：
   `aifeed.verify` 与 `aifeed.mako` 模块、`aifeed-verify`/`aifeed-mako` 控制台脚本、
   镜像 `1.0.0-draft` 核心的 PEP 440 预发布 `1.0.0a1`；历史

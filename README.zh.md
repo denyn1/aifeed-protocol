@@ -171,6 +171,7 @@ node bin/cli.js site build ./public --domain example.com --key keys/aifeed-priva
 - 智能体快速上手（客户端侧）：[`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - 发布方 AI 指南（所有者侧）：[`docs/publisher-ai-guide.zh.md`](docs/publisher-ai-guide.zh.md)
 - 发布方 Studio（本地应用）：[`studio/README.zh.md`](studio/README.zh.md)
+- 智能体技能：[`skills/aifeed/SKILL.md`](skills/aifeed/SKILL.md)（可通过 ClawHub 安装：`npx clawhub install aifeed`）
 - 完整指南：[`docs/penjelasan-aifeed.html`](docs/penjelasan-aifeed.html)（<https://aifeed.md/penjelasan.html> 的源码）
 - 安全政策：[`SECURITY.md`](SECURITY.md)
 - 治理与开放核心政策：[`GOVERNANCE.md`](GOVERNANCE.md)

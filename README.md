@@ -175,6 +175,7 @@ summarization this project does not perform automatically.
 - Agent quickstart (client side): [`docs/agent-quickstart.md`](docs/agent-quickstart.md)
 - Publisher AI guide (owner side): [`docs/publisher-ai-guide.md`](docs/publisher-ai-guide.md)
 - Publisher Studio (local app): [`studio/README.md`](studio/README.md)
+- Agent skill: [`skills/aifeed/SKILL.md`](skills/aifeed/SKILL.md) (installable via ClawHub: `npx clawhub install aifeed`)
 - Complete guide: [`docs/penjelasan-aifeed.html`](docs/penjelasan-aifeed.html) (source of <https://aifeed.md/penjelasan.html>)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 - Governance & open-core policy: [`GOVERNANCE.md`](GOVERNANCE.md)

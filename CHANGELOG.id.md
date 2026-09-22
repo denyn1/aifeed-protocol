@@ -34,6 +34,10 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
 - **Pengajuan ke ZCode Plugins Marketplace** — PR #33 di `zai-org/zcode-plugins`
   menambahkan plugin `aifeed` (mesin MCP zero-dependency yang divendor plus skill
   verify-first) untuk agen ZCode milik Z.ai; menunggu review maintainer.
+- **Skill agen terbit di ClawHub** — `aifeed@1.0.0-draft.1` publik di
+  <https://clawhub.ai/denyn1/skills/aifeed> dan bisa dipasang dengan
+  `npx clawhub install aifeed`; ringkasan keamanan ClawHub menyebutnya skill
+  dokumentasi tanpa payload eksekutabel.
 - **Paket PyPI `aifeed`** — verifier Python independen kini terbit sebagai wheel hanya
   pustaka standar (`pip install aifeed`): modul `aifeed.verify` dan `aifeed.mako`, skrip
   konsol `aifeed-verify`/`aifeed-mako`, pra-rilis PEP 440 `1.0.0a1` yang mencerminkan inti

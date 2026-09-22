@@ -34,6 +34,10 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
 - **ZCode Plugins Marketplace submission** — `zai-org/zcode-plugins` PR #33 adds an
   `aifeed` plugin (vendored zero-dependency MCP engine plus a verify-first skill) for
   Z.ai's ZCode agent; pending maintainer review.
+- **Agent skill published on ClawHub** — `aifeed@1.0.0-draft.1` is public at
+  <https://clawhub.ai/denyn1/skills/aifeed> and installable with
+  `npx clawhub install aifeed`; the ClawHub security summary reports a
+  documentation-only skill with no bundled executable payload.
 - **PyPI package `aifeed`** — the independent Python verifier now ships as a
   standard-library-only wheel (`pip install aifeed`): `aifeed.verify` and `aifeed.mako`
   modules, `aifeed-verify`/`aifeed-mako` console scripts, PEP 440 pre-release `1.0.0a1`
