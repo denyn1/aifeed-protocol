@@ -1,0 +1,5 @@
+# Add AIFeed tools to a DeepSeek Harness composition.
+# Example: pnpm dsh web --patch ./cordis.aifeed.yml
+- name: '@aifeed/deepseek-harness'
+  config:
+    allowPrivate: false

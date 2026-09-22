@@ -33,6 +33,7 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | Rust（Axum） | `AifeedLayer` 中间件（协商 + 内联签名） | [`rust/`](rust/) |
 | Cloudflare Workers（静态资源） | Accept → 通过 `ASSETS` binding 返回 `.aifeed.md` / `.mako.md` | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | 部署前 build + 签名 + 验证 | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
+| DeepSeek Harness（Cordis 插件） | 六个模型工具：验证、抓取、资源、索引与用途决策 | [`@aifeed/deepseek-harness`](deepseek-harness/)（npm） |
 | WordPress | 双栈服务 + 管理界面的插件 | `wp-plugin/` |
 
 ## 静态托管说明
@@ -197,6 +198,19 @@ npx wrangler deploy
 ```
 
 请求目录 URL 时请带尾部斜杠（`/dir/`）以获得 markdown；`/dir` 会回退到 HTML 资源。
+
+### DeepSeek Harness（Cordis 插件）
+
+```sh
+pnpm add @aifeed/deepseek-harness
+# 加入 Cordis patch：- name: '@aifeed/deepseek-harness'
+pnpm dsh web --patch ./cordis.aifeed.yml
+```
+
+该插件注册 `aifeed_verify_manifest`、`aifeed_fetch_aifeed`、`aifeed_list_assets`、
+`aifeed_verify_asset`、`aifeed_select_index` 与 `aifeed_decide_usage`。
+见 [`deepseek-harness/`](deepseek-harness/)。
+
 
 ## 部署后验证
 

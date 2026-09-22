@@ -53,6 +53,8 @@
     "build:mcp": "node tools/build-mcp.js",
     "mcpb": "node tools/build-mcpb.js",
     "mcp:check": "node tools/build-mcp.js --check",
+    "build:harness": "node tools/build-harness.js",
+    "harness:check": "node tools/build-harness.js --check",
     "build:fw": "node tools/build-frameworks.js",
     "fw:check": "node tools/build-frameworks.js --check",
     "build:cli": "node tools/build-cli.js",
@@ -60,7 +62,7 @@
     "mcp": "node packages/aifeed-mcp-server/index.js",
     "lint:syntax": "node tools/check-syntax.js",
     "check:consistency": "node tools/check-consistency.js",
-    "verify": "npm run lint:syntax && npm run check:consistency && npm test && npm run test:py && npm run vectors:check && npm run mako:vectors:check && npm run aimd:vectors:check && npm run build:sdk && npm run sdk:check && npm run build:mcp && npm run mcp:check && npm run build:fw && npm run fw:check && npm run build:cli && npm run cli:check && npm run paper:check && npm run render:html && npm run build:site && npm run demos:check"
+    "verify": "npm run lint:syntax && npm run check:consistency && npm test && npm run test:py && npm run vectors:check && npm run mako:vectors:check && npm run aimd:vectors:check && npm run build:sdk && npm run sdk:check && npm run build:mcp && npm run mcp:check && npm run build:harness && npm run harness:check && npm run build:fw && npm run fw:check && npm run build:cli && npm run cli:check && npm run paper:check && npm run render:html && npm run build:site && npm run demos:check"
   },
   "engines": {
     "node": ">=20"

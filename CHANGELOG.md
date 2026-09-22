@@ -24,6 +24,11 @@ here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/
   to `registry.modelcontextprotocol.io` under the `io.github.denyn1` namespace via
   `mcp-publisher`. The same build packs into an MCPB bundle (`npm run mcpb`) and is listed
   on Smithery as `denyn1/aifeed-mcp-server`.
+- **DeepSeek Harness plugin (`@aifeed/deepseek-harness`)** — Cordis plugin that gives the
+  harness six model-callable tools (`aifeed_verify_manifest`, `aifeed_fetch_aifeed`,
+  `aifeed_list_assets`, `aifeed_verify_asset`, `aifeed_select_index`,
+  `aifeed_decide_usage`); it reuses the zero-dependency MCP engine as a generated CJS copy
+  (`npm run build:harness` / `npm run harness:check`).
 - **PyPI package `aifeed`** — the independent Python verifier now ships as a
   standard-library-only wheel (`pip install aifeed`): `aifeed.verify` and `aifeed.mako`
   modules, `aifeed-verify`/`aifeed-mako` console scripts, PEP 440 pre-release `1.0.0a1`

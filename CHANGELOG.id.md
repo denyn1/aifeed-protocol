@@ -24,6 +24,11 @@ di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0
   `registry.modelcontextprotocol.io` di namespace `io.github.denyn1` lewat `mcp-publisher`.
   Build yang sama dikemas menjadi bundel MCPB (`npm run mcpb`) dan terdaftar di Smithery
   sebagai `denyn1/aifeed-mcp-server`.
+- **Plugin DeepSeek Harness (`@aifeed/deepseek-harness`)** — plugin Cordis yang memberi
+  harness enam tool yang bisa dipanggil model (`aifeed_verify_manifest`,
+  `aifeed_fetch_aifeed`, `aifeed_list_assets`, `aifeed_verify_asset`,
+  `aifeed_select_index`, `aifeed_decide_usage`); memakai ulang mesin MCP tanpa dependensi
+  sebagai salinan CJS yang di-generate (`npm run build:harness` / `npm run harness:check`).
 - **Paket PyPI `aifeed`** — verifier Python independen kini terbit sebagai wheel hanya
   pustaka standar (`pip install aifeed`): modul `aifeed.verify` dan `aifeed.mako`, skrip
   konsol `aifeed-verify`/`aifeed-mako`, pra-rilis PEP 440 `1.0.0a1` yang mencerminkan inti

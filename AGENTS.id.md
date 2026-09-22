@@ -24,6 +24,7 @@ situs web, dan paper.
    |---|---|---|---|
    | `packages/aifeed-verify/{lib,schema,index.js,index.d.ts}` | `lib/`, `schema/` (+ `index.js` SDK tulisan tangan) | `npm run build:sdk` | `npm run sdk:check` |
    | `packages/aifeed-mcp-server/{lib,schema}` | `lib/`, `schema/` (+ `index.js` MCP tulisan tangan) | `npm run build:mcp` | `npm run mcp:check` |
+   | `integrations/deepseek-harness/{engine,LICENSE}` | `packages/aifeed-mcp-server/` (salinan engine CJS; `engine/package.json` tulisan tangan) | `npm run build:harness` | `npm run harness:check` |
    | `packages/aifeed-frameworks/{lib,schema}` | `lib/`, `schema/` (+ `index.js` plugin, `vite.js`, `astro.js`, `next.js`, CLI tulisan tangan) | `npm run build:fw` | `npm run fw:check` |
    | `packages/aifeed-cli/{bin,lib,schema}` | `bin/`, `lib/`, `schema/` (+ `package.json`, README tulisan tangan) | `npm run build:cli` | `npm run cli:check` |
    | `conformance/vectors/**` (34) | `tools/gen-vectors.js` | `npm run vectors` | `npm run vectors:check` |
@@ -66,7 +67,7 @@ situs web, dan paper.
 npm run verify            # semuanya di bawah, satu gerbang
 npm run lint:syntax       # cek parse setiap file .js
 npm run check:consistency # versi, deps, secret, pasangan spec, target skrip
-npm test                  # suite Node (275 tes)
+npm test                  # suite Node (283 tes)
 npm run test:py           # verifier Python independen (56 tes)
 npm run bench:mako        # regenerasi benchmarks/mako-*.json + laporan
 npm run bench:enforcement # regenerasi benchmarks/enforcement-*.json|md
@@ -93,7 +94,7 @@ node bin/cli.js --help    # permukaan CLI
 | `packages/aifeed-cli/` | CLI terbit (`aifeed`): keygen/init/sign/validate/rotate/bundle/site build; `bin/`+`lib/`+`schema/` salinan hasil generate |
 | `clients/python/` | Verifier independen + tes (konformansi diferensial); terbit di PyPI sebagai `aifeed` (paket `aifeed/`, hanya stdlib) |
 | `conformance/` | Vektor: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revokasi + bundel |
-| `integrations/` | Adapter penerbit: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, Rust/Axum, GitHub Action |
+| `integrations/` | Adapter penerbit: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, Rust/Axum, GitHub Action, plugin DeepSeek Harness |
 | `skills/` | Skill agen (`aifeed/SKILL.md`): alur verify/publish untuk coding agent |
 | `examples/` | Fixture manifest bertanda tangan per kategori situs + loader framework Python siap salin |
 | `wp-plugin/` | Plugin penerbit WordPress (PHP; punya `tests/` sendiri) |

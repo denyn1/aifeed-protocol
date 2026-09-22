@@ -30,6 +30,7 @@ const sdkPkg = JSON.parse(read('packages/aifeed-verify/package.json'));
 const mcpPkg = JSON.parse(read('packages/aifeed-mcp-server/package.json'));
 const fwPkg = JSON.parse(read('packages/aifeed-frameworks/package.json'));
 const cliPkg = JSON.parse(read('packages/aifeed-cli/package.json'));
+const harnessPkg = JSON.parse(read('integrations/deepseek-harness/package.json'));
 const releaseVersion = rootPkg.version;
 
 match(read('wp-plugin/aifeed.php'), /^[\s*]*Version:\s*(\S+)/m, 'plugin header Version', releaseVersion, 'wp-plugin/aifeed.php');
@@ -70,7 +71,8 @@ for (const [file, pkg] of [
   ['packages/aifeed-verify/package.json', sdkPkg],
   ['packages/aifeed-mcp-server/package.json', mcpPkg],
   ['packages/aifeed-frameworks/package.json', fwPkg],
-  ['packages/aifeed-cli/package.json', cliPkg]
+  ['packages/aifeed-cli/package.json', cliPkg],
+  ['integrations/deepseek-harness/package.json', harnessPkg]
 ]) {
   const deps = Object.keys(pkg.dependencies || {});
   const devDeps = Object.keys(pkg.devDependencies || {});
@@ -82,7 +84,8 @@ for (const [file, pkg] of [
 for (const [file, pkg] of [
   ['packages/aifeed-mcp-server/package.json', mcpPkg],
   ['packages/aifeed-frameworks/package.json', fwPkg],
-  ['packages/aifeed-cli/package.json', cliPkg]
+  ['packages/aifeed-cli/package.json', cliPkg],
+  ['integrations/deepseek-harness/package.json', harnessPkg]
 ]) {
   if (pkg.version.split('-')[0] !== releaseVersion.split('-')[0]) {
     failures.push(file + ': version core "' + pkg.version.split('-')[0] + '" differs from release core "' + releaseVersion.split('-')[0] + '"');

@@ -33,6 +33,7 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | Rust (Axum) | `AifeedLayer` middleware (negotiation + inline signatures) | [`rust/`](rust/) |
 | Cloudflare Workers (static assets) | Accept → `.aifeed.md` / `.mako.md` via the `ASSETS` binding | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | build + sign + verify before deploy | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
+| DeepSeek Harness (Cordis plugin) | six model tools: verify, fetch, assets, index, and usage decisions | [`@aifeed/deepseek-harness`](deepseek-harness/) (npm) |
 | WordPress | plugin with dual-stack serving + admin | `wp-plugin/` |
 
 ## Static hosting note
@@ -201,6 +202,19 @@ npx wrangler deploy
 
 Request directory URLs with a trailing slash (`/dir/`) to receive markdown; `/dir`
 falls back to the HTML asset.
+
+### DeepSeek Harness (Cordis plugin)
+
+```sh
+pnpm add @aifeed/deepseek-harness
+# add to a Cordis patch: - name: '@aifeed/deepseek-harness'
+pnpm dsh web --patch ./cordis.aifeed.yml
+```
+
+The plugin registers `aifeed_verify_manifest`, `aifeed_fetch_aifeed`,
+`aifeed_list_assets`, `aifeed_verify_asset`, `aifeed_select_index`, and
+`aifeed_decide_usage`. See [`deepseek-harness/`](deepseek-harness/).
+
 
 ## Verify after deploy
 

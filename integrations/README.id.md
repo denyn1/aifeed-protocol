@@ -34,6 +34,7 @@ aifeed site build public --domain example.com --key .aifeed/aifeed-private.pem \
 | Rust (Axum) | middleware `AifeedLayer` (negosiasi + tanda tangan inline) | [`rust/`](rust/) |
 | Cloudflare Workers (aset statis) | Accept → `.aifeed.md` / `.mako.md` via binding `ASSETS` | [`cloudflare/worker.mjs`](cloudflare/worker.mjs), [`cloudflare/wrangler.template.toml`](cloudflare/wrangler.template.toml) |
 | CI/CD | build + tanda tangan + verifikasi sebelum deploy | [`github-action/aifeed.yml`](github-action/aifeed.yml) |
+| DeepSeek Harness (plugin Cordis) | enam tool model: verifikasi, fetch, aset, indeks, dan keputusan penggunaan | [`@aifeed/deepseek-harness`](deepseek-harness/) (npm) |
 | WordPress | plugin dengan penyajian dual-stack + admin | `wp-plugin/` |
 
 ## Catatan hosting statis
@@ -204,6 +205,19 @@ npx wrangler deploy
 
 Minta URL direktori dengan trailing slash (`/dir/`) untuk menerima markdown; `/dir`
 jatuh ke aset HTML.
+
+### DeepSeek Harness (plugin Cordis)
+
+```sh
+pnpm add @aifeed/deepseek-harness
+# tambahkan ke patch Cordis: - name: '@aifeed/deepseek-harness'
+pnpm dsh web --patch ./cordis.aifeed.yml
+```
+
+Plugin mendaftarkan `aifeed_verify_manifest`, `aifeed_fetch_aifeed`,
+`aifeed_list_assets`, `aifeed_verify_asset`, `aifeed_select_index`, dan
+`aifeed_decide_usage`. Lihat [`deepseek-harness/`](deepseek-harness/).
+
 
 ## Verifikasi setelah deploy
 

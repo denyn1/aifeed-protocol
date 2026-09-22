@@ -15,7 +15,7 @@ Declare, sign, and revoke what AI agents may do with your content — and let ag
   <a href="https://www.npmjs.com/package/@aifeed/verify"><img src="https://img.shields.io/npm/v/@aifeed/verify?color=f55036&label=npm" alt="npm version"></a>
   <a href="https://www.npmjs.com/package/aifeed"><img src="https://img.shields.io/npm/v/aifeed?color=f55036&label=cli" alt="aifeed CLI"></a>
   <a href="https://pypi.org/project/aifeed/"><img src="https://img.shields.io/pypi/v/aifeed?color=3775a9&label=pypi" alt="PyPI"></a>
-  <img src="https://img.shields.io/badge/tests-275%20JS%20%C2%B7%2056%20Python-3ddc97" alt="test suites">
+  <img src="https://img.shields.io/badge/tests-283%20JS%20%C2%B7%2056%20Python-3ddc97" alt="test suites">
   <img src="https://img.shields.io/badge/conformance-84%20vectors-f55036" alt="conformance vectors">
   <img src="https://img.shields.io/badge/specs-CC%20BY%204.0-6ea8fe" alt="spec license">
   <img src="https://img.shields.io/badge/code-MIT-3ddc97" alt="code license">

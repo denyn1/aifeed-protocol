@@ -23,6 +23,7 @@ benchmarks, the website, and the paper.
    |---|---|---|---|
    | `packages/aifeed-verify/{lib,schema,index.js,index.d.ts}` | `lib/`, `schema/` (+ hand-written SDK `index.js`) | `npm run build:sdk` | `npm run sdk:check` |
    | `packages/aifeed-mcp-server/{lib,schema}` | `lib/`, `schema/` (+ hand-written MCP `index.js`) | `npm run build:mcp` | `npm run mcp:check` |
+   | `integrations/deepseek-harness/{engine,LICENSE}` | `packages/aifeed-mcp-server/` (CJS engine copy; `engine/package.json` is hand-written) | `npm run build:harness` | `npm run harness:check` |
    | `packages/aifeed-frameworks/{lib,schema}` | `lib/`, `schema/` (+ hand-written plugin `index.js`, `vite.js`, `astro.js`, `next.js`, CLIs) | `npm run build:fw` | `npm run fw:check` |
    | `packages/aifeed-cli/{bin,lib,schema}` | `bin/`, `lib/`, `schema/` (+ hand-written `package.json`, README) | `npm run build:cli` | `npm run cli:check` |
    | `conformance/vectors/**` (34) | `tools/gen-vectors.js` | `npm run vectors` | `npm run vectors:check` |
@@ -65,7 +66,7 @@ benchmarks, the website, and the paper.
 npm run verify            # everything below, one gate
 npm run lint:syntax       # parse-check every .js file
 npm run check:consistency # versions, deps, secrets, spec pairs, script targets
-npm test                  # Node suite (275 tests)
+npm test                  # Node suite (283 tests)
 npm run test:py           # independent Python verifier (56 tests)
 npm run bench:mako        # regenerate benchmarks/mako-*.json + report
 npm run bench:enforcement # regenerate benchmarks/enforcement-*.json|md
@@ -92,7 +93,7 @@ node bin/cli.js --help    # CLI surface
 | `packages/aifeed-cli/` | Published CLI (`aifeed`): keygen/init/sign/validate/rotate/bundle/site build; `bin/`+`lib/`+`schema/` are generated copies |
 | `clients/python/` | Independent verifier + tests (differential conformance); published on PyPI as `aifeed` (`aifeed/` package, stdlib only) |
 | `conformance/` | Vectors: 34 manifest, 39 MAKO, 11 AIFeed Markdown, revocation + bundles |
-| `integrations/` | Publisher adapters: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, Rust/Axum, GitHub Action |
+| `integrations/` | Publisher adapters: nginx, Caddy, Apache, Node, Next.js, PHP, Python ASGI, Go, Rust/Axum, GitHub Action, DeepSeek Harness plugin |
 | `skills/` | Agent skill (`aifeed/SKILL.md`): verify/publish flows for coding agents |
 | `examples/` | Signed manifest fixtures per site category + copy-paste Python framework loaders |
 | `wp-plugin/` | WordPress publisher plugin (PHP; its own `tests/`) |
